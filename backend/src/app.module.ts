@@ -2,33 +2,27 @@ import {Module, OnModuleInit} from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import {TypeOrmModule} from "@nestjs/typeorm";
-import {Connection} from "typeorm";
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
-  imports: [
-      TypeOrmModule.forRoot({
-          type: "postgres",
-          host: "34.116.231.64",
-          port: 5432,
-          username: "postgres",
-          password: "bkLpa@:&)<8?7LBJ",
-          database: "Synara",
-          entities: [__dirname + "/entities/**/*.entity{.ts,.js}"],
-          synchronize : true
-      })
-  ],
-  controllers: [AppController],
-  providers: [AppService],
+    imports: [
+        ConfigModule.forRoot({ isGlobal: true }),
+        TypeOrmModule.forRootAsync({
+            imports: [ConfigModule],
+            useFactory: (configService: ConfigService) => ({
+                type: 'postgres',
+                host: configService.get<string>('DB_HOST'),
+                port: configService.get<number>('DB_PORT'),
+                username: configService.get<string>('DB_USERNAME'),
+                password: configService.get<string>('DB_PASSWORD'),
+                database: configService.get<string>('DB_NAME'),
+                entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+                synchronize: true, // Не использовать на продакшене
+            }),
+            inject: [ConfigService],
+        }),
+    ],
+    controllers: [AppController],
+    providers: [AppService],
 })
-export class AppModule implements OnModuleInit {
-    constructor(private readonly connection: Connection) {}
-
-    async onModuleInit() {
-        try {
-            const result = await this.connection.query('SELECT 1');
-            console.log('Successfully connected to the database.');
-        } catch (error) {
-            console.error('Unable to connect to the database:', error);
-        }
-    }
-}
+export class AppModule {}
