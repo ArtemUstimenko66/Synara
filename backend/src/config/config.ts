@@ -6,5 +6,8 @@ export default registerAs('config', () => ({
         clientSecret: process.env.GOOGLE_CLIEN_SECRET,
         callbackURL: process.env.GOOGLE_CALLBACK_URL
 
+    },
+    jwt: {
+        secret: "GoogleAuth"
     }
 }))

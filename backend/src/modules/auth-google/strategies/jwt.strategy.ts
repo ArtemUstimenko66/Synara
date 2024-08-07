@@ -35,7 +35,8 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt'){
     }
 
     async validate(payload: JwtPayload){
-        const user = await this.userRepository.findOne({id : payload.sub});
+        const userId = parseInt(payload.sub);
+        const user = await this.userRepository.findOneBy({id : userId});
 
         if(!user) {
             throw new UnauthorizedException('Please log in to continue')
@@ -48,6 +49,13 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt'){
 
     }
 }
+
+
+
+
+
+
+
 
 
 
