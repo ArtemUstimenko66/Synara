@@ -2,8 +2,6 @@ import {PassportStrategy} from "@nestjs/passport";
 import {ExtractJwt, Strategy} from "passport-jwt";
 import {Inject, UnauthorizedException} from "@nestjs/common";
 import {ConfigService} from "@nestjs/config";
-import { ConfigType } from '@nestjs/config';
-import config from '../../../config/config'
 import {InjectRepository} from "@nestjs/typeorm";
 import {User} from "../../users/entities/users.entity";
 import {Repository} from "typeorm";
@@ -17,7 +15,7 @@ export type JwtPayload = {
 
 export class JwtStrategy extends PassportStrategy(Strategy, 'jwt'){
     constructor(
-        @Inject(config.KEY) private configService: ConfigType<typeof config>,
+        private configService: ConfigService,
         @InjectRepository(User) private userRepository: Repository<User>,
     ) {
         const extractJwtFromCookie = (req) => {
@@ -29,7 +27,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt'){
         };
         super({
             ignoreExpiration: false,
-            secretOrKey: configService.jwt.secret,
+            secretOrKey: configService.get<string>("JWT_SECRET"),
             jwtFromRequest: extractJwtFromCookie,
         });
     }

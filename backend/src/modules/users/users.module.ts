@@ -6,6 +6,8 @@ import { User } from "./entities/users.entity";
 @Module({
   imports: [TypeOrmModule.forFeature([User])],
   providers: [UsersService],
-  exports: [UsersService],
+
+  //Добавил, так как была ошибка с User Repository
+  exports: [UsersService, TypeOrmModule],
 })
 export class UsersModule {}

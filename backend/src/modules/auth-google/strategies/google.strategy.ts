@@ -1,11 +1,10 @@
 import {PassportStrategy} from "@nestjs/passport";
 import {Inject, Injectable} from "@nestjs/common";
 import {Strategy, VerifyCallback} from "passport-google-oauth2";
-import config from '../../../config/config';
 import {InjectRepository} from "@nestjs/typeorm";
 import {User} from "../../users/entities/users.entity";
 import {Repository} from "typeorm";
-import { ConfigType } from '@nestjs/config';
+import {ConfigService, ConfigType} from '@nestjs/config';
 
 
 
@@ -13,13 +12,13 @@ import { ConfigType } from '@nestjs/config';
 export class GoogleStrategy extends PassportStrategy(Strategy, "google") {
 
     constructor(
-        @Inject(config.KEY) private configService:ConfigType<typeof  config>,
+        private configService:ConfigService,
         @InjectRepository(User) private userRepository : Repository<User>,
     ) {
         super({
-            clientID : configService.google.clientID,
-            clientSecret : configService.google.clientSecret,
-            callbackURL : configService.google.callbackURL,
+            clientID : configService.get<string>("GOOGLE_CLIENTID"),
+            clientSecret : configService.get<string>("GOOGLE_CLIEN_SECRET"),
+            callbackURL : configService.get<string>("GOOGLE_CALLBACK_URL"),
             scope: ['profile', 'email'],
         });
     }
