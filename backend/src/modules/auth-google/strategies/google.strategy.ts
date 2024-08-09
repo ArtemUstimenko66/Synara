@@ -16,9 +16,9 @@ export class GoogleStrategy extends PassportStrategy(Strategy, "google") {
         @InjectRepository(User) private userRepository : Repository<User>,
     ) {
         super({
-            clientID : configService.get<string>("GOOGLE_CLIENTID"),
-            clientSecret : configService.get<string>("GOOGLE_CLIEN_SECRET"),
-            callbackURL : configService.get<string>("GOOGLE_CALLBACK_URL"),
+            clientID : '883892480212-mo7bncue2ijekpv7our5bcljgcggiui1.apps.googleusercontent.com',//configService.get<string>("GOOGLE_CLIENT_ID")
+            clientSecret: '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' ,//configService.get<string>("GOOGLE_CLIENT_SECRET")
+            callbackURL : 'http://localhost:8080/auth-google/google/callback',
             scope: ['profile', 'email'],
         });
     }
