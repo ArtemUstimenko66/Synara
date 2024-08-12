@@ -1,0 +1,27 @@
+import React, { ReactNode } from 'react';
+import { useLocation } from 'react-router-dom';
+import { ReactComponent as VectorHomePage } from '../assets/images/VectorHomePage.svg';
+
+interface WrapperProps {
+    children: ReactNode;
+}
+
+const Wrapper: React.FC<WrapperProps> = ({ children }) => {
+    const location = useLocation();
+    const isHomePage = location.pathname === '/home';
+
+    return (
+        <div className="relative min-h-screen flex flex-col">
+            {isHomePage && (
+                <div className="absolute top-0 left-0 w-full z-0">
+                    <VectorHomePage className="w-full h-auto object-cover"/>
+                </div>
+            )}
+            <div className="flex-1 mx-28 py-8 relative z-10">
+                {children}
+            </div>
+        </div>
+    );
+}
+
+export default Wrapper;
