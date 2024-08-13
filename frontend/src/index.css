@@ -29,6 +29,31 @@ svg {
   align-items: center;
 }
 
+
+.header {
+  transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.header-slide-in {
+  transform: translateY(0);
+}
+
+.header-slide-out {
+  transform: translateY(-100%);
+}
+
+.bg-transparent {
+  background-color: transparent;
+}
+
+.bg-white {
+  background-color: white;
+}
+
+.transition-background-color {
+  transition: background-color 0.3s ease-in-out;
+}
+
 /* --- scroll bar --- */
 ::-webkit-scrollbar {
   width: 7px;

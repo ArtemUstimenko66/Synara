@@ -1,25 +1,27 @@
-import React, { useState, ReactNode } from 'react';
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 interface NavItemProps {
     text?: string;
-    children?: ReactNode;
+    to: string;
 }
 
-const NavItem: React.FC<NavItemProps> = ({ text = "", children }) => {
-    const [selected, setSelected] = useState<string>("");
+const NavItem: React.FC<NavItemProps> = ({ text = "", to }) => {
+    const location = useLocation();
+    const isActive = location.pathname === to;
+    console.log(`Current path: ${location.pathname}, Is active: ${isActive}`);
 
     return (
-        <div className='relative'>
-            <div className="flex space-x-2 cursor-pointer items-center">
-                <span
-                    className="text-medium-gray Montserrat hover:text-almost-black"
-                    onClick={() => children && setSelected(text !== selected ? text : "")}
-                >
-                    {text}
-                </span>
-            </div>
-            {selected && children}
-        </div>
+        <Link to={to} className='relative flex items-center'>
+            <span
+                className={`text-medium-gray Montserrat cursor-pointer hover:text-almost-black}`}
+            >
+                {text}
+            </span>
+            {isActive && (
+                <span className="absolute bottom-[-8px] left-0 w-full h-1 bg-yellow-500 rounded-full transition-all duration-300 ease-in-out"></span>
+            )}
+        </Link>
     );
 }
 

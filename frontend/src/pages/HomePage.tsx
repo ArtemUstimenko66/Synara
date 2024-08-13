@@ -1,11 +1,32 @@
 import React from 'react';
-import Header from '../components/Header';
-import {Button} from "../components/Button";
+
 import { ReactComponent as Placeholder } from '../assets/images/Placeholder.svg';
 import { ReactComponent as PlaceholderHorizontal } from '../assets/images/PlaceholderHorizontal.svg';
+import { ReactComponent as PlaceholderSquare } from '../assets/images/PlaceholderSquare.svg';
+
+import Header from '../components/Header';
+import {Button} from "../components/Button";
 import Footer from "../components/Footer";
+import DonationCard from "../components/DonationCard";
 
 const HomePage: React.FC = () => {
+
+    const calculatePercentage = (goal: number, raised: number) => {
+        return (raised / goal) * 100;
+    };
+
+    const goal1 = 100000;
+    const raised1 = 65000;
+    const percentage1 = calculatePercentage(goal1, raised1);
+
+    const goal2 = 80000;
+    const raised2 = 40000;
+    const percentage2 = calculatePercentage(goal2, raised2);
+
+    const goal3 = 50000;
+    const raised3 = 25000;
+    const percentage3 = calculatePercentage(goal3, raised3);
+
     return (
         <div className="w-full relative">
 
@@ -15,7 +36,7 @@ const HomePage: React.FC = () => {
             {/* Main div */}
             <div className="relative z-10 flex flex-col items-center justify-center pt-2">
 
-                {/* First section - join us */}
+                {/* First section - who are we */}
                 <section className='w-full flex justify-center flex-col xl:flex-row'>
                     <div
                         className="relative text-center order-2 xl:order-1 xl:text-left xl:w-11/12 xl:mt-64 mt-12 mr-16">
@@ -55,13 +76,88 @@ const HomePage: React.FC = () => {
                 </section>
 
                 {/* Third section - the last collections of money*/}
-                <section className='w-full h-56 mt-48'>
+                <section className="w-full h-auto flex flex-col items-center mt-64">
+                    <h2 className="text-h2 font-kharkiv mb-16">ОСТАННІ ЗБОРИ</h2>
+                    <div
+                        className="flex flex-col xl:flex-row justify-center items-center space-x-24 space-y-10 xl:space-y-0 xl:space-x-16">
+
+                        {/* Card 1 */}
+                        <DonationCard
+                            title="Збір на авто для 36 бригади"
+                            description="Lorem Ipsum - Це Текст-'Риба', Часто Використовуваний У Пресі Та Веб-Дизайні."
+                            goal={goal1}
+                            raised={raised1}
+                            percentage={percentage1}
+                        />
+
+                        {/* Card 2 */}
+                        <DonationCard
+                            title={`Збір для притулку "Ліда"`}
+                            description="Lorem Ipsum - Це Текст-'Риба', Часто Використовуваний У Пресі Та Веб-Дизайні."
+                            goal={goal2}
+                            raised={raised2}
+                            percentage={percentage2}
+                        />
+
+                        {/* Card 3 */}
+                        <DonationCard
+                            title="Збір на авто для 36 бригади"
+                            description="Lorem Ipsum - Це Текст-'Риба', Часто Використовуваний У Пресі Та Веб-Дизайні."
+                            goal={goal3}
+                            raised={raised3}
+                            percentage={percentage3}
+                        />
+                    </div>
+                    <div className="mt-16">
+                        <Button isFilled={true}>ПЕРЕГЛЯНУТИ ІНШІ</Button>
+                    </div>
+                </section>
+
+                {/* Fourth section - join us */}
+                <section className="w-full h-auto flex flex-col items-center mt-32">
+                    <h2 className="text-h2 font-kharkiv mb-24 text-center">ПРИЄДНУЙСЯ ДО НАС</h2>
+                    <div
+                        className="flex flex-col xl:flex-row justify-center items-center space-y-10 xl:space-y-0 xl:space-x-32">
+
+                        {/* Card 1 */}
+                        <div className="flex flex-col items-center">
+                            <PlaceholderSquare/>
+                            <h3 className="text-center text-h3 font-kharkiv mt-4 w-52">Ставай волонтером</h3>
+                            <p className="text-1 text-center font-montserratRegular mt-2 w-80">
+                                Lorem Ipsum - Це Текст-"Риба", Часто Використовуваний У Пресі Та Веб-Дизайні.
+                            </p>
+                        </div>
+
+                        {/* Card 2 */}
+                        <div className="flex flex-col items-center">
+                            <PlaceholderSquare/>
+                            <h3 className="text-center text-h3 font-kharkiv mt-4 w-52">Отримуй допомогу</h3>
+                            <p className="text-1 text-center font-montserratRegular mt-2 w-80">
+                                Lorem Ipsum - Це Текст-"Риба", Часто Використовуваний У Пресі Та Веб-Дизайні.
+                            </p>
+                        </div>
+
+                        {/* Card 3 */}
+                        <div className="flex flex-col items-center">
+                            <PlaceholderSquare/>
+                            <h3 className="text-center text-h3 font-kharkiv mt-4 w-48">Донать на ЗСУ</h3>
+                            <p className="text-1 text-center font-montserratRegular mt-2 w-80">
+                                Lorem Ipsum - Це Текст-"Риба", Часто Використовуваний У Пресі Та Веб-Дизайні.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Fifth section - how it works */}
+                <section className="w-full h-auto flex flex-col items-center mt-32">
+                    <h2 className="text-h2 font-kharkiv mb-24 text-center">ЯК ЦЕ ПРАЦЮЄ</h2>
 
                 </section>
+
             </div>
 
             {/* Footer */}
-            <Footer />
+            <Footer/>
         </div>
     );
 };
