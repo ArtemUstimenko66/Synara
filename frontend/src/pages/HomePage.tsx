@@ -3,6 +3,7 @@ import React from 'react';
 import { ReactComponent as Placeholder } from '../assets/images/Placeholder.svg';
 import { ReactComponent as PlaceholderHorizontal } from '../assets/images/PlaceholderHorizontal.svg';
 import { ReactComponent as PlaceholderSquare } from '../assets/images/PlaceholderSquare.svg';
+import { ReactComponent as Blue_cube } from '../assets/images/Blue_cube.svg';
 
 import Header from '../components/Header';
 import {Button} from "../components/Button";
@@ -149,9 +150,93 @@ const HomePage: React.FC = () => {
                 </section>
 
                 {/* Fifth section - how it works */}
-                <section className="w-full h-auto flex flex-col items-center mt-32">
+                <section className="w-full h-auto flex flex-col items-center mt-64">
                     <h2 className="text-h2 font-kharkiv mb-24 text-center">ЯК ЦЕ ПРАЦЮЄ</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+                        {/* Card 1 */}
+                        <div className="flex flex-col md:flex-row items-start ">
+                            <div className="flex flex-row items-start mt-24">
+                                <div
+                                    className="text-h_num text-center text-perfect-yellow font-bold font-montserratMedium mr-12">
+                                    1
+                                </div>
+                                <div className="ml-4">
+                                    <h3 className="text-left text-h3 font-kharkiv text-dark-blue">Зареєструйтесь:</h3>
+                                    <p className="text-left text-h4  font-montserratMedium mt-2 w-full">
+                                        Створіть обліковий запис та оберіть свою роль: "Потерпілий" або "Волонтер."
+                                    </p>
+                                </div>
+                            </div>
 
+                        </div>
+                        <Blue_cube className="ml-16"/>
+                        {/* Card 2 */}
+                        <Blue_cube className="mr-16"/>
+                        <div className="flex flex-col md:flex-row items-start ">
+                            <div className="flex flex-row items-start mt-24">
+                                <div
+                                    className="text-h_num text-center text-perfect-yellow font-bold font-montserratMedium mr-12">
+                                    2
+                                </div>
+                                <div className="ml-4">
+                                    <h3 className="text-left text-h3 font-kharkiv text-dark-blue">Допомога поруч:</h3>
+                                    <p className="text-left text-h4  font-montserratMedium mt-2 w-full">
+                                        Створіть оголошення або знайдіть допомогу."
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        {/* Card 3 */}
+                        <div className="flex flex-col md:flex-row items-start ">
+                            <div className="flex flex-row items-start mt-24">
+                                <div
+                                    className="text-h_num text-center text-perfect-yellow font-bold font-montserratMedium mr-12">
+                                    3
+                                </div>
+                                <div className="ml-4">
+                                    <h3 className="text-left text-h3 font-kharkiv text-dark-blue">Зв'яжіться та
+                                        допоможіть:</h3>
+                                    <p className="text-left text-h4  font-montserratMedium mt-2 w-full">
+                                        Спілкуйтеся з іншими користувачами через чат або відеозв'язок та організуйте
+                                        допомогу."
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <Blue_cube className="ml-16"/>
+                        {/* Card 4 */}
+                        <Blue_cube className="mr-16"/>
+                        <div className="flex flex-col md:flex-row items-start ">
+                            <div className="flex flex-row items-start mt-24">
+                                <div
+                                    className="text-h_num text-center text-perfect-yellow font-bold font-montserratMedium mr-12">
+                                    4
+                                </div>
+                                <div className="ml-4">
+                                    <h3 className="text-left text-h3 font-kharkiv text-dark-blue">Залиште відгук:</h3>
+                                    <p className="text-left text-h4  font-montserratMedium mt-2 w-full">
+                                        Поділіться своїм досвідом та допоможіть іншим користувачам зробити правильний
+                                        вибір."
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div className="mt-16">
+                        <Button isFilled={true}>ДЕТАЛЬНІШЕ</Button>
+                    </div>
+                </section>
+
+                <section className="w-full h-auto flex flex-col items-center mt-64">
+                    <h2 className="text-h2 font-kharkiv mb-24 text-center">ЧОМУ САМЕ МИ</h2>
+                    <div>
+
+                    </div>
                 </section>
 
             </div>

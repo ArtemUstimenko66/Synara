@@ -16,6 +16,8 @@ module.exports = {
         'dark-blue': '#1F74D5',
         'light-blue': '#36ACEC',
         'perfect-yellow': '#FAA206'
+
+
       },
       fontFamily: {
         kharkiv: ['Kharkiv Tone', 'sans-serif'],
@@ -23,6 +25,7 @@ module.exports = {
         montserratRegular: ['Montserrat-Regular', 'sans-serif'],
       },
       fontSize: {
+        h_num: '96pt',
         h1: '50pt',
         h2: '36pt',
         h3: '24pt',
