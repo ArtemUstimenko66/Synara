@@ -16,8 +16,6 @@ module.exports = {
         'dark-blue': '#1F74D5',
         'light-blue': '#36ACEC',
         'perfect-yellow': '#FAA206'
-
-
       },
       fontFamily: {
         kharkiv: ['Kharkiv Tone', 'sans-serif'],
