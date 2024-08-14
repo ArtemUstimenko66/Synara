@@ -4,6 +4,12 @@ import { ReactComponent as Placeholder } from '../assets/images/Placeholder.svg'
 import { ReactComponent as PlaceholderHorizontal } from '../assets/images/PlaceholderHorizontal.svg';
 import { ReactComponent as PlaceholderSquare } from '../assets/images/PlaceholderSquare.svg';
 import { ReactComponent as BlueCube } from '../assets/images/Blue_cube.svg';
+import { ReactComponent as VectorBlue } from '../assets/images/VectorBlue.svg';
+
+import { ReactComponent as FrameYouTube } from '../assets/images/FrameYouTube.svg';
+import { ReactComponent as FrameLogoApp } from '../assets/images/FrameLogoApp.svg';
+import { ReactComponent as GooglePlayImg } from '../assets/images/GooglePlayImg.svg';
+import { ReactComponent as AppStoreImg } from '../assets/images/AppStoreImg.svg';
 
 import { ReactComponent as VECTOR_1_1 } from '../assets/images/vector_1_1.svg';
 import { ReactComponent as VECTOR_1_2 } from '../assets/images/vector_1_2.svg';
@@ -242,10 +248,56 @@ const HomePage: React.FC = () => {
                 </section>
 
                 {/* Sixth section - why us */}
-                <section className="w-full h-auto flex flex-col items-center mt-44">
+                <section className="w-full h-auto flex flex-col items-center mt-32">
                     <h2 className="text-h2 font-kharkiv mb-24 text-center">ЧОМУ САМЕ МИ</h2>
-                    <div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+                        {/* Left Side */}
+                        <div className="flex flex-col">
+                            <div className="flex flex-row space-x-8">
+                                <div className="text-h1 font-bold font-montserratMedium">10k<span
+                                    className="text-dark-blue font-bold">+</span></div>
+                                <div className="text-h1 font-bold font-montserratMedium ">4k<span
+                                    className="text-dark-blue font-bold">+</span></div>
+                                <div className="text-h1 font-bold font-montserratMedium">20k<span
+                                    className="text-dark-blue font-bold">+</span></div>
+                            </div>
+                            <div
+                                className="flex flex-row font-bold font-montserratMedium space-x-8 text-body mt-2 text-gray-500">
+                                <div>Користувачів</div>
+                                <div>Волонтерів</div>
+                                <div>Раз допомогли</div>
+                            </div>
+                            <div className="mt-8 space-y-4 font-bold font-montserratRegular">
+                                <div className="flex items-center">
+                                    <VectorBlue/>
+                                    <p className="ml-4 font-montserratRegular">Lorem Ipsum Є Стандартною "Рибою" Для
+                                        Текстів На.</p>
+                                </div>
+                                <div className="flex items-center">
+                                    <VectorBlue/>
+                                    <p className="ml-4 font-montserratRegular">Lorem Ipsum Є Стандартною "Рибою" Для
+                                        Текстів Латиницею З Початку XVI Століття.</p>
+                                </div>
+                                <div className="flex items-center">
+                                    <VectorBlue/>
+                                    <p className="ml-4 font-montserratRegular">Lorem Ipsum Є Стандартною "Рибою".</p>
+                                </div>
+                                <div className="flex items-center">
+                                    <VectorBlue/>
+                                    <p className="ml-4 font-montserratRegular">Lorem Ipsum Є Стандартною "Рибою" Для
+                                        Текстів.</p>
+                                </div>
+                                <div className="flex items-center">
+                                    <VectorBlue/>
+                                    <div className="ml-4 font-montserratRegular">Lorem Ipsum Є Стандартною "Рибою" Для
+                                        Текстів Латиницею З Початку XVI Століття.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
+                        {/* Right Side */}
+                        <BlueCube className="ml-24"/>
                     </div>
                 </section>
 
@@ -344,10 +396,31 @@ const HomePage: React.FC = () => {
                 </section>
 
                 {/* Ninth section - download our mobile app */}
-                <section className="w-full h-auto flex flex-col items-center mt-44">
-                    <h2 className="text-h2 font-kharkiv mb-24 text-center">Завантажуйте безкоштовно додаток Synara</h2>
-                    <div>
+                <section className="w-full h-auto flex items-center justify-center mt-44 px-8 mb-14">
+                    {/* YouTube Frame */}
+                    <div className="flex-shrink-0">
+                        <FrameYouTube className="w-[600px] h-auto"/>
+                    </div>
 
+                    {/* App Details */}
+                    <div className="ml-16 flex flex-col justify-center">
+                        <h3 className="text-h3 font-kharkiv text-black w-30 whitespace-pre-line">{`Завантажуйте\n безкоштовно додаток Synara`}</h3>
+
+                        {/* App Icon and Text */}
+                        <div className="flex items-start mb-4 mt-10">
+                            <FrameLogoApp className="w-24 h-24 rounded-2xl mr-4 "/>
+                            <div className="w-60">
+                                <h3 className="font-montserratMedium text-blue-500 text-p font-bold mt-2">Synara</h3>
+                                <p className="font-montserratMedium text-sm leading-snug">Lorem Ipsum є стандартною
+                                    "рибою" для текстів латиницею.</p>
+                            </div>
+                        </div>
+
+                        {/* App Store / Google PlayMarket buttons */}
+                        <div className="flex items-center mt-8 space-x-4">
+                            <AppStoreImg className="w-[150px] h-auto mr-4"/>
+                            <GooglePlayImg className="w-[150px] h-auto "/>
+                        </div>
                     </div>
                 </section>
 
