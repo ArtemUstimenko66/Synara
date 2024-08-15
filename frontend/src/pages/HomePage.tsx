@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Placeholder from '../assets/images/Placeholder.svg?react';
 import PlaceholderHorizontal from '../assets/images/PlaceholderHorizontal.svg?react';
 import PlaceholderSquare from '../assets/images/PlaceholderSquare.svg?react';
@@ -18,13 +18,35 @@ import FrameLogoApp from '../assets/images/FrameLogoApp.svg?react';
 import GooglePlayImg from '../assets/images/GooglePlayImg.svg?react';
 import AppStoreImg from '../assets/images/AppStoreImg.svg?react';
 
+
 import Header from '../components/Header';
 import {Button} from "../components/Button";
 import Footer from "../components/Footer";
 import DonationCard from "../components/DonationCard";
 import DateRangeCalendarWithButton from "../components/Calendar";
+import Review from "../components/Review.tsx";
+
+
+const reviews = [
+    { comment: '1Lorem Ipsum is simply dummy text of the printing and typesetting industry.', name: 'John Doe', date: '01.01.2024' },
+    { comment: '2It is a long established fact that a reader will be distracted.', name: 'Jane Doe', date: '01.01.2024' },
+    { comment: '3The point of using Lorem Ipsum is that it has a more-or-less normal distribution.', name: 'Jim Doe', date: '01.01.2024' },
+    { comment: '4Many desktop publishing packages and web page editors now use Lorem Ipsum.', name: 'Jill Doe', date: '01.01.2024' },
+    { comment: '5Contrary to popular belief, Lorem Ipsum is not simply random text.', name: 'Jack Doe', date: '01.01.2024' },
+];
 
 const HomePage: React.FC = () => {
+
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentIndex((prevIndex) => (prevIndex + 1) % reviews.length);
+        }, 5000);
+
+        return () => clearInterval(interval);
+    }, []);
+
 
     const calculatePercentage = (goal: number, raised: number) => {
         return (raised / goal) * 100;
@@ -386,11 +408,40 @@ const HomePage: React.FC = () => {
                 </section>
 
                 {/* Eighth section - our feedbacks */}
-                <section className="w-full h-auto flex flex-col items-center mt-44">
+                <section className="w-full h-auto flex flex-col items-center mt-20">
                     <h2 className="text-h2 font-kharkiv mb-24 text-center">ВІДГУКИ ПРО НАС</h2>
-                    <div>
 
+                    <div className="relative w-full overflow-hidden">
+                        <div
+                            className="flex transition-transform duration-1000 ease-in-out"
+                            style={{
+                                transform: `translateX(-${currentIndex * 100}%)`,
+                            }}
+                        >
+                            {reviews.map((review, index) => (
+                                <div
+                                    key={index}
+                                    className="min-w-[100%] px-4"
+                                    style={{
+                                        opacity: index === currentIndex ? 1 : 0.5,
+                                    }}
+                                >
+                                    <Review comment={review.comment} name={review.name} date={review.date}/>
+                                </div>
+                            ))}
+                        </div>
+                        <div className="flex justify-center mt-4">
+                            {reviews.map((_, index) => (
+                                <div
+                                    key={index}
+                                    className={`h-2 mx-1 rounded-full ${
+                                        index === currentIndex ? 'bg-dark-blue w-8 transition-all duration-500 ease-in-out' : 'bg-light-blue w-4'
+                                    }`}
+                                ></div>
+                            ))}
+                        </div>
                     </div>
+
                 </section>
 
                 {/* Ninth section - download our mobile app */}
@@ -429,5 +480,6 @@ const HomePage: React.FC = () => {
         </div>
     );
 };
+
 
 export default HomePage;
