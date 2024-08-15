@@ -13,7 +13,6 @@ import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthGoogleService {
-  private readonly logger = new Logger(AuthGoogleService.name); // Инициализация логгера
 
   constructor(
     private jwtService: JwtService,
@@ -25,14 +24,12 @@ export class AuthGoogleService {
     try {
       return this.jwtService.sign(payload);
     } catch (error) {
-      this.logger.error('Error generating JWT', error.stack);
       throw new InternalServerErrorException('Failed to generate JWT');
     }
   }
 
   async signIn(user) {
     if (!user) {
-      this.logger.warn('Unauthenticated user attempt');
       throw new BadRequestException('Unauthenticated!');
     }
 
@@ -40,20 +37,11 @@ export class AuthGoogleService {
       const userExist = await this.findUserByEmail(user.email);
 
       if (!userExist) {
-        this.logger.log(
-          `User with email ${user.email} not found. Registering new user.`,
-        );
         return this.registerUser(user);
       }
 
-      this.logger.log(`User with email ${user.email} found. Signing in.`);
-      return this.generateJwt({
-        sub: userExist.id,
-        username: userExist.username,
-        email: userExist.email,
-      });
+      return this.getTokens(userExist);
     } catch (error) {
-      this.logger.error('Error during sign in', error.stack);
       throw new InternalServerErrorException('Failed to sign in user');
     }
   }
@@ -65,11 +53,7 @@ export class AuthGoogleService {
       newUser.username = user.email.split('@')[0]; //generateFromEmail(user.email, 5);
       await this.userRepository.save(newUser);
 
-      return this.generateJwt({
-        sub: newUser.id,
-        username: newUser.username,
-        email: newUser.email,
-      });
+      return this.getTokens(newUser);
     } catch (error) {
       throw new InternalServerErrorException('Failed to register user');
     }
@@ -84,24 +68,41 @@ export class AuthGoogleService {
     return hashedPassword;
   }
 
+  getTokens(user: User) {
+    const accessToken = this.generateJwt({
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      roles: [user.role],
+    });
+
+    const refreshToken = this.jwtService.sign(
+        {
+          id: user.id,
+          username: user.username,
+          email: user.email,
+          roles: [user.role],
+        },
+        {expiresIn: '7d', secret: 'JWT_SECRET_REFRESH'},
+    );
+
+    return {accessToken, refreshToken};
+  }
+
   generateRandomPassword(): string {
     return Math.random().toString(36).slice(-8);
   }
 
   async findUserByEmail(email: string) {
     try {
-      this.logger.log(`Looking for user with email: ${email}`);
       const user = await this.userRepository.findOneBy({ email });
 
       if (!user) {
-        this.logger.warn(`No user found with email: ${email}`);
         return null;
       }
 
-      this.logger.log(`User found with email: ${email}`);
       return user;
     } catch (error) {
-      this.logger.error(`Error finding user by email: ${email}`, error.stack);
       throw new InternalServerErrorException('Failed to find user by email');
     }
   }
