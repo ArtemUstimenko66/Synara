@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import { useLocation } from 'react-router-dom';
-import { ReactComponent as VectorHomePage } from '../assets/images/VectorHomePage.svg';
+import VectorHomePage from '../assets/images/VectorHomePage.svg?react';
 
 interface WrapperProps {
     children: ReactNode;

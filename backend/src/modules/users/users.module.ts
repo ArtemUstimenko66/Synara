@@ -1,13 +1,14 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { UsersService } from './services/users.service';
-import {TypeOrmModule} from "@nestjs/typeorm";
-import { User } from "./entities/users.entity";
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthModule } from '../auth/auth.module';
+import { UserController } from './controller/user.controller';
+import { User } from './entities/users.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User])],
+  imports: [TypeOrmModule.forFeature([User]), forwardRef(() => AuthModule)],
+  controllers: [UserController],
   providers: [UsersService],
-
-  //Добавил, так как была ошибка с User Repository
-  exports: [UsersService, TypeOrmModule],
+  exports: [UsersService, TypeOrmModule], //export typeOrm ???
 })
 export class UsersModule {}

@@ -1,24 +1,22 @@
 import React from 'react';
+import Placeholder from '../assets/images/Placeholder.svg?react';
+import PlaceholderHorizontal from '../assets/images/PlaceholderHorizontal.svg?react';
+import PlaceholderSquare from '../assets/images/PlaceholderSquare.svg?react';
+import BlueCube from '../assets/images/Blue_cube.svg?react';
+import VECTOR_1_1 from '../assets/images/vector_1_1.svg?react';
+import VECTOR_1_2 from '../assets/images/vector_1_2.svg?react';
+import VECTOR_2_1 from '../assets/images/vector_2_1.svg?react';
+import VECTOR_2_2 from '../assets/images/vector_2_2.svg?react';
+import VECTOR_3_1 from '../assets/images/vector_3_1.svg?react';
+import VECTOR_3_2 from '../assets/images/vector_3_2.svg?react';
+import VECTOR_4_1 from '../assets/images/vector_4_1.svg?react';
+import VECTOR_4_2 from '../assets/images/vector_4_2.svg?react';
 
-import { ReactComponent as Placeholder } from '../assets/images/Placeholder.svg';
-import { ReactComponent as PlaceholderHorizontal } from '../assets/images/PlaceholderHorizontal.svg';
-import { ReactComponent as PlaceholderSquare } from '../assets/images/PlaceholderSquare.svg';
-import { ReactComponent as BlueCube } from '../assets/images/Blue_cube.svg';
-import { ReactComponent as VectorBlue } from '../assets/images/VectorBlue.svg';
-
-import { ReactComponent as FrameYouTube } from '../assets/images/FrameYouTube.svg';
-import { ReactComponent as FrameLogoApp } from '../assets/images/FrameLogoApp.svg';
-import { ReactComponent as GooglePlayImg } from '../assets/images/GooglePlayImg.svg';
-import { ReactComponent as AppStoreImg } from '../assets/images/AppStoreImg.svg';
-
-import { ReactComponent as VECTOR_1_1 } from '../assets/images/vector_1_1.svg';
-import { ReactComponent as VECTOR_1_2 } from '../assets/images/vector_1_2.svg';
-import { ReactComponent as VECTOR_2_1 } from '../assets/images/vector_2_1.svg';
-import { ReactComponent as VECTOR_2_2 } from '../assets/images/vector_2_2.svg';
-import { ReactComponent as VECTOR_3_1 } from '../assets/images/vector_3_1.svg';
-import { ReactComponent as VECTOR_3_2 } from '../assets/images/vector_3_2.svg';
-import { ReactComponent as VECTOR_4_1 } from '../assets/images/vector_4_1.svg';
-import { ReactComponent as VECTOR_4_2 } from '../assets/images/vector_4_2.svg';
+import VectorBlue from '../assets/images/VectorBlue.svg?react';
+import FrameYouTube from '../assets/images/FrameYouTube.svg?react';
+import FrameLogoApp from '../assets/images/FrameLogoApp.svg?react';
+import GooglePlayImg from '../assets/images/GooglePlayImg.svg?react';
+import AppStoreImg from '../assets/images/AppStoreImg.svg?react';
 
 import Header from '../components/Header';
 import {Button} from "../components/Button";
