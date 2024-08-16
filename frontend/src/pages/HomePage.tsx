@@ -115,49 +115,53 @@ const HomePage: React.FC = () => {
             <div className="relative z-10 flex flex-col items-center justify-center pt-2">
 
                 {/* First section - who are we */}
-                <section className='w-full flex justify-center flex-col xl:flex-row'>
+                <section className='w-full flex justify-center flex-col xl:flex-row md:flex-row'>
                     <div
-                        className="relative text-center order-2 xl:order-1 xl:text-left xl:w-11/12 xl:mt-64 mt-12 mr-16">
-                        <h1 className='text-h1 font-kharkiv xl:whitespace-pre-line mt-6 mb-0 xl:tracking-tight'>{`LOREM IPSUM - \nЭТО ТЕКСТ-"РИБА"`}</h1>
-                        <p className='text-medium-gray font-montserratRegular mt-1 mb-4 whitespace-pre-line'>
+                        className="relative text-center order-2 xl:order-1 xl:text-left md:text-left xl:w-11/12 xl:mt-64 mt-12 mr-16 md:mt-32">
+                        <h1 className='xl:text-h1 font-kharkiv whitespace-pre-line mt-6 mb-0 tracking-tight
+                        md:text-h3 md:text-left
+                        '>{`LOREM IPSUM - \nЭТО ТЕКСТ-"РИБА"`}</h1>
+                        <p className='text-medium-gray font-montserratRegular mt-1 mb-4 whitespace-pre-line xl:text-pl
+                        md:text-ps md:text-left'>
                             {`Часто Використовуваний У Пресі Та Веб-Дизайні. \nЄ Стандартною "Рибою" Для Текстів.`}
                         </p>
                         <Button isFilled={true}>ПРИЄДНАТИСЯ</Button>
                     </div>
-                    <div className="hidden w-1/2 mt-20 xl:flex xl:order-2">
-                        <Placeholder/>
+                    <div className="hidden xl:w-1/2 xl:mt-20 xl:flex xl:order-2 md:flex md:order-2 md:mt-10 md:w-1/2">
+                        <Placeholder className="xl:w-11/12 xl:h-auto md:w-64 md:h-auto md:ml-36 md:mt-10"/>
                     </div>
                 </section>
 
                 {/* Second section - about us */}
-                <section className='w-full flex justify-center flex-col xl:flex-row mt-36'>
-                    <div className="hidden w-1/2 xl:flex xl:order-1 mt-16">
-                        <PlaceholderHorizontal/>
+                <section className='w-full flex justify-center flex-col xl:flex-row md:flex-row xl:mt-36 md:mt-4'>
+                    <div className="hidden xl:flex xl:order-1 md:flex md:order-1 xl:w-1/2 md:w-1/2 xl:mt-16 ">
+                        <PlaceholderHorizontal className="xl:w-full xl:h-auto md:w-72 md:h-auto md:mt-28 md:ml-14"/>
                     </div>
                     <div
-                        className="relative text-center order-2 xl:order-2 xl:text-left xl:w-11/12 mt-12 ml-16">
-                        <h1 className='text-h1 text-almost-white font-kharkiv xl:whitespace-pre-line mt-6 mb-0 xl:tracking-tight'>
+                        className="relative text-center order-2 xl:order-2 md:order-2 xl:text-left md:text-left xl:ml-24 xl:w-11/12 xl:mt-32 md:mt-24">
+                        <h1 className='xl:text-h1 text-almost-white font-kharkiv xl:whitespace-pre-line mt-6 mb-0 xl:tracking-tight
+            md:text-h3'>
                             {`ХТО МИ?`}
                         </h1>
-                        <p className='text-almost-white font-montserratRegular mt-1 mb-4 whitespace-pre-line'>
+                        <p className='text-almost-white font-montserratRegular xl:text-pl md:text-psm xl:mt-1 xl:mb-4 md:mb-4 whitespace-pre-line md:whitespace-pre-line'>
                             {`Lorem Ipsum - це текст-"риба", який часто використовують у пресі та веб-
-                            дизайні. Lorem Ipsum є стандартною "рибою" для текстів на латиниці з початку
-                            XVI століття. У той час якийсь безіменний друкар створив велику колекцію
-                            розмірів і форм шрифтів, використовуючи Lorem.
+            дизайні. Lorem Ipsum є стандартною "рибою" для текстів на латиниці з початку
+            XVI століття. У той час якийсь безіменний друкар створив велику колекцію
+            розмірів і форм шрифтів, використовуючи Lorem.
 
-                            змін п'ять століть, але й переступив в електронний дизайн. Його популяризації в 
-                            новий час послужили публікація аркушів Letraset зі зразками Lorem Ipsum у 60-х 
-                            роках і, в більш недавній час.`}
+            змін п'ять століть, але й переступив в електронний дизайн. Його популяризації в 
+            новий час послужили публікація аркушів Letraset зі зразками Lorem Ipsum у 60-х 
+            роках і, в більш недавній час.`}
                         </p>
                         <Button hasBorder={true}>ЧИТАТИ ДАЛІ</Button>
                     </div>
                 </section>
 
                 {/* Third section - the last collections of money*/}
-                <section className="w-full h-auto flex flex-col items-center mt-64">
-                    <h2 className="text-h2 font-kharkiv mb-16">ОСТАННІ ЗБОРИ</h2>
+                <section className="w-full h-auto flex flex-col items-center xl:mt-64 md:mt-44">
+                    <h2 className="text-h2 font-kharkiv mb-16 md:text-h3">ОСТАННІ ЗБОРИ</h2>
                     <div
-                        className="flex flex-col xl:flex-row justify-center items-center space-x-24 space-y-10 xl:space-y-0 xl:space-x-16">
+                        className="flex flex-col xl:flex-row md:flex-row justify-center items-center space-y-10 xl:space-y-0 md:space-y-0 xl:space-x-16 md:space-x-10">
 
                         {/* Card 1 */}
                         <DonationCard
@@ -192,34 +196,37 @@ const HomePage: React.FC = () => {
                 </section>
 
                 {/* Fourth section - join us */}
-                <section className="w-full h-auto flex flex-col items-center mt-32">
-                    <h2 className="text-h2 font-kharkiv mb-24 text-center">ПРИЄДНУЙСЯ ДО НАС</h2>
+                <section className="w-full h-auto flex flex-col items-center mt-32 px-4 md:px-8">
+                    <h2 className="text-h2 font-kharkiv xl:mb-24 md:text-h3 md:mb-16 text-center">ПРИЄДНУЙСЯ ДО НАС</h2>
                     <div
-                        className="flex flex-col xl:flex-row justify-center items-center space-y-10 xl:space-y-0 xl:space-x-32">
+                        className="flex flex-col xl:flex-row md:flex-row justify-center items-center space-y-10 xl:space-y-0 md:space-y-0 xl:space-x-32 md:space-x-16">
 
                         {/* Card 1 */}
-                        <div className="flex flex-col items-center">
-                            <PlaceholderSquare/>
-                            <h3 className="text-center text-h3 font-kharkiv mt-4 w-52">Ставай волонтером</h3>
-                            <p className="text-1 text-center font-montserratRegular mt-2 w-80">
+                        <div className="flex flex-col items-center max-w-xs md:max-w-sm xl:max-w-md">
+                            <PlaceholderSquare className="w-24 h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"/>
+                            <h3 className="text-center text-h3 font-kharkiv mt-4 w-full max-w-xs md:max-w-sm xl:max-w-md">Ставай
+                                волонтером</h3>
+                            <p className="text-1 text-center font-montserratRegular mt-2 w-full max-w-xs md:max-w-sm xl:max-w-md">
                                 Lorem Ipsum - Це Текст-"Риба", Часто Використовуваний У Пресі Та Веб-Дизайні.
                             </p>
                         </div>
 
                         {/* Card 2 */}
-                        <div className="flex flex-col items-center">
-                            <PlaceholderSquare/>
-                            <h3 className="text-center text-h3 font-kharkiv mt-4 w-52">Отримуй допомогу</h3>
-                            <p className="text-1 text-center font-montserratRegular mt-2 w-80">
+                        <div className="flex flex-col items-center max-w-xs md:max-w-sm xl:max-w-md">
+                            <PlaceholderSquare className="w-24 h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"/>
+                            <h3 className="text-center text-h3 font-kharkiv mt-4 w-full max-w-xs md:max-w-sm xl:max-w-md">Отримуй
+                                допомогу</h3>
+                            <p className="text-1 text-center font-montserratRegular mt-2 w-full max-w-xs md:max-w-sm xl:max-w-md">
                                 Lorem Ipsum - Це Текст-"Риба", Часто Використовуваний У Пресі Та Веб-Дизайні.
                             </p>
                         </div>
 
                         {/* Card 3 */}
-                        <div className="flex flex-col items-center">
-                            <PlaceholderSquare/>
-                            <h3 className="text-center text-h3 font-kharkiv mt-4 w-48">Донать на ЗСУ</h3>
-                            <p className="text-1 text-center font-montserratRegular mt-2 w-80">
+                        <div className="flex flex-col items-center max-w-xs md:max-w-sm xl:max-w-md">
+                            <PlaceholderSquare className="w-24 h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"/>
+                            <h3 className="text-center text-h3 font-kharkiv mt-4 w-full max-w-xs md:max-w-sm xl:max-w-md">Донать
+                                на ЗСУ</h3>
+                            <p className="text-1 text-center font-montserratRegular mt-2 w-full max-w-xs md:max-w-sm xl:max-w-md">
                                 Lorem Ipsum - Це Текст-"Риба", Часто Використовуваний У Пресі Та Веб-Дизайні.
                             </p>
                         </div>
@@ -450,7 +457,7 @@ const HomePage: React.FC = () => {
 
                 {/* Eighth section - our feedbacks */}
                 <section className="w-full h-auto flex flex-col items-center mt-16">
-                    <h2 className="text-h2 font-kharkiv mb-24 text-center">ВІДГУКИ ПРО НАС</h2>
+                    <h2 className="text-h2 font-kharkiv mb-24 md:text-h3 text-center">ВІДГУКИ ПРО НАС</h2>
 
                     <div className="relative w-full overflow-hidden">
                         <style>
@@ -486,30 +493,30 @@ const HomePage: React.FC = () => {
                 </section>
 
                 {/* Ninth section - download our mobile app */}
-                <section className="w-full h-auto flex items-center justify-center mt-44 px-8 mb-14">
+                <section className="w-full h-auto flex items-center justify-center xl:mt-44 md:mt-24 px-8 mb-14">
                     {/* YouTube Frame */}
                     <div className="flex-shrink-0">
-                        <FrameYouTube className="w-[600px] h-auto"/>
+                        <FrameYouTube className="xl:w-[600px] xl:h-auto md:w-[450px] md:h-auto"/>
                     </div>
 
                     {/* App Details */}
                     <div className="ml-16 flex flex-col justify-center">
-                        <h3 className="text-h3 font-kharkiv text-black w-30 whitespace-pre-line">{`Завантажуйте\n безкоштовно додаток Synara`}</h3>
+                        <h3 className="xl:text-h5 md:text-h5 font-kharkiv text-black w-30 whitespace-pre-line">{`Завантажуйте\n безкоштовно додаток Synara`}</h3>
 
                         {/* App Icon and Text */}
-                        <div className="flex items-start mb-4 mt-10">
-                            <FrameLogoApp className="w-24 h-24 rounded-2xl mr-4 "/>
+                        <div className="flex items-start xl:mb-4 md:mb-1 xl:mt-10 md:mt-4">
+                            <FrameLogoApp className="xl:w-24 xl:h-24 md:w-14 md:h-14 rounded-2xl mr-4 xl:mt-0 md:mt-2 "/>
                             <div className="w-60">
-                                <h3 className="font-montserratMedium text-blue-500 text-p font-bold mt-2">Synara</h3>
-                                <p className="font-montserratMedium text-sm leading-snug">Lorem Ipsum є стандартною
+                                <h3 className="font-montserratMedium text-blue-500 text-p font-bold xl:mt-2 md:mt-0">Synara</h3>
+                                <p className="font-montserratMedium xl:text-sm md:text-ps leading-snug">Lorem Ipsum є стандартною
                                     "рибою" для текстів латиницею.</p>
                             </div>
                         </div>
 
                         {/* App Store / Google PlayMarket buttons */}
                         <div className="flex items-center mt-8 space-x-4">
-                            <AppStoreImg className="w-[150px] h-auto mr-4"/>
-                            <GooglePlayImg className="w-[150px] h-auto "/>
+                            <AppStoreImg className="xl:w-[150px] md:w-[110px] h-auto mr-4"/>
+                            <GooglePlayImg className="xl:w-[150px] md:w-[110px] h-auto "/>
                         </div>
                     </div>
                 </section>

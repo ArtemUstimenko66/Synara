@@ -28,13 +28,13 @@ const Header: React.FC = () => {
             ${isVisible ? 'header-slide-in' : 'header-slide-out'} 
             ${isAtTop ? 'transition-background-color' : 'bg-white shadow-sm'}`}
         >
-            <div className="flex justify-between ml-20 mr-36 items-center px-8 py-8">
+            <div className="flex justify-between items-center px-8 py-8 xl:ml-20 md:ml-10 xl:mr-36 md:mr-4">
 
                 {/* Section with logo */}
-                <div className="text-xl font-bold mr-44">LOGO</div>
+                <div className="text-xl font-bold xl:mr-44 md:mr-14">LOGO</div>
 
                 {/* Header nav items */}
-                <nav className="hidden xl:flex space-x-20 items-center">
+                <nav className="flex-grow hidden md:flex xl:space-x-20 md:space-x-10 xl:mr-10 md:mr-5 items-center">
                     <NavItem text="ГОЛОВНА" to="/home"/>
                     <NavItem text="ПРО НАС" to="/about"/>
                     <NavItem text="ЗБОРИ" to="/collections"/>
@@ -43,7 +43,7 @@ const Header: React.FC = () => {
                 </nav>
 
                 {/* Authentication buttons */}
-                <div className="hidden ml-auto xl:flex space-x-5">
+                <div className="hidden md:flex space-x-5">
                     <Link to="/login">
                         <Button>УВІЙТИ</Button>
                     </Link>

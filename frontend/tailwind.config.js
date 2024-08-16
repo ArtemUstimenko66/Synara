@@ -8,7 +8,7 @@ module.exports = {
     screens: {
       'sm': '640px',  // mobile
       'md': '768px',  // tablet
-      'xl': '1024px', // desktop
+      'xl': '1025px', // desktop
     },
     extend: {
       colors: {
@@ -28,9 +28,11 @@ module.exports = {
         h1: '50pt',
         h2: '36pt',
         h3: '24pt',
-        h4: '20pt',
+        h4: '22pt',
         h5: '18pt',
-        body: '16pt',
+        pl: '12pt',
+        ps: '10pt',
+        psm: '8pt',
       },
     },
   },

@@ -13,7 +13,7 @@ const NavItem: React.FC<NavItemProps> = ({ text = "", to }) => {
     return (
         <Link to={to} className='relative flex items-center'>
             <span
-                className={`text-medium-gray Montserrat cursor-pointer hover:text-almost-black}`}
+                className={`text-medium-gray xl:text-pl md:text-ps Montserrat cursor-pointer hover:text-almost-black}`}
             >
                 {text}
             </span>

@@ -12,7 +12,7 @@ const Footer: React.FC = () => {
             <div className="w-full flex flex-col md:flex-row justify-between items-start text-almost-black">
 
                 {/* Left section with logo */}
-                <div className="text-lg font-bold mt-2">
+                <div className="text-lg font-bold mt-2 xl: xl:mr-0 md:mr-16">
                     LOGO
                 </div>
                 {/* Navigation section */}
@@ -28,7 +28,7 @@ const Footer: React.FC = () => {
                 </div>
 
                 {/* Info section */}
-                <div className="mt-4 ml-24 md:mt-0">
+                <div className="mt-4 ml-24 xl:mr-0 md:mt-0 md:mr-22">
                     <h3 className="font-bold mb-2">ІНФОРМАЦІЯ</h3>
                     <ul>
                         <li><a href="#" className="hover:underline">Умови використання</a></li>
@@ -38,8 +38,8 @@ const Footer: React.FC = () => {
                 </div>
 
                 {/* Contact section */}
-                <div className="mt-4 md:mt-0 text-left mr-24">
-                    <h3 className="font-bold mb-2">ЗВ'ЯЗОК</h3>
+                <div className="mt-4 md:mt-0 text-left xl:mr-24 md:mr-0 md:ml-12 xl:ml-0">
+                    <h3 className="font-bold mb-2 ">ЗВ'ЯЗОК</h3>
                     <p>0-800-501-701</p>
                     <p>Всеукраїнський телефон довіри</p>
                     {/* Social icons */}
