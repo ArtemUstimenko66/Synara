@@ -9,7 +9,6 @@ interface NavItemProps {
 const NavItem: React.FC<NavItemProps> = ({ text = "", to }) => {
     const location = useLocation();
     const isActive = location.pathname === to;
-    console.log(`Current path: ${location.pathname}, Is active: ${isActive}`);
 
     return (
         <Link to={to} className='relative flex items-center'>

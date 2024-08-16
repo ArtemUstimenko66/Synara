@@ -28,24 +28,65 @@ import Review from "../components/Review.tsx";
 
 
 const reviews = [
-    { comment: '1Lorem Ipsum is simply dummy text of the printing and typesetting industry.', name: 'John Doe', date: '01.01.2024' },
-    { comment: '2It is a long established fact that a reader will be distracted.', name: 'Jane Doe', date: '01.01.2024' },
-    { comment: '3The point of using Lorem Ipsum is that it has a more-or-less normal distribution.', name: 'Jim Doe', date: '01.01.2024' },
-    { comment: '4Many desktop publishing packages and web page editors now use Lorem Ipsum.', name: 'Jill Doe', date: '01.01.2024' },
-    { comment: '5Contrary to popular belief, Lorem Ipsum is not simply random text.', name: 'Jack Doe', date: '01.01.2024' },
+    {
+        comment: 'I had an incredible experience with this product! It exceeded my expectations in every way. The quality is top-notch, and it has become an essential part of my daily routine. Highly recommended!',
+        name: 'Emily Johnson',
+        date: '02.03.2024'
+    },
+    {
+        comment: 'Fantastic service and a product that truly delivers on its promises. I was a bit skeptical at first, but after using it for a few weeks, I am thoroughly impressed. Would definitely buy again!',
+        name: 'Michael Brown',
+        date: '15.02.2024'
+    },
+    {
+        comment: 'This is easily the best purchase I have made this year. The attention to detail is evident, and the customer support was excellent. I couldn’t be happier with my decision!',
+        name: 'Sophia Williams',
+        date: '28.01.2024'
+    },
+    {
+        comment: 'I am absolutely thrilled with this product! It has made a huge difference in my life, and I can’t imagine going back to how things were before. Five stars all the way!',
+        name: 'William Davis',
+        date: '05.02.2024'
+    },
+    {
+        comment: 'Top-quality product with exceptional value for money. It arrived quickly, and the packaging was impeccable. I’ve already recommended it to all my friends and family!',
+        name: 'Olivia Garcia',
+        date: '10.02.2024'
+    },
 ];
+
+
 
 const HomePage: React.FC = () => {
 
-    const [currentIndex, setCurrentIndex] = useState(0);
+    const [isPaused, setIsPaused] = useState<boolean>(false);
+    const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
     useEffect(() => {
         const interval = setInterval(() => {
-            setCurrentIndex((prevIndex) => (prevIndex + 1) % reviews.length);
+            if (!isPaused) {
+                setHoveredIndex(prevIndex => {
+                    if (prevIndex !== null) {
+                        return (prevIndex + 1) % (reviews.length * 2);
+                    }
+                    return 0;
+                });
+            }
         }, 5000);
 
         return () => clearInterval(interval);
-    }, []);
+    }, [isPaused]);
+
+    const handleMouseEnter = (index: number) => {
+        setIsPaused(true);
+        setHoveredIndex(index);
+    };
+
+    const handleMouseLeave = () => {
+        setIsPaused(false);
+    };
+
+
 
 
     const calculatePercentage = (goal: number, raised: number) => {
@@ -408,40 +449,40 @@ const HomePage: React.FC = () => {
                 </section>
 
                 {/* Eighth section - our feedbacks */}
-                <section className="w-full h-auto flex flex-col items-center mt-20">
+                <section className="w-full h-auto flex flex-col items-center mt-16">
                     <h2 className="text-h2 font-kharkiv mb-24 text-center">ВІДГУКИ ПРО НАС</h2>
 
                     <div className="relative w-full overflow-hidden">
-                        <div
-                            className="flex transition-transform duration-1000 ease-in-out"
-                            style={{
-                                transform: `translateX(-${currentIndex * 100}%)`,
-                            }}
-                        >
-                            {reviews.map((review, index) => (
-                                <div
-                                    key={index}
-                                    className="min-w-[100%] px-4"
-                                    style={{
-                                        opacity: index === currentIndex ? 1 : 0.5,
-                                    }}
-                                >
-                                    <Review comment={review.comment} name={review.name} date={review.date}/>
-                                </div>
-                            ))}
-                        </div>
-                        <div className="flex justify-center mt-4">
-                            {reviews.map((_, index) => (
-                                <div
-                                    key={index}
-                                    className={`h-2 mx-1 rounded-full ${
-                                        index === currentIndex ? 'bg-dark-blue w-8 transition-all duration-500 ease-in-out' : 'bg-light-blue w-4'
-                                    }`}
-                                ></div>
-                            ))}
+                        <style>
+                            {`
+                                .scrolling-container {
+                                    display: flex;
+                                    animation: scrollLeft 30s linear infinite;
+                                    animation-play-state: ${isPaused ? 'paused' : 'running'};
+                                }
+                                @keyframes scrollLeft {
+                                    0% { transform: translateX(0); }
+                                    100% { transform: translateX(-50%); } 
+                                }
+                            `}
+                        </style>
+                        <div className="scrolling-wrapper">
+                            <div className="scrolling-container py-12">
+                                {reviews.concat(reviews).map((review, index) => (
+                                    <div
+                                        key={index}
+                                        className={`review-item ${hoveredIndex === index ? 'hovered' : ''}`}
+                                        onMouseEnter={() => handleMouseEnter(index)}
+                                        onMouseLeave={handleMouseLeave}
+                                    >
+                                        <div className="mx-auto max-w-md">
+                                            <Review comment={review.comment} name={review.name} date={review.date}/>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
-
                 </section>
 
                 {/* Ninth section - download our mobile app */}
