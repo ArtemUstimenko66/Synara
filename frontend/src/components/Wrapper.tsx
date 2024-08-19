@@ -11,9 +11,9 @@ const Wrapper: React.FC<WrapperProps> = ({ children }) => {
     const isHomePage = location.pathname === '/home';
 
     return (
-        <div className="relative min-h-screen flex flex-col">
+        <div className="relative min-h-screen min-w-full flex flex-col">
             {isHomePage && (
-                <div className="absolute top-0 left-0 w-full h-full z-0 overflow-hidden">
+                <div className="absolute top-0 left-0 right-0 mr-0 w-full h-full z-0 overflow-hidden">
                     <VectorHomePage className="w-full h-auto object-cover"/>
                 </div>
             )}

@@ -21,7 +21,6 @@ const App: React.FC = () => {
                     <Route path="/verify-phone" element={<VerificationPage />} />
                     <Route path="*" element={<NotFoundPage />} />
                 </Routes>
-
             </Wrapper>
         </Router>
     );
