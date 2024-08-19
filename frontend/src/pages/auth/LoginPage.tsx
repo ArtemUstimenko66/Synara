@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { login } from "../../services/authService";
+import { login } from "../../../../../frontend/src/services/authService.tsx";
 import { useNavigate } from "react-router-dom";
-import GoogleLoginButton from "../../components/GoogleLoginButton";
+import GoogleLoginButton from "../../../../../frontend/src/components/GoogleLoginButton.tsx";
 
 const LoginPage: React.FC = () => {
     const [email, setEmail] = useState('');

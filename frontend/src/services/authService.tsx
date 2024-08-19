@@ -1,4 +1,5 @@
 import api from "./api";
+import { RegisterPayload } from "../interfaces/AuthInterface.tsx";
 
 export const login = async (email: string, password: string)  => {
     try {
@@ -10,10 +11,16 @@ export const login = async (email: string, password: string)  => {
     }
 }
 
-export const register = async (username: string, email: string, password: string)  => {
+export const register = async (payload: RegisterPayload)  => {
     try {
-        const response = await api.post('/auth/register', { username, email, password });
-        return response.data;
+        const response = await api.post('/auth/register', payload);
+        const data = response.data;
+
+        const phoneNumber = data.phoneNumber;
+        if(phoneNumber) {
+            localStorage.setItem('phoneNumber', phoneNumber);
+        }
+        return data;
     } catch (error) {
         console.log('Register error', error);
         throw error;
