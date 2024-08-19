@@ -86,9 +86,6 @@ const HomePage: React.FC = () => {
         setIsPaused(false);
     };
 
-
-
-
     const calculatePercentage = (goal: number, raised: number) => {
         return (raised / goal) * 100;
     };

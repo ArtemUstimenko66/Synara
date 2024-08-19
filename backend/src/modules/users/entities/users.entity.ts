@@ -30,6 +30,14 @@ export class User {
   email: string;
 
   @ApiProperty({
+    example: '+38066996699',
+    description: 'Phone number of the user',
+    type: String,
+  })
+  @Column({ nullable: true })
+  phoneNumber: string;
+
+  @ApiProperty({
     example: 'password123',
     description: 'Password for the user account',
     type: String,
@@ -44,4 +52,20 @@ export class User {
   })
   @Column({ type: 'enum', enum: Role, default: Role.Guest })
   role: Role;
+
+  @ApiProperty({
+    example: 'true',
+    description: 'Confirmation of user phone number',
+    type: Boolean,
+  })
+  @Column({ nullable: true })
+  isPhoneVerified: boolean;
+
+  @ApiProperty({
+    example: 'true',
+    description: 'Confirmation of user email',
+    type: Boolean,
+  })
+  @Column({ nullable: true })
+  isConfirmedEmail: boolean;
 }

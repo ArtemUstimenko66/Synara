@@ -14,12 +14,13 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
-    const { username, password, email, role } = createUserDto;
+    const { username, password, email, phoneNumber, role } = createUserDto;
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = this.userRepository.create({
       username,
       password: hashedPassword,
       email,
+      phoneNumber,
       role: role || Role.Guest,
     });
     return this.userRepository.save(user);
@@ -29,9 +30,24 @@ export class UsersService {
     return this.userRepository.findOne({ where: { email } });
   }
 
-  async findById(id: number): Promise<User | undefined> {
-    return this.userRepository.findOne({
-      where: { id },
-    });
+  async findUserByPhoneNumber(phoneNumber: string): Promise<User | undefined> {
+    return this.userRepository.findOne({ where: { phoneNumber } });
+  }
+  //
+  // async findById(id: number): Promise<User | undefined> {
+  //   return this.userRepository.findOne({
+  //     where: { id },
+  //   });
+  // }
+
+  // сделать что бы отслеживать статус верификации телефона
+  async updatePhoneVerificationStatus(
+    phoneNumber: string,
+    isVerified: boolean,
+  ): Promise<void> {
+    await this.userRepository.update(
+      { phoneNumber },
+      { isPhoneVerified: isVerified },
+    );
   }
 }

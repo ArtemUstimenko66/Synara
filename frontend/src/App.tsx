@@ -7,7 +7,7 @@ import RegisterPage from "./pages/auth/RegisterPage.tsx";
 import HomePage from "./pages/HomePage.tsx";
 import NotFoundPage from "./pages/NotFoundPage.tsx";
 import Wrapper from "./components/Wrapper.tsx";
-
+import VerificationPage from "./pages/auth/VerificationPage.tsx";
 const App: React.FC = () => {
     return (
         <Router>
@@ -18,6 +18,7 @@ const App: React.FC = () => {
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/registration" element={<RegisterPage />} />
                     <Route path="/profile" element={<Profile />} />
+                    <Route path="/verify-phone" element={<VerificationPage />} />
                     <Route path="*" element={<NotFoundPage />} />
                 </Routes>
 

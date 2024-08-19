@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Get,
@@ -48,6 +49,15 @@ export class AuthController {
       .send({ message: 'Logged in successfully', access_token, refresh_token });
   }
 
+  @ApiOperation({ summary: 'Register' })
+  @ApiResponse({ status: 201, type: User })
+  @Post('/register')
+  async register(@Body() createUserDto: CreateUserDto) {
+    return await this.authService.register(createUserDto);
+  }
+
+  @ApiOperation({ summary: 'Refresh token' })
+  @ApiResponse({ status: 200, type: 'Bearer Token' })
   @Post('/refresh')
   async refreshToken(@Req() req: Request, @Res() res: Response) {
     const refreshToken = req.cookies['refreshToken'];
@@ -74,13 +84,6 @@ export class AuthController {
         message: 'Invalid refresh token',
       });
     }
-  }
-
-  @ApiOperation({ summary: 'Register' })
-  @ApiResponse({ status: 201, type: User })
-  @Post('/register')
-  async register(@Body() createUserDto: CreateUserDto) {
-    return this.authService.register(createUserDto);
   }
 
   @ApiOperation({ summary: 'Get profile' })

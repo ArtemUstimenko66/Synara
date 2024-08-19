@@ -1,54 +1,83 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { register } from "../../services/authService.tsx";
+import { sendVerificationCode } from "../../services/smsService.tsx";
+import { Role } from '../../interfaces/AuthInterface.tsx';
+import { useNavigate } from "react-router-dom";
+
 
 const Register: React.FC = () => {
+    const [username, setUsername] = useState<string>('');
+    const [email, setEmail] = useState<string>('');
+    const [phoneNumber, setPhoneNumber] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const [role, setRole] = useState<Role>(Role.Guest);
+    const [isVerificationSent, setIsVerificationSent] = useState<boolean>(false);
+    const navigate = useNavigate();
+
+    const handleRegister = async () => {
+        try {
+            await register({ username, email, phoneNumber, password, role });
+            await sendVerificationCode(phoneNumber);
+            setIsVerificationSent(true);
+            navigate('/verify-phone');
+            console.log('Registration successful! Verification code sent to your phone.');
+        } catch (error) {
+            console.error('Registration error:', error);
+        }
+    };
+
     return (
-        <div className="flex justify-center items-center h-screen">
-            <div className="bg-white p-8 rounded-lg shadow-lg">
-                <h1 className="text-2xl font-bold mb-6">Register</h1>
-                <form>
-                    <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
-                            Username
-                        </label>
-                        <input
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            id="username"
-                            type="text"
-                            placeholder="Username"
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
-                            Email
-                        </label>
-                        <input
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            id="email"
-                            type="email"
-                            placeholder="Email"
-                        />
-                    </div>
-                    <div className="mb-6">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
-                            Password
-                        </label>
-                        <input
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                            id="password"
-                            type="password"
-                            placeholder="******************"
-                        />
-                    </div>
-                    <div className="flex items-center justify-between">
-                        <button
-                            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                            type="button"
-                        >
-                            Sign Up
-                        </button>
-                    </div>
-                </form>
-            </div>
+        <div className="max-w-md mx-auto mt-10 p-8 bg-white shadow-md rounded-lg">
+            <h2 className="text-2xl font-bold text-center mb-6">Register</h2>
+            <input
+                type="text"
+                placeholder="Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <input
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <input
+                type="text"
+                placeholder="Phone Number"
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+                className="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <select
+                value={role}
+                onChange={(e) => setRole(e.target.value as Role)}
+                className="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+                <option value={Role.Guest}>Guest</option>
+                <option value={Role.Victim}>Victim</option>
+                <option value={Role.Volunteer}>Volunteer</option>
+            </select>
+            <button
+                onClick={handleRegister}
+                className="w-full px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+                Register
+            </button>
+
+            {isVerificationSent && (
+                <div className="mt-4 text-green-500">
+                    <p>Please check your phone for the verification code.</p>
+                </div>
+            )}
         </div>
     );
 };

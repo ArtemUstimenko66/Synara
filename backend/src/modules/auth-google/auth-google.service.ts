@@ -2,7 +2,6 @@ import {
   BadRequestException,
   Injectable,
   InternalServerErrorException,
-  Logger,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -13,7 +12,6 @@ import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthGoogleService {
-
   constructor(
     private jwtService: JwtService,
     private configService: ConfigService,
@@ -77,16 +75,16 @@ export class AuthGoogleService {
     });
 
     const refreshToken = this.jwtService.sign(
-        {
-          id: user.id,
-          username: user.username,
-          email: user.email,
-          roles: [user.role],
-        },
-        {expiresIn: '7d', secret: 'JWT_SECRET_REFRESH'},
+      {
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        roles: [user.role],
+      },
+      { expiresIn: '7d', secret: 'JWT_SECRET_REFRESH' },
     );
 
-    return {accessToken, refreshToken};
+    return { accessToken, refreshToken };
   }
 
   generateRandomPassword(): string {

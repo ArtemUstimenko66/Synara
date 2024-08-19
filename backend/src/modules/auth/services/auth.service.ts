@@ -3,6 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../../users/services/users.service';
 import { CreateUserDto } from '../../users/dtos/create-user.dto';
 import { LoginUserDto } from '../../users/dtos/login-user.dto';
+import { User } from '../../users/entities/users.entity';
 import * as bcrypt from 'bcryptjs';
 
 @Injectable()
@@ -12,10 +13,38 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
+  async generateTokens(user: User) {
+    const payload = {
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      phone: user.phoneNumber,
+      roles: [user.role],
+    };
+
+    const access_token = this.jwtService.sign(payload);
+
+    const refresh_token = this.jwtService.sign(payload, {
+      expiresIn: '7d',
+      secret: 'JWT_SECRET_REFRESH',
+    });
+
+    return { access_token, refresh_token };
+  }
+
   async register(createUserDto: CreateUserDto) {
-    const user = await this.userService.create(createUserDto);
-    const { password, ...result } = user;
-    return result;
+    const { username, email, password, phoneNumber, role } = createUserDto;
+
+    const user = await this.userService.create({
+      username,
+      email,
+      password,
+      phoneNumber,
+      role,
+    });
+
+    const { password: _, ...result } = user;
+    return { ...result, message: 'User registered successfully.' };
   }
 
   async login(loginUserDto: LoginUserDto) {
@@ -27,24 +56,7 @@ export class AuthService {
       throw new UnauthorizedException();
     }
 
-    const access_token = this.jwtService.sign({
-      id: user.id,
-      username: user.username,
-      email: user.email,
-      roles: [user.role],
-    });
-    const refresh_token = this.jwtService.sign(
-      {
-        id: user.id,
-        username: user.username,
-        email: user.email,
-        roles: [user.role],
-      },
-      { expiresIn: '7d', secret: 'JWT_SECRET_REFRESH' },
-    );
-
-    console.log('Login successful, access_token:', access_token);
-    return { access_token, refresh_token };
+    return this.generateTokens(user);
   }
 
   async refreshToken(refreshToken: string) {
@@ -56,12 +68,8 @@ export class AuthService {
       if (!user) {
         throw new UnauthorizedException('Invalid refresh token');
       }
-      const access_token = this.jwtService.sign({
-        id: user.id,
-        username: user.username,
-        email: user.email,
-        roles: [user.role],
-      });
+
+      const { access_token } = await this.generateTokens(user);
 
       console.log(
         'Token refreshed successfully, new access_token:',

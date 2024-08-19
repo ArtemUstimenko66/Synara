@@ -7,6 +7,8 @@ import { JwtModule } from '@nestjs/jwt';
 import { LocalStrategy } from './strategy/local.strategy';
 import { JwtStrategy } from './strategy/jwt.strategy';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { CacheModule } from '../../cache.module';
+import { SmsModule } from '../sms/sms.module';
 
 @Module({
   imports: [
@@ -20,6 +22,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         signOptions: { expiresIn: '15s' },
       }),
     }),
+    CacheModule,
+    forwardRef(() => SmsModule),
   ],
   controllers: [AuthController],
   providers: [AuthService, LocalStrategy, JwtStrategy],
