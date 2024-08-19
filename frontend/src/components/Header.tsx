@@ -2,11 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { Button } from "./Button";
 import NavItem from "./NavItem";
 import { Link } from "react-router-dom";
+import {MobileMenu} from "./MobileMenu.tsx";
+import MenuCloseIcon from '../assets/images/icon-close-menu.svg?react';
+import MenuIcon from '../assets/images/icon-menu.svg?react';
+
 
 const Header: React.FC = () => {
     const [isVisible, setIsVisible] = useState(true);
     const [isAtTop, setIsAtTop] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     const handleScroll = () => {
         const currentScrollY = window.scrollY;
@@ -34,7 +39,7 @@ const Header: React.FC = () => {
                 <div className="text-xl font-bold xl:mr-44 md:mr-14">LOGO</div>
 
                 {/* Header nav items */}
-                <nav className="flex-grow hidden md:flex xl:space-x-20 md:space-x-10 xl:mr-10 md:mr-5 items-center">
+                <nav className="flex-grow hidden xl:flex xl:space-x-20 md:space-x-10 xl:mr-10 md:mr-5 items-center">
                     <NavItem text="ГОЛОВНА" to="/home"/>
                     <NavItem text="ПРО НАС" to="/about"/>
                     <NavItem text="ЗБОРИ" to="/collections"/>
@@ -43,7 +48,7 @@ const Header: React.FC = () => {
                 </nav>
 
                 {/* Authentication buttons */}
-                <div className="hidden md:flex space-x-5">
+                <div className="hidden xl:flex space-x-5">
                     <Link to="/login">
                         <Button>УВІЙТИ</Button>
                     </Link>
@@ -51,6 +56,14 @@ const Header: React.FC = () => {
                         <Button isFilled={true}>РЕЄСТРАЦІЯ</Button>
                     </Link>
                 </div>
+
+                {/* Mobile menu */}
+                <div className="flex xl:hidden ml-auto cursor-pointer z-30"
+                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                >
+                    {isMobileMenuOpen ? <MenuCloseIcon/> : <MenuIcon/>}
+                </div>
+                <MobileMenu isOpen={isMobileMenuOpen}/>
             </div>
         </header>
     );
