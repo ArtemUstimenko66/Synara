@@ -13,8 +13,8 @@ const Wrapper: React.FC<WrapperProps> = ({ children }) => {
     return (
         <div className="relative min-h-screen min-w-full flex flex-col">
             {isHomePage && (
-                <div className="absolute top-0 left-0 right-0 mr-0 w-full h-full z-0 overflow-hidden">
-                    <VectorHomePage className="w-full h-auto object-cover"/>
+                <div className="absolute top-0 left-0 right-0 w-full h-full z-0 overflow-hidden">
+                    <VectorHomePage className="w-full h-auto"/>
                 </div>
             )}
             <div className="flex-1 md:mx-12 xl:mx-28 py-8 relative z-10">

@@ -50,14 +50,14 @@ export default function DateRangePickerWithButton() {
 
                     {/* Button group in a row */}
                     <div className="flex justify-around mb-2">
-                        <button className="bg-blue-500 text-white py-1 px-4 rounded-full">День</button>
-                        <button className="bg-blue-500 text-white py-1 px-4 rounded-full">Неділя</button>
-                        <button className="bg-blue-500 text-white py-1 px-4 rounded-full">Місяць</button>
-                        <button className="bg-blue-500 text-white py-1 px-4 rounded-full">Рік</button>
+                        <button className="bg-another-blue text-white py-1 px-4 rounded-full">День</button>
+                        <button className="bg-another-blue text-white py-1 px-4 rounded-full">Неділя</button>
+                        <button className="bg-another-blue text-white py-1 px-4 rounded-full">Місяць</button>
+                        <button className="bg-another-blue text-white py-1 px-4 rounded-full">Рік</button>
                     </div>
 
                     {/* Line below the buttons */}
-                    <div className="border-t-2 border-blue-700"></div>
+                    <div className="border-t-2 border-another-blue my-2"></div>
 
                     {/* Calendar with Ukrainian localization and custom styles */}
                     <DayPicker
@@ -67,15 +67,16 @@ export default function DateRangePickerWithButton() {
                         locale={uk} // Set the Ukrainian locale
                         styles={{
                             day: { margin: '5px' },
-                            month: { margin: '10px' },
+                            month: { margin: '0px' },
                             caption: {
                                 marginBottom: '10px',
                                 background: '#1F74D5',
                                 textTransform: 'capitalize',
                                 fontWeight: 'normal', // Ensure normal font weight for month name
+                                textAlign: 'left', // Align month and year to the left
                             },
                             weekdays: {
-                                color: '#1F74D5',
+                                color: '#0000fe',
                                 fontWeight: 'bold', // Bold font for weekdays
                                 textTransform: 'capitalize', // Capitalize weekday names
                             },
@@ -91,6 +92,7 @@ export default function DateRangePickerWithButton() {
                             },
                         }}
                     />
+
                 </div>
             )}
         </div>

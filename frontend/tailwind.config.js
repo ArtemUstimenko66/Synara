@@ -16,7 +16,8 @@ module.exports = {
         'almost-white': '#FFFFFF',
         'dark-blue': '#1F74D5',
         'light-blue': '#36ACEC',
-        'perfect-yellow': '#FAA206'
+        'perfect-yellow': '#FAA206',
+        'another-blue': '#0000fe'
       },
       fontFamily: {
         kharkiv: ['Kharkiv Tone', 'sans-serif'],
@@ -53,6 +54,7 @@ module.exports = {
             'relative-md': 'calc(2rem + 2vw)', // For `md` screens
         'relative-smlg': 'calc(3rem + 3vw)', // For `md` screens
             'relative-lg': 'calc(4rem + 4vw)', // For `md` screens
+        'relative-blg': 'calc(5rem + 55зчvw)', // For `md` screens
             'relative-elg': 'calc(8rem + 8vw)', // For `md` screens
         'relative-xlg': 'calc(10rem + 10vw)', // For `md` screens
             'relative-1/2': 'calc(50% + 1vw)', // For `md` screens
