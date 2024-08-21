@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { verifySmsCode } from "../../../../../frontend/src/services/smsService.tsx";
+import {verifySmsCode} from "../../services/smsService.tsx";
+
 
 const VerificationPage: React.FC = () => {
     const [code, setCode] = useState<string>('');

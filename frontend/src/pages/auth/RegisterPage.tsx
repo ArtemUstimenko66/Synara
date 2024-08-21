@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { register } from "../../../../../frontend/src/services/authService.tsx";
-import { sendVerificationCode } from "../../../../../frontend/src/services/smsService.tsx";
-import { Role } from '../../../../../frontend/src/interfaces/AuthInterface.tsx';
+
 import { useNavigate } from "react-router-dom";
+import {Role} from "../../interfaces/AuthInterface.tsx";
+import {register} from "../../services/authService.tsx";
+import {sendVerificationCode} from "../../services/smsService.tsx";
 
 
 const Register: React.FC = () => {
