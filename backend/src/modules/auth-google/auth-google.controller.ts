@@ -9,7 +9,9 @@ import {
 import { Response } from 'express';
 import { AuthGoogleService } from './auth-google.service';
 import { GoogleOauthGuard } from './guards/google-oauth.guard';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Authorization google')
 @Controller('auth-google')
 export class AuthGoogleController {
   constructor(private authService: AuthGoogleService) {}

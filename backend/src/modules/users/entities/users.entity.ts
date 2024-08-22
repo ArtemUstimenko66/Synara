@@ -58,7 +58,7 @@ export class User {
     description: 'Confirmation of user phone number',
     type: Boolean,
   })
-  @Column({ nullable: true })
+  @Column({ default: false })
   isPhoneVerified: boolean;
 
   @ApiProperty({
@@ -66,6 +66,6 @@ export class User {
     description: 'Confirmation of user email',
     type: Boolean,
   })
-  @Column({ nullable: true })
+  @Column({ default: false })
   isConfirmedEmail: boolean;
 }

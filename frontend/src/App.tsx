@@ -8,6 +8,7 @@ import HomePage from "./pages/HomePage.tsx";
 import NotFoundPage from "./pages/NotFoundPage.tsx";
 import Wrapper from "./components/Wrapper.tsx";
 import VerificationPage from "./pages/auth/VerificationPage.tsx";
+import ConfirmEmailPage from "./pages/ConfirmEmailPage.tsx";
 const App: React.FC = () => {
     return (
         <Router>
@@ -20,6 +21,8 @@ const App: React.FC = () => {
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/verify-phone" element={<VerificationPage />} />
                     <Route path="*" element={<NotFoundPage />} />
+                    <Route path="/email-sent" element={<ConfirmEmailPage />} />
+                    <Route path="/verify-email" element={<ConfirmEmailPage />} />
                 </Routes>
             </Wrapper>
         </Router>

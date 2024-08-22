@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { register } from "../../services/authService.tsx";
-import { sendVerificationCode } from "../../services/smsService.tsx";
 import { Role } from '../../interfaces/AuthInterface.tsx';
 import { useNavigate } from "react-router-dom";
-
+import {sendEmailVerification} from "../../services/emailService.tsx";
 
 const Register: React.FC = () => {
     const [username, setUsername] = useState<string>('');
@@ -11,15 +10,13 @@ const Register: React.FC = () => {
     const [phoneNumber, setPhoneNumber] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [role, setRole] = useState<Role>(Role.Guest);
-    const [isVerificationSent, setIsVerificationSent] = useState<boolean>(false);
     const navigate = useNavigate();
 
     const handleRegister = async () => {
         try {
             await register({ username, email, phoneNumber, password, role });
-            await sendVerificationCode(phoneNumber);
-            setIsVerificationSent(true);
-            navigate('/verify-phone');
+            await sendEmailVerification(email)
+            navigate('/verify-email');
             console.log('Registration successful! Verification code sent to your phone.');
         } catch (error) {
             console.error('Registration error:', error);
@@ -72,12 +69,6 @@ const Register: React.FC = () => {
             >
                 Register
             </button>
-
-            {isVerificationSent && (
-                <div className="mt-4 text-green-500">
-                    <p>Please check your phone for the verification code.</p>
-                </div>
-            )}
         </div>
     );
 };

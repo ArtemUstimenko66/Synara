@@ -1,17 +1,57 @@
-import React, { useState } from "react";
-import { verifySmsCode } from "../../services/smsService.tsx";
+import React, { useState, useEffect } from 'react';
+import { verifySmsCode, sendVerificationCode } from '../../services/smsService';
+import { useNavigate } from 'react-router-dom';
 
 const VerificationPage: React.FC = () => {
     const [code, setCode] = useState<string>('');
+    const [error, setError] = useState<string | null>(null);
+    const [canResend, setCanResend] = useState<boolean>(true);
+    const [resendTimer, setResendTimer] = useState<number>(30);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        let timer: number;
+        if (!canResend) {
+            timer = window.setInterval(() => {
+                setResendTimer((prev) => {
+                    if (prev <= 1) {
+                        setCanResend(true);
+                        clearInterval(timer);
+                        return 30;
+                    }
+                    return prev - 1;
+                });
+            }, 1000);
+        }
+
+        return () => clearInterval(timer);
+    }, [canResend]);
 
     const handleVerify = async () => {
         try {
             await verifySmsCode(code);
-            console.log('Verification successfully!');
+            navigate('/profile');
+            setError(null);
         } catch (error) {
-            console.error('Verification error', error);
+            setError('Verification error');
         }
-    }
+    };
+
+    const handleResendCode = async () => {
+        const phoneNumber = localStorage.getItem('phoneNumber');
+        if (!phoneNumber) {
+            setError('Phone number is not available');
+            return;
+        }
+
+        try {
+            await sendVerificationCode(phoneNumber);
+            setError(null);
+            setCanResend(false);
+        } catch (error) {
+            setError('Error sending SMS code');
+        }
+    };
 
     return (
         <div className="max-w-md mx-auto mt-10 p-8 bg-white shadow-md rounded-lg">
@@ -29,6 +69,19 @@ const VerificationPage: React.FC = () => {
             >
                 Verify
             </button>
+            <p className="text-center mt-4">
+                {canResend ? (
+                    <button
+                        onClick={handleResendCode}
+                        className="text-blue-500 hover:underline"
+                    >
+                        Don't receive code? Try again
+                    </button>
+                ) : (
+                    `Please wait ${resendTimer} seconds to resend`
+                )}
+            </p>
+            {error && <p className="text-red-500 text-center mt-4">{error}</p>}
         </div>
     );
 }

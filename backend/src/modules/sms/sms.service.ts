@@ -1,12 +1,14 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
-import { Twilio } from 'twilio';
 import { TwilioService } from './twilio.service';
+import { UsersService } from '../users/services/users.service';
 import { Cache } from 'cache-manager';
 
 @Injectable()
 export class SmsService {
+  private readonly RESEND_INTERVAL = 30 * 1000;
   constructor(
     private twilioService: TwilioService,
+    private userService: UsersService,
     @Inject('CACHE_MANAGER') private readonly cacheManager: Cache,
   ) {}
 
@@ -15,6 +17,17 @@ export class SmsService {
   }
 
   async sendVerificationCode(phoneNumber: string): Promise<void> {
+    const now = new Date().getTime();
+    const lastSent = await this.cacheManager.get<number>(
+      `${phoneNumber}_lastSent`,
+    );
+
+    if (lastSent && now - lastSent < this.RESEND_INTERVAL) {
+      throw new BadRequestException(
+        'You can request a new code only every 30 seconds',
+      );
+    }
+
     const code = this.generateCode();
     const expiresAt = new Date();
     expiresAt.setMinutes(expiresAt.getMinutes() + 15);
@@ -23,6 +36,12 @@ export class SmsService {
       phoneNumber,
       JSON.stringify({ code, expiresAt }),
       600,
+    );
+
+    await this.cacheManager.set(
+      `${phoneNumber}_lastSent`,
+      now,
+      this.RESEND_INTERVAL / 1000,
     );
 
     await this.twilioService.sendSms(
@@ -44,6 +63,8 @@ export class SmsService {
     }
 
     await this.cacheManager.del(phoneNumber);
+
+    await this.userService.updatePhoneVerificationStatus(phoneNumber, true);
     return true;
   }
 }
