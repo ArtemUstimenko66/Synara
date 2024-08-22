@@ -22,11 +22,12 @@ import AppStoreImg from '../assets/images/AppStoreImg.svg?react';
 
 
 import Header from '../components/Header';
-import {Button} from "../components/Button";
+import {Button} from "../ui/Button.tsx";
 import Footer from "../components/Footer";
 import DonationCard from "../components/DonationCard";
-import DateRangeCalendarWithButton from "../components/Calendar";
+import DateRangeCalendarWithButton from "../ui/Calendar.tsx";
 import Review from "../components/Review.tsx";
+import Wrapper from "../ui/Wrapper.tsx";
 
 
 const reviews = [
@@ -129,7 +130,7 @@ const HomePage: React.FC = () => {
 
             {/* Header */}
             <Header/>
-
+            <Wrapper>
             {/* Main div */}
             <div className="relative z-10 flex flex-col items-center justify-center pt-2">
 
@@ -623,7 +624,7 @@ const HomePage: React.FC = () => {
                 </section>
 
             </div>
-
+            </Wrapper>
             {/* Footer */}
             <Footer/>
         </div>

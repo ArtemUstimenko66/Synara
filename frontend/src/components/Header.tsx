@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from "./Button";
-import NavItem from "./NavItem";
+import { Button } from "../ui/Button.tsx";
+import NavItem from "../ui/NavItem.tsx";
 import { Link } from "react-router-dom";
 import { MobileMenu } from "./MobileMenu.tsx";
 import MenuCloseIcon from '../assets/images/icon-close-menu.svg?react';

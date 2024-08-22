@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { login } from "../../services/authService.tsx";
 import GoogleLoginButton from "../../components/GoogleLoginButton.tsx";
-import Stepper from "../../components/Stepper"; // Импортируем компонент Stepper
+
 
 const LoginPage: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -22,7 +22,7 @@ const LoginPage: React.FC = () => {
         <div className="flex justify-center items-center h-screen">
             <div className="bg-white p-8 rounded-lg shadow-lg">
                 {/* Вставляем Stepper над формой логина */}
-                <Stepper />
+
 
                 <h1 className="text-2xl font-bold mb-6">Login</h1>
                 <form>
