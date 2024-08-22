@@ -22,11 +22,12 @@ import AppStoreImg from '../assets/images/AppStoreImg.svg?react';
 
 
 import Header from '../components/Header';
-import {Button} from "../components/Button";
+import {Button} from "../ui/Button.tsx";
 import Footer from "../components/Footer";
 import DonationCard from "../components/DonationCard";
-import DateRangeCalendarWithButton from "../components/Calendar";
+import DateRangeCalendarWithButton from "../ui/Calendar.tsx";
 import Review from "../components/Review.tsx";
+import Wrapper from "../ui/Wrapper.tsx";
 
 
 const reviews = [
@@ -57,10 +58,24 @@ const reviews = [
     },
 ];
 
+
+
 const HomePage: React.FC = () => {
     const [isPaused, setIsPaused] = useState(false);
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
     const scrollingContainerRef = useRef<HTMLDivElement>(null);
+
+    const handleMouseEnter = (index: number) => {
+        setIsPaused(true);
+        setHoveredIndex(index);
+        console.log(`Mouse entered index ${index}`);
+    };
+
+    const handleMouseLeave = () => {
+        setIsPaused(false);
+        setHoveredIndex(null);
+        console.log('Mouse left');
+    };
 
     const handleSwipe = (direction: 'left' | 'right') => {
         console.log(`Swiped ${direction}`);
@@ -93,15 +108,6 @@ const HomePage: React.FC = () => {
         return () => clearInterval(interval);
     }, [isPaused]);
 
-    const handleMouseEnter = (index: number) => {
-        setIsPaused(true);
-        setHoveredIndex(index);
-    };
-
-    const handleMouseLeave = () => {
-        setIsPaused(false);
-    };
-
 
     const calculatePercentage = (goal: number, raised: number) => {
         return (raised / goal) * 100;
@@ -124,20 +130,18 @@ const HomePage: React.FC = () => {
 
             {/* Header */}
             <Header/>
-
+            <Wrapper>
             {/* Main div */}
             <div className="relative z-10 flex flex-col items-center justify-center pt-2">
 
                 {/* First section - who are we */}
                 <section className='w-full flex justify-center flex-col xl:flex-row md:flex-row'>
                     <div
-                        className="relative text-center order-2 xl:order-1 xl:text-left md:text-left xl:w-11/12 xl:mt-64 mt-12 mr-16 md:mt-relative-smlg">
-                        <h1 className='xl:text-h1 font-kharkiv whitespace-pre-line mt-6 mb-0 tracking-tight
-        md:text-relative-h3xl md:text-left'>
+                        className="relative text-center order-2 xl:order-1 xl:text-left md:text-left xl:w-11/12 mt-12 xl:mt-64 mr-16 md:mt-relative-smlg">
+                        <h1 className='xl:text-h1 font-kharkiv whitespace-pre-line mt-6 mb-0 tracking-tight md:text-relative-h3xl md:text-left'>
                             {`LOREM IPSUM - \nЭТО ТЕКСТ-"РИБА"`}
                         </h1>
-                        <p className='text-medium-gray font-montserratRegular mt-1 mb-4 whitespace-pre-line xl:text-pl
-        md:text-relative-pxl md:text-left'>
+                        <p className='text-medium-gray font-montserratRegular mt-1 mb-4 whitespace-pre-line xl:text-pl md:text-relative-pxl md:text-left'>
                             {`Часто Використовуваний У Пресі Та Веб-Дизайні. \nЄ Стандартною "Рибою" Для Текстів.`}
                         </p>
                         <Button isFilled={true}>ПРИЄДНАТИСЯ</Button>
@@ -150,15 +154,15 @@ const HomePage: React.FC = () => {
                 </section>
 
                 {/* Second section - about us */}
-                <section className='w-full flex justify-center flex-col xl:flex-row md:flex-row xl:mt-64 md:-mt-5'>
+                <section className='w-full flex justify-center flex-col xl:flex-row md:flex-row xl:mt-96 md:mt-[11vw]'>
                     <div
-                        className="hidden xl:flex xl:order-1 md:flex md:order-1 xl:w-1/2 md:w-relative-1/2 xl:mt-16 md:mt-relative-lg">
+                        className="hidden xl:flex xl:order-1 md:flex md:order-1 xl:w-1/2 md:w-relative-1/2">
                         <PlaceholderHorizontal
-                            className="xl:w-96 xl:h-auto md:w-relative-elg md:h-auto md:ml-relative-lg md:mt-relative-sm xl:mr-0 md:mr-relative-md"/>
+                            className="xl:w-96 xl:h-auto md:w-relative-elg md:h-auto md:ml-relative-lg xl:mr-0 md:mr-relative-md"/>
                     </div>
                     <div
-                        className="relative text-center order-2 xl:order-2 md:order-2 xl:text-left md:text-left xl:ml-24 xl:w-11/12 xl:mt-32 md:mt-relative-lg">
-                        <h1 className='xl:text-h1 text-almost-white font-kharkiv xl:whitespace-pre-line xl:mt-6 md:mt-0 mb-0 xl:tracking-tight md:text-relative-h3xl'>
+                        className="relative text-center order-2 xl:order-2 md:order-2 xl:text-left md:text-left xl:ml-24 xl:w-11/12">
+                        <h1 className='xl:text-h1 text-almost-white font-kharkiv xl:whitespace-pre-line xl:mt-6 mb-0 xl:tracking-tight md:text-relative-h3xl'>
                             {`ХТО МИ?`}
                         </h1>
                         <p className='text-almost-white font-montserratRegular xl:text-pl md:text-relative-pxl xl:mt-1 xl:mb-4 md:mb-relative-sm whitespace-pre-line md:whitespace-pre-line'>
@@ -173,9 +177,9 @@ const HomePage: React.FC = () => {
 
                 {/* Third section - the last collections of money*/}
                 <section className="w-full h-auto flex flex-col items-center xl:mt-64 md:mt-relative-elg">
-                    <h2 className="xl:text-h2  md:text-relative-h3xl font-kharkiv mb-16">ОСТАННІ ЗБОРИ</h2>
+                    <h2 className="xl:text-h2 md:text-relative-h3xl font-kharkiv mb-16">ОСТАННІ ЗБОРИ</h2>
                     <div
-                        className="flex flex-col xl:flex-row md:flex-col justify-center items-center space-y-10 xl:space-y-0 md:space-y-relative-lg xl:space-x-16 md:space-x-0">
+                        className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-6 xl:flex xl:flex-row xl:gap-16 justify-center items-center">
 
                         {/* Card 1 */}
                         <DonationCard
@@ -207,11 +211,22 @@ const HomePage: React.FC = () => {
                             className="w-fixed-width"
                         />
 
+                        {/* Card 4 - Visible only on md screens */}
+                        <DonationCard
+                            title="Збір на гуманітарну допомогу"
+                            description="Lorem Ipsum - Це Текст-'Риба', Часто Використовуваний У Пресі Та Веб-Дизайні."
+                            goal={goal3}
+                            raised={raised3}
+                            percentage={percentage3}
+                            className="w-fixed-width xl:hidden md:block"
+                        />
+
                     </div>
                     <div className="mt-16">
                         <Button isFilled={true}>ПЕРЕГЛЯНУТИ ІНШІ</Button>
                     </div>
                 </section>
+
 
                 {/* Fourth section - join us */}
                 <section className="w-full h-auto flex flex-col items-center mt-32 px-4 md:px-8">
@@ -488,50 +503,79 @@ const HomePage: React.FC = () => {
                     </div>
                 </section>
 
-
-                {/*/!* Eighth section - our feedbacks *!/*/}
+                {/* Eighth section - our feedbacks */}
                 <section className="w-full h-auto flex flex-col items-center mt-16">
-                    <h2 className="xl:text-h2 md:text-relative-h2 font-kharkiv mb-24 text-center">ВІДГУКИ ПРО НАС</h2>
+                    <h2 className="xl:text-h2 md:text-relative-h2 font-kharkiv mb-12 text-center">ВІДГУКИ ПРО НАС</h2>
 
                     <div
                         className="relative w-full overflow-hidden"
-                        {...swipeHandlers} // Примените обработчики свайпа здесь
+                        {...swipeHandlers} // Apply swipe handlers here
                         onMouseEnter={() => setIsPaused(true)}
                         onMouseLeave={() => setIsPaused(false)}
                     >
                         <style>
                             {`
-                                .scrolling-container {
-                                   display: flex;
-                                     overflow: hidden;
-                                    animation-play-state: ${isPaused ? 'paused' : 'running'};
-                                }
-                                @keyframes scrollLeft {
-                                    0% { transform: translateX(0); }
-                                    100% { transform: translateX(-50%); }
-                                }
-                                
-                                .scrolling-wrapper {
-                                  width: 100%;
-                                  overflow: hidden; 
-                                }
-                                .review-item {
-                                  flex: 0 0 auto;
-                                  width: 100%;
-                                  scroll-snap-align: center; 
-                                  position: relative;
-                                  box-sizing: border-box;
-                                  padding: 1rem; 
-                                  transition: transform 0.3s ease;
-                                }
-                                
-                                .review-item.hovered {
-                                  transform: scale(1.05); 
-                                }
-                            `}
+                            .scrolling-container {
+                            display: flex;
+                            overflow: hidden;
+                            animation-play-state: ${isPaused ? 'paused' : 'running'};
+                        }
+
+                            @keyframes scrollLeft {
+                            0 % {transform: translateX(0);}
+                            100% {transform: translateX(-50%);}
+                        }
+
+                            .scrolling-wrapper {
+                            width: 100%;
+                            overflow: hidden;
+                        }
+
+                            .review-item {
+                            flex: 0 0 auto;
+                            width: 90%; 
+                            max-width: 400px;
+                            scroll-snap-align: center;
+                            position: relative;
+                            box-sizing: border-box;
+                            padding: 1rem;
+                            transition: transform 0.3s ease;
+                            height: auto; 
+                            overflow: visible; 
+                        }
+
+                            .review-item .avatar {
+                            position: relative;
+                            z-index: 1; /* Bring avatar to the front */
+                            width: 50px;
+                            height: 50px;
+                            border-radius: 50%;
+                            overflow: hidden;
+                            margin-bottom: 1rem;
+                        }
+
+                            .review-item.hovered {
+                            transform: scale(1.05);
+                            overflow: visible; 
+                        }
+
+                            @media (min-width: 768px) and (max-width: 1024px) {
+                            .scrolling-wrapper {
+                            padding-bottom: 1rem; 
+                        }
+                            .review-item {
+                            width: 80%; 
+                            padding: 0.5rem;
+                        }
+                            h2 {
+                            font-size: 1.5rem; 
+                            margin-bottom: 16px;
+                        }
+                        }
+                         `}
                         </style>
                         <div className="scrolling-wrapper">
-                            <div className="scrolling-container py-12" ref={scrollingContainerRef}>
+                            <div className="scrolling-container py-8" ref={scrollingContainerRef}>
                                 {reviews.concat(reviews).map((review, index) => (
                                     <div
                                         key={index}
@@ -539,7 +583,7 @@ const HomePage: React.FC = () => {
                                         onMouseEnter={() => handleMouseEnter(index)}
                                         onMouseLeave={() => handleMouseLeave}
                                     >
-                                        <div className="mx-auto max-w-md ">
+                                        <div className="mx-auto max-w-md">
                                             <Review comment={review.comment} name={review.name} date={review.date}/>
                                         </div>
                                     </div>
@@ -549,7 +593,7 @@ const HomePage: React.FC = () => {
                     </div>
                 </section>
 
-                {/*/!* Ninth section - download our mobile app *!/*/}
+                {/*/ Ninth section - download our mobile app */}
                 <section className="w-full h-auto flex items-center justify-center xl:mt-44 md:mt-24 px-8 mb-14">
                     {/* YouTube Frame */}
                     <div className="">
@@ -580,7 +624,7 @@ const HomePage: React.FC = () => {
                 </section>
 
             </div>
-
+            </Wrapper>
             {/* Footer */}
             <Footer/>
         </div>

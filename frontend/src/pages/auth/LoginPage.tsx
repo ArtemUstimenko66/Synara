@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { login } from "../../services/authService";
 import { useNavigate } from "react-router-dom";
-import GoogleLoginButton from "../../components/GoogleLoginButton";
+import { login } from "../../services/authService.tsx";
+import GoogleLoginButton from "../../components/GoogleLoginButton.tsx";
+
 
 const LoginPage: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -20,6 +21,9 @@ const LoginPage: React.FC = () => {
     return (
         <div className="flex justify-center items-center h-screen">
             <div className="bg-white p-8 rounded-lg shadow-lg">
+                {/* Вставляем Stepper над формой логина */}
+
+
                 <h1 className="text-2xl font-bold mb-6">Login</h1>
                 <form>
                     <div className="mb-4">
@@ -56,7 +60,7 @@ const LoginPage: React.FC = () => {
                         >
                             Login
                         </button>
-                        <GoogleLoginButton/>
+                        <GoogleLoginButton />
                     </div>
                 </form>
             </div>

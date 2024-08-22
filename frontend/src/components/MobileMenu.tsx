@@ -1,6 +1,6 @@
 import React from 'react';
-import NavItem from "./NavItem";
-import { Button } from "./Button.tsx";
+import NavItem from "../ui/NavItem.tsx";
+import { Button } from "../ui/Button.tsx";
 import { Link } from "react-router-dom";
 
 export const MobileMenu = ({ isOpen = false }) => {

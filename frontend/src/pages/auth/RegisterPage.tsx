@@ -1,76 +1,104 @@
-import React, { useState } from 'react';
-import { register } from "../../services/authService.tsx";
-import { Role } from '../../interfaces/AuthInterface.tsx';
-import { useNavigate } from "react-router-dom";
-import {sendEmailVerification} from "../../services/emailService.tsx";
+import { useState } from 'react';
+import ChooseRole from "../../components/registration/ChooseRole";
+import CompleteMainInfo from "../../components/registration/CompleteMainInfo";
+import AddressVictim from "../../components/registration/victim/AddressVictim.tsx";
+import AddressVolunteer from "../../components/registration/volunteer/AddressVolunteer.tsx";
+import CardVictim from "../../components/registration/victim/CardVictim.tsx";
+import DateBirthdayVictim from "../../components/registration/victim/DateBirthdayVictim.tsx";
+import EmailConfirm from "../../components/registration/EmailConfirm.tsx";
+import BackArrow from '../../assets/images/Back.svg?react';
+import Stepper from "../../ui/Stepper.tsx";
 
-const Register: React.FC = () => {
-    const [username, setUsername] = useState<string>('');
-    const [email, setEmail] = useState<string>('');
-    const [phoneNumber, setPhoneNumber] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
-    const [role, setRole] = useState<Role>(Role.Guest);
-    const navigate = useNavigate();
+const Registration = () => {
+    const [currentStep, setCurrentStep] = useState(1);
+    const [selectedRole, setSelectedRole] = useState<string | null>(null);
 
-    const handleRegister = async () => {
-        try {
-            await register({ username, email, phoneNumber, password, role });
-            await sendEmailVerification(email)
-            navigate('/verify-email');
-            console.log('Registration successful! Verification code sent to your phone.');
-        } catch (error) {
-            console.error('Registration error:', error);
-        }
+    const handleStepChange = (step: number) => {
+        setCurrentStep(step);
     };
 
+    const steps = [
+        {
+            component: (
+                <ChooseRole
+                    onSelectRole={(role) => {
+                        setSelectedRole(role);
+                        handleStepChange(2);
+                    }}
+                />
+            ),
+            step: 1
+        },
+        {
+            component: (
+                <CompleteMainInfo
+                    onNextStep={() => handleStepChange(3)}
+                />
+            ),
+            step: 2
+        },
+        {
+            component: selectedRole === 'victim' ?
+                <AddressVictim
+                    onNextStep={() => handleStepChange(4)}/>
+                :  <AddressVolunteer
+                    onNextStep={() => handleStepChange(4)}/>,
+            step: 3
+        },
+        {
+            component: (
+                <CardVictim
+                    onNextStep={() => handleStepChange(5)} // Proceed to a final step or completion screen
+                />
+            ),
+            step: 4
+        },
+        {
+            component:(
+                <DateBirthdayVictim
+                    onNextStep={() => handleStepChange(6)} // Proceed to a final step or completion screen
+                />
+            ),
+            step: 5
+        },
+        {
+            component: (
+                <EmailConfirm
+                    onNextStep={() => handleStepChange(7)}
+                />
+            ),
+            step: 6
+        },
+    ];
+
     return (
-        <div className="max-w-md mx-auto mt-10 p-8 bg-white shadow-md rounded-lg">
-            <h2 className="text-2xl font-bold text-center mb-6">Register</h2>
-            <input
-                type="text"
-                placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            <input
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            <input
-                type="text"
-                placeholder="Phone Number"
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-                className="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            <select
-                value={role}
-                onChange={(e) => setRole(e.target.value as Role)}
-                className="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-                <option value={Role.Guest}>Guest</option>
-                <option value={Role.Victim}>Victim</option>
-                <option value={Role.Volunteer}>Volunteer</option>
-            </select>
-            <button
-                onClick={handleRegister}
-                className="w-full px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-                Register
-            </button>
+        <div className="bg-dark-blue min-h-screen flex">
+            <div className="w-2/6 p-8 flex items-left justify-left mt-10 ml-28">
+                <div className="text-almost-white font-montserratRegular font-bold text-relative-h4">LOGO</div>
+            </div>
+
+            <div className="w-5/6 bg-almost-white rounded-l-3xl max-h-screen px-relative-md flex flex-col items-start justify-start">
+                <div className="flex max-h-screen">
+                    {/* Container for BackArrow */}
+                    <div className={`ml-2 mt-10 cursor-pointer ${currentStep > 1 ? '' : 'invisible'}`} onClick={() => handleStepChange(currentStep - 1)}>
+                        <BackArrow />
+                    </div>
+
+                    <div className="max-w-2xl ml-24 mt-10 max-h-screen flex flex-col justify-start flex-grow">
+                        <h1 className="font-kharkiv text-relative-h2 mb-relative-ssm mt-relative-ssm">СТВОРЕННЯ АККАУНТУ</h1>
+
+                        <div className="mb-relative-sm flex justify-start">
+                            <Stepper currentStep={currentStep} onStepChange={handleStepChange} />
+                        </div>
+
+                        <div className="flex-grow flex flex-col justify-between">
+                            {steps.find(step => step.step === currentStep)?.component}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };
 
-export default Register;
+export default Registration;
