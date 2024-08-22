@@ -2,7 +2,11 @@ import React from 'react';
 import GoogleImg from '../../assets/images/google.svg';
 import AppleImg from '../../assets/images/apple.svg';
 
-const CompleteMainInfo: React.FC = () => {
+type CompleteMainInfoProps = {
+    onNextStep: () => void;
+};
+
+const CompleteMainInfo: React.FC<CompleteMainInfoProps> = ({ onNextStep }) => {
     return (
         <div className="flex flex-col items-start pr-8 pb-8 w-full">
             <h2 className="text-relative-h4 font-kharkiv mb-4">Заповніть данні</h2>
@@ -45,7 +49,9 @@ const CompleteMainInfo: React.FC = () => {
             </div>
 
             <button
-                className="w-full bg-perfect-yellow text-almost-black py-4 rounded-full mb-6 hover:bg-perfect-yellow transition">
+                className="w-full bg-perfect-yellow text-almost-black py-4 rounded-full mb-6 hover:bg-perfect-yellow transition"
+                onClick={onNextStep}
+            >
                 ПРОДОВЖИТИ
             </button>
 

@@ -1,6 +1,11 @@
 import { useState } from 'react';
 import ChooseRole from "../../components/registration/ChooseRole";
 import CompleteMainInfo from "../../components/registration/CompleteMainInfo";
+import AddressVictim from "../../components/registration/victim/AddressVictim.tsx";
+import AddressVolunteer from "../../components/registration/volunteer/AddressVolunteer.tsx";
+import CardVictim from "../../components/registration/victim/CardVictim.tsx";
+import DateBirthdayVictim from "../../components/registration/victim/DateBirthdayVictim.tsx";
+import EmailConfirm from "../../components/registration/EmailConfirm.tsx";
 import BackArrow from '../../assets/images/Back.svg?react';
 import Stepper from "../../ui/Stepper.tsx";
 
@@ -13,8 +18,57 @@ const Registration = () => {
     };
 
     const steps = [
-        { component: <ChooseRole onSelectRole={(role) => { setSelectedRole(role); handleStepChange(2); }} />, step: 1 },
-        { component: <CompleteMainInfo />, step: 2 },
+        {
+            component: (
+                <ChooseRole
+                    onSelectRole={(role) => {
+                        setSelectedRole(role);
+                        handleStepChange(2);
+                    }}
+                />
+            ),
+            step: 1
+        },
+        {
+            component: (
+                <CompleteMainInfo
+                    onNextStep={() => handleStepChange(3)}
+                />
+            ),
+            step: 2
+        },
+        {
+            component: selectedRole === 'victim' ?
+                <AddressVictim
+                    onNextStep={() => handleStepChange(4)}/>
+                :  <AddressVolunteer
+                    onNextStep={() => handleStepChange(4)}/>,
+            step: 3
+        },
+        {
+            component: (
+                <CardVictim
+                    onNextStep={() => handleStepChange(5)} // Proceed to a final step or completion screen
+                />
+            ),
+            step: 4
+        },
+        {
+            component:(
+                <DateBirthdayVictim
+                    onNextStep={() => handleStepChange(6)} // Proceed to a final step or completion screen
+                />
+            ),
+            step: 5
+        },
+        {
+            component: (
+                <EmailConfirm
+                    onNextStep={() => handleStepChange(7)}
+                />
+            ),
+            step: 6
+        },
     ];
 
     return (
