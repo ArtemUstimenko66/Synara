@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import {Button} from "../../../ui/Button.tsx";
 
 const regionsWithCities = {
     'Київська область': ['Київ', 'Біла Церква', 'Бровари'],
@@ -17,7 +18,7 @@ const AddressVictim: React.FC<AddressVictimInfoProps> = ({onNextStep}) => {
 
     const handleRegionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedRegion(event.target.value);
-        setSelectedCity(''); // Reset city when region changes
+        setSelectedCity('');
     };
 
     return (
@@ -26,14 +27,14 @@ const AddressVictim: React.FC<AddressVictimInfoProps> = ({onNextStep}) => {
 
             <div className="flex w-full space-x-4 mb-4">
                 <div className="w-1/2 flex flex-col">
-                    <label className="font-montserratRegular mb-2">Область</label>
+                    <label className="font-montserratRegular mb-2">Область*</label>
                     <div className="relative">
                         <select
                             value={selectedRegion}
                             onChange={handleRegionChange}
-                            className="w-full p-4 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue appearance-none bg-white"
+                            className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue appearance-none bg-white"
                         >
-                            <option value="" disabled >Область проживання</option>
+                            <option value="" disabled>Область проживання</option>
                             {Object.keys(regionsWithCities).map((region) => (
                                 <option key={region} value={region}>
                                     {region}
@@ -42,26 +43,27 @@ const AddressVictim: React.FC<AddressVictimInfoProps> = ({onNextStep}) => {
                         </select>
                         <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
                             <svg
-                                className="w-4 h-4 text-blue-500" // Custom color and size for arrow
+                                className="w-4 h-4 text-blue-500"
                                 fill="none"
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg"
                             >
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                                      d="M19 9l-7 7-7-7"></path>
                             </svg>
                         </div>
                     </div>
                 </div>
 
                 <div className="w-1/2 flex flex-col">
-                    <label className="font-montserratRegular mb-2">Місто</label>
+                    <label className="font-montserratRegular mb-2">Місто*</label>
                     <div className="relative">
                         <select
                             value={selectedCity}
                             onChange={(e) => setSelectedCity(e.target.value)}
                             disabled={!selectedRegion}
-                            className="w-full p-4 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue appearance-none bg-white"
+                            className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue appearance-none bg-white"
                         >
                             <option value="" disabled>Місто проживання</option>
                             {selectedRegion &&
@@ -73,15 +75,49 @@ const AddressVictim: React.FC<AddressVictimInfoProps> = ({onNextStep}) => {
                         </select>
                         <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
                             <svg
-                                className="w-4 h-4 text-blue-500" // Custom color and size for arrow
+                                className="w-4 h-4 text-blue-500"
                                 fill="none"
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg"
                             >
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                                      d="M19 9l-7 7-7-7"></path>
                             </svg>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className="w-full mb-6">
+                <label className="font-montserratRegular mb-2">Вулиця</label>
+                <input
+                    type="text"
+                    placeholder="Назва вулиці"
+                    className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
+                />
+            </div>
+
+            <div className="flex w-full space-x-4 mb-4">
+                <div className="w-1/2 flex flex-col">
+                    <div className="relative">
+                        <label className="font-montserratRegular mb-2">Будинок</label>
+                        <input
+                            type="text"
+                            placeholder="Номер будинку"
+                            className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
+                        />
+                    </div>
+                </div>
+
+                <div className="w-1/2 flex flex-col">
+                    <div className="relative">
+                        <label className="font-montserratRegular mb-2">Квартира</label>
+                        <input
+                            type="text"
+                            placeholder="Номер квартири"
+                            className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
+                        />
                     </div>
                 </div>
             </div>
@@ -91,25 +127,17 @@ const AddressVictim: React.FC<AddressVictimInfoProps> = ({onNextStep}) => {
                 <input
                     type="text"
                     placeholder="Ваш контактний номер телефону"
-                    className="w-full p-4 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
+                    className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
                 />
             </div>
 
-            <div className="w-full mb-6">
-                <label className="font-montserratRegular mb-2">Особливі потреби або обмеження</label>
-                <input
-                    type="text"
-                    placeholder="Вкажіть, якщо є обмеження здоров'я"
-                    className="w-full p-4 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
-                />
-            </div>
 
-            <button
-                className="w-full bg-perfect-yellow text-almost-black py-4 rounded-full mb-6 hover:bg-perfect-yellow transition"
+            <Button
+                className="w-full bg-perfect-yellow text-almost-black py-3 rounded-full mt-6 hover:bg-perfect-yellow transition"
                 onClick={onNextStep}
             >
                 ПРОДОВЖИТИ
-            </button>
+            </Button>
         </div>
     );
 };

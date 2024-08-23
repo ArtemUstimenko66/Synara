@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { MobileMenu } from "./MobileMenu.tsx";
 import MenuCloseIcon from '../assets/images/icon-close-menu.svg?react';
 import MenuIcon from '../assets/images/icon-menu.svg?react';
+import LogoSynara from '../assets/images/logoSynara.svg?react';
 
 const Header: React.FC = () => {
     const [isVisible, setIsVisible] = useState(true);
@@ -35,10 +36,14 @@ const Header: React.FC = () => {
             <div className="flex justify-between items-center px-8 py-8 md:ml-10 md:mr-4 xl:ml-20 xl:mr-36">
 
                 {/* Логотип */}
-                <div className="text-xl font-bold xl:mr-44 md:mr-14">LOGO</div>
+
+                <Link to="/home">
+                    <LogoSynara className="text-xl font-bold xl:mr-44 md:mr-14"/>
+                </Link>
+
 
                 {/* Элементы навигации для компьютера */}
-                <nav className="flex-grow hidden md:hidden xl:flex xl:space-x-20 md:space-x-10 xl:mr-10 md:mr-5 items-center">
+                <nav className="flex-grow hidden md:hidden sm:hidden xl:flex xl:space-x-20 md:space-x-10 xl:mr-10 md:mr-5 items-center">
                     <NavItem text="ГОЛОВНА" to="/home" />
                     <NavItem text="ПРО НАС" to="/about" />
                     <NavItem text="ЗБОРИ" to="/collections" />
@@ -57,7 +62,7 @@ const Header: React.FC = () => {
                 </div>
 
                 {/* Мобильное меню */}
-                <div className="flex md:flex xl:hidden ml-auto cursor-pointer z-30"
+                <div className="flex md:flex sm:flex xl:hidden ml-auto cursor-pointer z-30"
                      onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 >
                     {isMobileMenuOpen ? <MenuCloseIcon /> : <MenuIcon />}

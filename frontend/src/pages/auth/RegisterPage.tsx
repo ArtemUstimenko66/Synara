@@ -3,7 +3,6 @@ import ChooseRole from "../../components/registration/ChooseRole";
 import CompleteMainInfo from "../../components/registration/CompleteMainInfo";
 import AddressVictim from "../../components/registration/victim/AddressVictim.tsx";
 import AddressVolunteer from "../../components/registration/volunteer/AddressVolunteer.tsx";
-import CardVictim from "../../components/registration/victim/CardVictim.tsx";
 import DateBirthdayVictim from "../../components/registration/victim/DateBirthdayVictim.tsx";
 import EmailConfirm from "../../components/registration/EmailConfirm.tsx";
 import BackArrow from '../../assets/images/Back.svg?react';
@@ -46,28 +45,21 @@ const Registration = () => {
             step: 3
         },
         {
-            component: (
-                <CardVictim
-                    onNextStep={() => handleStepChange(5)} // Proceed to a final step or completion screen
+            component:(
+                <DateBirthdayVictim
+                    onNextStep={() => handleStepChange(5)}
+                    selectedRole={selectedRole}
                 />
             ),
             step: 4
         },
         {
-            component:(
-                <DateBirthdayVictim
-                    onNextStep={() => handleStepChange(6)} // Proceed to a final step or completion screen
+            component: (
+                <EmailConfirm
+                    onNextStep={() => handleStepChange(6)}
                 />
             ),
             step: 5
-        },
-        {
-            component: (
-                <EmailConfirm
-                    onNextStep={() => handleStepChange(7)}
-                />
-            ),
-            step: 6
         },
     ];
 
@@ -79,17 +71,24 @@ const Registration = () => {
 
             <div className="w-5/6 bg-almost-white rounded-l-3xl max-h-screen px-relative-md flex flex-col items-start justify-start">
                 <div className="flex max-h-screen">
-                    {/* Container for BackArrow */}
-                    <div className={`ml-2 mt-10 cursor-pointer ${currentStep > 1 ? '' : 'invisible'}`} onClick={() => handleStepChange(currentStep - 1)}>
-                        <BackArrow />
-                    </div>
-
-                    <div className="max-w-2xl ml-24 mt-10 max-h-screen flex flex-col justify-start flex-grow">
-                        <h1 className="font-kharkiv text-relative-h2 mb-relative-ssm mt-relative-ssm">СТВОРЕННЯ АККАУНТУ</h1>
-
-                        <div className="mb-relative-sm flex justify-start">
-                            <Stepper currentStep={currentStep} onStepChange={handleStepChange} />
+                    {/* Условный рендеринг для BackArrow */}
+                    {currentStep > 1 && currentStep < steps.length && (
+                        <div className="ml-2 mt-10 cursor-pointer" onClick={() => handleStepChange(currentStep - 1)}>
+                            <BackArrow />
                         </div>
+                    )}
+
+                    <div className="max-w-2xl ml-24 mt-7 max-h-screen flex flex-col justify-start flex-grow">
+                        {/* Условный рендеринг для заголовка и степпера */}
+                        {currentStep < steps.length && (
+                            <>
+                                <h1 className="font-kharkiv text-relative-h2 mb-relative-ssm mt-relative-ssm">СТВОРЕННЯ АККАУНТУ</h1>
+
+                                <div className="mb-relative-sm flex justify-start">
+                                    <Stepper currentStep={currentStep} onStepChange={handleStepChange} />
+                                </div>
+                            </>
+                        )}
 
                         <div className="flex-grow flex flex-col justify-between">
                             {steps.find(step => step.step === currentStep)?.component}

@@ -36,7 +36,7 @@ export default function DateRangePickerWithButton() {
         <div className="relative">
             <button
                 onClick={() => setOpen(!open)}
-                className="text-1 font-montserratRegular bg-perfect-yellow rounded-full py-2 px-6"
+                className="text-1 font-montserratRegular w-auto bg-perfect-yellow rounded-full py-2 px-6"
             >
                 {formatDateRange(selectedRange)}
             </button>

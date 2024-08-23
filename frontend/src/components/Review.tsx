@@ -18,7 +18,7 @@ const Review: React.FC<ReviewProps> = ({ comment, name, date }) => {
             <div className="absolute -top-2 left-6 transform -translate-y-1/2">
                 <img src={Avatar} alt="Avatar" className="w-20 h-20 rounded-full" />
             </div>
-            <p className="mt-4 font-montserratRegular text-sm mb-4 select-none">{comment}</p>
+            <p className="mt-4 font-montserratRegular  sm:text-xs xl:text-xs-ps  md:text-xs-ps text-sm mb-4 select-none">{comment}</p>
             <div className="text-perfect-yellow mb-4 select-none">
                 <ReactStars
                     count={5}
