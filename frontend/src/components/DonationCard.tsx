@@ -11,10 +11,10 @@ interface DonationCardProps {
 
 const DonationCard: React.FC<DonationCardProps> = ({ title, description, goal, raised, percentage, className }) => {
     return (
-        <div className={`w-full xl:w-4/12 md:w-auto h-full border-4 border-dark-blue rounded-3xl p-8 flex flex-col justify-between ${className}`}>
+        <div className={`w-full xl:w-4/12 md:w-auto xl:h-[32vw] md:h-[54vw] border-4 border-dark-blue rounded-3xl p-8 flex flex-col justify-between ${className}`}>
             <div className="mt-4">
                 <h3 className={`xl:text-h3 md:text-relative-h3xl font-kharkiv ${className}`}>{title}</h3>
-                <p className="xl:text-pxl md:text-relative-h4 font-montserratRegular text-almost-black mt-2">
+                <p className="xl:text-pxl md:text-relative-pxl font-montserratRegular text-almost-black mt-2">
                     {description}
                 </p>
             </div>

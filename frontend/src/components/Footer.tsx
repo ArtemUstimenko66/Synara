@@ -2,6 +2,8 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookF, faInstagram, faTwitter, faTelegramPlane } from '@fortawesome/free-brands-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
+import LogoSynara from '../assets/images/logoSynara.svg?react';
+import {Link} from "react-router-dom";
 
 library.add(faFacebookF, faInstagram, faTwitter, faTelegramPlane);
 
@@ -13,7 +15,9 @@ const Footer: React.FC = () => {
 
                 {/* Left section with logo */}
                 <div className="text-lg font-bold mt-2 xl: xl:mr-0 md:mr-16">
-                    LOGO
+                    <Link to="/home">
+                        <LogoSynara className="text-xl font-bold xl:mr-44 md:mr-14"/>
+                    </Link>
                 </div>
                 {/* Navigation section */}
                 <div className="mt-4 ml-2 md:mt-0">

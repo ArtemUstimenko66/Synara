@@ -1,4 +1,5 @@
 import React from 'react';
+import {Button} from "../../../ui/Button.tsx";
 
 type CardVictimInfoProps = {
     onNextStep: () => void;
@@ -14,7 +15,7 @@ const CardVictim: React.FC<CardVictimInfoProps> = ({ onNextStep }) => {
                 <input
                     type="email"
                     placeholder="Номер вашої карти"
-                    className="w-full p-4 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
+                    className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
                 />
             </div>
 
@@ -23,7 +24,7 @@ const CardVictim: React.FC<CardVictimInfoProps> = ({ onNextStep }) => {
                 <input
                     type="email"
                     placeholder="CVV карти"
-                    className="w-full p-4 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
+                    className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
                 />
             </div>
 
@@ -32,7 +33,7 @@ const CardVictim: React.FC<CardVictimInfoProps> = ({ onNextStep }) => {
                 <input
                     type="email"
                     placeholder="Ім'я на картці"
-                    className="w-full p-4 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
+                    className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
                 />
             </div>
 
@@ -41,16 +42,16 @@ const CardVictim: React.FC<CardVictimInfoProps> = ({ onNextStep }) => {
                 <input
                     type="password"
                     placeholder="ММ / РР"
-                    className="w-full p-4 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
+                    className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
                 />
             </div>
 
-            <button
-                className="w-full bg-perfect-yellow text-almost-black py-4 rounded-full mb-6 hover:bg-perfect-yellow transition"
+            <Button
+                className="w-full bg-perfect-yellow text-almost-black py-3 rounded-full mb-6 hover:bg-perfect-yellow transition"
                 onClick={onNextStep}
             >
                 ПРОДОВЖИТИ
-            </button>
+            </Button>
             <div className="flex w-full justify-center">
                 <p className="text-relative-ps font-montserratRegular">
                     <button onClick={onNextStep} className="text-almost-black font-bold underline">Пропустити</button>

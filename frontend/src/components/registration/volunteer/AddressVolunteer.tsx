@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { Button } from "../../../ui/Button.tsx";
 
 const regionsWithCities = {
     'Київська область': ['Київ', 'Біла Церква', 'Бровари'],
@@ -19,9 +20,11 @@ const AddressVolunteer: React.FC<AddressVolunteerInfoProps> = ({ onNextStep }) =
     const [uploadedDocument, setUploadedDocument] = useState<File | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [selectedHelp, setselectedHelp] = useState<string | null>(null);
-    const handleHelpSelect = (gender: string) => {
-        setselectedHelp(gender);
+
+    const handleHelpSelect = (helpType: string) => {
+        setselectedHelp(helpType);
     };
+
     const handleRegionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedRegion(event.target.value);
         setSelectedCity(''); // Reset city when region changes
@@ -45,14 +48,14 @@ const AddressVolunteer: React.FC<AddressVolunteerInfoProps> = ({ onNextStep }) =
 
             <div className="flex w-full space-x-4 mb-4">
                 <div className="w-1/2 flex flex-col">
-                    <label className="font-montserratRegular mb-2">Область</label>
+                    <label className="font-montserratRegular mb-2">Область*</label>
                     <div className="relative">
                         <select
                             value={selectedRegion}
                             onChange={handleRegionChange}
-                            className="w-full p-4 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue appearance-none bg-white"
+                            className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue appearance-none bg-white"
                         >
-                            <option value="" disabled >Область проживання</option>
+                            <option value="" disabled>Область проживання</option>
                             {Object.keys(regionsWithCities).map((region) => (
                                 <option key={region} value={region}>
                                     {region}
@@ -61,7 +64,7 @@ const AddressVolunteer: React.FC<AddressVolunteerInfoProps> = ({ onNextStep }) =
                         </select>
                         <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
                             <svg
-                                className="w-4 h-4 text-blue-500" // Custom color and size for arrow
+                                className="w-4 h-4 text-blue-500"
                                 fill="none"
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
@@ -74,13 +77,13 @@ const AddressVolunteer: React.FC<AddressVolunteerInfoProps> = ({ onNextStep }) =
                 </div>
 
                 <div className="w-1/2 flex flex-col">
-                    <label className="font-montserratRegular mb-2">Місто</label>
+                    <label className="font-montserratRegular mb-2">Місто*</label>
                     <div className="relative">
                         <select
                             value={selectedCity}
                             onChange={(e) => setSelectedCity(e.target.value)}
                             disabled={!selectedRegion}
-                            className="w-full p-4 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue appearance-none bg-white"
+                            className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue appearance-none bg-white"
                         >
                             <option value="" disabled>Місто проживання</option>
                             {selectedRegion &&
@@ -92,7 +95,7 @@ const AddressVolunteer: React.FC<AddressVolunteerInfoProps> = ({ onNextStep }) =
                         </select>
                         <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
                             <svg
-                                className="w-4 h-4 text-blue-500" // Custom color and size for arrow
+                                className="w-4 h-4 text-blue-500"
                                 fill="none"
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
@@ -110,69 +113,74 @@ const AddressVolunteer: React.FC<AddressVolunteerInfoProps> = ({ onNextStep }) =
                 <input
                     type="text"
                     placeholder="Ваш контактний номер телефону"
-                    className="w-full p-4 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
+                    className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
                 />
             </div>
 
             <div className="w-full mb-4">
-                <label className="font-montserratRegular mb-2">Яку допомогу ви можете надавати:</label>
+                <label className="font-montserratRegular mb-2">Яку допомогу ви можете надавати:*</label>
                 <div className="flex flex-wrap gap-2">
                     <button
                         onClick={() => handleHelpSelect('Психологічна')}
-                        className={`py-2 px-4 rounded-full pl-20 pr-20   mt-4 border-2
-                         text-center ${
+                        className={`py-2 px-4 rounded-full pl-20 pr-20 mt-4 border-2 text-center ${
                             selectedHelp === 'Психологічна' ? 'bg-dark-blue border-dark-blue text-white' : 'border-light-blue'
-                        }`}>
+                        }`}
+                    >
                         Психологічна
                     </button>
-                    <button onClick={() => handleHelpSelect('Гуманітарна')}
-                            className={`py-2 px-4 rounded-full pl-20 pr-20 mt-4 border-2
-                         text-center ${
-                                selectedHelp === 'Гуманітарна' ? 'bg-dark-blue border-dark-blue text-white' : 'border-light-blue'
-                            }`}>
+                    <button
+                        onClick={() => handleHelpSelect('Гуманітарна')}
+                        className={`py-2 px-4 rounded-full pl-20 pr-20 mt-4 border-2 text-center ${
+                            selectedHelp === 'Гуманітарна' ? 'bg-dark-blue border-dark-blue text-white' : 'border-light-blue'
+                        }`}
+                    >
                         Гуманітарна
                     </button>
 
-                    <button onClick={() => handleHelpSelect('Інформаційна')}
-                            className={`py-2 px-4 rounded-full pl-20 pr-20 mt-4 border-2
-                         text-center ${
-                                selectedHelp === 'Інформаційна' ? 'bg-dark-blue border-dark-blue text-white' : 'border-light-blue'
-                            }`}>
+                    <button
+                        onClick={() => handleHelpSelect('Інформаційна')}
+                        className={`py-2 px-4 rounded-full pl-20 pr-20 mt-4 border-2 text-center ${
+                            selectedHelp === 'Інформаційна' ? 'bg-dark-blue border-dark-blue text-white' : 'border-light-blue'
+                        }`}
+                    >
                         Інформаційна
                     </button>
-                    <button onClick={() => handleHelpSelect('Матеріальна')}
-                            className={`py-2 px-4 rounded-full pl-20 pr-20 mt-4 border-2
-                         text-center ${
-                                selectedHelp === 'Матеріальна' ? 'bg-dark-blue border-dark-blue text-white' : 'border-light-blue'
-                            }`}>
+                    <button
+                        onClick={() => handleHelpSelect('Матеріальна')}
+                        className={`py-2 px-4 rounded-full pl-20 pr-20 mt-4 border-2 text-center ${
+                            selectedHelp === 'Матеріальна' ? 'bg-dark-blue border-dark-blue text-white' : 'border-light-blue'
+                        }`}
+                    >
                         Матеріальна
                     </button>
                 </div>
             </div>
 
-            <div className="w-full mb-4">
-                <label className="font-montserratRegular mb-2">Документи, підтверджуючі кваліфікацію</label>
-                <br/>
-                <button
-                    className="w-52 mb-6 mt-2 p-2 text-center border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue text-blue-500 "
-                    onClick={handleAddDocumentClick}
-                >
-                    {uploadedDocument ? uploadedDocument.name : 'ДОДАТИ ДОКУМЕНТ'}
-                </button>
-                <input
-                    type="file"
-                    ref={fileInputRef}
-                    className="hidden"
-                    onChange={handleDocumentUpload}
-                />
-            </div>
+            {(selectedHelp === 'Психологічна' || selectedHelp === 'Інформаційна') && (
+                <div className="w-full mb-4">
+                    <label className="font-montserratRegular mb-2">Документи, підтверджуючі кваліфікацію</label>
+                    <br />
+                    <button
+                        className="w-52 mb-6 mt-2 p-2 text-center border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue text-blue-500"
+                        onClick={handleAddDocumentClick}
+                    >
+                        {uploadedDocument ? uploadedDocument.name : 'ДОДАТИ ДОКУМЕНТ'}
+                    </button>
+                    <input
+                        type="file"
+                        ref={fileInputRef}
+                        className="hidden"
+                        onChange={handleDocumentUpload}
+                    />
+                </div>
+            )}
 
-            <button
+            <Button
                 className="w-full bg-perfect-yellow text-almost-black py-4 rounded-full mb-6 hover:bg-perfect-yellow transition"
                 onClick={onNextStep}
             >
                 ПРОДОВЖИТИ
-            </button>
+            </Button>
         </div>
     );
 };

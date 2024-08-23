@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import VectorWhite from '../../../assets/images/VectorWhite.svg?react';
+import { Button } from "../../../ui/Button.tsx";
 
 type DateVictimInfoProps = {
     onNextStep: () => void;
+    selectedRole: string | null; // Add this line
 };
 
-const DateBirthdayVictim: React.FC<DateVictimInfoProps> = ({ onNextStep }) => {
+const DateBirthdayVictim: React.FC<DateVictimInfoProps> = ({ onNextStep, selectedRole }) => { // Add selectedRole
     const [selectedGender, setSelectedGender] = useState<string | null>(null);
 
     const handleGenderSelect = (gender: string) => {
@@ -27,11 +29,11 @@ const DateBirthdayVictim: React.FC<DateVictimInfoProps> = ({ onNextStep }) => {
             <h2 className="text-relative-h4 font-kharkiv mb-4">Заповніть данні</h2>
 
             <div className="w-full mb-4">
-                <label className="font-montserratRegular mb-2">Дата народження</label>
+                <label className="font-montserratRegular mb-2">Дата народження*</label>
                 <input
                     type="text"
                     placeholder="ДД / ММ / РРРР"
-                    className="w-full p-4 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
+                    className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
                 />
             </div>
 
@@ -64,7 +66,27 @@ const DateBirthdayVictim: React.FC<DateVictimInfoProps> = ({ onNextStep }) => {
                     </button>
                 </div>
             </div>
-
+            <div className={`flex w-full space-x-2 ${selectedRole !== 'volunteer' ? 'flex-col' : ''}`}>
+                {selectedRole === 'volunteer' && (
+                    <div className="w-1/2 mb-4">
+                        <label
+                            className="font-montserratRegular whitespace-pre-line mb-2">{`Номер волонтерського\n посвідчення`}</label>
+                        <input
+                            type="text"
+                            placeholder="**********"
+                            className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
+                        />
+                    </div>
+                )}
+                <div className={`${selectedRole === 'volunteer' ? 'w-1/2 mt-6' : 'w-full'} mb-4`}>
+                    <label className="font-montserratRegular mb-2">РНОКПП</label>
+                    <input
+                        type="text"
+                        placeholder="**********"
+                        className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
+                    />
+                </div>
+            </div>
             <div className="w-full mb-4">
                 <label className="font-montserratRegular ">
                     <input
@@ -81,7 +103,7 @@ const DateBirthdayVictim: React.FC<DateVictimInfoProps> = ({ onNextStep }) => {
                         {selectedOptions.terms && (
                             <span
                                 className="absolute inset-0 flex items-center justify-center text-white font-bold text-xs">
-                                <VectorWhite />
+                                <VectorWhite/>
                             </span>
                         )}
                     </span>
@@ -107,7 +129,7 @@ const DateBirthdayVictim: React.FC<DateVictimInfoProps> = ({ onNextStep }) => {
                         {selectedOptions.personalData && (
                             <span
                                 className="absolute inset-0 flex items-center justify-center text-white font-bold text-xs">
-                                <VectorWhite />
+                                <VectorWhite/>
                             </span>
                         )}
                     </span>
@@ -131,7 +153,7 @@ const DateBirthdayVictim: React.FC<DateVictimInfoProps> = ({ onNextStep }) => {
                         {selectedOptions.updates && (
                             <span
                                 className="absolute inset-0 flex items-center justify-center text-white font-bold text-xs">
-                                <VectorWhite />
+                                <VectorWhite/>
                             </span>
                         )}
                     </span>
@@ -139,13 +161,12 @@ const DateBirthdayVictim: React.FC<DateVictimInfoProps> = ({ onNextStep }) => {
                 </label>
             </div>
 
-
-            <button
+            <Button
                 className="w-full bg-perfect-yellow text-almost-black py-4 rounded-full mb-6 hover:bg-perfect-yellow transition"
                 onClick={onNextStep}
             >
                 ПРОДОВЖИТИ
-            </button>
+            </Button>
 
         </div>
     );
