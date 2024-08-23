@@ -40,7 +40,6 @@ export class UsersService {
   //   });
   // }
 
-  // сделать что бы отслеживать статус верификации телефона
   async updatePhoneVerificationStatus(
     phoneNumber: string,
     isVerified: boolean,

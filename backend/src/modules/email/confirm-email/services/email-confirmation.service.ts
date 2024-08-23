@@ -6,6 +6,7 @@ import SendEmailService from '../../send-email/services/send-email.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../../../users/entities/users.entity';
 import { Repository } from 'typeorm';
+import {SmsService} from "../../../sms/sms.service";
 
 @Injectable()
 export class EmailConfirmationService {
@@ -13,10 +14,17 @@ export class EmailConfirmationService {
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
     private readonly emailService: SendEmailService,
+    private readonly smsService: SmsService,
     @InjectRepository(User) private userRepository: Repository<User>,
   ) {}
 
-  public sendVerificationLink(email: string) {
+  async sendVerificationLink(email: string) {
+    const userExist = await this.userRepository.findOneBy({ email });
+
+    if (userExist.isConfirmedEmail) {
+      throw new BadRequestException('Email already confirmed');
+    }
+
     const payload: VerificationTokenPayload = { email };
     const token = this.jwtService.sign(payload, {
       secret: this.configService.get('JWT_EMAIL_VERIFICATION_TOKEN_SECRET'),
@@ -37,7 +45,7 @@ export class EmailConfirmationService {
   async decodeConfirmationToken(token: string) {
     try {
       const payload = await this.jwtService.verify(token, {
-        secret: this.configService.get('JWT_VERIFICATION_TOKEN_SECRET'),
+        secret: this.configService.get('JWT_EMAIL_VERIFICATION_TOKEN_SECRET'),
       });
 
       if (typeof payload === 'object' && 'email' in payload) {
@@ -52,32 +60,16 @@ export class EmailConfirmationService {
     }
   }
 
-  async resendConfirmationLink(email: string) {
-    try {
-      const user = await this.userRepository.findOneBy({ email });
-
-      if (user.isConfirmedEmail) {
-        throw new BadRequestException('This email has been confirmed already');
-        // return " has been confirmed already";
-      }
-
-      await this.sendVerificationLink(user.email);
-      return ' get confirmation link';
-    } catch {}
-  }
-
   async confirmEmail(email: string) {
-    try {
-      const user = await this.userRepository.findOneBy({ email });
-      if (user.isConfirmedEmail) {
-        throw new BadRequestException('This email has been confirmed already');
-      }
-      await this.userRepository.update(
-        { email },
-        {
-          isConfirmedEmail: true,
-        },
-      );
-    } catch {}
+    const user = await this.userRepository.findOneBy({ email });
+    if (!user || user.isConfirmedEmail) {
+      throw new BadRequestException('This email has been confirmed already');
+    }
+    await this.userRepository.update(
+      { email },
+      {
+        isConfirmedEmail: true,
+      },
+    );
   }
 }

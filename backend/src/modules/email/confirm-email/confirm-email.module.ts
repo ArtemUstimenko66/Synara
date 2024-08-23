@@ -6,6 +6,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import { UsersModule } from '../../users/users.module';
 import { EmailConfirmationController } from './controllers/email-confirmation.controller';
+import { SmsModule } from '../../sms/sms.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { EmailConfirmationController } from './controllers/email-confirmation.co
     JwtModule,
     forwardRef(() => SendEmailModule),
     forwardRef(() => UsersModule),
+    forwardRef(() => SmsModule),
   ],
   controllers: [EmailConfirmationController],
   providers: [EmailConfirmationService, JwtAuthGuard],

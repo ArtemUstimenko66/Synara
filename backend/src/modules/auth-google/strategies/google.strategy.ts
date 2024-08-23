@@ -4,7 +4,7 @@ import { Strategy, VerifyCallback } from 'passport-google-oauth2';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../../users/entities/users.entity';
 import { Repository } from 'typeorm';
-import { ConfigService, ConfigType } from '@nestjs/config';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
@@ -21,14 +21,16 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
   }
 
   async validate(
-    _accessToken: string,
-    _refreshToken: string,
+    accessToken: string,
+    refreshToken: string,
     profile: any,
     done: VerifyCallback,
   ): Promise<any> {
     const { id, name, emails, photos } = profile;
 
     const user = {
+      accessToken,
+      refreshToken,
       provider: 'google',
       providerId: id,
       email: emails[0].value,

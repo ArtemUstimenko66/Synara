@@ -1,6 +1,6 @@
-import AvatarComent from '../assets/images/AvatarComent.png';
-import ReactStars from "react-rating-stars-component";
 import React from "react";
+import Avatar from '../assets/images/avatar.png';
+import ReactStars from "react-rating-stars-component";
 
 interface ReviewProps {
     comment: string;
@@ -16,7 +16,7 @@ const Review: React.FC<ReviewProps> = ({ comment, name, date }) => {
     return (
         <div className="relative p-12 rounded-lg border border-gray-200 bg-white max-w-5xl max-h-64 md:max-w-none md:max-h-none">
             <div className="absolute -top-2 left-6 transform -translate-y-1/2">
-                <img src={AvatarComent} alt="Avatar" className="w-20 h-20 mt-12 rounded-full" />
+                <img src={Avatar} alt="Avatar" className="w-20 h-20 rounded-full" />
             </div>
             <p className="mt-4 font-montserratRegular  sm:text-xs xl:text-xs-ps  md:text-xs-ps text-sm mb-4 select-none">{comment}</p>
             <div className="text-perfect-yellow mb-4 select-none">

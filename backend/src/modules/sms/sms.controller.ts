@@ -10,7 +10,9 @@ import { SmsService } from './sms.service';
 import { UsersService } from '../users/services/users.service';
 import { AuthService } from '../auth/services/auth.service';
 import { Response } from 'express';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Sms')
 @Controller('sms')
 export class SmsController {
   constructor(
@@ -18,6 +20,13 @@ export class SmsController {
     private userService: UsersService,
     private authService: AuthService,
   ) {}
+
+  // @Post('send-code')
+  // @HttpCode(200)
+  // async sendCode(@Body('phoneNumber') phoneNumber: string) {
+  //   await this.smsService.sendVerificationCode(phoneNumber);
+  //   return { message: 'Verification code sent successfully' };
+  // }
 
   @Post('send-code')
   @HttpCode(200)

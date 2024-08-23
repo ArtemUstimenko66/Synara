@@ -1,12 +1,39 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import GoogleImg from '../../assets/images/google.svg';
 import AppleImg from '../../assets/images/apple.svg';
 
 type CompleteMainInfoProps = {
     onNextStep: () => void;
+    setUsername: (username: string) => void;
+    setEmail: (email: string) => void;
+    setPhoneNumber: (phoneNumber: string) => void;
+    setPassword: (password: string) => void;
 };
 
-const CompleteMainInfo: React.FC<CompleteMainInfoProps> = ({ onNextStep }) => {
+const CompleteMainInfo: React.FC<CompleteMainInfoProps> = ({
+                                                               onNextStep,
+                                                               setUsername,
+                                                               setEmail,
+                                                               setPhoneNumber,
+                                                               setPassword
+                                                           }) => {
+
+    const handleUsernameChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setUsername(e.target.value);
+    };
+
+    const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setEmail(e.target.value);
+    };
+
+    const handlePhoneNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setPhoneNumber(e.target.value);
+    };
+
+    const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setPassword(e.target.value);
+    };
+
     return (
         <div className="flex flex-col items-start pr-8 pb-8 w-full">
             <h2 className="text-relative-h4 font-kharkiv mb-4">Заповніть данні</h2>
@@ -18,6 +45,7 @@ const CompleteMainInfo: React.FC<CompleteMainInfoProps> = ({ onNextStep }) => {
                         type="text"
                         placeholder="Ваше ім'я"
                         className="w-full p-4 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
+                        onChange={handleUsernameChange}
                     />
                 </div>
                 <div className="w-1/2 flex flex-col">
@@ -26,6 +54,7 @@ const CompleteMainInfo: React.FC<CompleteMainInfoProps> = ({ onNextStep }) => {
                         type="text"
                         placeholder="Ваше прізвище"
                         className="w-full p-4 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
+                        onChange={handlePhoneNumberChange}
                     />
                 </div>
             </div>
@@ -36,6 +65,7 @@ const CompleteMainInfo: React.FC<CompleteMainInfoProps> = ({ onNextStep }) => {
                     type="email"
                     placeholder="Адреса електронної пошти"
                     className="w-full p-4 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
+                    onChange={handleEmailChange}
                 />
             </div>
 
@@ -45,6 +75,7 @@ const CompleteMainInfo: React.FC<CompleteMainInfoProps> = ({ onNextStep }) => {
                     type="password"
                     placeholder="Ваш пароль"
                     className="w-full p-4 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
+                    onChange={handlePasswordChange}
                 />
             </div>
 
