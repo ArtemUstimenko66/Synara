@@ -11,6 +11,11 @@ import { CacheModule } from './cache.module';
 import { SmsModule } from './modules/sms/sms.module';
 import { ConfirmEmailModule } from './modules/email/confirm-email/confirm-email.module';
 import { SendEmailModule } from './modules/email/send-email/send-email.module';
+import { User } from './modules/users/entities/users.entity';
+import { VolunteersEntity } from './modules/users/entities/volunteers.entity';
+import { VolunteersModule } from './modules/users/volunteers.module';
+import { VictimsModule } from './modules/users/victims.module';
+import { VictimsEntity } from './modules/users/entities/victim.entity';
 
 @Module({
   imports: [
@@ -27,7 +32,7 @@ import { SendEmailModule } from './modules/email/send-email/send-email.module';
         username: configService.get<string>('DB_USERNAME'),
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_NAME'),
-        entities: [path.join(__dirname, '**/*.entity{.ts,.js}')],
+        entities: [User, VolunteersEntity, VictimsEntity],
         synchronize: true,
       }),
       inject: [ConfigService],
@@ -35,6 +40,8 @@ import { SendEmailModule } from './modules/email/send-email/send-email.module';
     AuthModule,
     AuthGoogleModule,
     UsersModule,
+    VolunteersModule,
+    VictimsModule,
     SmsModule,
     CacheModule,
     ConfirmEmailModule,

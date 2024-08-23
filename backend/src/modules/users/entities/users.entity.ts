@@ -1,6 +1,9 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
-import { Role } from '../role.enum';
+import { Role } from '../enums/role.enum';
+import { VolunteersEntity } from './volunteers.entity';
+import { Gender } from '../enums/gender.enum';
+import { VictimsEntity } from './victim.entity';
 
 @Entity('users')
 export class User {
@@ -13,12 +16,28 @@ export class User {
   id: number;
 
   @ApiProperty({
-    example: 'john_doe',
-    description: 'Unique username of the user',
+    example: 'John',
+    description: 'First name of the user',
     type: String,
   })
-  @Column()
-  username: string;
+  @Column({ type: 'varchar', length: 100 })
+  firstName: string;
+
+  @ApiProperty({
+    example: 'Doe',
+    description: 'Last name of the user',
+    type: String,
+  })
+  @Column({ type: 'varchar', length: 100 })
+  lastName: string;
+
+  @ApiProperty({
+    example: 'password123',
+    description: 'Password for the user account',
+    type: String,
+  })
+  @Column({ type: 'varchar', select: false })
+  password: string;
 
   @ApiProperty({
     example: 'john.doe@example.com',
@@ -26,27 +45,28 @@ export class User {
     uniqueItems: true,
     type: String,
   })
-  @Column({ unique: true })
+  @Column({ type: 'varchar', unique: true })
   email: string;
 
   @ApiProperty({
     example: '+38066996699',
     description: 'Phone number of the user',
     type: String,
+    required: false,
   })
-  @Column({ nullable: true })
+  @Column({ type: 'varchar', nullable: true })
   phoneNumber: string;
 
   @ApiProperty({
-    example: 'password123',
-    description: 'Password for the user account',
+    example: '1990-01-01',
+    description: 'Birthdate of the user',
     type: String,
   })
-  @Column()
-  password: string;
+  @Column({ type: 'date', nullable: true })
+  birthDate: Date;
 
   @ApiProperty({
-    example: 'admin',
+    example: 'guest',
     description: 'Role of the user in the system',
     type: String,
   })
@@ -54,7 +74,23 @@ export class User {
   role: Role;
 
   @ApiProperty({
-    example: 'true',
+    example: 'male',
+    description: 'Gender of the user',
+    type: String,
+  })
+  @Column({ type: 'enum', enum: Gender, default: Gender.Other })
+  gender: Gender;
+
+  @ApiProperty({
+    example: 1234567890,
+    description: 'UNP (Unique Identification Number) of the user',
+    type: Number,
+  })
+  @Column({ type: 'bigint', unique: true })
+  UNP: number;
+
+  @ApiProperty({
+    example: false,
     description: 'Confirmation of user phone number',
     type: Boolean,
   })
@@ -62,10 +98,16 @@ export class User {
   isPhoneVerified: boolean;
 
   @ApiProperty({
-    example: 'true',
+    example: false,
     description: 'Confirmation of user email',
     type: Boolean,
   })
   @Column({ default: false })
   isConfirmedEmail: boolean;
+
+  @OneToOne(() => VolunteersEntity, (volunteers) => volunteers.user)
+  volunteer: VolunteersEntity;
+
+  @OneToOne(() => VictimsEntity, (victim) => victim.user)
+  victim: VictimsEntity;
 }

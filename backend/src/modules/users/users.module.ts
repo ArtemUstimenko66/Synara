@@ -1,12 +1,11 @@
 import { forwardRef, Module } from '@nestjs/common';
-import { UsersService } from './services/users.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from '../auth/auth.module';
-import { UserController } from './controller/user.controller';
 import { User } from './entities/users.entity';
+import { UsersService } from './services/users.service';
 @Module({
   imports: [TypeOrmModule.forFeature([User]), forwardRef(() => AuthModule)],
-  controllers: [UserController],
+  controllers: [],
   providers: [UsersService],
   exports: [UsersService, TypeOrmModule], //TypeOrmModule что бы другие модули могли работать с ним ???
 })

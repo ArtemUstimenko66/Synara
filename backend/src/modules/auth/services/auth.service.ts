@@ -1,22 +1,28 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../../users/services/users.service';
+import { VolunteersService } from '../../users/services/volunteer.service';
+import { VictimService } from '../../users/services/victim.service';
 import { CreateUserDto } from '../../users/dtos/create-user.dto';
 import { LoginUserDto } from '../../users/dtos/login-user.dto';
 import { User } from '../../users/entities/users.entity';
+import { CreateVolunteerDto } from '../../users/dtos/create-volunteer.dto';
+import { CreateVictimDto } from '../../users/dtos/create-victim.dto';
+import { Role } from '../../users/enums/role.enum';
 import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class AuthService {
   constructor(
     private userService: UsersService,
+    private volunteerService: VolunteersService,
+    private victimService: VictimService,
     private jwtService: JwtService,
   ) {}
 
   async generateTokens(user: User) {
     const payload = {
       id: user.id,
-      username: user.username,
       email: user.email,
       phone: user.phoneNumber,
       roles: [user.role],
@@ -32,18 +38,30 @@ export class AuthService {
     return { access_token, refresh_token };
   }
 
-  async register(createUserDto: CreateUserDto) {
-    const { username, email, password, phoneNumber, role } = createUserDto;
-
+  async register(
+    createUserDto: CreateUserDto,
+    volunteerDetailsDto: CreateVolunteerDto,
+    victimDetailsDto: CreateVictimDto,
+  ) {
     const user = await this.userService.create({
-      username,
-      email,
-      password,
-      phoneNumber,
-      role,
+      ...createUserDto,
     });
 
-    const { password: _, ...result } = user;
+    if (user.role === Role.Volunteer) {
+      await this.volunteerService.create({
+        ...volunteerDetailsDto,
+        userId: user.id,
+      });
+    }
+
+    if (user.role === Role.Victim) {
+      await this.victimService.create({
+        ...victimDetailsDto,
+        userId: user.id,
+      });
+    }
+
+    const { password, ...result } = user;
     return { ...result, message: 'User registered successfully.' };
   }
 
@@ -80,6 +98,10 @@ export class AuthService {
       console.log('Error during token refresh:', error);
       throw new UnauthorizedException('Invalid refresh token');
     }
+  }
+
+  async getUserById(id: number): Promise<User> {
+    return this.userService.findById(id);
   }
 
   async validateUser(email: string, password: string): Promise<any> {

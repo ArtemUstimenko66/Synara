@@ -48,7 +48,7 @@ export class AuthGoogleService {
     try {
       const newUser = this.userRepository.create(user);
       newUser.password = await this.hashPassword(this.generateRandomPassword());
-      newUser.username = user.email.split('@')[0]; //generateFromEmail(user.email, 5);
+      // newUser.username = user.email.split('@')[0]; //generateFromEmail(user.email, 5);
       await this.userRepository.save(newUser);
 
       return this.getTokens(newUser);
@@ -69,7 +69,6 @@ export class AuthGoogleService {
   getTokens(user: User) {
     const accessToken = this.generateJwt({
       id: user.id,
-      username: user.username,
       email: user.email,
       roles: [user.role],
     });
@@ -77,7 +76,6 @@ export class AuthGoogleService {
     const refreshToken = this.jwtService.sign(
       {
         id: user.id,
-        username: user.username,
         email: user.email,
         roles: [user.role],
       },

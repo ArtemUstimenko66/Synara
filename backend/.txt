@@ -13,13 +13,4 @@
 
 обсудить с ними за этапы регистрации.
 
-    const handleRegister = async () => {
-        try {
-            await register({ username, email, phoneNumber, password, role });
-            await sendEmailVerification(email)
-            navigate('/verify-email');
-            console.log('Registration successful! Verification code sent to your phone.');
-        } catch (error) {
-            console.error('Registration error:', error);
-        }
-    };
+// вроде бы все есть , нужно посмотреть работает ли оно , в постман или не работает.

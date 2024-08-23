@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   HttpStatus,
+  Param,
   Post,
   Req,
   Res,
@@ -16,9 +17,11 @@ import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { LoginUserDto } from '../../users/dtos/login-user.dto';
 import { CreateUserDto } from '../../users/dtos/create-user.dto';
 import { Roles } from '../roles.decorator';
-import { Role } from '../../users/role.enum';
+import { Role } from '../../users/enums/role.enum';
 import { RoleGuard } from '../guards/roles.guard';
 import { Response, Request } from 'express';
+import { CreateVolunteerDto } from '../../users/dtos/create-volunteer.dto';
+import { CreateVictimDto } from '../../users/dtos/create-victim.dto';
 
 @ApiTags('Authorization')
 @Controller('auth')
@@ -51,8 +54,16 @@ export class AuthController {
   @ApiOperation({ summary: 'Register' })
   @ApiResponse({ status: 201, type: User })
   @Post('/register')
-  async register(@Body() createUserDto: CreateUserDto) {
-    return await this.authService.register(createUserDto);
+  async register(
+    @Body() createUserDto: CreateUserDto,
+    @Body('volunteerDetails') createVolunteerDto: CreateVolunteerDto,
+    @Body('victimDetails') createVictimDto: CreateVictimDto,
+  ) {
+    return await this.authService.register(
+      createUserDto,
+      createVolunteerDto,
+      createVictimDto,
+    );
   }
 
   @ApiOperation({ summary: 'Refresh token' })
@@ -92,6 +103,14 @@ export class AuthController {
   @Get('/profile')
   getProfile(@Req() req) {
     return req.user;
+  }
+
+  @ApiOperation({ summary: 'Get user by ID' })
+  @ApiResponse({ status: 200, type: User })
+  //@UseGuards(JwtAuthGuard)
+  @Get('/user/:id')
+  async getUserById(@Param('id') id: number): Promise<User> {
+    return this.authService.getUserById(id);
   }
 
   @ApiOperation({ summary: 'Logout' })
