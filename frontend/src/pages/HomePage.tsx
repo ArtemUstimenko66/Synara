@@ -137,14 +137,14 @@ const HomePage: React.FC = () => {
                 {/* First section - who are we */}
                 <section className='w-full flex justify-center flex-col xl:flex-row md:flex-row'>
                     <div
-                        className="relative text-center order-2 xl:order-1 xl:text-left md:text-left xl:w-11/12 mt-12 xl:mt-64 mr-16 md:mt-relative-smlg">
-                        <h1 className='xl:text-h1 font-kharkiv whitespace-pre-line mt-6 mb-0 tracking-tight md:text-relative-h3xl md:text-left'>
+                        className="relative text-center order-2 xl:order-1 xl:text-left  md:text-left xl:w-11/12 mt-12 xl:mt-64 mr-16 md:mt-relative-smlg">
+                        <h1 className='xl:text-h1 sm:text-h5 sm:text-center sm:ml-12 md:ml-0 xl:ml-0 font-kharkiv whitespace-pre-line mt-6 mb-0 tracking-tight md:text-relative-h3xl md:text-left'>
                             {`LOREM IPSUM - \nЭТО ТЕКСТ-"РИБА"`}
                         </h1>
-                        <p className='text-medium-gray font-montserratRegular mt-1 mb-4 whitespace-pre-line xl:text-pl md:text-relative-pxl md:text-left'>
+                        <p className='text-medium-gray font-montserratRegular sm:ml-8 md:ml-0 sm:text-xs-ps xl:ml-0  mt-1 mb-4 whitespace-pre-line xl:text-pl md:text-relative-pxl md:text-left'>
                             {`Часто Використовуваний У Пресі Та Веб-Дизайні. \nЄ Стандартною "Рибою" Для Текстів.`}
                         </p>
-                        <Button isFilled={true}>ПРИЄДНАТИСЯ</Button>
+                        <Button className="sm:ml-8 xl:ml-0 md:ml-0 md:mt-0 sm:mt-6 xl:mt-0" isFilled={true}>ПРИЄДНАТИСЯ</Button>
                     </div>
                     <div
                         className="hidden xl:w-1/2 xl:mt-20 xl:flex xl:order-2 md:flex md:order-2 md:mt-relative-md md:w-1/2">
@@ -154,7 +154,7 @@ const HomePage: React.FC = () => {
                 </section>
 
                 {/* Second section - about us */}
-                <section className='w-full flex justify-center flex-col xl:flex-row md:flex-row xl:mt-96 md:mt-[11vw]'>
+                <section className='w-full flex justify-center sm:mt-96 sm:bg-dark-blue flex-col xl:flex-row md:flex-row xl:mt-96 md:mt-[11vw]'>
                     <div
                         className="hidden xl:flex xl:order-1 md:flex md:order-1 xl:w-1/2 md:w-relative-1/2">
                         <PlaceholderHorizontal
@@ -162,22 +162,23 @@ const HomePage: React.FC = () => {
                     </div>
                     <div
                         className="relative text-center order-2 xl:order-2 md:order-2 xl:text-left md:text-left xl:ml-24 xl:w-11/12">
-                        <h1 className='xl:text-h1 text-almost-white font-kharkiv xl:whitespace-pre-line xl:mt-6 mb-0 xl:tracking-tight md:text-relative-h3xl'>
+                        <h1 className='xl:text-h1 sm:text-h4 sm:mb-4 sm:mt-8 md:mt-0  md:mb-0 xl: text-almost-white font-kharkiv xl:whitespace-pre-line xl:mt-6 mb-0 xl:tracking-tight md:text-relative-h3xl'>
                             {`ХТО МИ?`}
                         </h1>
-                        <p className='text-almost-white font-montserratRegular xl:text-pl md:text-relative-pxl xl:mt-1 xl:mb-4 md:mb-relative-sm whitespace-pre-line md:whitespace-pre-line'>
+                        <p className='text-almost-white sm:text-left sm:m-4 md:m-0 xl:m-0 sm:text-xs-ps font-montserratRegular xl:text-pl md:text-relative-pxl xl:mt-1 xl:mb-4 md:mb-relative-sm whitespace-pre-line md:whitespace-pre-line'>
                             {`Lorem Ipsum - це текст-"риба", який часто використовують у пресі та веб-
                                 дизайні. Lorem Ipsum є стандартною "рибою" для текстів на латиниці з початку
                                 XVI століття. У той час якийсь безіменний друкар створив велику колекцію
                                 розмірів і форм шрифтів, використовуючи Lorem.`}
                         </p>
-                        <Button hasBorder={true}>ЧИТАТИ ДАЛІ</Button>
+                        <PlaceholderHorizontal className="xl:hidden md:hidden sm:w-[80%] sm:mx-auto"/>
+                        <Button  className="sm:hidden" hasBorder={true}>ЧИТАТИ ДАЛІ</Button>
                     </div>
                 </section>
 
                 {/* Third section - the last collections of money*/}
                 <section className="w-full h-auto flex flex-col items-center xl:mt-64 md:mt-relative-elg">
-                    <h2 className="xl:text-h2 md:text-relative-h3xl font-kharkiv mb-16">ОСТАННІ ЗБОРИ</h2>
+                    <h2 className="xl:text-h2 sm:mt-24 xl:mt-0 sm:text-h4 md:text-relative-h3xl font-kharkiv mb-16">ОСТАННІ ЗБОРИ</h2>
                     <div
                         className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-6 xl:flex xl:flex-row xl:gap-16 justify-center items-center">
 
@@ -230,40 +231,59 @@ const HomePage: React.FC = () => {
 
                 {/* Fourth section - join us */}
                 <section className="w-full h-auto flex flex-col items-center mt-32 px-4 md:px-8">
-                    <h2 className="xl:text-h2 md:text-relative-h3xl font-kharkiv xl:mb-24 md:mb-16 text-center">ПРИЄДНУЙСЯ
+                    <h2 className="xl:text-h2 sm:text-h4 md:text-relative-h3xl sm:mb-8  font-kharkiv xl:mb-24 md:mb-16 text-center">ПРИЄДНУЙСЯ
                         ДО
                         НАС</h2>
                     <div
-                        className="flex flex-col xl:flex-row md:flex-row justify-center items-center space-y-10 xl:space-y-0 md:space-y-0 xl:space-x-32 md:space-x-16">
+                        className="flex flex-col xl:flex-row  md:flex-row justify-center items-center space-y-10 xl:space-y-0 md:space-y-0 xl:space-x-32 md:space-x-16">
 
                         {/* Card 1 */}
-                        <div className="flex flex-col items-center max-w-xs md:max-w-sm xl:max-w-md">
-                            <PlaceholderSquare className="w-24 h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"/>
-                            <h3 className="text-center xl:text-h3 md:text-relative-h3xl font-kharkiv mt-4 w-full max-w-xs md:max-w-sm xl:max-w-md">Ставай
+                        <div className="flex xl:flex-col md:flex-col sm:flex-row  xl:items-center max-w-xs md:max-w-sm xl:max-w-md">
+                            <div className="">
+                                <PlaceholderSquare className="w-24 sm:w-40 md:ml-8 sm:mr-8 xl:mr-0 sm:h-40 h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"/>
+                            </div>
+                            <div className="sm:flex-row">
+                                <h3 className="xl:text-center sm:text-center xl:text-h3 md:text-relative-h3xl font-kharkiv mt-4 w-full max-w-xs md:max-w-sm xl:max-w-md">Ставай
                                 волонтером</h3>
-                            <p className="text-1 text-center font-montserratRegular mt-2 w-full max-w-xs md:max-w-sm xl:max-w-md">
+                                <p className="sm:text-xs xl:text-xs-pxl text-center font-montserratRegular mt-2 w-full max-w-xs md:max-w-sm xl:max-w-md">
                                 Lorem Ipsum - Це Текст-"Риба", Часто Використовуваний У Пресі Та Веб-Дизайні.
-                            </p>
+                                </p>
+
+                            </div>
                         </div>
 
                         {/* Card 2 */}
-                        <div className="flex flex-col items-center max-w-xs md:max-w-sm xl:max-w-md">
-                            <PlaceholderSquare className="w-24 h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"/>
-                            <h3 className="text-center xl:text-h3 md:text-relative-h3xl font-kharkiv mt-4 w-full max-w-xs md:max-w-sm xl:max-w-md">Отримуй
-                                допомогу</h3>
-                            <p className="text-1 text-center font-montserratRegular mt-2 w-full max-w-xs md:max-w-sm xl:max-w-md">
-                                Lorem Ipsum - Це Текст-"Риба", Часто Використовуваний У Пресі Та Веб-Дизайні.
-                            </p>
+                        <div
+                            className="flex xl:flex-col md:flex-col sm:flex-row items-center max-w-xs md:max-w-sm xl:max-w-md">
+                            <div>
+                                <PlaceholderSquare
+                                    className="sm:hidden md:block xl:block w-24 sm:w-40 md:ml-8 sm:mr-8 xl:mr-0 sm:h-40 h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"/>
+                            </div>
+                            <div className="sm:flex-row">
+                                <h3 className="xl:text-center sm:text-center xl:text-h3 md:text-relative-h3xl font-kharkiv mt-4 w-full max-w-xs md:max-w-sm xl:max-w-md">Отримуй
+                                    допомогу</h3>
+                                <p className="sm:text-xs xl:text-xs-pxl text-center font-montserratRegular mt-2 w-full max-w-xs md:max-w-sm xl:max-w-md">
+                                    Lorem Ipsum - Це Текст-"Риба", Часто Використовуваний У Пресі Та Веб-Дизайні.
+                                </p>
+                            </div>
+                            <div>
+                                <PlaceholderSquare
+                                    className="md:hidden sm:ml-8 xl:hidden w-24 sm:w-40 md:ml-8 sm:mr-8 xl:mr-0 sm:h-40 h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"/>
+                            </div>
                         </div>
 
                         {/* Card 3 */}
-                        <div className="flex flex-col items-center max-w-xs md:max-w-sm xl:max-w-md">
-                            <PlaceholderSquare className="w-24 h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"/>
-                            <h3 className="text-center xl:text-h3 md:text-relative-h3xl font-kharkiv mt-4 w-full max-w-xs md:max-w-sm xl:max-w-md">Донать
+                        <div className="flex xl:flex-col md:flex-col sm:flex-row items-center max-w-xs md:max-w-sm xl:max-w-md">
+                            <div className="">
+                            <PlaceholderSquare className="w-24 sm:w-40 md:ml-8 sm:mr-8 xl:mr-0 sm:h-40 h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"/>
+                            </div>
+                            <div className="sm:flex-row">
+                            <h3 className="xl:text-center sm:text-center xl:text-h3 md:text-relative-h3xl font-kharkiv mt-4 w-full max-w-xs md:max-w-sm xl:max-w-md">Донать
                                 на ЗСУ</h3>
-                            <p className="text-1 text-center font-montserratRegular mt-2 w-full max-w-xs md:max-w-sm xl:max-w-md">
+                            <p className="sm:text-xs xl:text-xs-pxl text-center font-montserratRegular mt-2 w-full max-w-xs md:max-w-sm xl:max-w-md">
                                 Lorem Ipsum - Це Текст-"Риба", Часто Використовуваний У Пресі Та Веб-Дизайні.
                             </p>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -289,7 +309,7 @@ const HomePage: React.FC = () => {
                             </div>
                         </div>
                         <BlueCube
-                            className="xl:ml-12 md:ml-16 xl:mt-auto md:mt-10 xl:w-auto xl:h-auto md:w-relative-xlg md:h-auto"/>
+                            className="xl:ml-12  md:ml-16 xl:mt-auto md:mt-10 xl:w-auto xl:h-auto md:w-relative-xlg md:h-auto"/>
 
                         {/* Card 2 */}
                         <BlueCube
@@ -358,51 +378,55 @@ const HomePage: React.FC = () => {
 
                 {/* Sixth section - why us */}
                 <section className="w-full h-auto flex flex-col items-center mt-32">
-                    <h2 className="xl:text-h2 md:text-relative-h3xl font-kharkiv mb-20 text-center">ЧОМУ САМЕ МИ</h2>
-                    <div className="flex xl:gap-12 md:gap-6">
+                    <h2 className="xl:text-h2 md:text-relative-h3xl sm:text-h4 font-kharkiv sm:mb-8 md:mb-20 xl:mb-20 text-center">ЧОМУ САМЕ МИ</h2>
+                    <div className="flex xl:gap-12 md:gap-6 sm:ml-8 md:ml-0 xl:ml-0">
                         {/* Левая сторона */}
                         <div className="flex-1 flex flex-col xl:ml-6 md:ml-6">
-                            <div className="flex flex-row xl:space-x-12 md:space-x-6">
+                            <div className="flex flex-row sm:space-x-16 xl:space-x-12 md:space-x-6">
                                 <div
-                                    className="xl:text-h1 md:text-relative-h1 text-md_h1 font-bold font-montserratMedium">10k<span
+                                    className="xl:text-h1 sm:text-h3 md:text-relative-h1 text-md_h1 font-bold font-montserratMedium">10k<span
                                     className="text-dark-blue font-bold">+</span></div>
                                 <div
-                                    className="xl:text-h1 md:text-relative-h1 text-md_h1 font-bold font-montserratMedium">4k<span
+                                    className="xl:text-h1 sm:text-h3 md:text-relative-h1 text-md_h1 font-bold font-montserratMedium">4k<span
                                     className="text-dark-blue font-bold">+</span></div>
                                 <div
-                                    className="xl:text-h1 md:text-relative-h1 text-md_h1 font-bold font-montserratMedium">20k<span
+                                    className="xl:text-h1 sm:text-h3 md:text-relative-h1 text-md_h1 font-bold font-montserratMedium">20k<span
                                     className="text-dark-blue font-bold">+</span></div>
                             </div>
                             <div
-                                className="flex flex-row font-bold font-montserratMedium xl:space-x-20 md:space-x-6 xl:text-pl md:text-relative-pxl text-md_body xl:mt-0 md:mt-2 text-gray-500">
+                                className="flex sm:text-xs sm:space-x-10 flex-row font-bold font-montserratMedium xl:space-x-20 md:space-x-6 xl:text-pl md:text-relative-pxl text-md_body xl:mt-0 md:mt-2 text-gray-500">
                                 <div>Користувачів</div>
                                 <div>Волонтерів</div>
                                 <div>Раз допомогли</div>
                             </div>
-                            <div className="xl:mt-16 md:mt-8 space-y-8 md:space-y-4 font-bold font-montserratRegular">
+                            <div>
+                                <BlueCube className="md:hidden xl:hidden sm:w-[90%] sm:h-auto sm:mt-6"/>
+                            </div>
+                            <div
+                                className=" xl:mt-16 md:mt-8 sm:mt-6 space-y-8 md:space-y-4 sm:space-y-4 font-bold font-montserratRegular">
                                 <div className="flex items-center">
-                                    <VectorBlue className="xl:w-auto xl:h-auto md:w-8 md:h-8"/>
-                                    <p className="xl:ml-8 md:ml-4 font-montserratRegular xl:text-pl md:text-relative-pxl">Lorem
+                                    <VectorBlue className="xl:w-auto xl:h-auto md:w-8 md:h-8 sm:mr-4 md:mr-0 xl:mr-0"/>
+                                    <p className="xl:ml-8 md:ml-4 sm:text-xs-ps font-montserratRegular xl:text-pl md:text-relative-pxl">Lorem
                                         Ipsum Є Стандартною "Рибою" Для Текстів Латиницею З Початку XVI Століття.</p>
                                 </div>
                                 <div className="flex items-center">
-                                    <VectorBlue className="xl:w-auto xl:h-auto md:w-8 md:h-8"/>
-                                    <p className="xl:ml-8 md:ml-4 font-montserratRegular xl:text-pl md:text-relative-pxl">Lorem
+                                    <VectorBlue className="xl:w-auto xl:h-auto md:w-8 md:h-8 sm:mr-4 md:mr-0 xl:mr-0"/>
+                                    <p className="xl:ml-8 md:ml-4 sm:text-xs-ps font-montserratRegular xl:text-pl md:text-relative-pxl">Lorem
                                         Ipsum Є Стандартною "Рибою" Для Текстів Латиницею З Початку XVI Століття.</p>
                                 </div>
                                 <div className="flex items-center">
-                                    <VectorBlue className="xl:w-auto xl:h-auto md:w-8 md:h-8"/>
-                                    <p className="xl:ml-8 md:ml-4 font-montserratRegular xl:text-pl md:text-relative-pxl">Lorem
+                                    <VectorBlue className="xl:w-auto xl:h-auto md:w-8 md:h-8 sm:mr-4 md:mr-0 xl:mr-0"/>
+                                    <p className="xl:ml-8 md:ml-4 sm:text-xs-ps font-montserratRegular xl:text-pl md:text-relative-pxl">Lorem
                                         Ipsum Є Стандартною "Рибою" Для Текстів Латиницею З Початку XVI Століття.</p>
                                 </div>
                                 <div className="flex items-center">
-                                    <VectorBlue className="xl:w-auto xl:h-auto md:w-8 md:h-8"/>
-                                    <p className="xl:ml-8 md:ml-4 font-montserratRegular xl:text-pl md:text-relative-pxl">Lorem
+                                    <VectorBlue className="xl:w-auto xl:h-auto md:w-8 md:h-8 sm:mr-4 md:mr-0 xl:mr-0"/>
+                                    <p className="xl:ml-8 md:ml-4 sm:text-xs-ps font-montserratRegular xl:text-pl md:text-relative-pxl">Lorem
                                         Ipsum Є Стандартною "Рибою" Для Текстів Латиницею З Початку XVI Століття.</p>
                                 </div>
                                 <div className="flex items-center">
-                                    <VectorBlue className="xl:w-auto xl:h-auto md:w-8 md:h-8"/>
-                                    <p className="xl:ml-8 md:ml-4 font-montserratRegular xl:text-pl md:text-relative-pxl">Lorem
+                                    <VectorBlue className="xl:w-auto xl:h-auto md:w-8 md:h-8 sm:mr-4 md:mr-0 xl:mr-0"/>
+                                    <p className="xl:ml-8 md:ml-4 sm:text-xs-ps font-montserratRegular xl:text-pl md:text-relative-pxl">Lorem
                                         Ipsum Є Стандартною "Рибою" Для Текстів Латиницею З Початку XVI Століття.</p>
                                 </div>
                             </div>
@@ -410,67 +434,70 @@ const HomePage: React.FC = () => {
 
                         {/* Правая сторона */}
                         <div className="flex-shrink-0">
-                            <BlueCube
-                                className="xl:ml-20 md:ml-12 xl:mt-2 md:mt-24 xl:w-auto xl:h-auto md:w-72 md:h-auto"/>
+                        <BlueCube
+                                className="sm:hidden md:block xl:block xl:ml-20 md:ml-12 xl:mt-2 md:mt-24 xl:w-auto xl:h-auto md:w-72 md:h-auto"/>
                         </div>
                     </div>
                 </section>
 
                 {/* Seventh section - our statistics */}
                 <section className="w-full h-auto flex flex-col items-center mt-40">
-                    <h2 className="xl:text-h2 md:text-relative-h2 font-kharkiv mb-16 text-center">НАША СТАТИСТИКА</h2>
-
+                    <h2 className="xl:text-h2 sm:text-h3 md:text-relative-h2 font-kharkiv sm:mb-4 md:mb-16 xl:mb-16 text-center">НАША СТАТИСТИКА</h2>
+                    <div className="flex flex-col md:hidden xl:hidden sm:block">
+                        <div className=" sm:text-pxll sm:text-center font-kharkiv ">За період</div>
+                        <DateRangeCalendarWithButton/>
+                    </div>
                     <div className="w-full grid grid-cols-3 gap-x-2 gap-y-2 pr-12">
 
                         {/* Statistic 1 */}
-                        <div className="relative w-64 h-64 mx-auto xl:ml-28 md:ml-8 flex items-center justify-center">
+                        <div className="relative w-64 h-64 mx-auto sm:mt-8 md:mt-0 xl:mt-0 sm:ml-8 xl:ml-28 md:ml-8 flex items-center justify-center">
                             <div className="absolute inset-0 animate-move-in-circle-2">
-                                <VECTOR_1_2 className="xl:w-auto xl:h-auto md:w-[115%] md:h-[115%]"/>
+                                <VECTOR_1_2 className="sm:w-[80%] sm:h-[80%] xl:w-auto xl:h-auto md:w-[115%] md:h-[115%]"/>
                             </div>
                             <div className="xl:mt-10 md:mt-3 xl:ml-6 md:ml-0 absolute inset-0 animate-move-in-circle">
-                                <VECTOR_1_1 className="xl:w-auto xl:h-auto md:w-[105%] md:h-[105%]"/>
+                                <VECTOR_1_1 className="sm:w-[80%] sm:h-[80%] xl:w-auto xl:h-auto md:w-[105%] md:h-[105%]"/>
                             </div>
                             <div
-                                className="xl:mt-24 xl:ml-16 md:mt-6 md:ml-2 absolute inset-0 flex flex-col items-center justify-center text-white text-h3 text-center">
-                                <h2 className="xl:mb-4 md:mb-2 font-montserratMedium text-white font-extrabold xl:text-5xl md:text-relative-h1">350</h2>
-                                <p className="xl:text-xl md:text-relative-h4 font-montserratRegular text-white whitespace-pre-line">{`Гуманітарної \nдопомоги`}</p>
+                                className="xl:mt-24 sm:mr-12 md:mr-0 xl:mr-0 sm:mb-8 md:mb-0 xl:mb-0 xl:ml-16 md:mt-6 md:ml-2 absolute inset-0 flex flex-col items-center justify-center text-white text-h3 text-center">
+                                <h2 className="xl:mb-4 sm:text-h3 md:mb-2 font-montserratMedium text-white font-extrabold xl:text-5xl md:text-relative-h1">350</h2>
+                                <p className="xl:text-xl sm:text-xs-pxl md:text-relative-h4 font-montserratRegular text-white whitespace-pre-line">{`Гуманітарної \nдопомоги`}</p>
                             </div>
                         </div>
 
                         {/* Centered "За період" */}
                         <div
-                            className="relative w-64 h-64 mx-auto flex items-center justify-center xl:mt-48 xl:ml-32 md:mt-32 md:ml-8">
+                            className="sm:hidden md:block xl:block relative w-64 h-64 mx-auto flex items-center justify-center xl:mt-48 xl:ml-32 md:mt-32 md:ml-8">
                             <div className="text-center mt-12">
-                                <div className="xl:text-h3 md:text-relative-h3 font-kharkiv mb-4">За період</div>
+                                <div className=" xl:text-h3 md:text-relative-h3 font-kharkiv mb-4">За період</div>
                                 <DateRangeCalendarWithButton/>
                             </div>
                         </div>
 
                         {/* Statistic 2 */}
-                        <div className="relative w-64 h-64 flex items-center justify-center">
+                        <div className=" relative w-64 md:mt-0 md:ml-0 xl:mt-0 xl:ml-0 sm:mt-96 sm:mr-12 h-64  flex items-center justify-center">
                             <div className="absolute inset-0 animate-move-in-circle xl:ml-auto md:xl-ml-4">
-                                <VECTOR_2_2 className="xl:w-auto xl:h-auto md:w-[105%] md:h-[105%]"/>
+                                <VECTOR_2_2 className="sm:w-[90%] sm:h-[90%] xl:w-auto xl:h-auto md:w-[105%] md:h-[105%]"/>
                             </div>
                             <div className="mt-8 ml-12 absolute inset-0 animate-move-in-circle-2">
-                                <VECTOR_2_1 className="xl:w-auto xl:h-auto md:w-[105%] md:h-[105%]"/>
+                                <VECTOR_2_1 className="sm:w-[90%] sm:h-[90%] xl:w-auto xl:h-auto md:w-[105%] md:h-[105%]"/>
                             </div>
                             <div
                                 className="xl:mt-8 xl:ml-12 md:mt-0 md:ml-2 absolute inset-0 flex flex-col items-center justify-center text-white text-h3 text-center">
-                                <h2 className="font-montserratMedium font-extrabold text-white xl:text-5xl md:text-relative-h1">285</h2>
-                                <p className="xl:mt-4 md:mt-2 xl:text-xl md:text-relative-h4 font-montserratRegular whitespace-pre-line text-white">{`Інформаційної\nдопомоги`}</p>
+                                <h2 className="font-montserratMedium sm:text-h3 font-extrabold text-white xl:text-5xl md:text-relative-h1">285</h2>
+                                <p className="xl:mt-4 md:mt-2 sm:text-xs-pxl xl:text-xl md:text-relative-h4 font-montserratRegular whitespace-pre-line text-white">{`Інформаційної\nдопомоги`}</p>
                             </div>
                         </div>
 
                         {/* Statistic 3 */}
                         <div
-                            className="relative w-64 h-64 mx-auto xl:ml-56 md:ml-4 flex items-center justify-center xl:mt-0 md:-mt-12">
+                            className=" relative sm:mt-64 w-64 h-64 mx-auto xl:ml-56 md:ml-4 flex items-center justify-center xl:mt-0 md:-mt-12">
                             <div className="absolute inset-0 animate-move-in-circle">
-                                <VECTOR_3_2 className="xl:w-auto xl:h-auto md:w-[120%] md:h-[120%]"/>
+                                <VECTOR_3_2 className="sm:w-[80%] sm:h-[80%] xl:w-auto xl:h-auto md:w-[120%] md:h-[120%]"/>
                             </div>
                             <div
                                 className="xl:mt-14 xl:ml-12 md:mt-0 md:ml-0 absolute inset-0 animate-move-in-circle-2">
                                 <VECTOR_3_1
-                                    className="xl:w-auto xl:h-auto md:w-[105%] md:h-[105%] md:mt-8 md:ml-8 xl:mt-0 xl:ml-0"/>
+                                    className="sm:w-[80%] sm:h-[80%] xl:w-auto xl:h-auto md:w-[105%] md:h-[105%] md:mt-8 md:ml-8 xl:mt-0 xl:ml-0"/>
                             </div>
                             <div
                                 className="xl:mt-40 xl:ml-40 md:mt-10 md:ml-10 absolute inset-0 flex flex-col items-center justify-center text-white text-h3 text-center">
@@ -484,12 +511,12 @@ const HomePage: React.FC = () => {
 
                         {/* Statistic 4 */}
                         <div
-                            className="xl:mr-24 md:mr-0 relative w-64 h-64 flex items-left justify-center xl:mt-0 md:-mt-12 xl:ml-0 md:ml-0">
+                            className=" xl:mr-24 md:mr-0 relative w-64 h-64 flex items-left justify-center xl:mt-0 md:-mt-12 xl:ml-0 md:ml-0">
                             <div className="absolute inset-0 animate-move-in-circle-2">
-                                <VECTOR_4_2 className="md:-ml-4 xl:w-auto xl:h-auto md:w-[120%] md:h-[120%]"/>
+                                <VECTOR_4_2 className="sm:w-[90%] sm:h-[90%] md:-ml-4 xl:w-auto xl:h-auto md:w-[120%] md:h-[120%]"/>
                             </div>
                             <div className="mt-4 ml-8 absolute inset-0 animate-move-in-circle">
-                                <VECTOR_4_1 className="xl:w-auto xl:h-auto md:w-[110%] md:h-[110%]"/>
+                                <VECTOR_4_1 className="sm:w-[90%] sm:h-[90%] xl:w-auto xl:h-auto md:w-[110%] md:h-[110%]"/>
                             </div>
                             <div
                                 className="xl:mt-12 md:mt-1 xl:ml-56 md:ml-24 absolute inset-0 flex flex-col items-center justify-center text-white text-h3 text-center">
@@ -594,23 +621,23 @@ const HomePage: React.FC = () => {
                 </section>
 
                 {/*/ Ninth section - download our mobile app */}
-                <section className="w-full h-auto flex items-center justify-center xl:mt-44 md:mt-24 px-8 mb-14">
+                <section className="sm:mt-12 w-full sm:flex-col md:flex-row xl:flex-row h-auto flex items-center justify-center xl:mt-44 md:mt-24 px-8 mb-14">
                     {/* YouTube Frame */}
                     <div className="">
-                        <FrameYouTube className="xl:w-[600px] xl:h-auto md:w-[110%] md:h-auto"/>
+                        <FrameYouTube className="sm:h-[200px] sm:w-auto xl:w-[600px] xl:h-auto md:w-[110%] md:h-auto"/>
                     </div>
 
                     {/* App Details */}
-                    <div className="ml-16 flex flex-col justify-center">
-                        <h3 className="xl:text-h5 md:text-relative-h3 font-kharkiv text-black w-30 whitespace-pre-line">{`Завантажуйте\n безкоштовно додаток Synara`}</h3>
+                    <div className="md:ml-16 xl:ml-16 flex flex-col justify-center">
+                        <h3 className="xl:text-h5 sm:text-h5 sm:mt-6 xl:mt-0 md:mt-0 md:text-left  xl:text-left sm:text-center md:text-relative-h3 font-kharkiv text-black w-30 whitespace-pre-line">{`Завантажуйте\n безкоштовно додаток Synara`}</h3>
 
                         {/* App Icon and Text */}
-                        <div className="flex items-start xl:mb-4 md:mb-1 xl:mt-10 md:mt-4">
+                        <div className="sm:mt-8 flex items-start xl:mb-4 md:mb-1 xl:mt-10 md:mt-4">
                             <FrameLogoApp
-                                className="xl:w-24 xl:h-24 md:w-[32%] md:h-[32%] rounded-2xl mr-4 xl:mt-0 md:mt-2 "/>
+                                className="xl:w-24 xl:h-24 md:w-[32%] md:h-[32%] sm:w-[32%] sm:h-[32%]  rounded-2xl mr-4 xl:mt-0 md:mt-2 "/>
                             <div className="w-60">
                                 <h3 className="font-montserratMedium text-blue-500 text-p font-bold xl:mt-2 md:mt-0">Synara</h3>
-                                <p className="font-montserratMedium xl:text-sm md:text-ps leading-snug">Lorem Ipsum є
+                                <p className="font-montserratMedium sm:text-xs-ps xl:text-sm md:text-ps leading-snug">Lorem Ipsum є
                                     стандартною "рибою" для текстів латиницею.</p>
                             </div>
                         </div>

@@ -4,7 +4,7 @@ type ChooseRoleProps = {
 
 const ChooseRole: React.FC<ChooseRoleProps> = ({ onSelectRole }) => {
     return (
-        <div className="flex flex-col justify-start items-start text-left relative-md">
+        <div className="flex flex-col justify-start items-start text-leftcd fron relative-md">
             <h2 className="font-kharkiv text-relative-h4 mb-relative-md">Вибір ролі</h2>
             <div className="flex justify-start w-full mb-relative-md">
                 <div
