@@ -1,4 +1,4 @@
-import { refreshToken } from "../../services/authService";
+import { refreshToken } from "../../services/authService.tsx";
 
 export const authInterceptor = (api: any) => {
     api.interceptors.response.use(

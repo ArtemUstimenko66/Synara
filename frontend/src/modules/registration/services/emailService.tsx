@@ -1,4 +1,4 @@
-import api from "./api";
+import api from "./api.tsx";
 
 export const sendEmailVerification = async (email: string) => {
     return api.post("/confirmation-email/send-confirmation-link", {email})

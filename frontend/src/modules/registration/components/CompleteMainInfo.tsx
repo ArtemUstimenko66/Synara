@@ -1,41 +1,39 @@
-import React, { ChangeEvent } from 'react';
-import GoogleImg from '../../assets/images/google.svg';
-import TwitterImg from '../../assets/images/twitter_x.svg';
-import BankIdImg from '../../assets/images/bank_id.png';
-import DiiaImg from '../../assets/images/diia.png';
-import {Button} from "../../ui/Button.tsx";
-
+import React, { useState, ChangeEvent } from 'react';
+import BankIdImg from '../../../assets/images/bank_id.png';
+import DiiaImg from '../../../assets/images/diia.png';
+import { Button } from "../../../ui/Button.tsx";
+import { User } from "../interfaces/User.tsx";
+import TwitterLoginButton from "./TwitterLoginButton.tsx";
+import GoogleLoginButton from "./GoogleLoginButton.tsx";
 
 type CompleteMainInfoProps = {
+    setUserData: (data: Partial<User>) => void;
     onNextStep: () => void;
-    setUsername: (username: string) => void;
-    setEmail: (email: string) => void;
-    setPhoneNumber: (phoneNumber: string) => void;
-    setPassword: (password: string) => void;
 };
 
-const CompleteMainInfo: React.FC<CompleteMainInfoProps> = ({
-                                                               onNextStep,
-                                                               setUsername,
-                                                               setEmail,
-                                                               setPhoneNumber,
-                                                               setPassword
-                                                           }) => {
+const CompleteMainInfo: React.FC<CompleteMainInfoProps> = ({ setUserData, onNextStep }) => {
+    const [localData, setLocalData] = useState<Partial<User>>({
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: ''
+    });
 
-    const handleUsernameChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setUsername(e.target.value);
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setLocalData(prevData => ({
+            ...prevData,
+            [name]: value,
+        }));
     };
 
-    const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setEmail(e.target.value);
-    };
-
-    const handlePhoneNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setPhoneNumber(e.target.value);
-    };
-
-    const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setPassword(e.target.value);
+    const handleSubmit = () => {
+        if (typeof setUserData === 'function') {
+            setUserData(prev => ({ ...prev, ...localData }));
+            onNextStep();
+        } else {
+            console.error("setUserData is not a function");
+        }
     };
 
     return (
@@ -47,18 +45,22 @@ const CompleteMainInfo: React.FC<CompleteMainInfoProps> = ({
                     <label className="font-montserratRegular mb-2">Ім'я*</label>
                     <input
                         type="text"
+                        name="firstName"
                         placeholder="Ваше ім'я"
                         className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
-                        onChange={handleUsernameChange}
+                        value={localData.firstName}
+                        onChange={handleInputChange}
                     />
                 </div>
                 <div className="w-1/2 flex flex-col">
                     <label className="font-montserratRegular mb-2">Прізвище*</label>
                     <input
                         type="text"
+                        name="lastName"
                         placeholder="Ваше прізвище"
                         className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
-                        onChange={handlePhoneNumberChange}
+                        value={localData.lastName}
+                        onChange={handleInputChange}
                     />
                 </div>
             </div>
@@ -67,9 +69,11 @@ const CompleteMainInfo: React.FC<CompleteMainInfoProps> = ({
                 <label className="font-montserratRegular mb-2">Пошта*</label>
                 <input
                     type="email"
+                    name="email"
                     placeholder="Адреса електронної пошти"
                     className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
-                    onChange={handleEmailChange}
+                    value={localData.email}
+                    onChange={handleInputChange}
                 />
             </div>
 
@@ -77,15 +81,18 @@ const CompleteMainInfo: React.FC<CompleteMainInfoProps> = ({
                 <label className="font-montserratRegular mb-2">Пароль*</label>
                 <input
                     type="password"
+                    name="password"
                     placeholder="Ваш пароль"
                     className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
-                    onChange={handlePasswordChange}
+                    value={localData.password}
+                    onChange={handleInputChange}
                 />
             </div>
 
-            <Button isFilled={true}
+            <Button
+                isFilled={true}
                 className="w-full bg-perfect-yellow text-almost-black py-3 rounded-full mb-5 hover:bg-perfect-yellow transition"
-                onClick={onNextStep}
+                onClick={handleSubmit}
             >
                 ПРОДОВЖИТИ
             </Button>
@@ -95,10 +102,7 @@ const CompleteMainInfo: React.FC<CompleteMainInfoProps> = ({
             </div>
 
             <div className="flex w-full justify-between mb-7">
-                <button
-                    className="w-1/2 bg-gray-200 py-3 rounded-xl flex items-center justify-center mr-2 hover:bg-gray-300 transition">
-                    <img src={`${GoogleImg}`} alt="Google" className="w-6 h-6 mr-2"/>
-                </button>
+                <GoogleLoginButton/>
                 <button
                     className="w-1/2 bg-gray-200 py-3 rounded-xl flex items-center justify-center ml-2 hover:bg-gray-300 transition">
                     <img src={`${BankIdImg}`} alt="Bank ID" className="w-20 h-6 mr-2"/>
@@ -110,10 +114,7 @@ const CompleteMainInfo: React.FC<CompleteMainInfoProps> = ({
                     className="w-1/2 bg-almost-black text-white py-3 rounded-xl flex items-center justify-center mr-2 hover:bg-gray-700 transition">
                     <img src={`${DiiaImg}`} alt="Diia" className="w-9 h-5 mr-2"/>
                 </button>
-                <button
-                    className="w-1/2 bg-almost-black text-white py-3 rounded-xl flex items-center justify-center ml-2 hover:bg-gray-700 transition">
-                    <img src={`${TwitterImg}`} alt="Twitter X" className="w-6 h-6 mr-2"/>
-                </button>
+                <TwitterLoginButton/>
             </div>
 
             <div className="flex w-full justify-center">

@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-import { authInterceptor } from "../helpers/interceptors/authInterceptor";
+import { authInterceptor } from "../helpers/interceptors/authInterceptor.tsx";
 
 const api: AxiosInstance = axios.create({
     baseURL: 'http://localhost:8080',

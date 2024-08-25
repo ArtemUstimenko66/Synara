@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import { login } from "../../services/authService.tsx";
-import GoogleLoginButton from "../../components/GoogleLoginButton.tsx";
+import { login } from "../../modules/registration/services/authService.tsx";
+import GoogleLoginButton from "../../ui/GoogleLoginButton.tsx";
 
 
 const LoginPage: React.FC = () => {

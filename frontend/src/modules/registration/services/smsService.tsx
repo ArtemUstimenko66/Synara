@@ -1,4 +1,4 @@
-import api from "./api";
+import api from "./api.tsx";
 
 export const sendVerificationCode = async (phoneNumber: string) => {
     return api.post('/sms/send-code', { phoneNumber });

@@ -16,14 +16,14 @@ export class VolunteersEntity {
     example: 'Kyiv',
     description: 'Region where the volunteer is located',
   })
-  @Column()
+  @Column({ nullable: true })
   region: string;
 
   @ApiProperty({
     example: 'Kyiv',
     description: 'City where the volunteer is located',
   })
-  @Column()
+  @Column({ nullable: true })
   city: string;
 
   @ApiProperty({
@@ -35,6 +35,7 @@ export class VolunteersEntity {
     type: 'enum',
     enum: SupportType,
     array: true,
+    nullable: true,
   })
   supports: SupportType[];
 
@@ -42,7 +43,7 @@ export class VolunteersEntity {
     example: 1,
     description: 'Unique identifier of the associated user',
   })
-  @Column({ type: 'int' })
+  @Column({ type: 'int', nullable: true })
   userId: number;
 
   @ApiProperty({

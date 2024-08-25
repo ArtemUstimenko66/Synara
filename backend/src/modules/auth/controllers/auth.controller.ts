@@ -22,6 +22,7 @@ import { RoleGuard } from '../guards/roles.guard';
 import { Response, Request } from 'express';
 import { CreateVolunteerDto } from '../../users/dtos/create-volunteer.dto';
 import { CreateVictimDto } from '../../users/dtos/create-victim.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('Authorization')
 @Controller('auth')
@@ -38,13 +39,16 @@ export class AuthController {
 
     res.cookie('accessToken', access_token, {
       httpOnly: true,
-      secure: false,
+      secure: true,
       maxAge: 3600000,
+      sameSite: 'none',
+
     });
     res.cookie('refreshToken', refresh_token, {
       httpOnly: true,
-      secure: false,
+      secure: true,
       maxAge: 604800000,
+      sameSite: 'none',
     });
     res
       .status(201)
@@ -99,7 +103,7 @@ export class AuthController {
   @ApiOperation({ summary: 'Get profile' })
   @ApiResponse({ status: 200, type: [User] })
   @UseGuards(JwtAuthGuard)
-  // @Roles(Role.Volunteer)
+  //@Roles(Role.Volunteer)
   @Get('/profile')
   getProfile(@Req() req) {
     return req.user;
@@ -119,5 +123,32 @@ export class AuthController {
     res.clearCookie('accessToken');
     res.clearCookie('refreshToken');
     res.status(200).send({ message: 'Logged out successfully' });
+  }
+
+  //Twitter auth
+  @Get('twitter')
+  @UseGuards(AuthGuard('twitter'))
+  async twitterAuth(@Req() req: Request) {}
+
+  @Get('twitter/callback')
+  @UseGuards(AuthGuard('twitter'))
+  async twitterAuthCallback(@Req() req: Request, @Res() res: Response) {
+    const user = req.user;
+    const tokens = await this.authService.generateTokens(user);
+
+    res.cookie('accessToken', tokens.access_token, {
+      httpOnly: true,
+      secure: true,
+      maxAge: 3600000,
+      sameSite: 'none',
+    });
+
+    res.cookie('refreshToken', tokens.refresh_token, {
+      httpOnly: true,
+      secure: true,
+      maxAge: 604800000,
+      sameSite: 'none',
+    });
+    res.redirect('https://8925-109-87-124-110.ngrok-free.app/profile');
   }
 }

@@ -1,4 +1,4 @@
-import api from "./api";
+import api from "./api.tsx";
 import { RegisterPayload } from "../interfaces/AuthInterface.tsx";
 
 export const login = async (email: string, password: string)  => {

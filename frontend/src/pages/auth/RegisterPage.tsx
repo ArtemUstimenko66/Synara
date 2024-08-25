@@ -1,54 +1,85 @@
-import { useState } from 'react';
-import ChooseRole from "../../components/registration/ChooseRole";
-import CompleteMainInfo from "../../components/registration/CompleteMainInfo";
-import AddressVictim from "../../components/registration/victim/AddressVictim.tsx";
-import AddressVolunteer from "../../components/registration/volunteer/AddressVolunteer.tsx";
-import DateBirthdayVictim from "../../components/registration/victim/DateBirthdayVictim.tsx";
-import EmailConfirm from "../../components/registration/EmailConfirm.tsx";
-import BackArrow from '../../assets/images/Back.svg?react';
-import Stepper from "../../ui/Stepper.tsx";
+import { useEffect, useState } from 'react';
+import ChooseRole from "../../modules/registration/components/ChooseRole.tsx";
+import CompleteMainInfo from "../../modules/registration/components/CompleteMainInfo.tsx";
+import AddressVictim from "../../modules/registration/components/victim/AddressVictim";
+import AddressVolunteer from "../../modules/registration/components/volunteer/AddressVolunteer";
+import DateBirthday from "../../modules/registration/components/DateBirthday.tsx";
+import EmailConfirm from "../../modules/registration/components/EmailConfirm.tsx";
+import Stepper from "../../ui/Stepper";
+import { User } from "../../modules/registration/interfaces/User";
+import BackArrowComponent from "../../modules/registration/components/BackArrow.tsx";
 
 const Registration = () => {
     const [currentStep, setCurrentStep] = useState(1);
-    const [selectedRole, setSelectedRole] = useState<string | null>(null);
 
-    const handleStepChange = (step: number) => {
-        setCurrentStep(step);
+    const [userData, setUserData] = useState<User>({
+        role: '',
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        phoneNumber: '',
+        dateOfBirth: '',
+        unp: 0,
+        gender: '',
+        region: '',
+        city: '',
+        street: '',
+        house: 0,
+        apartment: 0,
+        helpTypes: [],
+        volunteerId: 0
+    });
+
+    const handleNextStep = (data: Partial<User>, nextStep: number) => {
+        setUserData(prev => ({ ...prev, ...data }));
+        setCurrentStep(nextStep);
     };
+
+    // log data on each step
+    useEffect(() => {
+        console.log("User data after update:", userData);
+    }, [userData, currentStep]);
 
     const steps = [
         {
             component: (
-                <ChooseRole
-                    onSelectRole={(role) => {
-                        setSelectedRole(role);
-                        handleStepChange(2);
-                    }}
-                />
+                <ChooseRole onSelectRole={(role: string) => handleNextStep({ role }, 2)} />
             ),
             step: 1
         },
         {
             component: (
                 <CompleteMainInfo
-                    onNextStep={() => handleStepChange(3)}
+                    userData={userData}
+                    setUserData={setUserData}
+                    onNextStep={() => handleNextStep({}, 3)}
                 />
             ),
             step: 2
         },
         {
-            component: selectedRole === 'victim' ?
+            component: userData.role === 'victim' ? (
                 <AddressVictim
-                    onNextStep={() => handleStepChange(4)}/>
-                :  <AddressVolunteer
-                    onNextStep={() => handleStepChange(4)}/>,
+                    userData={userData}
+                    setUserData={setUserData}
+                    onNextStep={() => handleNextStep({}, 4)}
+                />
+            ) : (
+                <AddressVolunteer
+                    userData={userData}
+                    setUserData={setUserData}
+                    onNextStep={() => handleNextStep({}, 4)}
+                />
+            ),
             step: 3
         },
         {
-            component:(
-                <DateBirthdayVictim
-                    onNextStep={() => handleStepChange(5)}
-                    selectedRole={selectedRole}
+            component: (
+                <DateBirthday
+                    setUserData={setUserData}
+                    selectedRole={userData.role}
+                    onNextStep={() => handleNextStep({}, 5)}
                 />
             ),
             step: 4
@@ -56,11 +87,12 @@ const Registration = () => {
         {
             component: (
                 <EmailConfirm
-                    onNextStep={() => handleStepChange(6)}
+                    userData={userData}
+                    setUserData={setUserData}
                 />
             ),
             step: 5
-        },
+        }
     ];
 
     return (
@@ -71,21 +103,18 @@ const Registration = () => {
 
             <div className="w-5/6 bg-almost-white rounded-l-3xl max-h-screen px-relative-md flex flex-col items-start justify-start">
                 <div className="flex max-h-screen">
-                    {/* Условный рендеринг для BackArrow */}
                     {currentStep > 1 && currentStep < steps.length && (
-                        <div className="ml-2 mt-10 cursor-pointer" onClick={() => handleStepChange(currentStep - 1)}>
-                            <BackArrow />
-                        </div>
+                        <BackArrowComponent onClick={() => setCurrentStep(currentStep - 1)} />
                     )}
 
                     <div className="max-w-2xl ml-24 mt-7 max-h-screen flex flex-col justify-start flex-grow">
-                        {/* Условный рендеринг для заголовка и степпера */}
                         {currentStep < steps.length && (
                             <>
-                                <h1 className="font-kharkiv text-relative-h2 mb-relative-ssm mt-relative-ssm">СТВОРЕННЯ АККАУНТУ</h1>
-
+                                <h1 className="font-kharkiv text-relative-h2 mb-relative-ssm mt-relative-ssm">
+                                    СТВОРЕННЯ АККАУНТУ
+                                </h1>
                                 <div className="mb-relative-sm flex justify-start">
-                                    <Stepper currentStep={currentStep} onStepChange={handleStepChange} />
+                                    <Stepper currentStep={currentStep} onStepChange={setCurrentStep} />
                                 </div>
                             </>
                         )}
