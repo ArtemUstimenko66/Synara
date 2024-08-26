@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { Button } from "../../../../ui/Button.tsx";
 
+import 'react-international-phone/style.css';
+import {MuiPhone} from "../MuiPhone.tsx";
+
 const regionsWithCities = {
     'Київська область': ['Київ', 'Біла Церква', 'Бровари'],
     'Львівська область': ['Львів', 'Дрогобич', 'Стрий'],
     'Одеська область': ['Одеса', 'Ізмаїл', 'Чорноморськ'],
     'Харківська область': ['Харків', 'Чугуїв', 'Ізюм'],
     'Дніпропетровська область': ['Дніпро', 'Кривий Ріг', 'Павлоград'],
-    // Add more regions and cities as needed
 };
 
 type AddressVictimInfoProps = {
@@ -182,12 +184,10 @@ const AddressVictim: React.FC<AddressVictimInfoProps> = ({ userData, setUserData
 
             <div className="w-full mb-4">
                 <label className="font-montserratRegular mb-2">Номер телефону</label>
-                <input
-                    type="text"
-                    placeholder="Ваш контактний номер телефону"
+                <MuiPhone
                     value={phoneNumber}
-                    onChange={(e) => setPhone(e.target.value)}
-                    className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
+                    onChange={(phone) => setPhone(phone)}
+                    fullWidth
                 />
             </div>
 

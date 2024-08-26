@@ -5,6 +5,7 @@ import { Button } from "../../../ui/Button.tsx";
 import { User } from "../interfaces/User.tsx";
 import TwitterLoginButton from "./TwitterLoginButton.tsx";
 import GoogleLoginButton from "./GoogleLoginButton.tsx";
+import { Eye, EyeOff } from 'react-feather'; // Используйте иконки для глаза
 
 type CompleteMainInfoProps = {
     setUserData: (data: Partial<User>) => void;
@@ -18,6 +19,7 @@ const CompleteMainInfo: React.FC<CompleteMainInfoProps> = ({ setUserData, onNext
         email: '',
         password: ''
     });
+    const [showPassword, setShowPassword] = useState<boolean>(false); // Состояние для видимости пароля
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -76,18 +78,26 @@ const CompleteMainInfo: React.FC<CompleteMainInfoProps> = ({ setUserData, onNext
                     onChange={handleInputChange}
                 />
             </div>
-
-            <div className="w-full mb-6">
+            <div className="w-full mb-6 relative">
                 <label className="font-montserratRegular mb-2">Пароль*</label>
                 <input
-                    type="password"
+                    type={showPassword ? 'text' : 'password'}
                     name="password"
                     placeholder="Ваш пароль"
-                    className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
+                    className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue pr-10"
                     value={localData.password}
                     onChange={handleInputChange}
                 />
+                <button
+                    type="button"
+                    onClick={() => setShowPassword(prev => !prev)}
+                    className="absolute top-1/2 right-3 transform -translate-y-1/2 text-gray-400"
+                    style={{marginTop: '0.8rem', marginRight: '1rem'}}
+                >
+                    {showPassword ? <EyeOff size={20}/> : <Eye size={20}/>}
+                </button>
             </div>
+
 
             <Button
                 isFilled={true}
