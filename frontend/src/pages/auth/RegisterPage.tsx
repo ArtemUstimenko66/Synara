@@ -101,8 +101,8 @@ const Registration = () => {
                 <div className="text-almost-white font-montserratRegular font-bold text-relative-h4">LOGO</div>
             </div>
 
-            <div className="w-5/6 bg-almost-white rounded-l-3xl max-h-screen px-relative-md flex flex-col items-start justify-start">
-                <div className="flex max-h-screen">
+            <div className="w-5/6 bg-almost-white rounded-l-3xl min-h-screen px-relative-md flex flex-col items-start justify-start">
+                <div className="flex h-full">
                     {currentStep > 1 && currentStep < steps.length && (
                         <BackArrowComponent onClick={() => setCurrentStep(currentStep - 1)} />
                     )}
