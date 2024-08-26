@@ -8,6 +8,8 @@ import EmailConfirm from "../../modules/registration/components/EmailConfirm.tsx
 import Stepper from "../../ui/Stepper";
 import { User } from "../../modules/registration/interfaces/User";
 import BackArrowComponent from "../../modules/registration/components/BackArrow.tsx";
+import CheckPhone from "../../modules/registration/components/CheckPhone.tsx";
+import {useNavigate} from "react-router-dom";
 
 const Registration = () => {
     const [currentStep, setCurrentStep] = useState(1);
@@ -89,11 +91,27 @@ const Registration = () => {
                 <EmailConfirm
                     userData={userData}
                     setUserData={setUserData}
+                    onNextStep={() => handleNextStep({}, 6)}
                 />
             ),
             step: 5
+        },
+        {
+            component: (
+                <CheckPhone
+                    userData={userData}
+                    setUserData={setUserData}
+                />
+            ),
+            step: 6
         }
     ];
+
+    const navigate = useNavigate();
+
+    const handleBackArrowClick = () => {
+        navigate('/home');
+    };
 
     return (
         <div className="bg-dark-blue min-h-screen flex">
@@ -103,12 +121,15 @@ const Registration = () => {
 
             <div className="w-5/6 bg-almost-white rounded-l-3xl min-h-screen px-relative-md flex flex-col items-start justify-start">
                 <div className="flex h-full">
-                    {currentStep > 1 && currentStep < steps.length && (
+                    {currentStep > 1 && currentStep < 5 && (
                         <BackArrowComponent onClick={() => setCurrentStep(currentStep - 1)} />
+                    )}
+                    {currentStep == 6 && (
+                        <BackArrowComponent onClick={() => handleBackArrowClick()} />
                     )}
 
                     <div className="max-w-2xl ml-24 mt-7 max-h-screen flex flex-col justify-start flex-grow">
-                        {currentStep < steps.length && (
+                        {currentStep < 5  && (
                             <>
                                 <h1 className="font-kharkiv text-relative-h2 mb-relative-ssm mt-relative-ssm">
                                     СТВОРЕННЯ АККАУНТУ

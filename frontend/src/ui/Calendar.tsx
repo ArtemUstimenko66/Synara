@@ -42,7 +42,7 @@ export default function DateRangePickerWithButton() {
             </button>
 
             {open && (
-                <div className="absolute mt-2 z-10 bg-white p-4 rounded-lg shadow-lg">
+                <div className="absolute mt-2 z-10 bg-white p-4 rounded-lg shadow-lg xl:-left-10 md:-left-10 sm:-left-14">
                     {/* Text above the buttons */}
                     <div className="text-lg font-semibold mb-4 ml-3 text-left">
                         За останній:
@@ -92,7 +92,6 @@ export default function DateRangePickerWithButton() {
                             },
                         }}
                     />
-
                 </div>
             )}
         </div>

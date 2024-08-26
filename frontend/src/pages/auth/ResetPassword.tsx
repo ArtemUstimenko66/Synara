@@ -1,24 +1,26 @@
 import { useEffect, useState } from 'react';
-import CompleteMainInfo from "../../modules/registration/components/CompleteMainInfo.tsx";
-import { User } from "../../modules/registration/interfaces/User";
+import { UserLogin } from "../../modules/login/interfaces/UserLogin.tsx";
 import BackArrowComponent from "../../modules/registration/components/BackArrow.tsx";
-import LoginMain from "../../modules/login/components/LoginMain.tsx";
-import {UserLogin} from "../../modules/login/interfaces/UserLogin.tsx";
+import UpdatePassword from "../../modules/login/components/UpdatePassword.tsx";
+import EmailSend from "../../modules/login/components/EmailSend.tsx";
+import { useNavigate } from 'react-router-dom';
 
-const LoginPage = () => {
+const ResetPassword = () => {
     const [currentStep, setCurrentStep] = useState(1);
+    const [userData, setUserData] = useState<UserLogin>({ email: '', password: '' });
+    const navigate = useNavigate();
 
-    const [userData, setUserData] = useState<UserLogin>({
-        email: '',
-        password: '',
-    });
-
-    const handleNextStep = (data: Partial<User>, nextStep: number) => {
+    const handleNextStep = (data: Partial<UserLogin>, nextStep: number) => {
         setUserData(prev => ({ ...prev, ...data }));
         setCurrentStep(nextStep);
     };
 
-    // log data on each step
+    useEffect(() => {
+        if (currentStep === 0) {
+            navigate('/login');
+        }
+    }, [currentStep, navigate]);
+
     useEffect(() => {
         console.log("User data after update:", userData);
     }, [userData, currentStep]);
@@ -26,17 +28,13 @@ const LoginPage = () => {
     const steps = [
         {
             component: (
-                <LoginMain  />
+                <UpdatePassword onNextStep={(data) => handleNextStep(data, 2)} />
             ),
             step: 1
         },
         {
             component: (
-                <CompleteMainInfo
-                    userData={userData}
-                    setUserData={setUserData}
-                    onNextStep={() => handleNextStep({}, 3)}
-                />
+                <EmailSend email={userData.email} onNextStep={() => handleNextStep({}, 3)} />
             ),
             step: 2
         }
@@ -47,22 +45,10 @@ const LoginPage = () => {
             <div className="w-2/6 p-8 flex items-left justify-left mt-10 ml-28">
                 <div className="text-almost-white font-montserratRegular font-bold text-relative-h4">LOGO</div>
             </div>
-
             <div className="w-5/6 bg-almost-white rounded-l-3xl min-h-screen px-relative-md flex flex-col items-start justify-start">
                 <div className="flex h-full">
-                    {currentStep > 1 && currentStep < steps.length && (
-                        <BackArrowComponent onClick={() => setCurrentStep(currentStep - 1)} />
-                    )}
-
+                    <BackArrowComponent onClick={() => setCurrentStep(currentStep - 1)} />
                     <div className="max-w-2xl ml-24 mt-7 max-h-screen flex flex-col justify-start flex-grow">
-                        {currentStep < steps.length && (
-                            <>
-                                <h1 className="font-kharkiv text-relative-h2 mb-relative-ssm mt-relative-ssm">
-                                    ВХІД В АККАУНТ
-                                </h1>
-                            </>
-                        )}
-
                         <div className="flex-grow flex flex-col justify-between">
                             {steps.find(step => step.step === currentStep)?.component}
                         </div>
@@ -73,4 +59,4 @@ const LoginPage = () => {
     );
 };
 
-export default LoginPage;
+export default ResetPassword;

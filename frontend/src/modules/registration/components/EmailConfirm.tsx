@@ -1,39 +1,44 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Button } from "../../../ui/Button.tsx";
-import { User } from "../interfaces/User.tsx";
-import { registerUser, sendEmailConfirmation } from "../api/api.ts";
-import { prepareUserDataForBackend } from "../helpers/utils/userDataPreparation.ts";
+import { Button } from "../../../ui/Button";
+import { User } from "../interfaces/User";
+import { registerUser, sendEmailConfirmation } from "../api/api";
+import { prepareUserDataForBackend } from "../helpers/utils/userDataPreparation";
 
 interface EmailConfirmProps {
     userData: User;
+    onNextStep: () => void;
     setUserData: (data: Partial<User>) => void;
 }
 
-const EmailConfirm: React.FC<EmailConfirmProps> = ({ userData }) => {
+const EmailConfirm: React.FC<EmailConfirmProps> = ({ userData, onNextStep }) => {
     const [emailSent, setEmailSent] = useState<boolean>(false);
-    const registrationDoneRef = useRef<boolean>(false); // Используем useRef для хранения состояния регистрации
+    const registrationDoneRef = useRef<boolean>(false);
+    const effectExecuted = useRef<boolean>(false); // Дополнительный флаг для отслеживания выполнения эффекта
 
     useEffect(() => {
-        const handleRegister = async () => {
-            if (!registrationDoneRef.current) {
-                try {
-                    const preparedData = prepareUserDataForBackend(userData);
-                    console.log("Registering user with data:", preparedData);
 
-                    const data = await registerUser(preparedData);
-                    console.log("Registration successful:", data);
+        if (!effectExecuted.current && userData.email) {
+            effectExecuted.current = true;
 
-                    await sendEmailConfirmation(userData.email);
-                    console.log("Email confirmation sent successfully");
-                    setEmailSent(true);
-                    registrationDoneRef.current = true;
-                } catch (error) {
-                    console.error("Registration or email confirmation failed:", error);
+            const handleRegister = async () => {
+                if (!registrationDoneRef.current) {
+                    try {
+                        const preparedData = prepareUserDataForBackend(userData);
+                        console.log("Registering user with data:", preparedData);
+
+                        const data = await registerUser(preparedData);
+                        console.log("Registration successful:", data);
+
+                        console.log("Email confirmation sent successfully");
+                        registrationDoneRef.current = true;
+                    } catch (error) {
+                        console.error("Registration or email confirmation failed:", error);
+                    }
                 }
-            }
-        };
+            };
 
-        handleRegister();
+            handleRegister();
+        }
     }, [userData]);
 
     const handleResend = async () => {
@@ -60,6 +65,14 @@ const EmailConfirm: React.FC<EmailConfirmProps> = ({ userData }) => {
                 disabled={emailSent}
             >
                 НАДІСЛАТИ ЛИСТ ЩЕ РАЗ
+            </Button>
+            <Button
+                hasBlue={true}
+                className="w-full text-almost-black py-4 rounded-full mb-8 text-relative-pxl"
+                onClick={onNextStep}
+                disabled={emailSent}
+            >
+                ПРОЙТИ ДВОФАКТОРНУ АУТЕНТИФІКАЦІЮ
             </Button>
         </div>
     );

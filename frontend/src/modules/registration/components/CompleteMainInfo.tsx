@@ -5,7 +5,7 @@ import { Button } from "../../../ui/Button.tsx";
 import { User } from "../interfaces/User.tsx";
 import TwitterLoginButton from "./TwitterLoginButton.tsx";
 import GoogleLoginButton from "./GoogleLoginButton.tsx";
-import { Eye, EyeOff } from 'react-feather'; // Используйте иконки для глаза
+import { Eye, EyeOff } from 'react-feather';
 
 type CompleteMainInfoProps = {
     setUserData: (data: Partial<User>) => void;

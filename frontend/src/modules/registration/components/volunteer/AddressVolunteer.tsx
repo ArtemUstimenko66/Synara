@@ -198,7 +198,7 @@ const AddressVolunteer: React.FC<AddressVolunteerInfoProps> = ({ onNextStep, set
             </div>
 
             <div className="w-full mb-4">
-                <label className="font-montserratRegular mb-8">Номер телефону</label>
+                <label className="font-montserratRegular mb-8">Номер телефону*</label>
                 <MuiPhone
                     value={localData.phoneNumber || ''}
                     onChange={(phone) => setLocalData(prevData => ({...prevData, phoneNumber: phone}))}

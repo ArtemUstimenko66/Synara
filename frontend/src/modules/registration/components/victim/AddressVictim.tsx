@@ -183,7 +183,7 @@ const AddressVictim: React.FC<AddressVictimInfoProps> = ({ userData, setUserData
             </div>
 
             <div className="w-full mb-4">
-                <label className="font-montserratRegular mb-2">Номер телефону</label>
+                <label className="font-montserratRegular mb-2">Номер телефону*</label>
                 <MuiPhone
                     value={phoneNumber}
                     onChange={(phone) => setPhone(phone)}
