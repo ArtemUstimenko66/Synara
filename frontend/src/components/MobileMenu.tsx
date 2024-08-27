@@ -2,28 +2,34 @@ import React from 'react';
 import NavItem from "../ui/NavItem.tsx";
 import { Button } from "../ui/Button.tsx";
 import { Link } from "react-router-dom";
+import LogoSynara from '../assets/images/logoSynara.svg?react';
 
 export const MobileMenu = ({ isOpen = false }) => {
+    const navItems = [
+        { text: "Головна", to: "/home" },
+        { text: "Про нас", to: "/about" },
+        { text: "Збори", to: "/collections" },
+        { text: "Карти", to: "/maps" },
+        { text: "Як це працює", to: "/how-it-works" }
+    ];
+
     return (
-        <React.Fragment>
-            <div className={`absolute top-0 left-0 right-0 bg-almost-black opacity-50 z-10 min-h-[150vh] ${isOpen ? 'flex' : 'hidden'}`} />
-            <div className={`absolute right-0 top-0 w-1/2 bg-white z-20 justify-center min-h-[150vh] ${isOpen ? 'flex' : 'hidden'}`}>
-                <nav className="my-20 mx-5 space-y-5 text-lg w-full">
-                    <NavItem text="ГОЛОВНА" to="/home" />
-                    <NavItem text="ПРО НАС" to="/about" />
-                    <NavItem text="ЗБОРИ" to="/collections" />
-                    <NavItem text="КАРТИ" to="/maps" />
-                    <NavItem text="ЯК ЦЕ ПРАЦЮЄ" to="/how-it-works" />
-                    <div className="flex flex-col space-y-5">
-                        <Link to="/login" className="w-full">
-                            <Button hasBorder={true} className="w-full md:text-almost-black md:border-almost-black md:text-pxl md:w-full">УВІЙТИ</Button>
-                        </Link>
-                        <Link to="/registration" className="w-full">
-                            <Button isFilled={true} className="w-full md:text-pxl md:w-full">РЕЄСТРАЦІЯ</Button>
-                        </Link>
-                    </div>
-                </nav>
-            </div>
-        </React.Fragment>
+        <div
+            className={`fixed top-16 left-0 right-0 bg-white z-20 overflow-hidden transform transition-all duration-700 ease-in-out ${isOpen ? 'h-[calc(100vh-4rem)]' : 'h-0'}`}
+        >
+            <nav className="h-full flex flex-col my-10 mx-5 space-y-5 text-lg box-border w-[90%]">
+                {navItems.map((item, index) => (
+                    <NavItem key={item.to} text={item.text} to={item.to} isLast={index === navItems.length - 1} />
+                ))}
+                <div className="flex flex-col space-y-5 mt-auto">
+                    <Link to="/login" className="w-full mt-8">
+                        <Button hasBlue={true} className="w-full md:text-pxl">УВІЙТИ</Button>
+                    </Link>
+                    <Link to="/registration" className="w-full">
+                        <Button isFilled={true} className="w-full bg-yellow-500 text-black md:text-pxl">РЕЄСТРАЦІЯ</Button>
+                    </Link>
+                </div>
+            </nav>
+        </div>
     );
-}
+};
