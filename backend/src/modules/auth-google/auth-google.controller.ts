@@ -44,9 +44,9 @@ export class AuthGoogleController {
       return res.redirect('http://localhost:5173/profile');
     } catch (error) {
       console.error('Error in Google callback:', error.stack);
-      return res
-        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send({ message: 'Authentication failed' });
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
+        message: 'Authentication failed',
+      });
     }
   }
 }

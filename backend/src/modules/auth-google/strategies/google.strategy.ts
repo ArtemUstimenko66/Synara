@@ -1,5 +1,5 @@
 import { PassportStrategy } from '@nestjs/passport';
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Strategy, VerifyCallback } from 'passport-google-oauth2';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../../users/entities/users.entity';

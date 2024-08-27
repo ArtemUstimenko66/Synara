@@ -7,14 +7,15 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../users/entities/users.entity';
 import { Repository } from 'typeorm';
-import * as bcrypt from 'bcryptjs';
 import { ConfigService } from '@nestjs/config';
+import { PasswordService } from '../password/password.service';
 
 @Injectable()
 export class AuthGoogleService {
   constructor(
     private jwtService: JwtService,
     private configService: ConfigService,
+    private passwordService: PasswordService,
     @InjectRepository(User) private userRepository: Repository<User>,
   ) {}
 
@@ -47,23 +48,16 @@ export class AuthGoogleService {
   async registerUser(user: User) {
     try {
       const newUser = this.userRepository.create(user);
-      newUser.password = await this.hashPassword(this.generateRandomPassword());
-      // newUser.username = user.email.split('@')[0]; //generateFromEmail(user.email, 5);
+      newUser.password = await this.passwordService.hashPassword(
+        this.generateRandomPassword(),
+      );
+      //  newUser.username = user.email.split('@')[0];
       await this.userRepository.save(newUser);
 
       return this.getTokens(newUser);
     } catch (error) {
       throw new InternalServerErrorException('Failed to register user');
     }
-  }
-
-  async hashPassword(password: string): Promise<string> {
-    // console.log("Salt: ", this.configService.get("SALT"))
-    const salt = await bcrypt.genSalt(
-      parseInt(this.configService.get('SALT'), 10),
-    );
-    const hashedPassword = await bcrypt.hash(password, salt);
-    return hashedPassword;
   }
 
   getTokens(user: User) {

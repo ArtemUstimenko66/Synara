@@ -133,7 +133,7 @@ export class AuthController {
   @Get('twitter/callback')
   @UseGuards(AuthGuard('twitter'))
   async twitterAuthCallback(@Req() req: Request, @Res() res: Response) {
-    const user = req.user;
+    const user = req.user as User;
     const tokens = await this.authService.generateTokens(user);
 
     res.cookie('accessToken', tokens.access_token, {

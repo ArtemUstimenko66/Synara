@@ -65,11 +65,6 @@ const DateBirthday: React.FC<DateBirthdayProps> = ({ onNextStep, selectedRole, s
             newErrors.gender = 'Будь ласка, виберіть стать';
         }
 
-        // Validate volunteer ID if role is "volunteer"
-        if (selectedRole === 'volunteer' && !volunteerId) {
-            newErrors.volunteerId = 'Будь ласка, введіть номер волонтерського посвідчення';
-        }
-
         // Validate UNP
         if (!unp) {
             newErrors.unp = 'Будь ласка, введіть РНОКПП';
@@ -185,7 +180,6 @@ const DateBirthday: React.FC<DateBirthdayProps> = ({ onNextStep, selectedRole, s
                             value={volunteerId === '' ? '' : volunteerId}
                             onChange={(e) => setVolunteerId(e.target.value === '' ? '' : Number(e.target.value))}
                         />
-                        {errors.volunteerId && <p className="text-red-500 text-sm">{errors.volunteerId}</p>}
                     </div>
                 )}
                 <div className={`${selectedRole === 'volunteer' ? 'w-1/2 mt-6' : 'w-full'} mb-4`}>
