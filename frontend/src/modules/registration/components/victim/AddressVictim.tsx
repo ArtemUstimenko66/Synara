@@ -98,7 +98,7 @@ const AddressVictim: React.FC<AddressVictimInfoProps> = ({ userData, setUserData
         } else if (isNaN(apartment)) {
             newErrors.apartment = 'Квартира повинна бути числом';
         }
-        if (!phoneNumber) {
+        if (phoneNumber.length <= 5) {
             newErrors.phoneNumber = 'Будь ласка, введіть номер телефону';
         }
 

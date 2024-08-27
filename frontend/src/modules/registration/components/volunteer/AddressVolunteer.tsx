@@ -135,7 +135,7 @@ const AddressVolunteer: React.FC<AddressVolunteerInfoProps> = ({ onNextStep, set
         if (!selectedCity) {
             newErrors.city = 'Будь ласка, виберіть місто';
         }
-        if (!localData.phoneNumber) {
+        if (localData.phoneNumber.length <= 5) {
             newErrors.phoneNumber = 'Будь ласка, введіть номер телефону';
         }
         if (!localData.helpTypes || localData.helpTypes.length === 0) {
