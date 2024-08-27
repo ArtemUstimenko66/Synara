@@ -125,17 +125,39 @@ const AddressVolunteer: React.FC<AddressVolunteerInfoProps> = ({ onNextStep, set
             fileInputRef.current.click();
         }
     };
+    const [errors, setErrors] = useState<{ [key: string]: string }>({});
+    const validateFields = () => {
+        const newErrors: { [key: string]: string } = {};
 
+        if (!selectedRegion) {
+            newErrors.region = 'Будь ласка, виберіть область';
+        }
+        if (!selectedCity) {
+            newErrors.city = 'Будь ласка, виберіть місто';
+        }
+        if (!localData.phoneNumber) {
+            newErrors.phoneNumber = 'Будь ласка, введіть номер телефону';
+        }
+        if (!localData.helpTypes || localData.helpTypes.length === 0) {
+            newErrors.helpTypes = 'Будь ласка, виберіть хоча б один тип допомоги';
+        }
+
+        setErrors(newErrors);
+
+        return Object.keys(newErrors).length === 0;
+    };
     const handleSubmit = () => {
-        setUserData(prev => ({
-            ...prev,
-            region: selectedRegion,
-            city: selectedCity,
-            phoneNumber: localData.phoneNumber,
-            helpTypes: localData.helpTypes,
-            //documents: localData.documents
-        }));
-        onNextStep();
+        if(validateFields()) {
+            setUserData(prev => ({
+                ...prev,
+                region: selectedRegion,
+                city: selectedCity,
+                phoneNumber: localData.phoneNumber,
+                helpTypes: localData.helpTypes,
+                //documents: localData.documents
+            }));
+            onNextStep();
+        }
     };
 
     return (
@@ -153,6 +175,7 @@ const AddressVolunteer: React.FC<AddressVolunteerInfoProps> = ({ onNextStep, set
                             placeholder="Область проживання"
                             className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
                         />
+                        {errors.region && <p className="text-red-500 text-sm">{errors.region}</p>}
                         {regionOptions.length > 0 && (
                             <ul className="absolute w-full border-2 border-light-blue bg-white rounded-lg z-10 max-h-40 overflow-y-auto">
                                 {regionOptions.map((region) => (
@@ -180,6 +203,7 @@ const AddressVolunteer: React.FC<AddressVolunteerInfoProps> = ({ onNextStep, set
                             disabled={!selectedRegion}
                             className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
                         />
+                        {errors.city && <p className="text-red-500 text-sm">{errors.city}</p>}
                         {cityOptions.length > 0 && (
                             <ul className="absolute w-full border-2 border-light-blue bg-white rounded-lg z-10 max-h-40 overflow-y-auto">
                                 {cityOptions.map((city) => (
@@ -204,6 +228,7 @@ const AddressVolunteer: React.FC<AddressVolunteerInfoProps> = ({ onNextStep, set
                     onChange={(phone) => setLocalData(prevData => ({...prevData, phoneNumber: phone}))}
                     fullWidth
                 />
+                {errors.phoneNumber && <p className="text-red-500 text-sm">{errors.phoneNumber}</p>}
             </div>
 
             <div className="w-full mb-4">
@@ -221,6 +246,7 @@ const AddressVolunteer: React.FC<AddressVolunteerInfoProps> = ({ onNextStep, set
                         </button>
                     ))}
                 </div>
+                {errors.helpTypes && <p className="text-red-500 text-sm">{errors.helpTypes}</p>}
             </div>
 
             {(localData.helpTypes.includes('Психологічна') || localData.helpTypes.includes('Інформаційна')) && (

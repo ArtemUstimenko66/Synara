@@ -28,9 +28,43 @@ const CompleteMainInfo: React.FC<CompleteMainInfoProps> = ({ setUserData, onNext
             [name]: value,
         }));
     };
+    const [errors, setErrors] = useState<Partial<User>>({});
+
+    const validate = (): boolean => {
+        const newErrors: Partial<User> = {};
+
+        const namePattern = /^[A-ZА-ЯҐЄІЇ]/; // Pattern to match the first character as uppercase
+
+        if (!localData.firstName?.trim()) {
+            newErrors.firstName = "Ім'я є обов'язковим";
+        } else if (!namePattern.test(localData.firstName)) {
+            newErrors.firstName = "Ім'я повинно починатися з великої літери";
+        }
+
+        if (!localData.lastName?.trim()) {
+            newErrors.lastName = "Прізвище є обов'язковим";
+        } else if (!namePattern.test(localData.lastName)) {
+            newErrors.lastName = "Прізвище повинно починатися з великої літери";
+        }
+
+        if (!localData.email?.trim()) {
+            newErrors.email = "Пошта є обов'язковою";
+        } else if (!/\S+@\S+\.\S+/.test(localData.email)) {
+            newErrors.email = "Некоректний формат пошти";
+        }
+
+        if (!localData.password?.trim()) {
+            newErrors.password = "Пароль є обов'язковим";
+        } else if (localData.password.length < 6) {
+            newErrors.password = "Пароль повинен містити мінімум 6 символів";
+        }
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
 
     const handleSubmit = () => {
-        if (typeof setUserData === 'function') {
+        if (validate() && typeof setUserData === 'function') {
             setUserData(prev => ({ ...prev, ...localData }));
             onNextStep();
         } else {
@@ -53,6 +87,7 @@ const CompleteMainInfo: React.FC<CompleteMainInfoProps> = ({ setUserData, onNext
                         value={localData.firstName}
                         onChange={handleInputChange}
                     />
+                    {errors.firstName && <p className="text-red-500 text-sm mt-1">{errors.firstName}</p>}
                 </div>
                 <div className="w-1/2 flex flex-col">
                     <label className="font-montserratRegular mb-2">Прізвище*</label>
@@ -64,6 +99,7 @@ const CompleteMainInfo: React.FC<CompleteMainInfoProps> = ({ setUserData, onNext
                         value={localData.lastName}
                         onChange={handleInputChange}
                     />
+                    {errors.lastName && <p className="text-red-500 text-sm mt-1">{errors.lastName}</p>}
                 </div>
             </div>
 
@@ -77,6 +113,7 @@ const CompleteMainInfo: React.FC<CompleteMainInfoProps> = ({ setUserData, onNext
                     value={localData.email}
                     onChange={handleInputChange}
                 />
+                {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
             </div>
             <div className="w-full mb-6 relative">
                 <label className="font-montserratRegular mb-2">Пароль*</label>
@@ -96,6 +133,8 @@ const CompleteMainInfo: React.FC<CompleteMainInfoProps> = ({ setUserData, onNext
                 >
                     {showPassword ? <EyeOff size={20}/> : <Eye size={20}/>}
                 </button>
+                {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
+
             </div>
 
 

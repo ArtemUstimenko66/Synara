@@ -128,7 +128,7 @@ const Registration = () => {
                         <BackArrowComponent onClick={() => handleBackArrowClick()} />
                     )}
 
-                    <div className="max-w-2xl ml-24 mt-7 max-h-screen flex flex-col justify-start flex-grow">
+                    <div className="max-w-2xl ml-24 mt-7 flex flex-col justify-start flex-grow">
                         {currentStep < 5  && (
                             <>
                                 <h1 className="font-kharkiv text-relative-h2 mb-relative-ssm mt-relative-ssm">

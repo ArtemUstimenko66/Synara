@@ -32,30 +32,89 @@ const DateBirthday: React.FC<DateBirthdayProps> = ({ onNextStep, selectedRole, s
 
         setDateOfBirth(value);
     };
+    const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
-    const handleSubmit = () => {
-        const [day, month, year] = dateOfBirth.split(' / ').map(part => parseInt(part, 10));
+    const validateFields = () => {
+        const newErrors: { [key: string]: string } = {};
 
-        if (year && month && day) {
-            const formattedDate = `${year.toString().padStart(4, '0')}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-
-            const localData = {
-                dateOfBirth: formattedDate,
-                gender: selectedGender,
-                volunteerId,
-                unp,
-            };
-
-            console.log("Updated User Data: ", localData);
-
-            if (typeof setUserData === 'function') {
-                setUserData(prev => ({ ...prev, ...localData }));
-                onNextStep();
-            } else {
-                console.error("setUserData is not a function");
-            }
+        if (!dateOfBirth || !/^\d{2} \/ \d{2} \/ \d{4}$/.test(dateOfBirth)) {
+            newErrors.dateOfBirth = 'Будь ласка, введіть коректну дату (ДД / ММ / РРРР)';
         } else {
-            console.error("Invalid date format");
+            const [day, month, year] = dateOfBirth.split(" / ").map(Number);
+            const currentYear = new Date().getFullYear();
+
+            // Проверка месяца
+            if (month < 1 || month > 12) {
+                newErrors.dateOfBirth = 'Місяць повинен бути між 01 та 12';
+            } else {
+                // Проверка дня
+                const daysInMonth = new Date(year, month, 0).getDate(); // Получаем количество дней в месяце
+                if (day < 1 || day > daysInMonth) {
+                    newErrors.dateOfBirth = `День повинен бути між 01 та ${daysInMonth} для обраного місяця`;
+                }
+
+                // Проверка года
+                if (year < 1900 || year > currentYear) {
+                    newErrors.dateOfBirth = `Рік повинен бути між 1900 та ${currentYear}`;
+                }
+            }
+        }
+
+        // Validate gender selection
+        if (!selectedGender) {
+            newErrors.gender = 'Будь ласка, виберіть стать';
+        }
+
+        // Validate volunteer ID if role is "volunteer"
+        if (selectedRole === 'volunteer' && !volunteerId) {
+            newErrors.volunteerId = 'Будь ласка, введіть номер волонтерського посвідчення';
+        }
+
+        // Validate UNP
+        if (!unp) {
+            newErrors.unp = 'Будь ласка, введіть РНОКПП';
+        } else if (isNaN(Number(unp))) {
+            newErrors.unp = 'РНОКПП повинно бути числом';
+        }
+
+        // Validate agreement to terms and personal data processing
+        if (!selectedOptions.terms) {
+            newErrors.terms = 'Ви повинні погодитися з правилами користування';
+        }
+        if (!selectedOptions.personalData) {
+            newErrors.personalData = 'Ви повинні дати згоду на обробку персональних даних';
+        }
+
+        setErrors(newErrors);
+
+        return Object.keys(newErrors).length === 0;
+    };
+    const handleSubmit = () => {
+        if(validateFields())
+        {
+            const [day, month, year] = dateOfBirth.split(' / ').map(part => parseInt(part, 10));
+
+            if (year && month && day) {
+                const formattedDate = `${year.toString().padStart(4, '0')}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+
+                const localData = {
+                    dateOfBirth: formattedDate,
+                    gender: selectedGender,
+                    volunteerId,
+                    unp,
+                };
+
+                console.log("Updated User Data: ", localData);
+
+                if (typeof setUserData === 'function') {
+                    setUserData(prev => ({...prev, ...localData}));
+                    onNextStep();
+                } else {
+                    console.error("setUserData is not a function");
+                }
+            } else {
+                console.error("Invalid date format");
+            }
         }
     };
 
@@ -79,6 +138,7 @@ const DateBirthday: React.FC<DateBirthdayProps> = ({ onNextStep, selectedRole, s
                     onChange={handleDateChange}
                     className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
                 />
+                {errors.dateOfBirth && <p className="text-red-500 text-sm">{errors.dateOfBirth}</p>}
             </div>
 
             <div className="w-full mb-4">
@@ -109,6 +169,7 @@ const DateBirthday: React.FC<DateBirthdayProps> = ({ onNextStep, selectedRole, s
                         Інше
                     </button>
                 </div>
+                {errors.gender && <p className="text-red-500 text-sm">{errors.gender}</p>}
             </div>
 
             <div className={`flex w-full space-x-2 ${selectedRole !== 'volunteer' ? 'flex-col' : ''}`}>
@@ -124,6 +185,7 @@ const DateBirthday: React.FC<DateBirthdayProps> = ({ onNextStep, selectedRole, s
                             value={volunteerId === '' ? '' : volunteerId}
                             onChange={(e) => setVolunteerId(e.target.value === '' ? '' : Number(e.target.value))}
                         />
+                        {errors.volunteerId && <p className="text-red-500 text-sm">{errors.volunteerId}</p>}
                     </div>
                 )}
                 <div className={`${selectedRole === 'volunteer' ? 'w-1/2 mt-6' : 'w-full'} mb-4`}>
@@ -136,6 +198,7 @@ const DateBirthday: React.FC<DateBirthdayProps> = ({ onNextStep, selectedRole, s
                         value={unp === '' ? '' : unp}
                         onChange={(e) => setUnp(e.target.value === '' ? '' : Number(e.target.value))}
                     />
+                    {errors.unp && <p className="text-red-500 text-sm">{errors.unp}</p>}
                 </div>
             </div>
 
@@ -163,6 +226,7 @@ const DateBirthday: React.FC<DateBirthdayProps> = ({ onNextStep, selectedRole, s
                                                                                                                 className="underline font-bold">Політикою</a>
                     <p className="underline font-bold ml-6">конфіденційності</p>
                 </label>
+                {errors.terms && <p className="text-red-500 text-sm">{errors.terms}</p>}
             </div>
 
             <div className="w-full mb-4">
@@ -187,6 +251,7 @@ const DateBirthday: React.FC<DateBirthdayProps> = ({ onNextStep, selectedRole, s
                     </span>
                     Я даю згоду на обробку моїх персональних даних
                 </label>
+                {errors.personalData && <p className="text-red-500 text-sm">{errors.personalData}</p>}
             </div>
 
             <div className="w-full mb-6">

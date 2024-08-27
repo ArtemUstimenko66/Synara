@@ -71,18 +71,53 @@ const AddressVictim: React.FC<AddressVictimInfoProps> = ({ userData, setUserData
         setCityOptions([]);
     };
 
+    const [errors, setErrors] = useState<{ [key: string]: string }>({});
+    const startsWithCapital = (str: string) => /^[А-ЯҐЄІЇA-Z]/.test(str);
+
     const handleSubmit = () => {
-        setUserData((prev: any) => ({
-            ...prev,
-            region: selectedRegion,
-            city: selectedCity,
-            street,
-            house,
-            apartment,
-            phoneNumber,
-        }));
-        onNextStep();
+        const newErrors: { [key: string]: string } = {};
+
+        if (!selectedRegion) {
+            newErrors.region = 'Будь ласка, виберіть область';
+        }
+        if (!selectedCity) {
+            newErrors.city = 'Будь ласка, виберіть місто';
+        }
+        if (!street) {
+            newErrors.street = 'Будь ласка, введіть назву вулиці';
+        } else if (!startsWithCapital(street)) {
+            newErrors.street = 'Назва вулиці має починатися з великої літери';
+        }
+        if (!house) {
+            newErrors.house = 'Будь ласка, введіть номер будинку';
+        } else if (isNaN(house)) {
+            newErrors.house = 'Будинок повинен бути числом';
+        }
+        if (!apartment && apartment !== 0) {
+            newErrors.apartment = 'Будь ласка, введіть номер квартири';
+        } else if (isNaN(apartment)) {
+            newErrors.apartment = 'Квартира повинна бути числом';
+        }
+        if (!phoneNumber) {
+            newErrors.phoneNumber = 'Будь ласка, введіть номер телефону';
+        }
+
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+        } else {
+            setUserData((prev: any) => ({
+                ...prev,
+                region: selectedRegion,
+                city: selectedCity,
+                street,
+                house,
+                apartment,
+                phoneNumber,
+            }));
+            onNextStep();
+        }
     };
+
 
     return (
         <div className="flex flex-col items-start pr-8 pb-8 w-full">
@@ -99,6 +134,7 @@ const AddressVictim: React.FC<AddressVictimInfoProps> = ({ userData, setUserData
                             placeholder="Область проживання"
                             className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
                         />
+                        {errors.region && <p className="text-red-500 text-sm">{errors.region}</p>}
                         {regionOptions.length > 0 && (
                             <ul className="absolute w-full border-2 border-light-blue bg-white rounded-lg z-10 max-h-40 overflow-y-auto">
                                 {regionOptions.map((region) => (
@@ -126,6 +162,7 @@ const AddressVictim: React.FC<AddressVictimInfoProps> = ({ userData, setUserData
                             disabled={!selectedRegion}
                             className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
                         />
+                        {errors.city && <p className="text-red-500 text-sm">{errors.city}</p>}
                         {cityOptions.length > 0 && (
                             <ul className="absolute w-full border-2 border-light-blue bg-white rounded-lg z-10 max-h-40 overflow-y-auto">
                                 {cityOptions.map((city) => (
@@ -152,6 +189,7 @@ const AddressVictim: React.FC<AddressVictimInfoProps> = ({ userData, setUserData
                     onChange={(e) => setStreet(e.target.value)}
                     className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
                 />
+                {errors.street && <p className="text-red-500 text-sm">{errors.street}</p>}
             </div>
 
             <div className="flex w-full space-x-4 mb-4">
@@ -165,6 +203,7 @@ const AddressVictim: React.FC<AddressVictimInfoProps> = ({ userData, setUserData
                             onChange={(e) => setHouse(Number(e.target.value))}
                             className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
                         />
+                        {errors.house && <p className="text-red-500 text-sm">{errors.house}</p>}
                     </div>
                 </div>
 
@@ -178,6 +217,7 @@ const AddressVictim: React.FC<AddressVictimInfoProps> = ({ userData, setUserData
                             onChange={(e) => setApartment(Number(e.target.value))}
                             className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
                         />
+                        {errors.apartment && <p className="text-red-500 text-sm">{errors.apartment}</p>}
                     </div>
                 </div>
             </div>
@@ -189,8 +229,8 @@ const AddressVictim: React.FC<AddressVictimInfoProps> = ({ userData, setUserData
                     onChange={(phone) => setPhone(phone)}
                     fullWidth
                 />
+                {errors.phoneNumber && <p className="text-red-500 text-sm">{errors.phoneNumber}</p>}
             </div>
-
             <Button
                 className="w-full bg-perfect-yellow text-almost-black py-3 rounded-full mt-6 hover:bg-perfect-yellow transition"
                 onClick={handleSubmit}
