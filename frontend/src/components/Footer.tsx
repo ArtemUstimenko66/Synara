@@ -55,8 +55,9 @@ const Footer: React.FC = () => {
                     </AccordionSection>
                     <div className="border border-dark-blue mb-4 w-full"></div>
                     <AccordionSection title="ЗВ'ЯЗОК">
-                        <p className="my-2">0-800-501-701</p>
-                        <p className="my-2">Всеукраїнський телефон довіри</p>
+                        <p className="mt-2">0-800-501-701</p>
+                        <p className="mb-2">Всеукраїнський телефон довіри</p>
+                        <p className="my-2">synara.support@email.com</p>
                         <div className="mt-2 flex space-x-4">
                             <a href="#" aria-label="Facebook">
                                 <FontAwesomeIcon icon={['fab', 'facebook-f']}/>
@@ -91,7 +92,7 @@ const Footer: React.FC = () => {
                             </Link>
                         </div>
                         {/* Navigation section */}
-                        <div className="mt-4 ml-2 md:mt-0">
+                        <div className="mt-4 ml-2 md:mt-0 md:-ml-8">
                             <h3 className="font-bold mb-2">НАВІГАЦІЯ</h3>
                             <ul>
                                 <li><a href="#" className="hover:underline">Головна</a></li>
@@ -102,7 +103,7 @@ const Footer: React.FC = () => {
                             </ul>
                         </div>
                         {/* Info section */}
-                        <div className="mt-4 ml-24 xl:mr-0 md:mt-0 md:mr-22">
+                        <div className="mt-4 ml-24 xl:mr-0 md:mt-0 md:mr-22 md:ml-4">
                             <h3 className="font-bold mb-2">ІНФОРМАЦІЯ</h3>
                             <ul>
                                 <li><a href="#" className="hover:underline">Умови використання</a></li>
@@ -114,19 +115,20 @@ const Footer: React.FC = () => {
                         <div className="mt-4 md:mt-0 text-left xl:mr-24 md:mr-0 md:ml-12 xl:ml-0">
                             <h3 className="font-bold mb-2">ЗВ'ЯЗОК</h3>
                             <p>0-800-501-701</p>
-                            <p>Всеукраїнський телефон довіри</p>
+                            <p className="mb-4">Всеукраїнський телефон довіри</p>
+                            <p>synara.support@email.com</p>
                             <div className="mt-2 flex justify-start space-x-4">
                                 <a href="#" aria-label="Facebook">
-                                    <FontAwesomeIcon icon={['fab', 'facebook-f']} />
+                                    <FontAwesomeIcon icon={['fab', 'facebook-f']}/>
                                 </a>
                                 <a href="#" aria-label="Instagram">
-                                    <FontAwesomeIcon icon={['fab', 'instagram']} />
+                                    <FontAwesomeIcon icon={['fab', 'instagram']}/>
                                 </a>
                                 <a href="#" aria-label="Twitter">
-                                    <FontAwesomeIcon icon={['fab', 'twitter']} />
+                                    <FontAwesomeIcon icon={['fab', 'twitter']}/>
                                 </a>
                                 <a href="#" aria-label="Telegram">
-                                    <FontAwesomeIcon icon={['fab', 'telegram-plane']} />
+                                    <FontAwesomeIcon icon={['fab', 'telegram-plane']}/>
                                 </a>
                             </div>
                         </div>
