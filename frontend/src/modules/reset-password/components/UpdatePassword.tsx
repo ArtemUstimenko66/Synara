@@ -1,15 +1,29 @@
 import React, { useState } from 'react';
-import { Button } from "../../../ui/Button";
+import { Button } from "../../../ui/Button.tsx";
+import {sendResetEmail} from "../api/resetPasswordService.ts";
+
 
 type UpdatePasswordInfoProps = {
     onNextStep: (data: { email: string }) => void;
 };
-
 const UpdatePassword: React.FC<UpdatePasswordInfoProps> = ({ onNextStep }) => {
     const [email, setEmail] = useState('');
+    const [error, setError] = useState<string | null>(null);
+    const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
-    const handleSubmit = () => {
-        onNextStep({ email });
+    const handleSubmit = async () => {
+        setError(null);
+        setSuccessMessage(null);
+
+        try {
+            const message = await sendResetEmail(email);
+            setSuccessMessage(message);
+            localStorage.setItem('userEmail', email);
+            onNextStep({ email });
+        } catch (error: any) {
+            console.error('Ошибка при запросе на сброс пароля:', error);
+            setError(error.message);
+        }
     };
 
     return (
@@ -27,6 +41,8 @@ const UpdatePassword: React.FC<UpdatePasswordInfoProps> = ({ onNextStep }) => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
+                    {error && <p className="text-red-500 mt-2">{error}</p>}
+                    {successMessage && <p className="text-green-500 mt-2">{successMessage}</p>}
                 </div>
             </div>
             <Button

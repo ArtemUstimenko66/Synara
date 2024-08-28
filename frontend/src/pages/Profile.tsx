@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { getProfile, logout } from "../modules/registration/services/authService";
 import { useNavigate } from "react-router-dom";
+import {getProfile, logout} from "../modules/profile/api/registerService.ts";
 
 const Profile = () => {
     const [user, setUser] = useState<any>(null);

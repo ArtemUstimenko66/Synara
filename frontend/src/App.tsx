@@ -5,9 +5,9 @@ import Profile from "./pages/Profile.tsx";
 import RegisterPage from "./pages/auth/RegisterPage.tsx";
 import HomePage from "./pages/HomePage.tsx";
 import NotFoundPage from "./pages/NotFoundPage.tsx";
-import VerificationPage from "./pages/auth/VerificationPage.tsx";
-import NewPassword from "./pages/auth/NewPassword.tsx";
-import ResetPassword from "./pages/auth/ResetPassword.tsx";
+import PhoneVerificationPage from "./pages/PhoneVerificationPage.tsx";
+import NewPassword from "./pages/reset-password/NewPassword.tsx";
+import ResetPassword from "./pages/reset-password/ResetPassword.tsx";
 
 const App: React.FC = () => {
     return (
@@ -18,7 +18,7 @@ const App: React.FC = () => {
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/registration" element={<RegisterPage />} />
                     <Route path="/profile" element={<Profile />} />
-                    <Route path="/verify-phone" element={<VerificationPage />} />
+                    <Route path="/verify-phone" element={<PhoneVerificationPage />} />
                     <Route path="/reset-password" element={<ResetPassword />} />
                     <Route path="/new-password" element={<NewPassword />} />
                     <Route path="*" element={<NotFoundPage />} />

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Button } from "../../../ui/Button";
 import { User } from "../interfaces/User";
-import { registerUser, sendEmailConfirmation } from "../api/api";
+import {registerUser, sendEmailConfirmation, uploadDocument} from "../api/registerService.ts";
 import { prepareUserDataForBackend } from "../helpers/utils/userDataPreparation";
 
 interface EmailConfirmProps {
@@ -13,10 +13,9 @@ interface EmailConfirmProps {
 const EmailConfirm: React.FC<EmailConfirmProps> = ({ userData, onNextStep }) => {
     const [emailSent, setEmailSent] = useState<boolean>(false);
     const registrationDoneRef = useRef<boolean>(false);
-    const effectExecuted = useRef<boolean>(false); // Дополнительный флаг для отслеживания выполнения эффекта
+    const effectExecuted = useRef<boolean>(false);
 
     useEffect(() => {
-
         if (!effectExecuted.current && userData.email) {
             effectExecuted.current = true;
 
@@ -29,10 +28,19 @@ const EmailConfirm: React.FC<EmailConfirmProps> = ({ userData, onNextStep }) => 
                         const data = await registerUser(preparedData);
                         console.log("Registration successful:", data);
 
+                        await sendEmailConfirmation(userData.email);
                         console.log("Email confirmation sent successfully");
+
+                        if (userData.documents) {
+                            for (const file of userData.documents) {
+                                await uploadDocument(file);
+                                console.log("Document uploaded successfully");
+                            }
+                        }
+
                         registrationDoneRef.current = true;
                     } catch (error) {
-                        console.error("Registration or email confirmation failed:", error);
+                        console.error("Registration, email confirmation, or document upload failed:", error);
                     }
                 }
             };

@@ -9,6 +9,6 @@ const api: AxiosInstance = axios.create({
     withCredentials: true // includes cookies
 });
 
-authInterceptor(api);
+//authInterceptor(api);
 
 export default api;

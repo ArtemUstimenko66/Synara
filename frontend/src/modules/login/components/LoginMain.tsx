@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
-import { login } from "../../registration/services/authService";
+
 import GoogleLoginButton from "../../registration/components/GoogleLoginButton";
 import { Button } from "../../../ui/Button";
 import { Eye, EyeOff } from 'react-feather';
@@ -9,6 +9,7 @@ import DiiaImg from '../../../assets/images/diia.png';
 import TwitterLoginButton from "../../registration/components/TwitterLoginButton";
 import VectorWhite from '../../../assets/images/VectorWhite.svg?react';
 import Cookies from 'js-cookie';
+import {login} from "../api/loginService.ts";
 
 const LoginMain: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -17,6 +18,7 @@ const LoginMain: React.FC = () => {
     const [selectedOptions, setSelectedOptions] = useState<{ [key: string]: boolean }>({
         terms: false,
     });
+    const [errors, setErrors] = useState<{ email: string; password: string }>({ email: '', password: '' });
 
     const navigate = useNavigate();
 
@@ -27,19 +29,43 @@ const LoginMain: React.FC = () => {
         }
     }, []);
 
+    const validate = () => {
+        let valid = true;
+        let errors = { email: '', password: '' };
+
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email)) {
+            errors.email = 'Невірний формат електронної пошти';
+            valid = false;
+        }
+
+        if (password.length < 6) {
+            errors.password = 'Пароль повинен містити не менше 6 символів';
+            valid = false;
+        }
+
+        setErrors(errors);
+        return valid;
+    };
+
     const handleLogin = async () => {
-        try {
-            const response = await login(email, password);
-            const { accessToken } = response;
+        if (validate()) {
+            try {
+                const response = await login(email, password);
+                const { accessToken } = response;
                 if (selectedOptions.terms) {
                     Cookies.set('email', email, { expires: 7 });
                 } else {
                     Cookies.remove('email');
                 }
                 navigate('/profile');
-
-        } catch (error) {
-            console.error('Login failed', error);
+            } catch (error: any) {
+                if (error.response && error.response.status === 401) {
+                    console.error('401 : Неправильний email або пароль.');
+                } else {
+                    console.error('Login failed', error);
+                }
+            }
         }
     };
 
@@ -63,6 +89,7 @@ const LoginMain: React.FC = () => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
+                    {errors.email && <p className="text-red-500">{errors.email}</p>}
                 </div>
             </div>
             <div className="w-full mb-6 relative">
@@ -83,6 +110,7 @@ const LoginMain: React.FC = () => {
                 >
                     {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
+                {errors.password && <p className="text-red-500">{errors.password}</p>}
             </div>
             <div className="flex items-center justify-between w-full mb-6">
                 <div className="w-1/2 mb-4">

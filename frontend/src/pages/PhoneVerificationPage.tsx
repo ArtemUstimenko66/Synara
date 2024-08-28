@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { verifySmsCode, sendVerificationCode } from '../../modules/registration/services/smsService';
 import { useNavigate } from 'react-router-dom';
 
-const VerificationPage: React.FC = () => {
+const PhoneVerificationPage: React.FC = () => {
     const [code, setCode] = useState<string>('');
     const [error, setError] = useState<string | null>(null);
     const [canResend, setCanResend] = useState<boolean>(true);
@@ -86,4 +86,4 @@ const VerificationPage: React.FC = () => {
     );
 }
 
-export default VerificationPage;
+export default PhoneVerificationPage;
