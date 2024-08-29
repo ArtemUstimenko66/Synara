@@ -21,11 +21,23 @@ export class AuthService {
   ) {}
 
   async generateTokens(user: User) {
+    const volunteer = await this.volunteerService.findByUserId(user.id);
+
     const payload = {
       id: user.id,
       email: user.email,
       phone: user.phoneNumber,
       roles: [user.role],
+      volunteer: volunteer
+        ? {
+            id: volunteer.id,
+            region: volunteer.region,
+            city: volunteer.city,
+            supports: volunteer.supports,
+            volunteerIdentificationNumber:
+              volunteer.volunteer_identification_number,
+          }
+        : null,
     };
 
     const access_token = this.jwtService.sign(payload);

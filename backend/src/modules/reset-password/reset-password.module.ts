@@ -1,5 +1,5 @@
-import { forwardRef, Module } from '@nestjs/common';
-import { UsersModule } from '../users/users.module';
+import { Module } from '@nestjs/common';
+import { UsersModule } from '../users/modules/users.module';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { ResetPasswordController } from './reset-password.controller';
@@ -11,9 +11,9 @@ import { PasswordModule } from '../password/password.module';
   imports: [
     ConfigModule,
     JwtModule,
-    forwardRef(() => UsersModule),
-    forwardRef(() => SendEmailModule),
-    forwardRef(() => PasswordModule),
+    UsersModule,
+    SendEmailModule,
+    PasswordModule,
   ],
   controllers: [ResetPasswordController],
   providers: [ResetPasswordService],

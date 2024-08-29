@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { UsersModule } from '../users/users.module';
+import { UsersModule } from '../users/modules/users.module';
 import { ConfirmIpnController } from './confirm-ipn.controller';
 import { ConfirmIpnService } from './confirm-ipn.service';
 

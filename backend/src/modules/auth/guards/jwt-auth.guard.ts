@@ -12,14 +12,16 @@ export class JwtAuthGuard {
   canActivate(context: ExecutionContext): boolean {
     const request = context.switchToHttp().getRequest();
     const cookie = request.cookies['accessToken'];
+
     if (!cookie) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('Missing access token');
     }
+
     try {
       request.user = this.jwtService.verify(cookie);
       return true;
     } catch (error) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('Invalid access token');
     }
   }
 }

@@ -24,7 +24,7 @@ export class EmailConfirmationController {
       await this.emailConfirmationService.decodeConfirmationToken(token);
     await this.emailConfirmationService.confirmEmail(email);
 
-    const user = await this.userService.findByEmail(email);
+    //const user = await this.userService.findByEmail(email);
     // if (user && user.phoneNumber) {
     //   await this.smsService.sendVerificationCode(user.phoneNumber);
     // }

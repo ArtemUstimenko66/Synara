@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { UsersModule } from '../users/users.module';
+import { UsersModule } from '../users/modules/users.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthGoogleController } from './auth-google.controller';
@@ -7,7 +7,7 @@ import { AuthGoogleService } from './auth-google.service';
 import { GoogleStrategy } from './strategies/google.strategy';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { PassportModule } from '@nestjs/passport';
-import {PasswordModule} from "../password/password.module";
+import { PasswordModule } from '../password/password.module';
 
 @Module({
   imports: [
@@ -20,7 +20,7 @@ import {PasswordModule} from "../password/password.module";
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         secret: configService.get<string>('JWT_SECRET'),
-        signOptions: { expiresIn: '15s' },
+        signOptions: { expiresIn: configService.get<string>('JWT_EXPIRATION') },
       }),
     }),
   ],

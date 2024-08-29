@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { VolunteersEntity } from '../entities/volunteers.entity';
 import { CreateVolunteerDto } from '../dtos/create-volunteer.dto';
-import { User } from '../entities/users.entity';
 
 @Injectable()
 export class VolunteersService {

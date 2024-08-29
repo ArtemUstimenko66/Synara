@@ -1,8 +1,8 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AuthModule } from '../auth/auth.module';
-import { VolunteersEntity } from './entities/volunteers.entity';
-import { VolunteersService } from './services/volunteer.service';
+import { AuthModule } from '../../auth/auth.module';
+import { VolunteersEntity } from '../entities/volunteers.entity';
+import { VolunteersService } from '../services/volunteer.service';
 @Module({
   imports: [
     TypeOrmModule.forFeature([VolunteersEntity]),

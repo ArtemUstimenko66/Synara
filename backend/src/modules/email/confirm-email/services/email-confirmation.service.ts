@@ -6,7 +6,6 @@ import SendEmailService from '../../send-email/services/send-email.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../../../users/entities/users.entity';
 import { Repository } from 'typeorm';
-import {SmsService} from "../../../sms/sms.service";
 
 @Injectable()
 export class EmailConfirmationService {
@@ -14,7 +13,6 @@ export class EmailConfirmationService {
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
     private readonly emailService: SendEmailService,
-    private readonly smsService: SmsService,
     @InjectRepository(User) private userRepository: Repository<User>,
   ) {}
 

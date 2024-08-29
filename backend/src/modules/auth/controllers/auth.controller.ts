@@ -32,6 +32,7 @@ export class AuthController {
   @ApiOperation({ summary: 'Login' })
   @ApiResponse({ status: 201, type: 'Bearer Token' })
   @UseGuards(LocalAuthGuard)
+  @Roles(Role.Volunteer, Role.Victim, Role.Guest)
   @Post('/login')
   async login(@Body() loginUserDto: LoginUserDto, @Res() res: Response) {
     const { access_token, refresh_token } =
@@ -58,6 +59,7 @@ export class AuthController {
   @ApiOperation({ summary: 'Register' })
   @ApiResponse({ status: 201, type: User })
   @Post('/register')
+  @Roles(Role.Volunteer, Role.Victim, Role.Guest)
   async register(
     @Body() createUserDto: CreateUserDto,
     @Body('volunteerDetails') createVolunteerDto: CreateVolunteerDto,
@@ -103,7 +105,7 @@ export class AuthController {
   @ApiOperation({ summary: 'Get profile' })
   @ApiResponse({ status: 200, type: [User] })
   @UseGuards(JwtAuthGuard)
-  //@Roles(Role.Volunteer)
+  @Roles(Role.Volunteer, Role.Victim, Role.Guest)
   @Get('/profile')
   getProfile(@Req() req) {
     return req.user;
@@ -111,7 +113,7 @@ export class AuthController {
 
   @ApiOperation({ summary: 'Get user by ID' })
   @ApiResponse({ status: 200, type: User })
-  //@UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Get('/user/:id')
   async getUserById(@Param('id') id: number): Promise<User> {
     return this.authService.getUserById(id);
@@ -126,6 +128,7 @@ export class AuthController {
   }
 
   //Twitter auth
+  @Roles(Role.Volunteer, Role.Victim, Role.Guest)
   @Get('twitter')
   @UseGuards(AuthGuard('twitter'))
   async twitterAuth(@Req() req: Request) {}

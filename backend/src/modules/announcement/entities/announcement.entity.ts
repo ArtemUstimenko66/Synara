@@ -14,14 +14,6 @@ export class Announcement {
   id: number;
 
   @ApiProperty({
-    example: 'Ivan Ivanov',
-    description: 'Name of the user, whose posted this announcement',
-    type: String,
-  })
-  @Column()
-  senderId: number;
-
-  @ApiProperty({
     example: '2024-08-25',
     description: 'Date, when user posted announcement',
     type: Date,
