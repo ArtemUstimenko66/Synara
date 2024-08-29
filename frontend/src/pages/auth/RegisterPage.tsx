@@ -8,7 +8,7 @@ import EmailConfirm from "../../modules/registration/components/EmailConfirm.tsx
 import Stepper from "../../ui/Stepper";
 import { User } from "../../modules/registration/interfaces/User";
 import BackArrowComponent from "../../modules/registration/components/BackArrow.tsx";
-import CheckPhone from "../../modules/registration/components/CheckPhone.tsx";
+import CheckPhone from "../../modules/phone-verification/components/CheckPhone.tsx";
 import {useNavigate} from "react-router-dom";
 
 const Registration = () => {
@@ -30,6 +30,7 @@ const Registration = () => {
         house: 0,
         apartment: 0,
         helpTypes: [],
+        documents: [],
         volunteerId: 0
     });
 

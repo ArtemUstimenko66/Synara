@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { UserLogin } from "../../modules/login/interfaces/UserLogin.tsx";
 import BackArrowComponent from "../../modules/registration/components/BackArrow.tsx";
-import UpdatePassword from "../../modules/login/components/UpdatePassword.tsx";
-import EmailSend from "../../modules/login/components/EmailSend.tsx";
+import UpdatePassword from "../../modules/reset-password/components/UpdatePassword.tsx";
+import EmailSend from "../../modules/reset-password/components/EmailSend.tsx";
 import { useNavigate } from 'react-router-dom';
 
 const ResetPassword = () => {
@@ -34,7 +34,7 @@ const ResetPassword = () => {
         },
         {
             component: (
-                <EmailSend email={userData.email} onNextStep={() => handleNextStep({}, 3)} />
+                <EmailSend email={userData.email}  />
             ),
             step: 2
         }

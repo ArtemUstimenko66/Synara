@@ -24,7 +24,7 @@ const AddressVolunteer: React.FC<AddressVolunteerInfoProps> = ({ onNextStep, set
         city: '',
         phoneNumber: '',
         helpTypes: [],
-        //documents: []
+        documents: []
     });
 
     const [selectedRegion, setSelectedRegion] = useState<string>(localData.region || '');
@@ -103,16 +103,18 @@ const AddressVolunteer: React.FC<AddressVolunteerInfoProps> = ({ onNextStep, set
         });
     };
 
+    // Обработчик для удаления файла
     const handleRemoveDocument = (fileName: string) => {
         setLocalData(prevData => ({
             ...prevData,
-            documents: prevData.documents?.filter(doc => doc !== fileName),
+            documents: prevData.documents?.filter(file => file.name !== fileName),
         }));
     };
 
+// Обработчик загрузки файлов
     const handleDocumentUpload = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.files) {
-            const newDocuments = Array.from(event.target.files).map(file => file.name);
+            const newDocuments = Array.from(event.target.files);
             setLocalData(prevData => ({
                 ...prevData,
                 documents: [...(prevData.documents || []), ...newDocuments],
@@ -120,11 +122,13 @@ const AddressVolunteer: React.FC<AddressVolunteerInfoProps> = ({ onNextStep, set
         }
     };
 
+// Обработчик клика по кнопке добавления документа
     const handleAddDocumentClick = () => {
         if (fileInputRef.current) {
             fileInputRef.current.click();
         }
     };
+
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
     const validateFields = () => {
         const newErrors: { [key: string]: string } = {};
@@ -154,7 +158,7 @@ const AddressVolunteer: React.FC<AddressVolunteerInfoProps> = ({ onNextStep, set
                 city: selectedCity,
                 phoneNumber: localData.phoneNumber,
                 helpTypes: localData.helpTypes,
-                //documents: localData.documents
+                documents: localData.documents
             }));
             onNextStep();
         }
@@ -270,8 +274,8 @@ const AddressVolunteer: React.FC<AddressVolunteerInfoProps> = ({ onNextStep, set
                         <div>
                             {localData.documents?.map((doc, index) => (
                                 <div key={index} className="flex items-center justify-between w-full mt-1 p-3 rounded-lg border-2 bg-baby-blue border-baby-blue">
-                                    <p className="font-montserratRegular text-sm text-almost-black">{doc}</p>
-                                    <DeleteImg className="cursor-pointer" onClick={() => handleRemoveDocument(doc)} />
+                                    <p className="font-montserratRegular text-sm text-almost-black">{doc.name}</p>
+                                    <DeleteImg className="cursor-pointer" onClick={() => handleRemoveDocument(doc.name)} />
                                 </div>
                             ))}
                         </div>

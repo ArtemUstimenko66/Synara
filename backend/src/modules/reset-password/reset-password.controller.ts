@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import {BadRequestException, Body, Controller, Get, Post, Query, Res} from '@nestjs/common';
 import { ResetPasswordService } from './reset-password.service';
 import { ResetPasswordDto } from './dtos/reset-password.dto';
+import { Response } from 'express';
 
 @Controller('reset')
 export class ResetPasswordController {
@@ -12,8 +13,15 @@ export class ResetPasswordController {
   }
 
   @Get('allow-reset-password')
-  async allowResettingPassword(@Query('token') token: string) {
-    return await this.profileService.decodeToken(token);
+  async allowResettingPassword(@Query('token') token: string, @Res() res: Response) {
+    try {
+      const email = await this.profileService.decodeToken(token);
+      if (email) {
+        return res.redirect(`http://localhost:5173/new-password?token=${token}`);
+      }
+    } catch (error) {
+      throw new BadRequestException('Invalid token');
+    }
   }
 
   @Post('reset-password')

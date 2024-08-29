@@ -1,30 +1,20 @@
-import React, { useEffect } from 'react';
-import { Button } from "../../../ui/Button";
-import {sendEmailResetPassword} from "../api/api.ts";
+import { Button } from "../../../ui/Button.tsx";
+import {sendResetEmail} from "../api/resetPasswordService.ts";
 
 type EmailSendProps = {
-    onNextStep: () => void;
     email: string;
 };
 
-const EmailSend: React.FC<EmailSendProps> = ({ onNextStep, email }) => {
-    useEffect(() => {
-        const sendResetEmail = async () => {
-            try {
-                await sendEmailResetPassword(email);
-                console.log('Email sent successfully');
-            } catch (error) {
-                console.error('Failed to send email:', error);
-            }
-        };
+const EmailSend: React.FC<EmailSendProps> = ({ email }) => {
 
-        sendResetEmail();
-    }, [email]);
-
-    const handleSubmit = () => {
-        onNextStep();
+    const handleSubmit = async () => {
+        try {
+            await sendResetEmail(email);
+            console.log('Success resend');
+        } catch (error: any) {
+            console.error('Error resend:', error);
+        }
     };
-
     return (
         <div className="flex flex-col w-full mt-24">
             <div className="flex w-full space-x-4 mb-4 mt-10">

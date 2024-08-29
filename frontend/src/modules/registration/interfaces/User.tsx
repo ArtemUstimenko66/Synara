@@ -14,6 +14,6 @@ export interface User {
     house?: 0;
     apartment?: 0;
     helpTypes?: string[];
-    //document?: string[];
+    documents?: File[];
     volunteerId?: 0;
 }

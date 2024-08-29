@@ -1,36 +1,8 @@
-import api from "./api.tsx";
-import { RegisterPayload } from "../interfaces/AuthInterface.tsx";
-
-export const login = async (email: string, password: string)  => {
-    try {
-        const response = await api.post('/auth/login', {email, password }, { withCredentials: true });
-        return response.data;
-    } catch (error) {
-        console.log('Login error', error); // maybe we need to change expectation here later
-        throw error;
-    }
-}
-
-export const register = async (payload: RegisterPayload)  => {
-    try {
-        const response = await api.post('/auth/register', payload);
-        const data = response.data;
-
-        const phoneNumber = data.phoneNumber;
-        if(phoneNumber) {
-            localStorage.setItem('phoneNumber', phoneNumber);
-        }
-        return data;
-    } catch (error) {
-        console.log('Register error', error);
-        throw error;
-    }
-}
-
+import api from "./api.ts";
 export const getProfile = async () => {
     try {
         const response = await api.get('/auth/profile', {
-           withCredentials: true
+            withCredentials: true
         });
         return response.data;
     } catch (error) {
@@ -38,7 +10,6 @@ export const getProfile = async () => {
         throw error;
     }
 }
-
 export const refreshToken = async () => {
     try {
         const response = await api.post('/auth/refresh', {}, {
@@ -64,4 +35,3 @@ export const logout = async () => {
         throw error;
     }
 }
-

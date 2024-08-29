@@ -2,7 +2,6 @@ import React from 'react';
 import NavItem from "../ui/NavItem.tsx";
 import { Button } from "../ui/Button.tsx";
 import { Link } from "react-router-dom";
-import LogoSynara from '../assets/images/logoSynara.svg?react';
 
 export const MobileMenu = ({ isOpen = false }) => {
     const navItems = [
@@ -21,7 +20,7 @@ export const MobileMenu = ({ isOpen = false }) => {
                 {navItems.map((item, index) => (
                     <NavItem key={item.to} text={item.text} to={item.to} isLast={index === navItems.length - 1} />
                 ))}
-                <div className="flex flex-col space-y-5 mr-14 mt-auto">
+                <div className="flex flex-col space-y-5 md:mr-14 sm:mr-0 mt-auto">
                     <Link to="/login" className="w-full mt-8">
                         <Button hasBlue={true} className="w-full md:text-pxl">УВІЙТИ</Button>
                     </Link>
