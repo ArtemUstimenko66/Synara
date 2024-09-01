@@ -8,7 +8,7 @@ type UpdatePasswordInfoProps = {
     setUserData: (data: Partial<User>) => void;
 };
 
-const UpdatePassword: React.FC<UpdatePasswordInfoProps> = ({ userData }) => {
+const CheckPhone: React.FC<UpdatePasswordInfoProps> = ({ userData }) => {
     const [code, setCode] = useState<string>('');
     const [error, setError] = useState<string | null>(null); // Состояние для ошибки
     const effectExecuted = useRef<boolean>(false); // Дополнительный флаг для отслеживания выполнения эффекта
@@ -87,4 +87,4 @@ const UpdatePassword: React.FC<UpdatePasswordInfoProps> = ({ userData }) => {
     );
 };
 
-export default UpdatePassword;
+export default CheckPhone;

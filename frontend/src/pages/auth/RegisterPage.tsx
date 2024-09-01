@@ -39,6 +39,12 @@ const Registration = () => {
         setCurrentStep(nextStep);
     };
 
+    // save data to localStorage on changes
+    // useEffect(() => {
+    //     localStorage.setItem('userData', JSON.stringify(userData));
+    //     localStorage.setItem('currentStep', currentStep.toString());
+    // }, [userData, currentStep]);
+
     // log data on each step
     useEffect(() => {
         console.log("User data after update:", userData);

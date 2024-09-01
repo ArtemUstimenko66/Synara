@@ -1,5 +1,5 @@
 import React from 'react';
-import GoogleImg from '../../../assets/images/google.svg'; // Убедитесь, что путь к изображению правильный
+import GoogleImg from '../../../../assets/images/google.svg'; // Убедитесь, что путь к изображению правильный
 
 const GoogleLoginButton: React.FC = () => {
     const handleGoogleLogin = () => {
@@ -10,7 +10,7 @@ const GoogleLoginButton: React.FC = () => {
         <button
             onClick={handleGoogleLogin}
             style={{ width: '50%', padding: '12px', borderRadius: '8px' }}
-            className="w-full bg-gray-200 py-3 rounded-xl flex items-center justify-center hover:bg-gray-300 transition"
+            className="w-1/2 bg-gray-200 py-3 rounded-xl flex items-center justify-center hover:bg-gray-300 transition mr-2"
         >
             <img src={GoogleImg} alt="Google" className="w-6 h-6" /> {/* Удалили текст, оставили только изображение */}
         </button>

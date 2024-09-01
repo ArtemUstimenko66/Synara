@@ -1,3 +1,5 @@
+import {Link} from "react-router-dom";
+
 type ChooseRoleProps = {
     onSelectRole: (role: string) => void;
 };
@@ -21,7 +23,7 @@ const ChooseRole: React.FC<ChooseRoleProps> = ({ onSelectRole }) => {
                 </div>
             </div>
             <p className="text-relative-ps font-montserratRegular">
-                У вас вже є аккаунт? <a href="/login" className="text-almost-black font-bold underline">Увійти</a>
+                У вас вже є аккаунт? <Link to="/login" className="text-almost-black font-bold underline">Увійти</Link>
             </p>
         </div>
     );

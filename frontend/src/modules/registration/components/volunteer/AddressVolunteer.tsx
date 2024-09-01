@@ -1,7 +1,7 @@
 import React, { useState, useRef, ChangeEvent } from 'react';
 import { Button } from "../../../../ui/Button.tsx";
 import { User } from "../../interfaces/User.tsx";
-import { MuiPhone } from "../MuiPhone.tsx";
+import { MuiPhone } from "../ui/MuiPhone.tsx";
 import DeleteImg from '../../../../assets/images/DeleteImg.svg?react';
 
 const regionsWithCities = {

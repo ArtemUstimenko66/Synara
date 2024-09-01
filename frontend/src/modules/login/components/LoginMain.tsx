@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
-import GoogleLoginButton from "../../registration/components/GoogleLoginButton";
+import GoogleLoginButton from "../../registration/components/ui/GoogleLoginButton.tsx";
 import { Button } from "../../../ui/Button";
 import { Eye, EyeOff } from 'react-feather';
-import BankIdImg from '../../../assets/images/bank_id.png';
-import DiiaImg from '../../../assets/images/diia.png';
-import TwitterLoginButton from "../../registration/components/TwitterLoginButton";
+import TwitterLoginButton from "../../registration/components/ui/TwitterLoginButton.tsx";
 import VectorWhite from '../../../assets/images/VectorWhite.svg?react';
 import Cookies from 'js-cookie';
 import {login} from "../api/loginService.ts";
@@ -19,6 +17,7 @@ const LoginMain: React.FC = () => {
         terms: false,
     });
     const [errors, setErrors] = useState<{ email: string; password: string }>({ email: '', password: '' });
+    const [generalError, setGeneralError] = useState<string>('');
 
     const navigate = useNavigate();
 
@@ -58,10 +57,11 @@ const LoginMain: React.FC = () => {
                 } else {
                     Cookies.remove('email');
                 }
-                navigate('/profile');
+                navigate('/main');
             } catch (error: any) {
                 if (error.response && error.response.status === 401) {
                     console.error('401 : Неправильний email або пароль.');
+                    setGeneralError('Неправильний email або пароль.');
                 } else {
                     console.error('Login failed', error);
                 }
@@ -136,11 +136,11 @@ const LoginMain: React.FC = () => {
                         Запам'ятати мене
                     </label>
                 </div>
-                <a href="/reset-password"
+                <Link to="/reset-password"
                    className="text-almost-black text-relative-ps font-montserratRegular font-bold underline">Забули
-                    пароль?</a>
+                    пароль?</Link>
             </div>
-
+            {generalError && <p className="text-red-500 text-center mb-5">{generalError}</p>}
             <Button
                 isFilled={true}
                 className="w-full bg-perfect-yellow text-almost-black py-3 rounded-full mb-5 hover:bg-perfect-yellow transition"
@@ -155,24 +155,13 @@ const LoginMain: React.FC = () => {
 
             <div className="flex w-full justify-between mb-7">
                 <GoogleLoginButton />
-                <button
-                    className="w-1/2 bg-gray-200 py-3 rounded-xl flex items-center justify-center ml-2 hover:bg-gray-300 transition">
-                    <img src={`${BankIdImg}`} alt="Bank ID" className="w-20 h-6 mr-2" />
-                </button>
-            </div>
-
-            <div className="flex w-full justify-between mb-7">
-                <button
-                    className="w-1/2 bg-almost-black text-white py-3 rounded-xl flex items-center justify-center mr-2 hover:bg-gray-700 transition">
-                    <img src={`${DiiaImg}`} alt="Diia" className="w-9 h-5 mr-2" />
-                </button>
                 <TwitterLoginButton />
             </div>
 
             <div className="flex w-full justify-center mt-6">
                 <p className="text-relative-ps font-montserratRegular">
-                    У вас ще немає аккаунта? <a href="/registration"
-                                                className="text-almost-black font-bold underline">Зареєструватись</a>
+                    У вас ще немає аккаунта? <Link to="/registration"
+                                                className="text-almost-black font-bold underline">Зареєструватись</Link>
                 </p>
             </div>
         </div>

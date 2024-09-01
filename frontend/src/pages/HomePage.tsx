@@ -244,7 +244,7 @@ const HomePage: React.FC = () => {
 
                     {/* Second section - about us */}
                     <section
-                        className='w-full flex justify-center sm:mt-96 sm:bg-dark-blue  flex-col xl:flex-row md:flex-row xl:mt-[15vw] md:mt-[11vw] '>
+                        className='w-full flex justify-center sm:mt-96 sm:bg-dark-blue  flex-col xl:flex-row md:flex-row xl:mt-[20vw] md:mt-[14vw] '>
                         <div
                             className="hidden xl:flex xl:order-1 md:flex md:order-1 xl:w-1/2 md:w-relative-1/2">
                             <PlaceholderHorizontal

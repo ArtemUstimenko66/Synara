@@ -3,8 +3,8 @@ import BankIdImg from '../../../assets/images/bank_id.png';
 import DiiaImg from '../../../assets/images/diia.png';
 import { Button } from "../../../ui/Button.tsx";
 import { User } from "../interfaces/User.tsx";
-import TwitterLoginButton from "./TwitterLoginButton.tsx";
-import GoogleLoginButton from "./GoogleLoginButton.tsx";
+import TwitterLoginButton from "./ui/TwitterLoginButton.tsx";
+import GoogleLoginButton from "./ui/GoogleLoginButton.tsx";
 import { Eye, EyeOff } from 'react-feather';
 
 type CompleteMainInfoProps = {
@@ -152,17 +152,6 @@ const CompleteMainInfo: React.FC<CompleteMainInfoProps> = ({ setUserData, onNext
 
             <div className="flex w-full justify-between mb-7">
                 <GoogleLoginButton/>
-                <button
-                    className="w-1/2 bg-gray-200 py-3 rounded-xl flex items-center justify-center ml-2 hover:bg-gray-300 transition">
-                    <img src={`${BankIdImg}`} alt="Bank ID" className="w-20 h-6 mr-2"/>
-                </button>
-            </div>
-
-            <div className="flex w-full justify-between mb-7">
-                <button
-                    className="w-1/2 bg-almost-black text-white py-3 rounded-xl flex items-center justify-center mr-2 hover:bg-gray-700 transition">
-                    <img src={`${DiiaImg}`} alt="Diia" className="w-9 h-5 mr-2"/>
-                </button>
                 <TwitterLoginButton/>
             </div>
 

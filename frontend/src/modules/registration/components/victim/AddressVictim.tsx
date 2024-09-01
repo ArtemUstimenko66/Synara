@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button } from "../../../../ui/Button.tsx";
 
 import 'react-international-phone/style.css';
-import {MuiPhone} from "../MuiPhone.tsx";
+import {MuiPhone} from "../ui/MuiPhone.tsx";
 
 const regionsWithCities = {
     'Київська область': ['Київ', 'Біла Церква', 'Бровари'],

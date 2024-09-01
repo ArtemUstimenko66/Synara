@@ -1,6 +1,4 @@
 import { useEffect, useState } from 'react';
-import CompleteMainInfo from "../../modules/registration/components/CompleteMainInfo.tsx";
-import { User } from "../../modules/registration/interfaces/User";
 import BackArrowComponent from "../../modules/registration/components/BackArrow.tsx";
 import LoginMain from "../../modules/login/components/LoginMain.tsx";
 import {UserLogin} from "../../modules/login/interfaces/UserLogin.tsx";
@@ -8,15 +6,10 @@ import {UserLogin} from "../../modules/login/interfaces/UserLogin.tsx";
 const LoginPage = () => {
     const [currentStep, setCurrentStep] = useState(1);
 
-    const [userData, setUserData] = useState<UserLogin>({
+    const [userData] = useState<UserLogin>({
         email: '',
         password: '',
     });
-
-    const handleNextStep = (data: Partial<User>, nextStep: number) => {
-        setUserData(prev => ({ ...prev, ...data }));
-        setCurrentStep(nextStep);
-    };
 
     // log data on each step
     useEffect(() => {
@@ -29,16 +22,6 @@ const LoginPage = () => {
                 <LoginMain  />
             ),
             step: 1
-        },
-        {
-            component: (
-                <CompleteMainInfo
-                    userData={userData}
-                    setUserData={setUserData}
-                    onNextStep={() => handleNextStep({}, 3)}
-                />
-            ),
-            step: 2
         }
     ];
 
@@ -55,13 +38,12 @@ const LoginPage = () => {
                     )}
 
                     <div className="max-w-2xl ml-24 mt-7 flex flex-col justify-start flex-grow">
-                        {currentStep < steps.length && (
-                            <>
+
                                 <h1 className="font-kharkiv text-relative-h2 mb-relative-ssm mt-relative-ssm">
                                     ВХІД В АККАУНТ
                                 </h1>
-                            </>
-                        )}
+
+
 
                         <div className="flex-grow flex flex-col justify-between">
                             {steps.find(step => step.step === currentStep)?.component}

@@ -1,13 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import BackArrowComponent from "../../modules/registration/components/BackArrow.tsx";
-import { Eye, EyeOff } from "react-feather";
-import React, { useState } from "react";
+import  { useState } from "react";
 import { Button } from "../../ui/Button.tsx";
 import {resetPassword} from "../../modules/reset-password/api/resetPasswordService.ts";
 
 const NewPassword = () => {
     const navigate = useNavigate();
-    const [showPassword, setShowPassword] = useState(false);
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState<string | null>(null);
@@ -76,42 +74,26 @@ const NewPassword = () => {
                             <div className="w-full mb-6 relative">
                                 <label className="font-montserratRegular mb-2">Пароль</label>
                                 <input
-                                    type={showPassword ? 'text' : 'password'}
+                                    type={'text'}
                                     name="password"
                                     placeholder="Створіть новий пароль"
                                     className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue pr-10"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                 />
-                                <button
-                                    type="button"
-                                    onClick={() => setShowPassword(prev => !prev)}
-                                    className="absolute top-1/2 right-3 transform -translate-y-1/2 text-gray-400"
-                                    style={{ marginTop: '0.8rem', marginRight: '1rem' }}
-                                >
-                                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                                </button>
                             </div>
 
                             {/* Поле подтверждения пароля */}
                             <div className="w-full mb-2 relative">
                                 <label className="font-montserratRegular mb-2">Підтвердження пароля</label>
                                 <input
-                                    type={showPassword ? 'text' : 'password'}
+                                    type={'text'}
                                     name="confirmPassword"
                                     placeholder="Повторіть новий пароль"
                                     className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue pr-10"
                                     value={confirmPassword}
                                     onChange={(e) => setConfirmPassword(e.target.value)}
                                 />
-                                <button
-                                    type="button"
-                                    onClick={() => setShowPassword(prev => !prev)}
-                                    className="absolute top-1/2 right-3 transform -translate-y-1/2 text-gray-400"
-                                    style={{ marginTop: '0.8rem', marginRight: '1rem' }}
-                                >
-                                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                                </button>
                             </div>
 
                             {/* Сообщение об ошибке */}
