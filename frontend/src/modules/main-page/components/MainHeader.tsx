@@ -1,10 +1,25 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import LogoSynara from '../../../assets/images/logoSynara.svg?react';
+
+import MenuIcon from '../assets/menu.svg?react';
+import NotificationIcon from '../assets/notification.svg?react';
+
 import {Button} from "../../../ui/Button.tsx";
 import NavItem from "../../../ui/NavItem.tsx";
+import {logout} from "../../profile/api/profileService.ts";
 
 const MainHeader: React.FC = () => {
+    const navigate = useNavigate();
+    const handleLogout = async () => {
+        try {
+            await logout();
+            navigate('/');
+        } catch (error) {
+            console.error('Logout failed', error);
+        }
+    }
+
     return (
         <header className="flex items-center justify-between p-4 ">
             <Link to="/main">
@@ -19,40 +34,14 @@ const MainHeader: React.FC = () => {
             </nav>
             <div className="flex space-x-8">
                 <button>
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={2}
-                        stroke="currentColor"
-                        className="w-6 h-6 text-almost-black"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0018 14.158V11a6 6 0 10-12 0v3.159c0 .524-.214 1.03-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-                        />
-                    </svg>
+                    <MenuIcon className="h-6 w-6"/>
                 </button>
                 <button>
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={2}
-                        stroke="currentColor"
-                        className="w-6 h-6 text-almost-black"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M4 6h16M4 12h16m-7 6h7"
-                        />
-                    </svg>
+                    <NotificationIcon className="h-6 w-6"/>
                 </button>
-                <Link to="/registration">
-                    <Button isFilled={true} className="px-4">ВИХІД</Button>
-                </Link>
+                {/*<Link to="/home">*/}
+                {/*    <Button isFilled={true} className="px-4" onClick={handleLogout}>ВИХІД</Button>*/}
+                {/*</Link>*/}
             </div>
         </header>
     );

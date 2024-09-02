@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookF, faInstagram, faTwitter, faTelegramPlane } from '@fortawesome/free-brands-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import LogoSynara from '../assets/images/logoSynara.svg?react';
+import LogoSynara from '../assets/images/logo_Footer.svg?react';
 import { Link } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import LogoFooter from '../assets/images/logo_Footer.svg?react';
@@ -39,9 +39,9 @@ const Footer: React.FC = () => {
                         <ul>
                             <li className="my-2"><a href="#" className="hover:underline">Головна</a></li>
                             <li className="my-2"><a href="#" className="hover:underline">Про нас</a></li>
-                            <li className="my-2"><a href="#" className="hover:underline">Допомога ЗСУ</a></li>
+                            <li className="my-2"><a href="#" className="hover:underline">Збори</a></li>
                             <li className="my-2"><a href="#" className="hover:underline">Карти</a></li>
-                            <li className="my-2"><a href="#" className="hover:underline">Як це працює?</a></li>
+                            <li className="my-2"><a href="#" className="hover:underline">Як це працює</a></li>
                         </ul>
                     </AccordionSection>
                     <div className="border border-dark-blue mb-4 w-full"></div>
@@ -84,26 +84,36 @@ const Footer: React.FC = () => {
             ) : (
                 <>
                     <hr className="border-t border-gray-200 w-[110%] border-2 mb-6"/>
-                    <div className="w-full flex flex-col md:flex-row justify-between items-start text-almost-black">
+                    <div className="w-[110%] flex flex-col md:flex-row justify-between items-start text-almost-black">
                         {/* Left section with logo */}
-                        <div className="text-lg font-bold mt-2 xl:mr-0 md:mr-5">
+                        <div className=" mt-2 xl:mr-0 md:mr-5 justify-start flex">
                             <Link to="/home">
-                                <LogoSynara className="text-xl font-bold xl:mr-44 md:mr-14" />
+                                <LogoSynara className="text-xl font-bold  w-[45%] xl:mr-32 md:mr-14" />
                             </Link>
                         </div>
                         {/* Navigation section */}
-                        <div className="mt-4 ml-2 md:mt-0 md:-ml-8">
+                        <div className="mt-4 ml-2 md:mt-0 md:-ml-8 xl:mr-14">
                             <h3 className="font-bold mb-2">НАВІГАЦІЯ</h3>
-                            <ul>
-                                <li><a href="#" className="hover:underline">Головна</a></li>
-                                <li><a href="#" className="hover:underline">Про нас</a></li>
-                                <li><a href="#" className="hover:underline">Допомога ЗСУ</a></li>
-                                <li><a href="#" className="hover:underline">Карти</a></li>
-                                <li><a href="#" className="hover:underline">Як це працює?</a></li>
-                            </ul>
+                            <div className="flex space-x-8">
+                                <ul>
+                                    <li><a href="#" className="hover:underline">Профіль</a></li>
+                                    <li><a href="#" className="hover:underline">Чат</a></li>
+                                    <li><a href="#" className="hover:underline">Петиції</a></li>
+                                    <li><a href="#" className="hover:underline">Оголошення</a></li>
+                                    <li><a href="#" className="hover:underline">Статистика</a></li>
+                                    <li><a href="#" className="hover:underline">Налаштування</a></li>
+                                </ul>
+                                <ul>
+                                    <li><a href="#" className="hover:underline">Головна</a></li>
+                                    <li><a href="#" className="hover:underline">Про нас</a></li>
+                                    <li><a href="#" className="hover:underline">Збори</a></li>
+                                    <li><a href="#" className="hover:underline">Карти</a></li>
+                                    <li><a href="#" className="hover:underline">Як це працює</a></li>
+                                </ul>
+                            </div>
                         </div>
                         {/* Info section */}
-                        <div className="mt-4 ml-24 xl:mr-0 md:mt-0 md:mr-22 md:ml-4">
+                        <div className="mt-4 ml-24 xl:mr-0 md:mt-0 md:mr-22 xl:ml-14 md:ml-4">
                             <h3 className="font-bold mb-2">ІНФОРМАЦІЯ</h3>
                             <ul>
                                 <li><a href="#" className="hover:underline">Умови використання</a></li>
@@ -112,7 +122,7 @@ const Footer: React.FC = () => {
                             </ul>
                         </div>
                         {/* Contact section */}
-                        <div className="mt-4 md:mt-0 text-left xl:mr-24 md:mr-0 md:ml-12 xl:ml-0">
+                        <div className="mt-4 md:mt-0 text-left  xl:mr-24 md:mr-0 md:ml-12 xl:ml-20">
                             <h3 className="font-bold mb-2">ЗВ'ЯЗОК</h3>
                             <p>0-800-501-701</p>
                             <p className="mb-4">Всеукраїнський телефон довіри</p>

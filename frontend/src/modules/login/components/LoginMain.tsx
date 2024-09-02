@@ -48,15 +48,21 @@ const LoginMain: React.FC = () => {
     };
 
     const handleLogin = async () => {
+        console.log('handleLogin')
         if (validate()) {
             try {
                 const response = await login(email, password);
                 const { accessToken } = response;
+
+                localStorage.setItem('accessToken', response.access_token);
+
                 if (selectedOptions.terms) {
                     Cookies.set('email', email, { expires: 7 });
                 } else {
                     Cookies.remove('email');
                 }
+
+
                 navigate('/main');
             } catch (error: any) {
                 if (error.response && error.response.status === 401) {

@@ -1,4 +1,4 @@
-import {refreshToken} from "../../../profile/api/registerService.ts";
+import {refreshToken} from "../../../profile/api/profileService.ts";
 
 export const authInterceptor = (api: any) => {
     api.interceptors.response.use(
