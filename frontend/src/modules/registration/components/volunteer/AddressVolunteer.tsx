@@ -165,11 +165,11 @@ const AddressVolunteer: React.FC<AddressVolunteerInfoProps> = ({ onNextStep, set
     };
 
     return (
-        <div className="flex flex-col items-start pr-8 pb-8 w-full">
-            <h2 className="text-relative-h4 font-kharkiv mb-4">Заповніть данні</h2>
+        <div className="flex flex-col items-start xl:pr-8 xl:pb-8 w-full">
+            <h2 className="sm:text-xs-pxl xl:text-relative-h4 font-kharkiv mb-4">Заповніть данні</h2>
 
             <div className="flex w-full space-x-4 mb-4">
-                <div className="w-1/2 flex flex-col">
+                <div className="w-1/2 flex flex-col xl:block sm:hidden">
                     <label className="font-montserratRegular mb-2">Область*</label>
                     <div className="relative">
                         <input
@@ -179,7 +179,7 @@ const AddressVolunteer: React.FC<AddressVolunteerInfoProps> = ({ onNextStep, set
                             placeholder="Область проживання"
                             className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
                         />
-                        {errors.region && <p className="text-red-500 text-sm">{errors.region}</p>}
+                        {errors.region && <p className="text-red-500 xl:block sm:hidden text-sm">{errors.region}</p>}
                         {regionOptions.length > 0 && (
                             <ul className="absolute w-full border-2 border-light-blue bg-white rounded-lg z-10 max-h-40 overflow-y-auto">
                                 {regionOptions.map((region) => (
@@ -196,7 +196,7 @@ const AddressVolunteer: React.FC<AddressVolunteerInfoProps> = ({ onNextStep, set
                     </div>
                 </div>
 
-                <div className="w-1/2 flex flex-col">
+                <div className="w-1/2 flex flex-col xl:block sm:hidden">
                     <label className="font-montserratRegular mb-2">Місто*</label>
                     <div className="relative">
                         <input
@@ -207,7 +207,7 @@ const AddressVolunteer: React.FC<AddressVolunteerInfoProps> = ({ onNextStep, set
                             disabled={!selectedRegion}
                             className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
                         />
-                        {errors.city && <p className="text-red-500 text-sm">{errors.city}</p>}
+                        {errors.city && <p className="text-red-500 xl:block sm:hidden text-sm">{errors.city}</p>}
                         {cityOptions.length > 0 && (
                             <ul className="absolute w-full border-2 border-light-blue bg-white rounded-lg z-10 max-h-40 overflow-y-auto">
                                 {cityOptions.map((city) => (
@@ -224,7 +224,60 @@ const AddressVolunteer: React.FC<AddressVolunteerInfoProps> = ({ onNextStep, set
                     </div>
                 </div>
             </div>
+            <div className="sm:w-full flex flex-col xl:hidden sm:block">
+                <label className="font-montserratRegular mb-2">Область*</label>
+                <div className="relative">
+                    <input
+                        type="text"
+                        value={selectedRegion}
+                        onChange={handleRegionChange}
+                        placeholder="Область проживання"
+                        className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
+                    />
+                    {errors.region && <p className="text-red-500 xl:hidden sm:block text-sm">{errors.region}</p>}
+                    {regionOptions.length > 0 && (
+                        <ul className="absolute w-full border-2 border-light-blue bg-white rounded-lg z-10 max-h-40 overflow-y-auto">
+                            {regionOptions.map((region) => (
+                                <li
+                                    key={region}
+                                    onClick={() => handleRegionSelect(region)}
+                                    className="p-2 cursor-pointer hover:bg-gray-100"
+                                >
+                                    {region}
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </div>
+            </div>
 
+            <div className="sm:w-full flex flex-col xl:hidden sm:block">
+                <label className="font-montserratRegular mb-2">Місто*</label>
+                <div className="relative">
+                    <input
+                        type="text"
+                        value={selectedCity}
+                        onChange={handleCityChange}
+                        placeholder="Місто проживання"
+                        disabled={!selectedRegion}
+                        className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
+                    />
+                    {errors.city && <p className="text-red-500 xl:hidden sm:block text-sm">{errors.city}</p>}
+                    {cityOptions.length > 0 && (
+                        <ul className="absolute w-full border-2 border-light-blue bg-white rounded-lg z-10 max-h-40 overflow-y-auto">
+                            {cityOptions.map((city) => (
+                                <li
+                                    key={city}
+                                    onClick={() => handleCitySelect(city)}
+                                    className="p-2 cursor-pointer hover:bg-gray-100"
+                                >
+                                    {city}
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </div>
+            </div>
             <div className="w-full mb-4">
                 <label className="font-montserratRegular mb-8">Номер телефону*</label>
                 <MuiPhone
@@ -242,7 +295,7 @@ const AddressVolunteer: React.FC<AddressVolunteerInfoProps> = ({ onNextStep, set
                         <button
                             key={helpType}
                             onClick={() => handleHelpSelect(helpType)}
-                            className={`py-2 px-4 rounded-full pl-20 pr-20 mt-1 border-2 text-center ${
+                            className={`py-2 px-4 rounded-full sm:pl-7 sm:pr-7 xl:pl-20 xl:pr-20 mt-1 border-2 text-center ${
                                 (localData.helpTypes as string[]).includes(helpType) ? 'bg-dark-blue border-dark-blue text-white' : 'border-light-blue'
                             }`}
                         >
@@ -256,7 +309,7 @@ const AddressVolunteer: React.FC<AddressVolunteerInfoProps> = ({ onNextStep, set
             {(localData.helpTypes.includes('Психологічна') || localData.helpTypes.includes('Інформаційна')) && (
                 <div className="w-full mb-4">
                     <div className="flex flex-col">
-                        <label className="font-montserratRegular">Документи, підтверджуючі кваліфікацію</label>
+                        <label className="xl:text-xs-pl sm:text-pd font-montserratRegular">Документи, підтверджуючі кваліфікацію</label>
                         <button
                             className="w-52 mb-2 mt-2 p-2 uppercase text-center border-2 rounded-lg outline-none border-light-blue text-light-blue"
                             onClick={handleAddDocumentClick}
@@ -273,9 +326,11 @@ const AddressVolunteer: React.FC<AddressVolunteerInfoProps> = ({ onNextStep, set
                         />
                         <div>
                             {localData.documents?.map((doc, index) => (
-                                <div key={index} className="flex items-center justify-between w-full mt-1 p-3 rounded-lg border-2 bg-baby-blue border-baby-blue">
+                                <div key={index}
+                                     className="flex items-center justify-between w-full mt-1 p-3 rounded-lg border-2 bg-baby-blue border-baby-blue">
                                     <p className="font-montserratRegular text-sm text-almost-black">{doc.name}</p>
-                                    <DeleteImg className="cursor-pointer" onClick={() => handleRemoveDocument(doc.name)} />
+                                    <DeleteImg className="cursor-pointer"
+                                               onClick={() => handleRemoveDocument(doc.name)}/>
                                 </div>
                             ))}
                         </div>

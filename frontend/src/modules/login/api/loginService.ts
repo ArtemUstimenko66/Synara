@@ -1,4 +1,4 @@
-import api from "./api.ts";
+import api from "../../main-api/api.ts";
 
 export const login = async (email: string, password: string) => {
     try {

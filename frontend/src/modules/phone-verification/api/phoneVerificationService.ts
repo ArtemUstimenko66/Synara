@@ -1,4 +1,4 @@
-import api from "./api.ts";
+import api from "../../main-api/api.ts";
 
 export const sendCodeToPhoneNumber = async (phoneNumber: string) => {
     try {

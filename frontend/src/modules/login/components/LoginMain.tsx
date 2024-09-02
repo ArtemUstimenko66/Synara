@@ -78,9 +78,9 @@ const LoginMain: React.FC = () => {
 
     return (
         <div className="flex flex-col w-full">
-            <div className="flex w-full space-x-4 mb-4 mt-10">
-                <div className="w-full mb-4">
-                    <label className="font-montserratRegular mb-2">Пошта</label>
+            <div className="flex w-full space-x-4 mb-4 xl:mt-10 sm:mt-2">
+                <div className="w-full xl:mb-4 mb-2">
+                    <label className="font-montserratRegular xl:mb-2 mb-0">Пошта</label>
                     <input
                         type="email"
                         name="email"
@@ -98,14 +98,14 @@ const LoginMain: React.FC = () => {
                     type={showPassword ? 'text' : 'password'}
                     name="password"
                     placeholder="Ваш пароль"
-                    className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue pr-10"
+                    className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue xl:pr-10"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
                 <button
                     type="button"
                     onClick={() => setShowPassword(prev => !prev)}
-                    className="absolute top-1/2 right-3 transform -translate-y-1/2 text-gray-400"
+                    className="absolute top-1/2 xl:right-3 sm:right-1 transform -translate-y-1/2 text-gray-400"
                     style={{ marginTop: '0.8rem', marginRight: '1rem' }}
                 >
                     {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
@@ -113,7 +113,7 @@ const LoginMain: React.FC = () => {
                 {errors.password && <p className="text-red-500">{errors.password}</p>}
             </div>
             <div className="flex items-center justify-between w-full mb-6">
-                <div className="w-1/2 mb-4">
+                <div className="w-1/2 xl:mb-4">
                     <label className="font-montserratRegular">
                         <input
                             type="checkbox"
@@ -137,29 +137,29 @@ const LoginMain: React.FC = () => {
                     </label>
                 </div>
                 <Link to="/reset-password"
-                   className="text-almost-black text-relative-ps font-montserratRegular font-bold underline">Забули
+                   className="text-almost-black text-sm sm:sm:items-center font-montserratRegular font-bold underline">Забули
                     пароль?</Link>
             </div>
             {generalError && <p className="text-red-500 text-center mb-5">{generalError}</p>}
             <Button
                 isFilled={true}
-                className="w-full bg-perfect-yellow text-almost-black py-3 rounded-full mb-5 hover:bg-perfect-yellow transition"
+                className="w-full bg-perfect-yellow text-almost-black py-3 rounded-full mb-5 xl:mt-0 sm:mt-5 hover:bg-perfect-yellow transition"
                 onClick={handleLogin}
             >
                 УВІЙТИ
             </Button>
 
-            <div className="flex items-center justify-center w-full mb-10 mt-5 text-gray-500">
+            <div className="flex items-center justify-center w-full xl:mb-10 sm:mb-5 xl:mt-5 sm:mt-1 text-gray-500">
                 <span className="mx-4">Або увійти за допомогою</span>
             </div>
 
-            <div className="flex w-full justify-between mb-7">
+            <div className="flex w-full justify-between mb-5">
                 <GoogleLoginButton />
                 <TwitterLoginButton />
             </div>
 
-            <div className="flex w-full justify-center mt-6">
-                <p className="text-relative-ps font-montserratRegular">
+            <div className="flex w-full justify-center xl:mt-6 sm:mt-1">
+                <p className="text-sm font-montserratRegular">
                     У вас ще немає аккаунта? <Link to="/registration"
                                                 className="text-almost-black font-bold underline">Зареєструватись</Link>
                 </p>

@@ -121,10 +121,10 @@ const AddressVictim: React.FC<AddressVictimInfoProps> = ({ userData, setUserData
 
     return (
         <div className="flex flex-col items-start pr-8 pb-8 w-full">
-            <h2 className="text-relative-h4 font-kharkiv mb-4">Заповніть данні</h2>
+            <h2 className="sm:text-xs-pxl xl:text-relative-h4 font-kharkiv mb-4">Заповніть данні</h2>
 
-            <div className="flex w-full space-x-4 mb-4">
-                <div className="w-1/2 flex flex-col">
+            <div className="flex xl:w-full sm:w-full space-x-4 mb-4">
+                <div className="w-1/2 flex flex-col xl:block sm:hidden">
                     <label className="font-montserratRegular mb-2">Область*</label>
                     <div className="relative">
                         <input
@@ -134,7 +134,7 @@ const AddressVictim: React.FC<AddressVictimInfoProps> = ({ userData, setUserData
                             placeholder="Область проживання"
                             className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
                         />
-                        {errors.region && <p className="text-red-500 text-sm">{errors.region}</p>}
+                        {errors.region && <p className="text-red-500 xl:block sm:hidden text-sm">{errors.region}</p>}
                         {regionOptions.length > 0 && (
                             <ul className="absolute w-full border-2 border-light-blue bg-white rounded-lg z-10 max-h-40 overflow-y-auto">
                                 {regionOptions.map((region) => (
@@ -151,7 +151,7 @@ const AddressVictim: React.FC<AddressVictimInfoProps> = ({ userData, setUserData
                     </div>
                 </div>
 
-                <div className="w-1/2 flex flex-col">
+                <div className="w-1/2 flex flex-col xl:block sm:hidden">
                     <label className="font-montserratRegular mb-2">Місто*</label>
                     <div className="relative">
                         <input
@@ -162,7 +162,7 @@ const AddressVictim: React.FC<AddressVictimInfoProps> = ({ userData, setUserData
                             disabled={!selectedRegion}
                             className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
                         />
-                        {errors.city && <p className="text-red-500 text-sm">{errors.city}</p>}
+                        {errors.city && <p className="text-red-500 xl:block sm:hidden text-sm">{errors.city}</p>}
                         {cityOptions.length > 0 && (
                             <ul className="absolute w-full border-2 border-light-blue bg-white rounded-lg z-10 max-h-40 overflow-y-auto">
                                 {cityOptions.map((city) => (
@@ -180,7 +180,64 @@ const AddressVictim: React.FC<AddressVictimInfoProps> = ({ userData, setUserData
                 </div>
             </div>
 
-            <div className="w-full mb-6">
+
+
+
+            <div className="xl:w-full sm:w-full xl:hidden sm:block">
+                <label className="font-montserratRegular mb-2">Область*</label>
+                <div className="relative">
+                    <input
+                        type="text"
+                        value={selectedRegion}
+                        onChange={handleRegionChange}
+                        placeholder="Область проживання"
+                        className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
+                    />
+                    {errors.region && <p className="text-red-500 xl:hidden sm:block text-sm">{errors.region}</p>}
+                    {regionOptions.length > 0 && (
+                        <ul className="absolute w-full border-2 border-light-blue bg-white rounded-lg z-10 max-h-40 overflow-y-auto">
+                            {regionOptions.map((region) => (
+                                <li
+                                    key={region}
+                                    onClick={() => handleRegionSelect(region)}
+                                    className="p-2 cursor-pointer hover:bg-gray-100"
+                                >
+                                    {region}
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </div>
+            </div>
+
+            <div className="xl:w-full sm:w-full xl:hidden sm:block">
+                <label className="font-montserratRegular mb-2">Місто*</label>
+                <div className="relative">
+                    <input
+                        type="text"
+                        value={selectedCity}
+                        onChange={handleCityChange}
+                        placeholder="Місто проживання"
+                        disabled={!selectedRegion}
+                        className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
+                    />
+                    {errors.city && <p className="text-red-500 xl:hidden sm:block text-sm">{errors.city}</p>}
+                    {cityOptions.length > 0 && (
+                        <ul className="absolute w-full border-2 border-light-blue bg-white rounded-lg z-10 max-h-40 overflow-y-auto">
+                            {cityOptions.map((city) => (
+                                <li
+                                    key={city}
+                                    onClick={() => handleCitySelect(city)}
+                                    className="p-2 cursor-pointer hover:bg-gray-100"
+                                >
+                                    {city}
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </div>
+            </div>
+            <div className="w-full xl:mb-6 sm:mb-2">
                 <label className="font-montserratRegular mb-2">Вулиця</label>
                 <input
                     type="text"

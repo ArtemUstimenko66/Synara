@@ -73,37 +73,62 @@ const CompleteMainInfo: React.FC<CompleteMainInfoProps> = ({ setUserData, onNext
     };
 
     return (
-        <div className="flex flex-col items-start pr-8 pb-8 w-full">
-            <h2 className="text-relative-h4 font-kharkiv mb-4">Заповніть данні</h2>
+        <div className="flex flex-col items-start sm:pr-6 xl:pr-8 pb-8 w-full">
+            <h2 className="xl:text-relative-h4 sm:text-xs-pxl font-kharkiv sm:mb-0 xl:mb-4">Заповніть данні</h2>
 
             <div className="flex w-full space-x-4 mb-4">
-                <div className="w-1/2 flex flex-col">
-                    <label className="font-montserratRegular mb-2">Ім'я*</label>
+                <div className="xl:w-1/2 sm:w-full flex flex-col">
+                    <label className="font-montserratRegular mb-2 sm:hidden xl:block">Ім'я*</label>
                     <input
                         type="text"
                         name="firstName"
                         placeholder="Ваше ім'я"
-                        className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
+                        className="w-full p-3 border-2 rounded-lg sm:hidden xl:block outline-none border-light-blue focus:border-dark-blue"
                         value={localData.firstName}
                         onChange={handleInputChange}
                     />
-                    {errors.firstName && <p className="text-red-500 text-sm mt-1">{errors.firstName}</p>}
+                    {errors.firstName && <p className="text-red-500 sm:hidden xl:block text-sm mt-1">{errors.firstName}</p>}
                 </div>
-                <div className="w-1/2 flex flex-col">
-                    <label className="font-montserratRegular mb-2">Прізвище*</label>
+                <div className="xl:w-1/2 sm:w-full flex flex-col">
+                    <label className="font-montserratRegular mb-2 sm:hidden xl:block">Прізвище*</label>
                     <input
                         type="text"
                         name="lastName"
                         placeholder="Ваше прізвище"
-                        className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
+                        className="w-full p-3 border-2 rounded-lg sm:hidden xl:block outline-none border-light-blue focus:border-dark-blue"
                         value={localData.lastName}
                         onChange={handleInputChange}
                     />
-                    {errors.lastName && <p className="text-red-500 text-sm mt-1">{errors.lastName}</p>}
+                    {errors.lastName && <p className="text-red-500 sm:hidden xl:block text-sm mt-1">{errors.lastName}</p>}
                 </div>
             </div>
+            <div className="xl:w-1/2 flex flex-col sm:block xl:hidden sm:mb-4 sm:w-full">
+                <label className="font-montserratRegular mb-2">Ім'я*</label>
+                <input
+                    type="text"
+                    name="firstName"
+                    placeholder="Ваше ім'я"
+                    className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
+                    value={localData.firstName}
+                    onChange={handleInputChange}
+                />
+                {errors.firstName && <p className="text-red-500 text-sm mt-1">{errors.firstName}</p>}
+            </div>
 
-            <div className="w-full mb-4">
+
+            <div className="xl:w-1/2 flex flex-col sm:block xl:hidden sm:mb-4 sm:w-full">
+                <label className="font-montserratRegular mb-2">Прізвище*</label>
+                <input
+                    type="text"
+                    name="lastName"
+                    placeholder="Ваше прізвище"
+                    className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
+                    value={localData.lastName}
+                    onChange={handleInputChange}
+                />
+                {errors.lastName && <p className="text-red-500 text-sm mt-1">{errors.lastName}</p>}
+            </div>
+            <div className="w-full mb-4 ">
                 <label className="font-montserratRegular mb-2">Пошта*</label>
                 <input
                     type="email"
@@ -156,7 +181,7 @@ const CompleteMainInfo: React.FC<CompleteMainInfoProps> = ({ setUserData, onNext
             </div>
 
             <div className="flex w-full justify-center">
-                <p className="text-relative-ps font-montserratRegular">
+                <p className="sm:text-xs-ps xl:text-relative-ps sm:ml-0 xl:ml-0 font-montserratRegular">
                     У вас вже є аккаунт? <a href="/login" className="text-almost-black font-bold underline">Увійти</a>
                 </p>
             </div>

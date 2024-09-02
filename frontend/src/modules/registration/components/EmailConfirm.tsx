@@ -60,15 +60,15 @@ const EmailConfirm: React.FC<EmailConfirmProps> = ({ userData, onNextStep }) => 
     };
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen p-8 w-full">
-            <h2 className="text-relative-h3 uppercase font-kharkiv mb-8 text-center">
+        <div className="flex flex-col items-center justify-center p-8 w-full h-full">
+            <h2 className="xl:text-relative-h3 sm:text-relative-h1 uppercase font-kharkiv mb-8 text-center">
                 Ми надіслали вам електронний лист для підтвердження
             </h2>
-            <h3 className="text-h5 whitespace-pre-line font-montserratRegular mb-8 text-center">
+            <h3 className="xl:text-h5 md:text-relative-h3 sm:text-relative-h2 whitespace-pre-line font-montserratRegular mb-8 text-center">
                 Будь ласка, перевірте свою пошту та перейдіть за посиланням у листі, щоб завершити реєстрацію.
             </h3>
             <Button
-                className="w-full bg-perfect-yellow text-almost-black py-4 rounded-full mb-8 text-relative-pxl"
+                className="w-full bg-perfect-yellow text-almost-black py-4 rounded-full mb-8 xl:text-relative-pxl md:text-relative-h3 sm:text-relative-h2"
                 onClick={handleResend}
                 disabled={emailSent}
             >
@@ -76,13 +76,14 @@ const EmailConfirm: React.FC<EmailConfirmProps> = ({ userData, onNextStep }) => 
             </Button>
             <Button
                 hasBlue={true}
-                className="w-full text-almost-black py-4 rounded-full mb-8 text-relative-pxl"
+                className="w-full text-almost-black py-4 rounded-full mb-8 xl:text-relative-pxl md:text-relative-h3 sm:text-relative-h2"
                 onClick={onNextStep}
                 disabled={emailSent}
             >
                 ПРОЙТИ ДВОФАКТОРНУ АУТЕНТИФІКАЦІЮ
             </Button>
         </div>
+
     );
 };
 

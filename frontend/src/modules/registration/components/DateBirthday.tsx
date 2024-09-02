@@ -122,9 +122,9 @@ const DateBirthday: React.FC<DateBirthdayProps> = ({ onNextStep, selectedRole, s
 
     return (
         <div className="flex flex-col items-start pr-8 pb-8 w-full">
-            <h2 className="text-relative-h4 font-kharkiv mb-4">Заповніть данні</h2>
+            <h2 className="sm:text-xs-pxl xl:text-relative-h4 font-kharkiv mb-4">Заповніть данні</h2>
 
-            <div className="w-full mb-4">
+            <div className="sm:w-full xl:w-full mb-4">
                 <label className="font-montserratRegular mb-2">Дата народження*</label>
                 <input
                     type="text"
@@ -167,11 +167,13 @@ const DateBirthday: React.FC<DateBirthdayProps> = ({ onNextStep, selectedRole, s
                 {errors.gender && <p className="text-red-500 text-sm">{errors.gender}</p>}
             </div>
 
-            <div className={`flex w-full space-x-2 ${selectedRole !== 'volunteer' ? 'flex-col' : ''}`}>
+            <div className={`sm:flex-none xl:flex w-full sm:space-x-0 xl:space-x-2 ${selectedRole !== 'volunteer' ? 'flex-col' : ''}`}>
                 {selectedRole === 'volunteer' && (
-                    <div className="w-1/2 mb-4">
+                    <div className="sm:w-full xl:w-1/2 sm:mb-0 xl:mb-4">
                         <label
-                            className="font-montserratRegular whitespace-pre-line mb-2">{`Номер волонтерського\n посвідчення`}</label>
+                            className="xl:block sm:hidden font-montserratRegular whitespace-pre-line mb-0">{`Номер волонтерського\n посвідчення`}</label>
+                        <label
+                            className="xl:hidden sm:block font-montserratRegular whitespace-pre-line sm:mb-2">{`Номер волонтерського посвідчення`}</label>
                         <input
                             type="text"
                             name="volunteerId"
@@ -182,8 +184,9 @@ const DateBirthday: React.FC<DateBirthdayProps> = ({ onNextStep, selectedRole, s
                         />
                     </div>
                 )}
-                <div className={`${selectedRole === 'volunteer' ? 'w-1/2 mt-6' : 'w-full'} mb-4`}>
-                    <label className="font-montserratRegular mb-2">РНОКПП</label>
+                <div
+                    className={`${selectedRole === 'volunteer' ? 'sm:w-full xl:w-1/2 sm:mt-2 xl:mt-6' : 'w-full'} mb-4`}>
+                <label className="font-montserratRegular mb-2">РНОКПП</label>
                     <input
                         type="text"
                         name="unp"
@@ -218,7 +221,8 @@ const DateBirthday: React.FC<DateBirthdayProps> = ({ onNextStep, selectedRole, s
                     </span>
                     Я погоджуюся з <a href="#" className="underline font-bold">Правилами користування</a> та <a href="#"
                                                                                                                 className="underline font-bold">Політикою</a>
-                    <p className="underline font-bold ml-6">конфіденційності</p>
+                    <p className="underline sm:hidden xl:block font-bold ml-6">конфіденційності</p>
+                    <p className="underline sm:block xl:hidden font-bold">конфіденційності</p>
                 </label>
                 {errors.terms && <p className="text-red-500 text-sm">{errors.terms}</p>}
             </div>

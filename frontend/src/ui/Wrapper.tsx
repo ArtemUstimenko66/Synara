@@ -8,7 +8,7 @@ interface WrapperProps {
 
 const Wrapper: React.FC<WrapperProps> = ({ children }) => {
     const location = useLocation();
-    const isHomePage = location.pathname === '/home';
+    const isHomePage = location.pathname === '/';
 
     return (
         <div className="relative min-h-screen min-w-full flex flex-col">

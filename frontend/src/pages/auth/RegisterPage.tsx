@@ -10,7 +10,7 @@ import { User } from "../../modules/registration/interfaces/User";
 import BackArrowComponent from "../../modules/registration/components/BackArrow.tsx";
 import CheckPhone from "../../modules/phone-verification/components/CheckPhone.tsx";
 import {useNavigate} from "react-router-dom";
-
+import LogoSynara from '../../assets/images/logoSynara.svg?react';
 const Registration = () => {
     const [currentStep, setCurrentStep] = useState(1);
 
@@ -121,28 +121,39 @@ const Registration = () => {
     };
 
     return (
-        <div className="bg-dark-blue min-h-screen flex">
-            <div className="w-2/6 p-8 flex items-left justify-left mt-10 ml-28">
+        <div className="bg-dark-blue min-h-screen h-screen flex ">
+            <div className="w-2/6 p-8 xl:flex md:hidden sm:hidden items-left justify-left mt-10 ml-28">
                 <div className="text-almost-white font-montserratRegular font-bold text-relative-h4">LOGO</div>
             </div>
+            <div
+                className="xl:w-5/6 md:w-full sm:w-full bg-almost-white xl:rounded-l-3xl h-full xl:px-relative-md flex flex-col xl:items-start xl:justify-start sm:items-center sm:justify-center">
+                <div className="flex w-11/12 xl:hidden">
+                    <div className="xl:mt-[20%]">
+                        <BackArrowComponent onClick={handleBackArrowClick}/>
+                    </div>
+                    <div className="flex w-full justify-center ">
+                        <LogoSynara className="xl:hidden md:flex sm:flex  sm:w-24 sm:h-24"/>
+                    </div>
+                </div>
 
-            <div className="w-5/6 bg-almost-white rounded-l-3xl min-h-screen px-relative-md flex flex-col items-start justify-start">
-                <div className="flex h-full">
-                    {currentStep > 1 && currentStep < 5 && (
-                        <BackArrowComponent onClick={() => setCurrentStep(currentStep - 1)} />
-                    )}
-                    {currentStep == 6 && (
-                        <BackArrowComponent onClick={() => handleBackArrowClick()} />
-                    )}
+                <div className="flex h-full w-11/12">
+                    <div className="xl:flex sm:hidden">
+                        {currentStep > 1 && currentStep < 5 && (
+                            <BackArrowComponent onClick={() => setCurrentStep(currentStep - 1)}/>
+                        )}
+                        {currentStep == 6 && (
+                            <BackArrowComponent onClick={() => handleBackArrowClick()}/>
+                        )}
+                    </div>
 
-                    <div className="max-w-2xl ml-24 mt-7 flex flex-col justify-start flex-grow">
-                        {currentStep < 5  && (
+                    <div className="xl:max-w-2xl xl:ml-24 sm:ml-5 mt-7 flex flex-col justify-start flex-grow">
+                        {currentStep < 5 && (
                             <>
-                                <h1 className="font-kharkiv text-relative-h2 mb-relative-ssm mt-relative-ssm">
+                                <h1 className="font-kharkiv xl:text-relative-h2 sm:text-relative-h1 mb-relative-ssm mt-relative-ssm">
                                     СТВОРЕННЯ АККАУНТУ
                                 </h1>
                                 <div className="mb-relative-sm flex justify-start">
-                                    <Stepper currentStep={currentStep} onStepChange={setCurrentStep} />
+                                    <Stepper currentStep={currentStep} onStepChange={setCurrentStep}/>
                                 </div>
                             </>
                         )}

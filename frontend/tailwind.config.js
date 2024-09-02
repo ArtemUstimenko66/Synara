@@ -6,9 +6,9 @@ module.exports = {
   ],
   theme: {
     screens: {
-      'sm': '390px',  // mobile
+      'sm': '340px',  // mobile
       'md': '768px',  // tablet
-      'xl': '1025px', // desktop
+      'xl': '1024px', // desktop
     },
     extend: {
       colors: {
@@ -37,9 +37,12 @@ module.exports = {
         pxll: '16pt',
         pxl: '15pt',
         pl: '12pt',
+        pd: '11pt',
         ps: '10pt',
         psm: '8pt',
 
+        'relative-xlh1': '7vw',
+        'relative-xlh2': '6vw',
         'relative-h1': '5vw',      // Relative header 1 size
         'relative-h2': '3.75vw',   // Relative header 2 size
         'relative-h3xl': '3.2vw',   // Relative header 2 size
