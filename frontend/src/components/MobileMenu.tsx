@@ -25,7 +25,7 @@ export const MobileMenu = ({ isOpen = false }) => {
                         <Button hasBlue={true} className="w-full md:text-pxl">УВІЙТИ</Button>
                     </Link>
                     <Link to="/registration" className="w-full">
-                        <Button isFilled={true} className="w-full bg-yellow-500 text-black md:text-pxl">РЕЄСТРАЦІЯ</Button>
+                        <Button isFilled={true} className="w-full text-black md:text-pxl">РЕЄСТРАЦІЯ</Button>
                     </Link>
                 </div>
             </nav>

@@ -75,7 +75,10 @@ const Footer: React.FC = () => {
                     </AccordionSection>
                     <div className="border border-dark-blue mb-4 w-full"></div>
                     <div className="flex items-center justify-center">
-                        <LogoFooter className="mb-4"/>
+                        <Link to=".">
+                            <LogoFooter className="text-xl font-bold w-[45%] xl:mr-32 md:mr-14" />
+                        </Link>
+
                     </div>
                     <div className="text-center text-pl text-almost-black">
                         ©2024 SYNARA. All rights reserved
@@ -87,8 +90,8 @@ const Footer: React.FC = () => {
                     <div className="w-[110%] flex flex-col md:flex-row justify-between items-start text-almost-black">
                         {/* Left section with logo */}
                         <div className=" mt-2 xl:mr-0 md:mr-5 justify-start flex">
-                            <Link to="/home">
-                                <LogoSynara className="text-xl font-bold  w-[45%] xl:mr-32 md:mr-14" />
+                            <Link to=".">
+                                <LogoSynara className="text-xl font-bold w-[45%] xl:mr-32 md:mr-14" />
                             </Link>
                         </div>
                         {/* Navigation section */}

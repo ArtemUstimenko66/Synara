@@ -5,24 +5,14 @@ import MenuIcon from '../assets/menu.svg?react';
 import NotificationIcon from '../assets/notification.svg?react';
 
 import NavItem from "../../../ui/NavItem.tsx";
-import { logout } from "../../profile/api/profileService.ts";
+
 import { SideBar } from "./SideBar.tsx";
 
 const MainHeader: React.FC = () => {
-    const navigate = useNavigate();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isVisible, setIsVisible] = useState(true);
     const [isAtTop, setIsAtTop] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
-
-    const handleLogout = async () => {
-        try {
-            await logout();
-            navigate('/');
-        } catch (error) {
-            console.error('Logout failed', error);
-        }
-    };
 
     const handleScroll = () => {
         const currentScrollY = window.scrollY;
@@ -47,20 +37,21 @@ const MainHeader: React.FC = () => {
             >
                 <div className="flex justify-between 0 pl-[5%] items-center px-8 py-8 md:ml-10 md:mr-4 xl:ml-20 xl:mr-36">
 
-                    {/* Логотип */}
+                    {/* Logo */}
                     <Link to="/main">
                         <LogoSynara className="text-xl font-bold xl:mr-44 md:mr-14"/>
                     </Link>
 
-                    {/* Элементы навигации для компьютера */}
+                    {/* Nav items */}
                     <nav className="flex space-x-16 ">
-                        <NavItem text="ГОЛОВНА" to="/home"/>
+                        <NavItem text="ГОЛОВНА" to="/main"/>
                         <NavItem text="ПРО НАС" to="/about"/>
                         <NavItem text="ЗБОРИ" to="/collections"/>
                         <NavItem text="КАРТИ" to="/maps"/>
                         <NavItem text="ЯК ЦЕ ПРАЦЮЄ" to="/how-it-works"/>
                     </nav>
 
+                    {/* Buttons */}
                     <div className="flex space-x-8 ">
                         <div className="flex ml-auto cursor-pointer"
                              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
@@ -71,12 +62,9 @@ const MainHeader: React.FC = () => {
                         </button>
                     </div>
 
-
-                    {/* Сайдбар */}
-
                 </div>
             </header>
-            <SideBar isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)}/>
+            <SideBar isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} isFilters={false}/>
         </>
     );
 };

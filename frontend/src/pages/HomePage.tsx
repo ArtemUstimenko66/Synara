@@ -591,7 +591,6 @@ const HomePage: React.FC = () => {
                         <h2 className="xl:text-h2 md:text-relative-h3xl sm:text-h4 sm:text-h5  font-kharkiv sm:mb-8 md:mb-20 xl:mb-20 text-center">ЧОМУ
                             САМЕ МИ</h2>
                         <div className="flex xl:gap-12 md:gap-6 sm:ml-8 md:ml-0 xl:ml-0">
-                            {/* Левая сторона */}
                             <div className="flex-1 flex flex-col xl:ml-6 md:ml-6">
                                 <div className="flex flex-row sm:space-x-16 xl:space-x-12 md:space-x-6">
                                     <div
