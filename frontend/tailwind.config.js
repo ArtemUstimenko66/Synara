@@ -14,7 +14,7 @@ module.exports = {
       colors: {
         'almost-black': '#000000',
         'almost-white': '#FFFFFF',
-        'perfect-gray': '#eaeaea',
+        'perfect-gray': '#f1f0f0',
         'dark-blue': '#1F74D5',
         'light-blue': '#36ACEC',
         'baby-blue': '#B1CEF0',

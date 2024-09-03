@@ -29,7 +29,7 @@ const AccordionSection: React.FC<{ title: string }> = ({ title, children }) => {
 
 const Footer: React.FC = () => {
     const isSmallScreen = useMediaQuery({query: '(max-width: 640px)'});
-
+    const isHomePage = location.pathname === '/home';
     return (
         <footer className="xl:py-8 md:py-8 mt-4 xl:w-[90%] md:w-[90%] sm:w-[100%] justify-center flex flex-col font-montserratRegular">
             {isSmallScreen ? (
@@ -95,14 +95,18 @@ const Footer: React.FC = () => {
                         <div className="mt-4 ml-2 md:mt-0 md:-ml-8 xl:mr-14">
                             <h3 className="font-bold mb-2">НАВІГАЦІЯ</h3>
                             <div className="flex space-x-8">
-                                <ul>
+                                {!isHomePage && (
+                                    <ul>
                                     <li><a href="#" className="hover:underline">Профіль</a></li>
                                     <li><a href="#" className="hover:underline">Чат</a></li>
                                     <li><a href="#" className="hover:underline">Петиції</a></li>
                                     <li><a href="#" className="hover:underline">Оголошення</a></li>
                                     <li><a href="#" className="hover:underline">Статистика</a></li>
                                     <li><a href="#" className="hover:underline">Налаштування</a></li>
-                                </ul>
+                                    </ul>
+                                    )
+                                }
+
                                 <ul>
                                     <li><a href="#" className="hover:underline">Головна</a></li>
                                     <li><a href="#" className="hover:underline">Про нас</a></li>

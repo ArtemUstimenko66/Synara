@@ -1,16 +1,20 @@
-import React from "react";
-import {Link, useNavigate} from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import { Link, useNavigate } from "react-router-dom";
 import LogoSynara from '../../../assets/images/logoSynara.svg?react';
-
 import MenuIcon from '../assets/menu.svg?react';
 import NotificationIcon from '../assets/notification.svg?react';
 
-import {Button} from "../../../ui/Button.tsx";
 import NavItem from "../../../ui/NavItem.tsx";
-import {logout} from "../../profile/api/profileService.ts";
+import { logout } from "../../profile/api/profileService.ts";
+import { SideBar } from "./SideBar.tsx";
 
 const MainHeader: React.FC = () => {
     const navigate = useNavigate();
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isVisible, setIsVisible] = useState(true);
+    const [isAtTop, setIsAtTop] = useState(true);
+    const [lastScrollY, setLastScrollY] = useState(0);
+
     const handleLogout = async () => {
         try {
             await logout();
@@ -18,32 +22,62 @@ const MainHeader: React.FC = () => {
         } catch (error) {
             console.error('Logout failed', error);
         }
-    }
+    };
+
+    const handleScroll = () => {
+        const currentScrollY = window.scrollY;
+        setIsVisible(currentScrollY < lastScrollY || currentScrollY === 0);
+        setIsAtTop(currentScrollY === 0);
+        setLastScrollY(currentScrollY);
+    };
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, [lastScrollY]);
 
     return (
-        <header className="flex items-center justify-between p-4 ">
-            <Link to="/main">
-                <LogoSynara className="text-xl font-bold xl:mr-44 md:mr-14"/>
-            </Link>
-            <nav className="flex space-x-16">
-                <NavItem text="ГОЛОВНА" to="/home"/>
-                <NavItem text="ПРО НАС" to="/about"/>
-                <NavItem text="ЗБОРИ" to="/collections"/>
-                <NavItem text="КАРТИ" to="/maps"/>
-                <NavItem text="ЯК ЦЕ ПРАЦЮЄ" to="/how-it-works"/>
-            </nav>
-            <div className="flex space-x-8">
-                <button>
-                    <MenuIcon className="h-6 w-6"/>
-                </button>
-                <button>
-                    <NotificationIcon className="h-6 w-6"/>
-                </button>
-                {/*<Link to="/home">*/}
-                {/*    <Button isFilled={true} className="px-4" onClick={handleLogout}>ВИХІД</Button>*/}
-                {/*</Link>*/}
-            </div>
-        </header>
+        <>
+            <header
+                className={`w-full fixed top-0 left-0 z-30 transition-transform duration-300 ease-in-out 
+            ${isVisible ? 'header-slide-in' : 'header-slide-out'} 
+            ${isAtTop ? 'transition-background-color' : 'bg-white shadow-sm'}`}
+            >
+                <div className="flex justify-between 0 pl-[5%] items-center px-8 py-8 md:ml-10 md:mr-4 xl:ml-20 xl:mr-36">
+
+                    {/* Логотип */}
+                    <Link to="/main">
+                        <LogoSynara className="text-xl font-bold xl:mr-44 md:mr-14"/>
+                    </Link>
+
+                    {/* Элементы навигации для компьютера */}
+                    <nav className="flex space-x-16 ">
+                        <NavItem text="ГОЛОВНА" to="/home"/>
+                        <NavItem text="ПРО НАС" to="/about"/>
+                        <NavItem text="ЗБОРИ" to="/collections"/>
+                        <NavItem text="КАРТИ" to="/maps"/>
+                        <NavItem text="ЯК ЦЕ ПРАЦЮЄ" to="/how-it-works"/>
+                    </nav>
+
+                    <div className="flex space-x-8 ">
+                        <div className="flex ml-auto cursor-pointer"
+                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+                            {<MenuIcon className="h-6 w-6"/>}
+                        </div>
+                        <button>
+                            <NotificationIcon className="h-6 w-6"/>
+                        </button>
+                    </div>
+
+
+                    {/* Сайдбар */}
+
+                </div>
+            </header>
+            <SideBar isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)}/>
+        </>
     );
 };
 
