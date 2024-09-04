@@ -39,7 +39,7 @@ const MainHeader: React.FC = () => {
 
                     {/* Logo */}
                     <Link to="/main">
-                        <LogoSynara className="text-xl font-bold xl:mr-44 md:mr-14"/>
+                        <LogoSynara className="text-xl font-bold xl:mr-[10%] md:mr-14"/>
                     </Link>
 
                     {/* Nav items */}

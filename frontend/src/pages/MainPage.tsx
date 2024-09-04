@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import MainHeader from "../modules/main-page/components/MainHeader.tsx";
 import SearchComponent from "../modules/main-page/components/SearchComponent.tsx";
 import Announcement from "../modules/main-page/components/Announcement.tsx";
@@ -7,69 +7,98 @@ import DownArrowIcon from '../modules/main-page/assets/Down_Arrow.svg?react';
 import Wrapper from "../ui/Wrapper.tsx";
 import { Button } from "../ui/Button.tsx";
 import Footer from "../components/Footer.tsx";
-import MenuIcon from '../modules/main-page/assets/menu.svg?react';
 import { SideBar } from "../modules/main-page/components/SideBar.tsx";
+import {getAnnouncements} from "../modules/main-page/api/mainPageService.ts";
 
 const MainPage: React.FC = () => {
     const [sortOrder, setSortOrder] = useState<'newest' | 'oldest'>('newest');
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+   // const [announcements, setAnnouncements] = useState<any[]>([]);
+
+    // useEffect(() => {
+    //     const fetchAnnouncements = async () => {
+    //         try {
+    //             const data = await getAnnouncements();
+    //             setAnnouncements(data);
+    //         } catch (error) {
+    //             console.error('Ошибка при загрузке объявлений:', error);
+    //         }
+    //     };
+    //
+    //     fetchAnnouncements();
+    // }, []);
 
     const announcements = [
         {
-            name: 'Ольга Коваленко',
+            id: 1,
+            userId: 1,
+            userName: 'Ольга Коваленко',
             avatar: 'https://randomuser.me/api/portraits/women/2.jpg',
-            date: new Date('2024-08-27'),
-            text: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя...',
-            type: 'Психологічна'
+            datePosted: new Date('2024-08-27'),
+            description: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя...',
+            typeHelp: 'Психологічна'
         },
         {
-            name: 'Анна Иванова',
+            id: 2,
+            userId: 2,
+            userName: 'Анна Иванова',
             avatar: 'https://randomuser.me/api/portraits/women/3.jpg',
-            date: new Date('2024-08-28'),
-            text: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя...',
-            type: 'Гуманітарна'
+            datePosted: new Date('2024-08-28'),
+            description: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя...',
+            typeHelp: 'Гуманітарна'
         },
         {
-            name: 'Елена Смирнова',
+            id: 3,
+            userId: 3,
+            userName: 'Елена Смирнова',
             avatar: 'https://randomuser.me/api/portraits/women/4.jpg',
-            date: new Date('2024-08-29'),
-            text: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя...',
-            type: 'Психологічна'
+            datePosted: new Date('2024-08-29'),
+            description: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя...',
+            typeHelp: 'Психологічна'
         },
         {
-            name: "Андрій Литвиненко",
+            id: 4,
+            userId: 4,
+            userName: "Андрій Литвиненко",
             avatar: "https://randomuser.me/api/portraits/men/3.jpg",
-            date: new Date('2024-08-29'),
-            text: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя...',
-            type: "Інформаційна",
+            datePosted: new Date('2024-08-29'),
+            description: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя...',
+            typeHelp: "Інформаційна",
         },
         {
-            name: "Марія Пономаренко",
-            avatar: "https://randomuser.me/api/portraits/women/4.jpg",
-            date: new Date('2024-08-30'),
-            text: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя...',
-            type: "Гуманітарна",
+            id: 5,
+            userId: 5,
+            userName: "Марія Пономаренко",
+            avatar: "https://randomuser.me/api/portraits/women/1.jpg",
+            datePosted: new Date('2024-08-30'),
+            description: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя...',
+            typeHelp: "Гуманітарна",
         },
         {
-            name: "Іван Іванов",
+            id: 6,
+            userId: 6,
+            userName: "Іван Іванов",
             avatar: "https://randomuser.me/api/portraits/men/5.jpg",
-            date: new Date('2024-09-01'),
-            text: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя...',
-            type: "Матеріальна",
+            datePosted: new Date('2024-09-01'),
+            description: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя...',
+            typeHelp: "Матеріальна",
         },
         {
-            name: "Світлана Кучер",
+            id: 7,
+            userId: 7,
+            userName: "Світлана Кучер",
             avatar: "https://randomuser.me/api/portraits/women/6.jpg",
-            date: new Date('2024-09-02'),
-            text: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя...',
-            type: "Матеріальна",
+            datePosted: new Date('2024-09-02'),
+            description: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя...',
+            typeHelp: "Матеріальна",
         }
     ];
 
+
     const sortedAnnouncements = announcements.sort((a, b) => {
-        const dateA = new Date(a.date).getTime();
-        const dateB = new Date(b.date).getTime();
+        const dateA = new Date(a.datePosted).getTime();
+        const dateB = new Date(b.datePosted).getTime();
         return sortOrder === 'newest' ? dateB - dateA : dateA - dateB;
     });
 
@@ -151,11 +180,11 @@ const MainPage: React.FC = () => {
                                 {sortedAnnouncements.map((announcement, index) => (
                                     <div key={index} className="w-full md:w-[32%] p-2 mt-4">
                                         <Announcement
-                                            name={announcement.name}
+                                            userName={announcement.userName}
                                             avatar={announcement.avatar}
-                                            date={announcement.date}
-                                            text={announcement.text}
-                                            type={announcement.type}
+                                            datePosted={announcement.datePosted}
+                                            description={announcement.description}
+                                            typeHelp={announcement.typeHelp}
                                         />
                                     </div>
                                 ))}

@@ -3,14 +3,14 @@ import { Button } from "../../../ui/Button.tsx";
 import HeartImg from '../../../assets/images/heart-svgrepo-com.svg?react';
 
 interface AnnouncementProps {
-    name: string;
+    userName: string;
     avatar: string;
-    date: Date;
-    text: string;
-    type: string;
+    datePosted: Date;
+    description: string;
+    typeHelp: string;
 }
 
-const Announcement: React.FC<AnnouncementProps> = ({ name, avatar, date, text, type }) => {
+const Announcement: React.FC<AnnouncementProps> = ({ userName, avatar, datePosted, description, typeHelp }) => {
     return (
         <div className="bg-perfect-gray rounded-3xl flex flex-col h-full">
             {/* User Info Section */}
@@ -23,21 +23,21 @@ const Announcement: React.FC<AnnouncementProps> = ({ name, avatar, date, text, t
                 />
                 {/* User and Date */}
                 <div>
-                    <h4 className="text-relative-pl font-montserratMedium">{name}</h4>
+                    <h4 className="text-relative-pl font-montserratMedium">{userName}</h4>
                     <span className="text-relative-h5 font-montserratMedium">
-                        {date.toLocaleDateString('uk-UA')}
+                        {datePosted.toLocaleDateString('uk-UA')}
                     </span>
                 </div>
             </div>
 
             {/* Category Badge */}
             <div className="flex justify-end w-full items-end ">
-                <span className="bg-blue-500 w-3/6 text-white px-4 pr-5 pl-10 py-1 font-montserratRegular font-normal tracking-wide rounded-l-full">{type}</span>
+                <span className="bg-blue-500 w-3/6 text-white px-4 pr-5 pl-10 py-1 font-montserratRegular font-normal tracking-wide rounded-l-full">{typeHelp}</span>
             </div>
 
             {/* Description Section */}
             <p className="text-relative-p mb-4 font-montserratMedium p-4 ml-4">
-                {text}
+                {description}
             </p>
 
             {/* Action Button Section */}

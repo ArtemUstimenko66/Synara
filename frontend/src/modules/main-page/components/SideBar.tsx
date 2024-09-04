@@ -56,7 +56,7 @@ export const SideBar: React.FC<SideBarProps> = ({ isOpen, onClose, isFilters }) 
                         <Filters />
                     </div>
                 ) : (
-                    <div className="flex flex-col flex-grow">
+                    <div className="flex flex-col mx-4 flex-grow">
                         {/* Logo */}
                         <div className="flex justify-center mt-6 mb-8">
                             <LogoSynara className="w-28 h-28" />

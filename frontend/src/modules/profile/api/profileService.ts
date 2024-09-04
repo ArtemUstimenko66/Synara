@@ -28,7 +28,6 @@ export const logout = async () => {
         const response = await api.post('/auth/logout', {},  {
             withCredentials: true
         });
-        localStorage.removeItem('accessToken');
         console.log('Logout successful:', response.data);
         return response.data;
     } catch (error) {
