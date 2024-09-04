@@ -4,7 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Announcement } from './entities/announcement.entity';
+import { Announcement } from './announcement.entity';
 import { Repository } from 'typeorm';
 import { TypeHelp } from './type-help.enum';
 import { CreateAnnouncementDto } from './dtos/create-announcement.dto';
@@ -58,17 +58,6 @@ export class AnnouncementService {
       throw new BadRequestException(`Announcement with id ${id} not found`);
     }
     return announcement;
-  }
-
-  async findByTypeHelp(typeHelp: string) {
-    const typeHelpValid = TypeHelp[typeHelp as keyof typeof TypeHelp];
-
-    if (!typeHelpValid) {
-      throw new BadRequestException(`Invalid typeHelp: ${typeHelp}`);
-    }
-    return await this.announcementRepository.findOneBy({
-      typeHelp: typeHelpValid,
-    });
   }
 
   async remove(id: number): Promise<void> {

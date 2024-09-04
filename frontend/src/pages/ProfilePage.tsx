@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import {getProfile, logout} from "../modules/profile/api/registerService.ts";
+import {getProfile, logout} from "../modules/profile/api/profileService.ts";
 
-const Profile = () => {
+const ProfilePage = () => {
     const [user, setUser] = useState<any>(null);
     const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
@@ -49,4 +49,4 @@ const Profile = () => {
     );
 };
 
-export default Profile;
+export default ProfilePage;

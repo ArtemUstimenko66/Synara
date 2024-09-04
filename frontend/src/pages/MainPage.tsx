@@ -1,0 +1,175 @@
+import React, { useState } from 'react';
+import MainHeader from "../modules/main-page/components/MainHeader.tsx";
+import SearchComponent from "../modules/main-page/components/SearchComponent.tsx";
+import Announcement from "../modules/main-page/components/Announcement.tsx";
+import Filters from "../modules/main-page/components/Filters.tsx";
+import DownArrowIcon from '../modules/main-page/assets/Down_Arrow.svg?react';
+import Wrapper from "../ui/Wrapper.tsx";
+import { Button } from "../ui/Button.tsx";
+import Footer from "../components/Footer.tsx";
+import MenuIcon from '../modules/main-page/assets/menu.svg?react';
+import { SideBar } from "../modules/main-page/components/SideBar.tsx";
+
+const MainPage: React.FC = () => {
+    const [sortOrder, setSortOrder] = useState<'newest' | 'oldest'>('newest');
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+    const announcements = [
+        {
+            name: 'Ольга Коваленко',
+            avatar: 'https://randomuser.me/api/portraits/women/2.jpg',
+            date: new Date('2024-08-27'),
+            text: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя...',
+            type: 'Психологічна'
+        },
+        {
+            name: 'Анна Иванова',
+            avatar: 'https://randomuser.me/api/portraits/women/3.jpg',
+            date: new Date('2024-08-28'),
+            text: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя...',
+            type: 'Гуманітарна'
+        },
+        {
+            name: 'Елена Смирнова',
+            avatar: 'https://randomuser.me/api/portraits/women/4.jpg',
+            date: new Date('2024-08-29'),
+            text: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя...',
+            type: 'Психологічна'
+        },
+        {
+            name: "Андрій Литвиненко",
+            avatar: "https://randomuser.me/api/portraits/men/3.jpg",
+            date: new Date('2024-08-29'),
+            text: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя...',
+            type: "Інформаційна",
+        },
+        {
+            name: "Марія Пономаренко",
+            avatar: "https://randomuser.me/api/portraits/women/4.jpg",
+            date: new Date('2024-08-30'),
+            text: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя...',
+            type: "Гуманітарна",
+        },
+        {
+            name: "Іван Іванов",
+            avatar: "https://randomuser.me/api/portraits/men/5.jpg",
+            date: new Date('2024-09-01'),
+            text: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя...',
+            type: "Матеріальна",
+        },
+        {
+            name: "Світлана Кучер",
+            avatar: "https://randomuser.me/api/portraits/women/6.jpg",
+            date: new Date('2024-09-02'),
+            text: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя...',
+            type: "Матеріальна",
+        }
+    ];
+
+    const sortedAnnouncements = announcements.sort((a, b) => {
+        const dateA = new Date(a.date).getTime();
+        const dateB = new Date(b.date).getTime();
+        return sortOrder === 'newest' ? dateB - dateA : dateA - dateB;
+    });
+
+    const toggleDropdown = () => {
+        setIsDropdownOpen(!isDropdownOpen);
+    };
+
+    const handleSortOrderChange = (order: 'newest' | 'oldest') => {
+        setSortOrder(order);
+        setIsDropdownOpen(false);
+    };
+
+    return (
+        <Wrapper>
+            <div className="min-h-screen bg-almost-white">
+
+                {/* Header */}
+                <MainHeader />
+
+                <div className="w-full mt-[5%] px-4">
+                    <div className="flex flex-col md:flex-row md:space-x-4 md-8">
+
+                        <div className="w-1/4 flex flex-col items-start justify-start ">
+                            {/* Map of help */}
+                            <Button hasBlue={true} className="uppercase px-8 py-3 w-full">Карта допомоги</Button>
+
+                            {/* Filters button */}
+                            <div className="w-full flex  items-end justify-start">
+                                <Button hasBlue={true} className="px-4 mt-8 w-3/6" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+                                    <span className="text-montserratMedium text-relative-ps">Фільтрувати</span>
+                                </Button>
+                            </div>
+                        </div>
+
+                        <div className="w-3/4 flex flex-col items-end justify-end ">
+                            {/* Search */}
+                            <SearchComponent />
+
+                            {/* Sort button */}
+                            <div className="w-full flex items-end justify-end relative">
+                                <div className="w-3/12">
+                                    <Button
+                                        hasBlue={true}
+                                        className={`px-2 z-11 mt-8 w-full flex items-center justify-center space-x-3 transition-all duration-0 ${isDropdownOpen ? 'rounded-b-none rounded-t-3xl' : 'rounded-3xl'}`}
+                                        onClick={toggleDropdown}
+                                    >
+                                        <span className={`text-montserratMedium text-relative-ps`}>Сортування за</span>
+                                        <DownArrowIcon
+                                            className={`h-4 w-4 mt-1 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180 ' : ''}`}
+                                        />
+                                    </Button>
+                                    {isDropdownOpen && (
+                                        <div
+                                            className="w-3/12 bg-white border-2 border-blue-500 rounded-b-3xl absolute top-full right-0 -mt-1 z-10">
+                                            <div
+                                                className={`cursor-pointer py-2 px-4 border-b-2 border-blue-500 ${sortOrder === 'newest' ? 'text-blue-500' : 'text-black'}`}
+                                                onClick={() => handleSortOrderChange('newest')}
+                                            >
+                                                Спочатку нові
+                                            </div>
+                                            <div
+                                                className={`cursor-pointer py-2 px-4 ${sortOrder === 'oldest' ? 'text-blue-500' : 'text-black'}`}
+                                                onClick={() => handleSortOrderChange('oldest')}
+                                            >
+                                                Спочатку старі
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="flex flex-col md:flex-row space-x-8">
+                        {/* Main part */}
+                        <div className="w-full flex justify-between">
+                            {/* Announcements */}
+                            <div className="w-full mt-4 flex flex-wrap justify-between">
+                                {sortedAnnouncements.map((announcement, index) => (
+                                    <div key={index} className="w-full md:w-[32%] p-2 mt-4">
+                                        <Announcement
+                                            name={announcement.name}
+                                            avatar={announcement.avatar}
+                                            date={announcement.date}
+                                            text={announcement.text}
+                                            type={announcement.type}
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <SideBar isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} isFilters={true} />
+                {/* Footer */}
+                <Footer />
+            </div>
+        </Wrapper>
+    );
+};
+
+export default MainPage;

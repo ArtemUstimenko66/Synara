@@ -1,13 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import BackArrowComponent from "../../modules/registration/components/BackArrow.tsx";
-import { Eye, EyeOff } from "react-feather";
-import React, { useState } from "react";
+import  { useState } from "react";
 import { Button } from "../../ui/Button.tsx";
 import {resetPassword} from "../../modules/reset-password/api/resetPasswordService.ts";
-
-const NewPassword = () => {
+import LogoSynara from '../../assets/images/logoSynara.svg?react';
+const NewPasswordPage = () => {
     const navigate = useNavigate();
-    const [showPassword, setShowPassword] = useState(false);
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState<string | null>(null);
@@ -53,21 +51,34 @@ const NewPassword = () => {
     };
 
     return (
-        <div className="bg-dark-blue min-h-screen flex">
-            <div className="w-2/6 p-8 flex items-left justify-left mt-10 ml-28">
+        <div className="bg-dark-blue min-h-screen h-screen flex ">
+            <div className="w-2/6 p-8 xl:flex md:hidden sm:hidden items-left justify-left mt-10 ml-28">
                 <div className="text-almost-white font-montserratRegular font-bold text-relative-h4">LOGO</div>
             </div>
 
-            <div className="w-5/6 bg-almost-white rounded-l-3xl min-h-screen px-relative-md flex flex-col items-start justify-start">
+            <div
+                className="xl:w-5/6 md:w-full sm:w-full bg-almost-white min-h-screen xl:rounded-l-3xl h-full xl:px-relative-md flex flex-col xl:items-start xl:justify-start sm:items-center sm:justify-center">
+
+
+                <div className="flex w-11/12 xl:hidden">
+                    <div className="xl:mt-[20%]">
+                        <BackArrowComponent onClick={handleBackArrowClick}/>
+                    </div>
+                    <div className="flex w-full justify-center ">
+                        <LogoSynara className="xl:hidden md:flex sm:flex mt-relative-sm sm:w-24 sm:h-24"/>
+                    </div>
+                </div>
                 <div className="flex h-full">
-                    <BackArrowComponent onClick={handleBackArrowClick} />
+                    <div className="xl:flex sm:hidden">
+                        <BackArrowComponent onClick={handleBackArrowClick}/>
+                    </div>
 
-                    <div className="max-w-2xl ml-24 mt-7 max-h-screen flex flex-col justify-start flex-grow">
+                    <div className="max-w-2xl xl:ml-24 sm:mx-5 xl:mx-0 xl:mt-7 sm:mt-2 max-h-screen flex flex-col justify-start flex-grow">
 
-                        <h1 className="uppercase font-kharkiv text-relative-h2 mb-relative-ssm mt-relative-ssm">
+                        <h1 className="uppercase font-kharkiv xl:text-relative-h2 sm:text-relative-xlh1 mb-relative-ssm mt-relative-ssm">
                             Створення нового пароля
                         </h1>
-                        <h2 className="font-kharkiv text-relative-h3 mb-relative-ssm mt-relative-ssm">
+                        <h2 className="font-kharkiv xl:text-relative-h3 sm:text-relative-xlh2 mb-relative-ssm mt-relative-ssm">
                             Заповніть поле
                         </h2>
 
@@ -76,42 +87,26 @@ const NewPassword = () => {
                             <div className="w-full mb-6 relative">
                                 <label className="font-montserratRegular mb-2">Пароль</label>
                                 <input
-                                    type={showPassword ? 'text' : 'password'}
+                                    type={'text'}
                                     name="password"
                                     placeholder="Створіть новий пароль"
                                     className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue pr-10"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                 />
-                                <button
-                                    type="button"
-                                    onClick={() => setShowPassword(prev => !prev)}
-                                    className="absolute top-1/2 right-3 transform -translate-y-1/2 text-gray-400"
-                                    style={{ marginTop: '0.8rem', marginRight: '1rem' }}
-                                >
-                                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                                </button>
                             </div>
 
                             {/* Поле подтверждения пароля */}
                             <div className="w-full mb-2 relative">
                                 <label className="font-montserratRegular mb-2">Підтвердження пароля</label>
                                 <input
-                                    type={showPassword ? 'text' : 'password'}
+                                    type={'text'}
                                     name="confirmPassword"
                                     placeholder="Повторіть новий пароль"
                                     className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue pr-10"
                                     value={confirmPassword}
                                     onChange={(e) => setConfirmPassword(e.target.value)}
                                 />
-                                <button
-                                    type="button"
-                                    onClick={() => setShowPassword(prev => !prev)}
-                                    className="absolute top-1/2 right-3 transform -translate-y-1/2 text-gray-400"
-                                    style={{ marginTop: '0.8rem', marginRight: '1rem' }}
-                                >
-                                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                                </button>
                             </div>
 
                             {/* Сообщение об ошибке */}
@@ -133,4 +128,4 @@ const NewPassword = () => {
     );
 };
 
-export default NewPassword;
+export default NewPasswordPage;

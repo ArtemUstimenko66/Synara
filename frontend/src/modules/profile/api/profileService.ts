@@ -1,4 +1,4 @@
-import api from "./api.ts";
+import api from "../../main-api/api.ts";
 export const getProfile = async () => {
     try {
         const response = await api.get('/auth/profile', {
@@ -28,6 +28,7 @@ export const logout = async () => {
         const response = await api.post('/auth/logout', {},  {
             withCredentials: true
         });
+        localStorage.removeItem('accessToken');
         console.log('Logout successful:', response.data);
         return response.data;
     } catch (error) {

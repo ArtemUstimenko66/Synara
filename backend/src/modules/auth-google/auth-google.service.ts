@@ -39,7 +39,10 @@ export class AuthGoogleService {
         return this.registerUser(user);
       }
 
-      return this.getTokens(userExist);
+      return this.generateJwt({
+        sub: userExist.id,
+        email: userExist.email,
+      });
     } catch (error) {
       throw new InternalServerErrorException('Failed to sign in user');
     }
@@ -47,18 +50,29 @@ export class AuthGoogleService {
 
   async registerUser(user: User) {
     try {
+      console.log('Registering user with data:', user); // Для отладки
+
+      // Создаем нового пользователя и устанавливаем необходимые поля
       const newUser = this.userRepository.create(user);
       newUser.password = await this.passwordService.hashPassword(
-        this.generateRandomPassword(),
+          this.generateRandomPassword(),
       );
-      //  newUser.username = user.email.split('@')[0];
+      console.log('New user before saving:', newUser); // Для отладки
+
       await this.userRepository.save(newUser);
 
-      return this.getTokens(newUser);
+      console.log('User saved successfully:', newUser); // Для отладки
+
+      return this.generateJwt({
+        sub: newUser.id,
+        email: newUser.email,
+      });
     } catch (error) {
+      console.error('Error registering user:', error); // Для отладки
       throw new InternalServerErrorException('Failed to register user');
     }
   }
+
 
   getTokens(user: User) {
     const accessToken = this.generateJwt({

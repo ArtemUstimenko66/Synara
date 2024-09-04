@@ -1,7 +1,7 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
-import { TypeHelp } from '../type-help.enum';
-import { User } from '../../users/entities/users.entity';
+import { TypeHelp } from './type-help.enum';
+import { User } from '../users/entities/users.entity';
 
 @Entity('announcement')
 export class Announcement {

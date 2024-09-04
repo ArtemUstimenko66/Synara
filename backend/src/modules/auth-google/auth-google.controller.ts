@@ -24,22 +24,20 @@ export class AuthGoogleController {
   @UseGuards(GoogleOauthGuard)
   async googleAuthCallback(@Req() req, @Res() res: Response) {
     try {
-      const { accessToken, refreshToken } = await this.authService.signIn(
-        req.user,
-      );
+      const token = await this.authService.signIn(req.user);
 
-      res.cookie('accessToken', accessToken, {
+      res.cookie('accessToken', token, {
         maxAge: 2592000000,
         //sameSite: 'none', // ???
         secure: false,
         httpOnly: true,
       });
 
-      res.cookie('refreshToken', refreshToken, {
-        httpOnly: true,
-        secure: false,
-        maxAge: 604800000,
-      });
+      // res.cookie('refreshToken', refreshToken, {
+      //   httpOnly: true,
+      //   secure: false,
+      //   maxAge: 604800000,
+      // });
 
       return res.redirect('http://localhost:5173/profile');
     } catch (error) {

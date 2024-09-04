@@ -6,9 +6,7 @@ import { Role } from '../../users/enums/role.enum';
 
 @Injectable()
 export class TwitterStrategy extends PassportStrategy(Strategy, 'twitter') {
-  constructor(
-    private readonly usersService: UsersService,
-  ) {
+  constructor(private readonly usersService: UsersService) {
     super({
       consumerKey: 'c2G4RI18Ir4jHGXc9pwqBl6tK',
       consumerSecret: 'e5k5FLrF2YDJCKGKfkE18meJ3J0QYg1cqjvZ13ai3p9fxwB77G',

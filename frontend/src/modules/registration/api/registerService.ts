@@ -1,4 +1,4 @@
-import api from "./api.ts";
+import api from "../../main-api/api.ts";
 import {User} from "../interfaces/User.tsx";
 
 export const registerUser = async (userData: User) => {

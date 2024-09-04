@@ -8,7 +8,7 @@ type UpdatePasswordInfoProps = {
     setUserData: (data: Partial<User>) => void;
 };
 
-const UpdatePassword: React.FC<UpdatePasswordInfoProps> = ({ userData }) => {
+const CheckPhone: React.FC<UpdatePasswordInfoProps> = ({ userData }) => {
     const [code, setCode] = useState<string>('');
     const [error, setError] = useState<string | null>(null); // Состояние для ошибки
     const effectExecuted = useRef<boolean>(false); // Дополнительный флаг для отслеживания выполнения эффекта
@@ -45,40 +45,40 @@ const UpdatePassword: React.FC<UpdatePasswordInfoProps> = ({ userData }) => {
     };
 
     return (
-        <div className="flex flex-col w-full">
-            <div className="flex w-full space-x-4 mb-4">
+        <div className="flex flex-col w-11/12 justify-center">
+            <div className="flex w-full space-x-4 mb-4 sm:mr-20 xl:mr-0">
                 <div className="w-full mb-4">
-                    <h1 className="uppercase font-kharkiv text-relative-h2 mb-relative-ssm mt-relative-ssm">ДВОФАКТОРНА АУТЕНТИФІКАЦІЯ</h1>
-                    <h2 className="font-kharkiv text-relative-h3 mb-relative-ssm mt-relative-ssm">Заповніть поле</h2>
-                    <h3 className="text-relative-pl whitespace-pre-line font-montserratRegular mb-8 ">
+                    <h1 className="uppercase font-kharkiv xl:text-relative-h2 sm:text-relative-xlh1 md:text-relative-h1 mb-relative-ssm xl:mt-relative-ssm">ДВОФАКТОРНА АУТЕНТИФІКАЦІЯ</h1>
+                    <h2 className="font-kharkiv xl:text-relative-h3 sm:text-relative-xlh2  md:text-relative-h3 mb-relative-ssm mt-relative-ssm">Заповніть поле</h2>
+                    <h3 className="xl:text-relative-pl sm:text-relative-h2 md:text-relative-h3 whitespace-pre-line font-montserratRegular mb-8 ">
                         Ми надіслали код підтвердження на номер телефону
                         <b> {userData.phoneNumber}</b>
                     </h3>
-                    <label className="font-montserratRegular mb-2">Код</label>
+                    <label className="font-montserratRegular xl:text-relative-pl md:text-relative-h3 sm:text-relative-h2 mb-2">Код</label>
                     <input
                         type="password"
                         name="code"
                         placeholder="*****"
                         value={code}
                         onChange={(e) => setCode(e.target.value)}
-                        className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
+                        className="w-full p-3 xl:text-relative-pl md:text-relative-h3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
                     />
                     {error && <p className="text-red-500 mt-2">{error}</p>}
                 </div>
             </div>
             <Button
                 isFilled={true}
-                className="w-full uppercase py-3 rounded-full mb-5  "
+                className="w-full xl:text-relative-pl sm:text-relative-h2 md:text-relative-h3 uppercase py-4 rounded-full mb-5  "
                 onClick={handleVerifyCode}
             >
                 Перевірити код
             </Button>
-            <div className="flex items-center justify-center w-full mb-5 text-almost-black">
+            <div className="flex items-center justify-center w-full mb-5 xl:text-relative-pl sm:text-relative-h2 md:text-relative-h3 text-almost-black">
                 <span className="mx-4">Вам не прийшов код?</span>
             </div>
             <Button
                 hasBlue={true}
-                className="w-full uppercase py-3 rounded-full mb-5"
+                className="w-full uppercase xl:text-relative-pl sm:text-relative-h2 md:text-relative-h3 py-3 rounded-full mb-5"
                 onClick={handleResendCode}
             >
                 Надіслати код ще раз
@@ -87,4 +87,4 @@ const UpdatePassword: React.FC<UpdatePasswordInfoProps> = ({ userData }) => {
     );
 };
 
-export default UpdatePassword;
+export default CheckPhone;

@@ -2,6 +2,8 @@ import React, {useEffect, useRef, useState} from 'react';
 import { useSwipeable } from 'react-swipeable';
 import { useMediaQuery } from 'react-responsive';
 
+import CountUp from 'react-countup';
+
 import Placeholder from '../assets/images/Placeholder.svg?react';
 import PlaceholderHorizontal from '../assets/images/PlaceholderHorizontal.svg?react';
 import PlaceholderSquare from '../assets/images/PlaceholderSquare.svg?react';
@@ -30,6 +32,7 @@ import DateRangeCalendarWithButton from "../ui/Calendar.tsx";
 import Review from "../components/Review.tsx";
 import Wrapper from "../ui/Wrapper.tsx";
 import HowItWorksSM from "../ui/HowItWorksSM.tsx";
+
 
 const reviews = [
     {
@@ -244,7 +247,7 @@ const HomePage: React.FC = () => {
 
                     {/* Second section - about us */}
                     <section
-                        className='w-full flex justify-center sm:mt-96 sm:bg-dark-blue  flex-col xl:flex-row md:flex-row xl:mt-[15vw] md:mt-[11vw] '>
+                        className='w-full flex justify-center sm:mt-96 sm:bg-dark-blue  flex-col xl:flex-row md:flex-row xl:mt-[20vw] md:mt-[14vw] '>
                         <div
                             className="hidden xl:flex xl:order-1 md:flex md:order-1 xl:w-1/2 md:w-relative-1/2">
                             <PlaceholderHorizontal
@@ -588,17 +591,16 @@ const HomePage: React.FC = () => {
                         <h2 className="xl:text-h2 md:text-relative-h3xl sm:text-h4 sm:text-h5  font-kharkiv sm:mb-8 md:mb-20 xl:mb-20 text-center">ЧОМУ
                             САМЕ МИ</h2>
                         <div className="flex xl:gap-12 md:gap-6 sm:ml-8 md:ml-0 xl:ml-0">
-                            {/* Левая сторона */}
                             <div className="flex-1 flex flex-col xl:ml-6 md:ml-6">
                                 <div className="flex flex-row sm:space-x-16 xl:space-x-12 md:space-x-6">
                                     <div
-                                        className="xl:text-h1 sm:text-h3 md:text-relative-h1 text-md_h1 font-bold font-montserratMedium">10k<span
+                                        className="xl:text-h1 sm:text-h3 md:text-relative-h1 text-md_h1 font-bold font-montserratMedium"> <CountUp end={10} />k<span
                                         className="text-dark-blue font-bold">+</span></div>
                                     <div
-                                        className="xl:text-h1 sm:text-h3 md:text-relative-h1 text-md_h1 font-bold font-montserratMedium">4k<span
+                                        className="xl:text-h1 sm:text-h3 md:text-relative-h1 text-md_h1 font-bold font-montserratMedium"><CountUp end={4} />k<span
                                         className="text-dark-blue font-bold">+</span></div>
                                     <div
-                                        className="xl:text-h1 sm:text-h3 md:text-relative-h1 text-md_h1 font-bold font-montserratMedium">20k<span
+                                        className="xl:text-h1 sm:text-h3 md:text-relative-h1 text-md_h1 font-bold font-montserratMedium"><CountUp end={20} />k<span
                                         className="text-dark-blue font-bold">+</span></div>
                                 </div>
                                 <div

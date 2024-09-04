@@ -11,7 +11,9 @@ import { VolunteersEntity } from './volunteers.entity';
 import { Gender } from '../enums/gender.enum';
 import { VictimsEntity } from './victim.entity';
 import { File } from '../../s3-storage/entities/file.entity';
-import { Announcement } from '../../announcement/entities/announcement.entity';
+import { Announcement } from '../../announcement/announcement.entity';
+import { ChatMember } from '../../real-time-chat/chats/chat-member.entity';
+import { Message } from '../../real-time-chat/messages/message.entity';
 
 @Entity('users')
 export class User {
@@ -21,7 +23,7 @@ export class User {
     type: Number,
   })
   @PrimaryGeneratedColumn()
-  id: number;
+  id?: number;
 
   @ApiProperty({
     example: 'John',
@@ -29,7 +31,7 @@ export class User {
     type: String,
   })
   @Column({ type: 'varchar', length: 100, nullable: false })
-  firstName: string;
+  firstName?: string;
 
   @ApiProperty({
     example: 'Doe',
@@ -45,7 +47,7 @@ export class User {
     type: String,
   })
   @Column({ type: 'varchar', nullable: false })
-  password: string;
+  password?: string;
 
   @ApiProperty({
     example: 'john.doe@example.com',
@@ -54,7 +56,7 @@ export class User {
     type: String,
   })
   @Column({ type: 'varchar', unique: true, nullable: false })
-  email: string;
+  email?: string;
 
   @ApiProperty({
     example: '+38066996699',
@@ -70,16 +72,16 @@ export class User {
     description: 'Birthdate of the user',
     type: String,
   })
-  @Column({ type: 'date', nullable: false })
-  birthDate: Date;
+  @Column({ type: 'date', nullable: true })
+  birthDate?: Date;
 
   @ApiProperty({
     example: 'guest',
     description: 'Role of the user in the system',
     type: String,
   })
-  @Column({ type: 'enum', enum: Role, default: Role.Guest, nullable: false })
-  role: Role;
+  @Column({ type: 'enum', enum: Role, default: Role.Guest })
+  role?: Role;
 
   @ApiProperty({
     example: 'male',
@@ -87,15 +89,7 @@ export class User {
     type: String,
   })
   @Column({ type: 'enum', enum: Gender, default: Gender.Other })
-  gender: Gender;
-
-  @ApiProperty({
-    example: 1234567890,
-    description: 'UNP (Unique Identification Number) of the user',
-    type: Number,
-  })
-  @Column({ type: 'bigint', unique: true, nullable: false })
-  UNP: number;
+  gender?: Gender;
 
   @ApiProperty({
     example: 1234567890,
@@ -103,7 +97,15 @@ export class User {
     type: Number,
   })
   @Column({ type: 'bigint', unique: true, nullable: true })
-  wnp?: number;
+  UNP?: number;
+
+  @ApiProperty({
+    example: 'https://example.com/avatar.jpg',
+    description: 'Avatar of the user',
+    type: Number,
+  })
+  @Column({ type: 'varchar', length: 100, nullable: true })
+  avatarUrl?: number;
 
   @ApiProperty({
     example: false,
@@ -111,7 +113,7 @@ export class User {
     type: Boolean,
   })
   @Column({ default: false })
-  isPhoneVerified: boolean;
+  isPhoneVerified?: boolean;
 
   @ApiProperty({
     example: false,
@@ -119,7 +121,7 @@ export class User {
     type: Boolean,
   })
   @Column({ default: false })
-  isConfirmedEmail: boolean;
+  isConfirmedEmail?: boolean;
 
   @OneToOne(() => VolunteersEntity, (volunteers) => volunteers.user)
   volunteer?: VolunteersEntity;
@@ -131,5 +133,11 @@ export class User {
   files?: File[];
 
   @OneToMany(() => Announcement, (announcement) => announcement.user)
-  announcements: Announcement[];
+  announcements?: Announcement[];
+
+  @OneToMany(() => ChatMember, (chatMember) => chatMember.user)
+  chatMembers: ChatMember[];
+
+  @OneToMany(() => Message, (message) => message.sender)
+  messages: Message[];
 }

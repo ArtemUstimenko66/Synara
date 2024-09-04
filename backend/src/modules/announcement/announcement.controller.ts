@@ -12,7 +12,7 @@ import {
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AnnouncementService } from './announcement.service';
 import { CreateAnnouncementDto } from './dtos/create-announcement.dto';
-import { Announcement } from './entities/announcement.entity';
+import { Announcement } from './announcement.entity';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { Request } from 'express';
 import { User } from '../users/entities/users.entity';

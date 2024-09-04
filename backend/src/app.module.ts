@@ -17,6 +17,9 @@ import { FileModule } from './modules/s3-storage/file.module';
 import { PasswordModule } from './modules/password/password.module';
 import { ResetPasswordModule } from './modules/reset-password/reset-password.module';
 import { AnnouncementModule } from './modules/announcement/announcement.module';
+import { TranslateModule } from './modules/translate/translate.module';
+import { ChatsModule } from './modules/real-time-chat/chats/chats.module';
+import { MessagesModule } from './modules/real-time-chat/messages/messages.module';
 
 @Module({
   imports: [
@@ -42,6 +45,9 @@ import { AnnouncementModule } from './modules/announcement/announcement.module';
     PasswordModule,
     ResetPasswordModule,
     AnnouncementModule,
+    TranslateModule,
+    ChatsModule,
+    MessagesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
