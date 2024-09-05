@@ -7,15 +7,11 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../users/entities/users.entity';
 import { Repository } from 'typeorm';
-import { ConfigService } from '@nestjs/config';
-import { PasswordService } from '../password/password.service';
 
 @Injectable()
 export class AuthGoogleService {
   constructor(
     private jwtService: JwtService,
-    private configService: ConfigService,
-    private passwordService: PasswordService,
     @InjectRepository(User) private userRepository: Repository<User>,
   ) {}
 
@@ -36,43 +32,37 @@ export class AuthGoogleService {
       const userExist = await this.findUserByEmail(user.email);
 
       if (!userExist) {
-        return this.registerUser(user);
+        return user.email;
+        // return this.registerUser(user);
       }
 
-      return this.generateJwt({
-        sub: userExist.id,
-        email: userExist.email,
-      });
+      return this.getTokens(userExist);
     } catch (error) {
       throw new InternalServerErrorException('Failed to sign in user');
     }
   }
 
-  async registerUser(user: User) {
-    try {
-      console.log('Registering user with data:', user); // Для отладки
-
-      // Создаем нового пользователя и устанавливаем необходимые поля
-      const newUser = this.userRepository.create(user);
-      newUser.password = await this.passwordService.hashPassword(
-          this.generateRandomPassword(),
-      );
-      console.log('New user before saving:', newUser); // Для отладки
-
-      await this.userRepository.save(newUser);
-
-      console.log('User saved successfully:', newUser); // Для отладки
-
-      return this.generateJwt({
-        sub: newUser.id,
-        email: newUser.email,
-      });
-    } catch (error) {
-      console.error('Error registering user:', error); // Для отладки
-      throw new InternalServerErrorException('Failed to register user');
-    }
-  }
-
+  // async registerUser(user: User) {
+  //   try {
+  //     const newUser = this.userRepository.create(user);
+  //     newUser.password = await this.passwordService.hashPassword(
+  //       this.generateRandomPassword(),
+  //     );
+  //     console.log('New user before saving:', newUser);
+  //
+  //     await this.userRepository.save(newUser);
+  //
+  //     console.log('User saved successfully:', newUser);
+  //
+  //     return this.generateJwt({
+  //       sub: newUser.id,
+  //       email: newUser.email,
+  //     });
+  //   } catch (error) {
+  //     console.error('Error registering user:', error); // Для отладки
+  //     throw new InternalServerErrorException('Failed to register user');
+  //   }
+  // }
 
   getTokens(user: User) {
     const accessToken = this.generateJwt({
@@ -93,9 +83,9 @@ export class AuthGoogleService {
     return { accessToken, refreshToken };
   }
 
-  generateRandomPassword(): string {
-    return Math.random().toString(36).slice(-8);
-  }
+  // generateRandomPassword(): string {
+  //   return Math.random().toString(36).slice(-8);
+  // }
 
   async findUserByEmail(email: string) {
     try {

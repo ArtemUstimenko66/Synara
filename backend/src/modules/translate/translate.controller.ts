@@ -6,11 +6,11 @@ export class TranslateController {
   constructor(private readonly translateService: TranslateService) {}
 
   @Post()
-  async translate(@Body() body: { text: string; targetLanguage: string }) {
-    const { text, targetLanguage } = body;
+  async translate(@Body() body: { targetLanguage: string; page: string }) {
+    const { targetLanguage, page } = body;
     const translation = await this.translateService.translateText(
-      text,
       targetLanguage,
+      page,
     );
     return { translation };
   }
