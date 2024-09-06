@@ -9,7 +9,7 @@ export const useAuth = () => {
         const fetchProfile = async () => {
             try {
                 const profile = await getProfile();
-                console.log(profile);
+                //console.log(profile);
                 setIsAuthenticated(true);
             } catch (error) {
                 console.error('Failed to fetch profile -> ', error);

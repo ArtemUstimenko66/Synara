@@ -1,7 +1,8 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { TypeHelp } from './type-help.enum';
 import { User } from '../users/entities/users.entity';
+import {File} from "../s3-storage/entities/file.entity";
 
 @Entity('announcement')
 export class Announcement {
@@ -30,6 +31,14 @@ export class Announcement {
   description: string;
 
   @ApiProperty({
+    example: 123,
+    description: 'Number of views for the announcement',
+    type: Number,
+  })
+  @Column({ default: 0 })
+  viewsCount: number;
+
+  @ApiProperty({
     example: 'humanitarian',
     description: 'What kind of help somebody provide or need',
     type: String,
@@ -37,6 +46,17 @@ export class Announcement {
   @Column({ type: 'enum', enum: TypeHelp, default: TypeHelp.Humanitarian })
   typeHelp: TypeHelp;
 
+  @ApiProperty({
+    example: 5,
+    description: 'Number of responses to the announcement',
+    type: Number,
+  })
+  @Column({ default: 0 })
+  responsesCount: number;
+
   @ManyToOne(() => User, (user) => user.announcements)
   user: User;
+
+  @OneToMany(() => File, (file) => file.announcement)
+  files: File[];
 }

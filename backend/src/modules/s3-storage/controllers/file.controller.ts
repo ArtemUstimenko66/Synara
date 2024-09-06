@@ -17,9 +17,9 @@ export class FileController {
   private readonly bucket: string;
 
   constructor(
-    private readonly fileService: FileService,
-    private readonly s3Service: S3Service,
-    private readonly configService: ConfigService,
+      private readonly fileService: FileService,
+      private readonly s3Service: S3Service,
+      private readonly configService: ConfigService,
   ) {
     this.bucket = this.configService.get<string>('AWS_S3_BUCKET_NAME');
   }
@@ -27,15 +27,17 @@ export class FileController {
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
   async uploadFile(
-    @UploadedFile() file: Express.Multer.File,
-    @Body('userId') userId: number,
+      @UploadedFile() file: Express.Multer.File,
+      @Body('userId') userId: number,
+      @Body('announcementId') announcementId: number,
   ) {
     const fileUrl = await this.s3Service.uploadFile(file, this.bucket);
     const fileRecord = await this.fileService.createFile(
-      file.originalname,
-      fileUrl,
-      file.mimetype,
-      userId,
+        file.originalname,
+        fileUrl,
+        file.mimetype,
+        userId,
+        announcementId,
     );
     return { file: fileRecord };
   }

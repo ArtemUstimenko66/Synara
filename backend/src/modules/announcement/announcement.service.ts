@@ -46,13 +46,13 @@ export class AnnouncementService {
   }
 
   async findAll(): Promise<Announcement[]> {
-    return this.announcementRepository.find({ relations: ['user'] });
+    return this.announcementRepository.find({ relations: ['files', 'user'] });
   }
 
   async findOne(id: number): Promise<Announcement> {
     const announcement = await this.announcementRepository.findOne({
       where: { id },
-      relations: ['user'],
+      relations: ['files', 'user'],
     });
     if (!announcement) {
       throw new BadRequestException(`Announcement with id ${id} not found`);

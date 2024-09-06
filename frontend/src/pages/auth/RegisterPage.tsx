@@ -34,13 +34,6 @@ const Registration = () => {
         volunteerId: 0
     });
 
-    const params = new URLSearchParams(window.location.search);
-    const email = params.get('email');
-    if(email)
-    {
-        localStorage.setItem('userEmail', email);
-    }
-
     const handleNextStep = (data: Partial<User>, nextStep: number) => {
         setUserData(prev => ({ ...prev, ...data }));
         setCurrentStep(nextStep);

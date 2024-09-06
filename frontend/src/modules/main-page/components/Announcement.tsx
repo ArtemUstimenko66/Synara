@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from "../../../ui/Button.tsx";
+import ModalInfo from "./ModalInfo.tsx";
 import HeartImg from '../../../assets/images/heart-svgrepo-com.svg?react';
 
 interface AnnouncementProps {
@@ -8,9 +9,30 @@ interface AnnouncementProps {
     datePosted: Date;
     description: string;
     typeHelp: string;
+    viewsCount: number;
+    respondedCount: number;
+    images: string[];
 }
 
-const Announcement: React.FC<AnnouncementProps> = ({ userName, avatar, datePosted, description, typeHelp }) => {
+const Announcement: React.FC<AnnouncementProps> = ({
+                                                       userName,
+                                                       avatar,
+                                                       datePosted,
+                                                       description,
+                                                       typeHelp,
+                                                       viewsCount,
+                                                       respondedCount,
+                                                       images
+                                                   }) => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const helpTypesMap: { [key: string]: string } = {
+        humanitarian: 'Гуманітарна',
+        informational: 'Інформаційна',
+        psychological: 'Психологічна',
+        material: 'Матеріальна',
+    };
+
     return (
         <div className="bg-perfect-gray rounded-3xl flex flex-col h-full">
             {/* User Info Section */}
@@ -32,7 +54,9 @@ const Announcement: React.FC<AnnouncementProps> = ({ userName, avatar, datePoste
 
             {/* Category Badge */}
             <div className="flex justify-end w-full items-end ">
-                <span className="bg-blue-500 w-3/6 text-white px-4 pr-5 pl-10 py-1 font-montserratRegular font-normal tracking-wide rounded-l-full">{typeHelp}</span>
+                <span className="bg-blue-500 w-3/6 text-white px-4 pr-5 pl-10 py-1 font-montserratRegular font-normal tracking-wide rounded-l-full">
+                    {helpTypesMap[typeHelp] || typeHelp} {/* Преобразование типа помощи */}
+                </span>
             </div>
 
             {/* Description Section */}
@@ -42,10 +66,30 @@ const Announcement: React.FC<AnnouncementProps> = ({ userName, avatar, datePoste
 
             {/* Action Button Section */}
             <div className="flex justify-center items-center font-montserratMedium ml-4 mb-4 p-4">
-                <Button isFilled={true} className="uppercase px-4 py-2 rounded-full text-relative-p bg-perfect-yellow">Детальніше</Button>
-                {/* Like Icon */}
-                {/*<HeartImg className="w-8 h-8 ml-2" />*/}
+                <Button
+                    isFilled={true}
+                    onClick={() => setIsModalOpen(true)}
+                    className="uppercase px-4 py-2 rounded-full text-relative-p bg-perfect-yellow"
+                >
+                    Детальніше
+                </Button>
             </div>
+
+            {isModalOpen && (
+                <ModalInfo
+                    isOpen={isModalOpen}
+                    onClose={() => setIsModalOpen(false)}
+                    announcement={{
+                        userName,
+                        avatar,
+                        description,
+                        typeHelp: helpTypesMap[typeHelp] || typeHelp,
+                        viewsCount,
+                        respondedCount,
+                        images
+                    }}
+                />
+            )}
         </div>
     );
 };

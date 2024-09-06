@@ -28,8 +28,6 @@ export class EmailConfirmationController {
     // if (user && user.phoneNumber) {
     //   await this.smsService.sendVerificationCode(user.phoneNumber);
     // }
-
-    //Куда перенаправлять после подтверждения почты
     return res.redirect('http://localhost:5173/home');
   }
 }

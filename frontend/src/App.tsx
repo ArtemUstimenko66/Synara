@@ -9,18 +9,29 @@ import NewPasswordPage from "./pages/reset-password/NewPasswordPage.tsx";
 import ResetPasswordPage from "./pages/reset-password/ResetPasswordPage.tsx";
 import MainPage from "./pages/MainPage.tsx";
 import PrivateRoute from "./components/PrivateRoute.tsx";
+import CreateAnnouncementPage from "./modules/main-page/components/CreateAnnouncementPage.tsx";
 
 const App: React.FC = () => {
     return (
         <Routes>
             <Route path="/" element={<Navigate to="/home" replace />} />
+            {/* home */}
             <Route path="/home" element={<HomePage />} />
-            <Route path="/profile" element={<PrivateRoute element={<ProfilePage />} />} />
-            <Route path="/main" element={<PrivateRoute element={<MainPage />} />} />
+
+            {/* auth */}
             <Route path="/login" element={<LoginPage />} />
             <Route path="/registration" element={<RegisterPage />} />
             <Route path="/reset-password" element={<ResetPasswordPage />} />
             <Route path="/new-password" element={<NewPasswordPage />} />
+
+            {/* profile */}
+            <Route path="/profile" element={<PrivateRoute element={<ProfilePage />} />} />
+
+            {/* main */}
+            <Route path="/main" element={<PrivateRoute element={<MainPage />} />} />
+            <Route path="/add-announcement" element={<PrivateRoute element={<CreateAnnouncementPage />} />} />
+
+            {/* 404 */}
             <Route path="*" element={<NotFoundPage />} />
         </Routes>
     );

@@ -6,8 +6,9 @@ import { FileController } from './controllers/file.controller';
 import { S3Service } from './services/s3.service';
 import { FileService } from './services/file.service';
 import { S3Config } from './aws-s3.config';
+import {Announcement} from "../announcement/announcement.entity";
 @Module({
-  imports: [TypeOrmModule.forFeature([File, User])],
+  imports: [TypeOrmModule.forFeature([File, User, Announcement])],
   controllers: [FileController],
   providers: [S3Service, FileService, S3Config],
   exports: [],

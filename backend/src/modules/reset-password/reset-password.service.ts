@@ -11,7 +11,7 @@ import { Repository } from 'typeorm';
 import VerificationTokenPayload from '../email/confirm-email/intefaces/verificationTokenPayload.inteface';
 import SendEmailService from '../email/send-email/services/send-email.service';
 import { ResetPasswordDto } from './dtos/reset-password.dto';
-import { PasswordService } from '../util-password/password.service';
+import { PasswordService } from '../password/password.service';
 
 @Injectable()
 export class ResetPasswordService {
@@ -84,9 +84,7 @@ export class ResetPasswordService {
       await this.userRepository.save(user);
       return 'reseted';
     } catch (error) {
-      throw new InternalServerErrorException(
-        'Failed to reset user password',
-      );
+      throw new InternalServerErrorException('Failed to reset user password');
     }
   }
 }

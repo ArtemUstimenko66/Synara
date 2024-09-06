@@ -1,6 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { User } from '../../users/entities/users.entity';
+import { Announcement } from '../../announcement/announcement.entity';
 
 @Entity('files')
 export class File {
@@ -38,4 +39,11 @@ export class File {
     type: () => User,
   })
   user?: User;
+
+  @ManyToOne(() => Announcement, (announcement) => announcement.files)
+  @ApiProperty({
+    description: 'Announcement associated with the file',
+    type: () => Announcement,
+  })
+  announcement?: Announcement;
 }

@@ -5,10 +5,23 @@ import { Link } from "react-router-dom";
 const Filters: React.FC = () => {
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
     const [selectedUrgency, setSelectedUrgency] = useState<string | null>(null);
-    const [isUkraineSelected, setIsUkraineSelected] = useState<boolean>(false); // Добавляем состояние для выбора "Вся Україна"
+    const [isUkraineSelected, setIsUkraineSelected] = useState<boolean>(false);
 
     const categories = ['Психологічна', 'Гуманітарна', 'Інформаційна', 'Матеріальна'];
     const urgencies = ['Терміново', 'Не терміново'];
+
+    // Словари для перевода на английский
+    const categoryTranslations: { [key: string]: string } = {
+        'Психологічна': 'Psychological',
+        'Гуманітарна': 'Humanitarian',
+        'Інформаційна': 'Informational',
+        'Матеріальна': 'Material',
+    };
+
+    const urgencyTranslations: { [key: string]: string } = {
+        'Терміново': 'Urgent',
+        'Не терміново': 'Not Urgent',
+    };
 
     const toggleCategory = (category: string) => {
         if (selectedCategories.includes(category)) {
@@ -30,6 +43,47 @@ const Filters: React.FC = () => {
         setSelectedCategories([]);
         setSelectedUrgency(null);
         setIsUkraineSelected(false);
+    };
+
+    const applyFilters = async () => {
+        // Переводим выбранные фильтры на английский
+        const translatedCategories = selectedCategories.map(category => categoryTranslations[category]);
+        const translatedUrgency = selectedUrgency ? urgencyTranslations[selectedUrgency] : null;
+        const location = isUkraineSelected ? 'All Ukraine' : null;
+
+        // Формируем строку запроса
+        const params = new URLSearchParams();
+
+        if (translatedCategories.length > 0) {
+            params.append('categories', translatedCategories.join(','));
+        }
+
+        if (translatedUrgency) {
+            params.append('urgency', translatedUrgency);
+        }
+
+        if (location) {
+            params.append('location', location);
+        }
+
+        // URL запроса на бэкенд
+        const url = `/api/filters?${params.toString()}`;
+
+        console.log('Отправка запроса с фильтрами:', url);
+
+        // Отправляем GET-запрос на бэкенд
+        try {
+            const response = await fetch(url);
+
+            if (!response.ok) {
+                throw new Error('Ошибка при отправке запроса');
+            }
+
+            const data = await response.json();
+            console.log('Ответ сервера:', data);
+        } catch (error) {
+            console.error('Ошибка:', error);
+        }
     };
 
     return (
@@ -93,7 +147,13 @@ const Filters: React.FC = () => {
 
             {/* Buttons */}
             <div className="flex flex-col space-y-5 mt-10">
-                <Button isFilled={true} className="w-full uppercase text-black py-3 md:text-pxl">Застосувати</Button>
+                <Button
+                    isFilled={true}
+                    className="w-full uppercase text-black py-3 md:text-pxl"
+                    onClick={applyFilters} // Применяем фильтры
+                >
+                    Застосувати
+                </Button>
                 <Button
                     hasBlue={true}
                     className="w-full uppercase py-3 md:text-pxl"

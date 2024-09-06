@@ -5,7 +5,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { ResetPasswordController } from './reset-password.controller';
 import { ResetPasswordService } from './reset-password.service';
 import { SendEmailModule } from '../email/send-email/send-email.module';
-import { PasswordModule } from '../util-password/password.module';
+import { PasswordModule } from '../password/password.module';
 
 @Module({
   imports: [
