@@ -3,14 +3,7 @@ import { Button } from "../../../../ui/Button.tsx";
 
 import 'react-international-phone/style.css';
 import {MuiPhone} from "../ui/MuiPhone.tsx";
-
-const regionsWithCities = {
-    'Київська область': ['Київ', 'Біла Церква', 'Бровари'],
-    'Львівська область': ['Львів', 'Дрогобич', 'Стрий'],
-    'Одеська область': ['Одеса', 'Ізмаїл', 'Чорноморськ'],
-    'Харківська область': ['Харків', 'Чугуїв', 'Ізюм'],
-    'Дніпропетровська область': ['Дніпро', 'Кривий Ріг', 'Павлоград'],
-};
+import {regionsWithCities} from "../../../../data/Regions.ts";
 
 type AddressVictimInfoProps = {
     userData: any;

@@ -21,7 +21,7 @@ const UpdatePassword: React.FC<UpdatePasswordInfoProps> = ({ onNextStep }) => {
             localStorage.setItem('userEmail', email);
             onNextStep({ email });
         } catch (error: any) {
-            console.error('Ошибка при запросе на сброс пароля:', error);
+            console.error('Error in request to change password:', error);
             setError(error.message);
         }
     };

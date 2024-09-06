@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import BackArrowComponent from "../../modules/registration/components/BackArrow.tsx";
+import BackArrowComponent from "../../modules/registration/components/ui/BackArrow.tsx";
 import LoginMain from "../../modules/login/components/LoginMain.tsx";
 import { UserLogin } from "../../modules/login/interfaces/UserLogin.tsx";
 import LogoSynara from '../../assets/images/logoSynara.svg?react';

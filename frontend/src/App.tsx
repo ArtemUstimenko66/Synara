@@ -9,7 +9,7 @@ import NewPasswordPage from "./pages/reset-password/NewPasswordPage.tsx";
 import ResetPasswordPage from "./pages/reset-password/ResetPasswordPage.tsx";
 import MainPage from "./pages/MainPage.tsx";
 import PrivateRoute from "./components/PrivateRoute.tsx";
-import CreateAnnouncementPage from "./modules/main-page/components/CreateAnnouncementPage.tsx";
+import CreateAnnouncementPage from "./pages/CreateAnnouncementPage.tsx";
 
 const App: React.FC = () => {
     return (

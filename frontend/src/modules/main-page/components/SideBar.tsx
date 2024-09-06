@@ -6,6 +6,7 @@ import { Button } from "../../../ui/Button.tsx";
 import { logout } from "../../profile/api/profileService.ts";
 import Filters from "./Filters.tsx";
 import ModalLogout from "./ModalLogout.tsx";
+import {navItems} from "../../../data/navItemsSideBar.ts";
 
 
 interface SideBarProps {
@@ -18,15 +19,7 @@ export const SideBar: React.FC<SideBarProps> = ({ isOpen, onClose, isFilters }) 
     const navigate = useNavigate();
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const navItems = [
-        { text: "ПРОФІЛЬ", to: "/profile" },
-        { text: "ЧАТ", to: "/chat" },
-        { text: "ОГОЛОШЕННЯ", to: "/announcements" },
-        { text: "ПЕТИЦІЇ", to: "/petitions" },
-        { text: "СТАТИСТИКА", to: "/statistics" },
-        { text: "НАЛАШТУВАННЯ", to: "/settings" }
-    ];
-
+    // logout
     const handleLogout = async () => {
         try {
             await logout();
@@ -52,10 +45,12 @@ export const SideBar: React.FC<SideBarProps> = ({ isOpen, onClose, isFilters }) 
                             ${isOpen ? 'translate-x-0' : 'translate-x-full'} w-1/4 h-full shadow-lg border-2 border-l-dark-blue border-t-dark-blue border-b-dark-blue rounded-l-3xl flex flex-col`}
             >
                 {isFilters ? (
+                    // Filters
                     <div className="flex flex-col flex-grow p-5">
                         <Filters />
                     </div>
                 ) : (
+                    // Sidebar
                     <div className="flex flex-col mx-4 flex-grow">
                         {/* Logo */}
                         <div className="flex justify-center mt-6 mb-8">
@@ -85,7 +80,7 @@ export const SideBar: React.FC<SideBarProps> = ({ isOpen, onClose, isFilters }) 
                 )}
             </div>
 
-            {/* Modal for confirmation */}
+            {/* Modal for logout confirmation */}
             <ModalLogout
                 isOpen={isModalOpen}
                 onClose={() => { setIsModalOpen(false); onClose(); }}

@@ -68,7 +68,7 @@ const EmailConfirm: React.FC<EmailConfirmProps> = ({ userData, onNextStep }) => 
                 Будь ласка, перевірте свою пошту та перейдіть за посиланням у листі, щоб завершити реєстрацію.
             </h3>
             <Button
-                className="w-full bg-perfect-yellow text-almost-black py-4 rounded-full mb-8 xl:text-relative-pxl md:text-relative-h3 sm:text-relative-h2"
+                className="w-full bg-perfect-yellow text-almost-black py-4 rounded-full mb-8 xl:text-relative-pl md:text-relative-h3 sm:text-relative-h2"
                 onClick={handleResend}
                 disabled={emailSent}
             >
@@ -76,7 +76,7 @@ const EmailConfirm: React.FC<EmailConfirmProps> = ({ userData, onNextStep }) => 
             </Button>
             <Button
                 hasBlue={true}
-                className="w-full text-almost-black py-4 rounded-full mb-8 xl:text-relative-pxl md:text-relative-h3 sm:text-relative-h2"
+                className="w-full text-almost-black py-4 rounded-full mb-8 xl:text-relative-pl md:text-relative-h3 sm:text-relative-h2"
                 onClick={onNextStep}
                 disabled={emailSent}
             >

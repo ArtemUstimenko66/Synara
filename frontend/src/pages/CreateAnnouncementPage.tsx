@@ -1,13 +1,17 @@
 import React, { ChangeEvent, useRef, useState } from 'react';
-import MainHeader from "../../../modules/main-page/components/MainHeader.tsx";
-import Wrapper from "../../../ui/Wrapper.tsx";
-import { Button } from "../../../ui/Button.tsx";
-import Footer from "../../../components/Footer.tsx";
-import { SideBar } from "./SideBar.tsx";
-import DeleteImg from "../../../assets/images/DeleteImg.svg?react";
-import { Announcement } from "../interfaces/Announcement.tsx";
-import {createAnnouncement, uploadDocument} from "../api/mainPageService.ts";
+import MainHeader from "../modules/main-page/components/MainHeader.tsx";
+import Wrapper from "../ui/Wrapper.tsx";
+import { Button } from "../ui/Button.tsx";
+import Footer from "../components/Footer.tsx";
+import { SideBar } from "../modules/main-page/components/SideBar.tsx";
+import DeleteImg from "../assets/images/DeleteImg.svg?react";
+import { Announcement } from "../modules/main-page/interfaces/Announcement.tsx";
+import {createAnnouncement} from "../modules/main-page/api/mainPageService.ts";
 import {useNavigate} from "react-router-dom";
+import {convertDateToDBFormat} from "../modules/main-page/helpers/convertDateToDBFormat.ts";
+import {translateHelpType} from "../modules/main-page/helpers/translateHelpType.ts";
+import {uploadAllDocuments} from "../modules/main-page/helpers/uploadAllDocuments.ts";
+import {validateFields} from "../modules/main-page/validation/validateFields.ts";
 
 const CreateAnnouncementPage: React.FC = () => {
     const [datePosted, setDatePosted] = useState<string>('');
@@ -19,8 +23,8 @@ const CreateAnnouncementPage: React.FC = () => {
     });
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
+    const navigate = useNavigate();
 
-    // Обработчик даты
     const handleDateChange = (e: ChangeEvent<HTMLInputElement>) => {
         let value = e.target.value.replace(/\D/g, '');
         if (value.length > 8) value = value.slice(0, 8);
@@ -32,15 +36,13 @@ const CreateAnnouncementPage: React.FC = () => {
         setDatePosted(value);
     };
 
-    // Обработчик выбора типа помощи (только один)
     const handleHelpSelect = (helpType: string) => {
         setLocalData(prevData => ({
             ...prevData,
-            helpTypes: [helpType], // Оставляем только один выбранный тип
+            helpTypes: [helpType],
         }));
     };
 
-    // Обработчик загрузки файлов
     const handleDocumentUpload = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.files) {
             const newDocuments = Array.from(event.target.files);
@@ -51,7 +53,6 @@ const CreateAnnouncementPage: React.FC = () => {
         }
     };
 
-    // Обработчик удаления файла
     const handleRemoveDocument = (fileName: string) => {
         setLocalData(prevData => ({
             ...prevData,
@@ -59,68 +60,30 @@ const CreateAnnouncementPage: React.FC = () => {
         }));
     };
 
-    // Валидация полей
-    const validateFields = () => {
-        const newErrors: { [key: string]: string } = {};
-        if (!datePosted) {
-            newErrors.datePosted = 'Будь ласка, введіть дату';
-        }
-        if (!localData.description) {
-            newErrors.description = 'Будь ласка, введіть опис';
-        }
-        setErrors(newErrors);
-        return Object.keys(newErrors).length === 0;
-    };
-
-    // Обработчик отправки формы
-    const helpTypesMap: { [key: string]: string } = {
-        'Гуманітарна': 'humanitarian',
-        'Інформаційна': 'informational',
-        'Психологічна': 'psychological',
-        'Матеріальна': 'material',
-    };
-
-// Функция для перевода типа помощи
-    const translateHelpType = (helpType: string): string => {
-        return helpTypesMap[helpType] || 'humanitarian'; // Вернуть 'humanitarian' по умолчанию, если тип не найден
-    };
-
-
-
-    const uploadAllDocuments = async (files: File[]): Promise<string[]> => {
-        const uploadPromises = files.map(file => uploadDocument(file));
-        try {
-            const responses = await Promise.all(uploadPromises);
-            return responses.map(response => response.fileUrl); // Предположим, что сервер возвращает URL файлов
-        } catch (error) {
-            console.error("Failed to upload some documents:", error);
-            throw error;
-        }
-    };
-
-
-    const navigate = useNavigate(); // Хук для навигации
-// Обработчик отправки формы
     const handleSubmit = async () => {
-        if (validateFields()) {
-            try {
-                // Загрузка всех документов и получение их URL
-                const documentUrls = await uploadAllDocuments(localData.documents || []);
+        const newErrors = validateFields({ datePosted, description: localData.description || '' });
+        setErrors(newErrors);
 
-                // Подготовка данных для создания объявления
-                const finalData = {
+        if (Object.keys(newErrors).length === 0) {
+            const  formattedDate= convertDateToDBFormat(datePosted);
+            try {
+                const announcementData = {
                     description: localData.description || '',
-                    datePosted: datePosted,
-                    typeHelp: translateHelpType(localData.helpTypes?.[0] || 'Гуманітарна'), // Переводим тип помощи
-                    files: documentUrls, // Вставляем URL файлов в данные
+                    datePosted: formattedDate,
+                    typeHelp: translateHelpType(localData.helpTypes?.[0] || 'Гуманітарна'),
                 };
 
-                // Вызов функции добавления объявления
-                await createAnnouncement(finalData);
-                console.log("Объявление успешно создано");
+                const createdAnnouncement = await createAnnouncement(announcementData);
+                const announcementId = createdAnnouncement.id;
+
+                if (localData.documents && localData.documents.length > 0) {
+                    await uploadAllDocuments(localData.documents, announcementId);
+                }
+
+                console.log("Successfully uploaded announcement");
                 navigate('/main');
             } catch (error) {
-                console.error('Ошибка при создании объявления:', error);
+                console.error('Error uploading announcement:', error);
             }
         }
     };
@@ -130,9 +93,14 @@ const CreateAnnouncementPage: React.FC = () => {
     return (
         <Wrapper>
             <div className="min-h-screen bg-almost-white">
+
+                {/* Header */}
                 <MainHeader />
+
+                {/* Main part */}
                 <h2 className="text-h2 font-kharkiv text-center mt-24">Заповніть дані</h2>
 
+                {/* Date */}
                 <div className="w-full mb-4">
                     <label className="font-montserratRegular mb-2">Дата*</label>
                     <input
@@ -145,6 +113,7 @@ const CreateAnnouncementPage: React.FC = () => {
                     {errors.datePosted && <p className="text-red-500 text-sm">{errors.datePosted}</p>}
                 </div>
 
+                {/* Description */}
                 <div className="w-full flex flex-col mb-4">
                     <label className="font-montserratRegular mb-2">Опис*</label>
                     <textarea
@@ -157,6 +126,7 @@ const CreateAnnouncementPage: React.FC = () => {
                     {errors.description && <p className="text-red-500 text-sm">{errors.description}</p>}
                 </div>
 
+                {/* Help type */}
                 <div className="w-full mb-4">
                     <label className="font-montserratRegular mb-2">Яку допомогу ви можете надавати:*</label>
                     <div className="flex mt-4 space-x-10 flex-wrap gap-1">
@@ -176,6 +146,7 @@ const CreateAnnouncementPage: React.FC = () => {
                     </div>
                 </div>
 
+                {/* Add photo */}
                 <div className="w-full mb-4">
                     <div className="flex flex-col">
                         <label className="font-montserratRegular">Додати фото</label>
@@ -206,6 +177,7 @@ const CreateAnnouncementPage: React.FC = () => {
                     </div>
                 </div>
 
+                {/* Create button */}
                 <Button
                     isFilled={true}
                     className="w-full text-almost-white uppercase font-montserratRegular py-4 rounded-full mb-6"
@@ -214,7 +186,10 @@ const CreateAnnouncementPage: React.FC = () => {
                     Додати
                 </Button>
 
+                {/* Sidebar */}
                 <SideBar isOpen={false} onClose={() => {}} isFilters={true} />
+
+                {/* Footer */}
                 <Footer />
             </div>
         </Wrapper>

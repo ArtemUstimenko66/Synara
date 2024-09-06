@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from "../../../ui/Button.tsx";
 import ModalInfo from "./ModalInfo.tsx";
-import HeartImg from '../../../assets/images/heart-svgrepo-com.svg?react';
+import {getHelpTypeInUkrainian} from "../../../data/helpTypesMap.ts";
 
 interface AnnouncementProps {
     userName: string;
@@ -26,18 +26,12 @@ const Announcement: React.FC<AnnouncementProps> = ({
                                                    }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const helpTypesMap: { [key: string]: string } = {
-        humanitarian: 'Гуманітарна',
-        informational: 'Інформаційна',
-        psychological: 'Психологічна',
-        material: 'Матеріальна',
-    };
-
     return (
-        <div className="bg-perfect-gray rounded-3xl flex flex-col h-full">
+        <div className="bg-perfect-gray w-full rounded-3xl flex flex-col h-full">
+
             {/* User Info Section */}
             <div className="flex items-center p-4 mb-2 mt-4 ml-4">
-                {/* User Avatar */}
+                {/* Avatar */}
                 <img
                     src={avatar}
                     alt="User Avatar"
@@ -55,7 +49,7 @@ const Announcement: React.FC<AnnouncementProps> = ({
             {/* Category Badge */}
             <div className="flex justify-end w-full items-end ">
                 <span className="bg-blue-500 w-3/6 text-white px-4 pr-5 pl-10 py-1 font-montserratRegular font-normal tracking-wide rounded-l-full">
-                    {helpTypesMap[typeHelp] || typeHelp} {/* Преобразование типа помощи */}
+                    {getHelpTypeInUkrainian(typeHelp)}
                 </span>
             </div>
 
@@ -64,7 +58,7 @@ const Announcement: React.FC<AnnouncementProps> = ({
                 {description}
             </p>
 
-            {/* Action Button Section */}
+            {/* Details Button */}
             <div className="flex justify-center items-center font-montserratMedium ml-4 mb-4 p-4">
                 <Button
                     isFilled={true}
@@ -83,7 +77,7 @@ const Announcement: React.FC<AnnouncementProps> = ({
                         userName,
                         avatar,
                         description,
-                        typeHelp: helpTypesMap[typeHelp] || typeHelp,
+                        typeHelp: getHelpTypeInUkrainian(typeHelp),
                         viewsCount,
                         respondedCount,
                         images

@@ -4,13 +4,7 @@ import { User } from "../../interfaces/User.tsx";
 import { MuiPhone } from "../ui/MuiPhone.tsx";
 import DeleteImg from '../../../../assets/images/DeleteImg.svg?react';
 
-const regionsWithCities = {
-    'Київська область': ['Київ', 'Біла Церква', 'Бровари'],
-    'Львівська область': ['Львів', 'Дрогобич', 'Стрий'],
-    'Одеська область': ['Одеса', 'Ізмаїл', 'Чорноморськ'],
-    'Харківська область': ['Харків', 'Чугуїв', 'Ізюм'],
-    'Дніпропетровська область': ['Дніпро', 'Кривий Ріг', 'Павлоград'],
-};
+import {regionsWithCities} from "../../../../data/Regions.ts";
 
 type AddressVolunteerInfoProps = {
     userData: any;

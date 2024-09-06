@@ -34,10 +34,10 @@ export const createAnnouncement = async (data: AnnouncementData) => {
     }
 };
 
-
-export const uploadDocument = async (file: File) => {
+export const uploadDocument = async (file: File, announcementId: string) => {
     const formData = new FormData();
     formData.append('file', file);
+    formData.append('announcementId', announcementId);
 
     try {
         const response = await api.post('/files/upload', formData, {

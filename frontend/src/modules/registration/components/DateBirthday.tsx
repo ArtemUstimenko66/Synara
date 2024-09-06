@@ -21,7 +21,7 @@ const DateBirthday: React.FC<DateBirthdayProps> = ({ onNextStep, selectedRole, s
     });
 
     const handleDateChange = (e: ChangeEvent<HTMLInputElement>) => {
-        let value = e.target.value.replace(/\D/g, ''); // Удаляем все нечисловые символы
+        let value = e.target.value.replace(/\D/g, '');
         if (value.length > 8) value = value.slice(0, 8);
 
         if (value.length >= 2 && value.length <= 4) {
@@ -43,17 +43,13 @@ const DateBirthday: React.FC<DateBirthdayProps> = ({ onNextStep, selectedRole, s
             const [day, month, year] = dateOfBirth.split(" / ").map(Number);
             const currentYear = new Date().getFullYear();
 
-            // Проверка месяца
             if (month < 1 || month > 12) {
                 newErrors.dateOfBirth = 'Місяць повинен бути між 01 та 12';
             } else {
-                // Проверка дня
-                const daysInMonth = new Date(year, month, 0).getDate(); // Получаем количество дней в месяце
+                const daysInMonth = new Date(year, month, 0).getDate();
                 if (day < 1 || day > daysInMonth) {
                     newErrors.dateOfBirth = `День повинен бути між 01 та ${daysInMonth} для обраного місяця`;
                 }
-
-                // Проверка года
                 if (year < 1900 || year > currentYear) {
                     newErrors.dateOfBirth = `Рік повинен бути між 1900 та ${currentYear}`;
                 }
@@ -84,6 +80,7 @@ const DateBirthday: React.FC<DateBirthdayProps> = ({ onNextStep, selectedRole, s
 
         return Object.keys(newErrors).length === 0;
     };
+
     const handleSubmit = () => {
         if(validateFields())
         {

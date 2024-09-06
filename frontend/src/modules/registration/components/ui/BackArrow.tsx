@@ -1,6 +1,6 @@
 import React from 'react';
-import BackArrow from '../../../assets/images/Back.svg?react';
-import BackArrowMini from '../../../assets/images/back_arrow_mini.svg?react';
+import BackArrow from '../../../../assets/images/Back.svg?react';
+import BackArrowMini from '../../../../assets/images/back_arrow_mini.svg?react';
 import { useMediaQuery } from "react-responsive";
 
 const BackArrowComponent: React.FC<{ onClick: () => void }> = ({ onClick }) => {

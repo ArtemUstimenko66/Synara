@@ -7,7 +7,7 @@ import DateBirthday from "../../modules/registration/components/DateBirthday.tsx
 import EmailConfirm from "../../modules/registration/components/EmailConfirm.tsx";
 import Stepper from "../../ui/Stepper";
 import { User } from "../../modules/registration/interfaces/User";
-import BackArrowComponent from "../../modules/registration/components/BackArrow.tsx";
+import BackArrowComponent from "../../modules/registration/components/ui/BackArrow.tsx";
 import CheckPhone from "../../modules/phone-verification/components/CheckPhone.tsx";
 import {useNavigate} from "react-router-dom";
 import LogoSynara from '../../assets/images/logoSynara.svg?react';

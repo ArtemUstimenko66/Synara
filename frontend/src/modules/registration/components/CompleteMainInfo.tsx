@@ -1,6 +1,4 @@
 import React, { useState, ChangeEvent } from 'react';
-import BankIdImg from '../../../assets/images/bank_id.png';
-import DiiaImg from '../../../assets/images/diia.png';
 import { Button } from "../../../ui/Button.tsx";
 import { User } from "../interfaces/User.tsx";
 import TwitterLoginButton from "./ui/TwitterLoginButton.tsx";
@@ -19,7 +17,7 @@ const CompleteMainInfo: React.FC<CompleteMainInfoProps> = ({ setUserData, onNext
         email: '',
         password: ''
     });
-    const [showPassword, setShowPassword] = useState<boolean>(false); // Состояние для видимости пароля
+    const [showPassword, setShowPassword] = useState<boolean>(false);
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;

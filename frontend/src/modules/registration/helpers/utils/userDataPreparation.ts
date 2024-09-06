@@ -1,18 +1,8 @@
 import {User} from "../../interfaces/User.tsx";
+import {helpTypesMap} from "../../../../data/helpTypesMap.ts";
+import {genderMap} from "../../../../data/genderMap.ts";
 
 export const prepareUserDataForBackend = (userData: User) => {
-    const genderMap: { [key: string]: string } = {
-        'Чоловік': 'male',
-        'Жінка': 'female',
-        'Інше': 'other'
-    };
-
-    const helpTypesMap: { [key: string]: string } = {
-        'Гуманітарна': 'humanitarian',
-        'Інформаційна': 'informational',
-        'Психологічна': 'psychological',
-        'Матеріальна': 'material',
-    };
 
     const baseData = {
         firstName: userData.firstName,

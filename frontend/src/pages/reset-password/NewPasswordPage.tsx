@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import BackArrowComponent from "../../modules/registration/components/BackArrow.tsx";
+import BackArrowComponent from "../../modules/registration/components/ui/BackArrow.tsx";
 import  { useState } from "react";
 import { Button } from "../../ui/Button.tsx";
 import {resetPassword} from "../../modules/reset-password/api/resetPasswordService.ts";

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { UserLogin } from "../../modules/login/interfaces/UserLogin.tsx";
-import BackArrowComponent from "../../modules/registration/components/BackArrow.tsx";
+import BackArrowComponent from "../../modules/registration/components/ui/BackArrow.tsx";
 import UpdatePassword from "../../modules/reset-password/components/UpdatePassword.tsx";
 import EmailSend from "../../modules/reset-password/components/EmailSend.tsx";
 import { useNavigate } from 'react-router-dom';

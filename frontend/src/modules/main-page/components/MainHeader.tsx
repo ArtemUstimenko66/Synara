@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import LogoSynara from '../../../assets/images/logoSynara.svg?react';
 import MenuIcon from '../assets/menu.svg?react';
 import NotificationIcon from '../assets/notification.svg?react';
@@ -14,6 +14,7 @@ const MainHeader: React.FC = () => {
     const [isAtTop, setIsAtTop] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
 
+    // logic for scrolling
     const handleScroll = () => {
         const currentScrollY = window.scrollY;
         setIsVisible(currentScrollY < lastScrollY || currentScrollY === 0);
@@ -21,6 +22,7 @@ const MainHeader: React.FC = () => {
         setLastScrollY(currentScrollY);
     };
 
+    // logic for scrolling
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
         return () => {
@@ -54,7 +56,7 @@ const MainHeader: React.FC = () => {
                     {/* Buttons */}
                     <div className="flex space-x-8 ">
                         <div className="flex ml-auto cursor-pointer"
-                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+                                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
                             {<MenuIcon className="h-6 w-6"/>}
                         </div>
                         <button>

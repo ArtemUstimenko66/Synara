@@ -20,23 +20,24 @@ const ModalInfo: React.FC<ModalInfoProps> = ({ isOpen, onClose, announcement }) 
 
     return (
         <div className="fixed inset-0 flex items-center justify-center z-50">
-            {/* Темный фон */}
+            {/* Dark background */}
             <div className="fixed inset-0 bg-black opacity-50" onClick={onClose}></div>
 
-            {/* Контент модального окна */}
+            {/* Modal window */}
             <div className="bg-white rounded-3xl border-2 border-dark-blue p-8 shadow-lg z-60 relative w-[85%] h-[85%]">
                 <div className="flex flex-col items-center justify-center">
-                    {/* Аватар пользователя */}
+                    {/* Avatar */}
                     <img
                         src={announcement.avatar}
                         alt={`Аватар ${announcement.userName}`}
                         className="rounded-full w-32 h-32 mb-4"
                     />
+
+                    {/* Name */}
                     <h2 className="text-relative-h4 font-kharkiv mb-4 text-center">{announcement.userName}</h2>
 
-                    {/* Контент с вертикальной чертой */}
                     <div className="flex flex-row w-full h-full">
-                        {/* Описание слева */}
+                        {/* Description */}
                         <div className="w-[50%] text-left pr-8 ml-24">
                             <p className="text-relative-p font-montserratRegular mb-6">
                                 {announcement.description}
@@ -52,10 +53,10 @@ const ModalInfo: React.FC<ModalInfoProps> = ({ isOpen, onClose, announcement }) 
                             </p>
                         </div>
 
-                        {/* Вертикальная черта */}
+                        {/* Vertical dash */}
                         <div className="border-l-2 border-gray-300 mx-4"></div>
 
-                        {/* Картинка справа */}
+                        {/* Images */}
                         <div className="w-[40%] h-64 flex items-center justify-center">
                             <div className="w-[50%] flex flex-col items-center">
                                 {announcement.images.map((imageUrl, index) => (
@@ -70,7 +71,7 @@ const ModalInfo: React.FC<ModalInfoProps> = ({ isOpen, onClose, announcement }) 
                         </div>
                     </div>
 
-                    {/* Кнопки */}
+                    {/* Buttons */}
                     <div className="flex justify-center space-x-4 mt-6">
                         <Button hasBlue={true} className="bg-dark-blue uppercase text-white py-2 px-4 w-100px">
                             Відгукнутись
