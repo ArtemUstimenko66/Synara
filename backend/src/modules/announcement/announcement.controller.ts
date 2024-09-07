@@ -20,8 +20,8 @@ import { User } from '../users/entities/users.entity';
 import { PartialUpdateAnnouncementDto } from './dtos/update-announcement.dto';
 import { Roles } from '../auth/roles.decorator';
 import { Role } from '../users/enums/role.enum';
-import { TypeHelp } from './type-help.enum';
 import {EnumValidationPipe} from "./enum-validation.pipe";
+import {TypeHelp} from "./type-help.enum";
 
 @ApiTags('Announcement')
 @Controller('announcements')
