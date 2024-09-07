@@ -48,20 +48,20 @@ export class AnnouncementController {
     return this.announcementService.findAll();
   }
 
+  @ApiOperation({ summary: 'Filter announcements by type' })
+  @ApiResponse({ status: 200, type: [Announcement] })
+  @Get('filter')
+  filterAnnouncement(
+      @Query('type', new EnumValidationPipe(TypeHelp)) types?: TypeHelp[],
+  ) : Promise<Announcement[]> {
+    return this.announcementService.filterAnnouncements({ types });
+  }
+
   @ApiOperation({ summary: 'Search announcements by title' })
   @ApiResponse({ status: 200, type: [Announcement] })
   @Get('search')
   search(@Query('query') query: string): Promise<Announcement[]> {
     return this.announcementService.search(query);
-  }
-
-  @ApiOperation({ summary: 'Filter announcements by type' })
-  @ApiResponse({ status: 200, type: [Announcement] })
-  @Get('filter')
-  filterAnnouncement(
-      @Query('type', new EnumValidationPipe(TypeHelp)) type?: TypeHelp,
-  ) : Promise<Announcement[]> {
-    return this.announcementService.filterAnnouncements({ type });
   }
 
   @ApiOperation({ summary: 'Get an announcement by ID' })

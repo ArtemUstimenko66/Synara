@@ -13,7 +13,7 @@ import { PartialUpdateAnnouncementDto } from './dtos/update-announcement.dto';
 
 
 interface FileterOptions {
-  type?: TypeHelp;
+  types?: TypeHelp[];
 }
 
 @Injectable()
@@ -81,10 +81,9 @@ export class AnnouncementService {
         .createQueryBuilder('announcement')
         .leftJoinAndSelect('announcement.user', 'user');
 
-    if(options.type) {
-      qb.andWhere('announcement.typeHelp = :type', { type: options.type });
+    if(options.types && options.types.length > 0) {
+      qb.andWhere('announcement.typeHelp IN (:...types)', { types: options.types });
     }
-
     return qb.getMany();
   }
 

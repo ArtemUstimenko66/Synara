@@ -5,9 +5,18 @@ export class EnumValidationPipe implements PipeTransform {
     constructor(private readonly enumType: any) {}
 
     transform(value: any) {
-        if(!Object.values(this.enumType).includes(value)) {
-            throw new BadRequestException(`Invalid value '${value}' for enum.`);
+        if(!value) {
+            return [];
         }
-        return value;
+
+        const values = Array.isArray(value) ? value : [value];
+        const validVales = Object.values(this.enumType);
+
+        for(const val of values) {
+            if(!validVales.includes(val)) {
+                throw new BadRequestException(`Invalid value: ${val}`);
+            }
+        }
+        return values;
     }
 }
