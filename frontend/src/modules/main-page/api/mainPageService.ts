@@ -1,14 +1,19 @@
 import api from "../../main-api/api.ts";
 import AnnouncementData from "../interfaces/AnnouncementData.tsx";
 
-export const getAnnouncements = async () => {
+export const getAnnouncements = async (limit = 12, offset = 0) => {
     try {
-        const response = await api.get('/announcements', { withCredentials: true });
+        const response = await api.get('/announcements', {
+            params: {
+                limit,
+                offset
+            },
+            withCredentials: true
+        });
         const formattedData = response.data.map((announcement: any) => ({
             ...announcement,
             datePosted: new Date(announcement.datePosted),
         }));
-        console.log("announcements ->", formattedData);
         return formattedData;
     } catch (error: any) {
         console.error('Error receiving the announcements:', error);
@@ -16,27 +21,6 @@ export const getAnnouncements = async () => {
     }
 };
 
-
-// export const getAnnouncements = async () => {
-//     try {
-//         const response = await api.get('/announcements', {
-//             params: {
-//                 limit: 12,
-//                 offset: 0
-//             },
-//             withCredentials: true
-//         });
-//         const formattedData = response.data.map((announcement: any) => ({
-//             ...announcement,
-//             datePosted: new Date(announcement.datePosted),
-//         }));
-//         console.log("announcements ->", formattedData);
-//         return formattedData;
-//     } catch (error: any) {
-//         console.error('Error receiving the announcements:', error);
-//         throw error;
-//     }
-// };
 
 export const getFilteredAnnouncements = async (categories: string[]) => {
     const queryParams = new URLSearchParams();

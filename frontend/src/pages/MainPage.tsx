@@ -21,10 +21,10 @@ const MainPage: React.FC = () => {
     const [announcements, setAnnouncements] = useState<any[]>([]);
     const [filteredAnnouncements, setFilteredAnnouncements] = useState<any[] | null>(null);
     const [searchParams] = useSearchParams();
-    const handleOpenMap = () => {
-        setIsMapMenuOpen(true);
-        setIsMobileMenuOpen(false); // Close sidebar
-    };
+    const limit = 12;
+    const [offset, setOffset] = useState(0);
+    const [hasMore, setHasMore] = useState(true);
+
     // get announcements by search/filters
     useEffect(() => {
         const fetchAnnouncements = async () => {
@@ -37,7 +37,12 @@ const MainPage: React.FC = () => {
                 let data;
                 // if no filters or search query
                 if (!query && types.length === 0 && !urgency && !isUkraineSelected) {
-                    data = await getAnnouncements();
+                    data = await getAnnouncements(limit, offset);
+                    setAnnouncements(data);
+                    setOffset(offset + limit);
+                    if (data.length < limit) {
+                        setHasMore(false);  // Если меньше 12 товаров, скрываем кнопку
+                    }
                 } else if (query) {
                     data = await searchAnnouncements(query);
                 } else {
@@ -64,6 +69,20 @@ const MainPage: React.FC = () => {
 
         fetchAnnouncements();
     }, [searchParams]);
+
+    // load more announcements
+    const loadMoreAnnouncements = async () => {
+        try {
+            const data = await getAnnouncements(limit, offset);
+            setAnnouncements(prev => [...prev, ...data]);
+            setOffset(offset + limit);
+            if (data.length < limit) {
+                setHasMore(false);
+            }
+        } catch (error) {
+            console.error('Error loading more announcements:', error);
+        }
+    };
 
     // sort order (newest/oldest)
     const sortedAnnouncements = [...(filteredAnnouncements || announcements)].sort((a, b) => {
@@ -93,6 +112,10 @@ const MainPage: React.FC = () => {
         setIsDropdownOpen(!isDropdownOpen);
     };
 
+    const handleOpenMap = () => {
+        setIsMapMenuOpen(true);
+        setIsMobileMenuOpen(false);
+    };
 
     return (
         <Wrapper>
@@ -202,6 +225,15 @@ const MainPage: React.FC = () => {
                             </div>
                         </div>
                     </div>
+
+                    {/* Button show more */}
+                    {hasMore && (
+                        <div className="w-full flex justify-center mt-8">
+                            <Button isFilled={true} className="uppercase" onClick={loadMoreAnnouncements}>
+                                Показати ще
+                            </Button>
+                        </div>
+                    )}
                 </div>
 
                 {/* Sidebar */}
@@ -210,7 +242,7 @@ const MainPage: React.FC = () => {
                     onClose={() => setIsMobileMenuOpen(false)}
                     isFilters={true}
                     onApplyFilters={handleApplyFilters}
-                    onOpenMap={handleOpenMap} // Pass the function to SideBar
+                    onOpenMap={handleOpenMap}
                 />
                 <Map
                     isOpen={isMapMenuOpen}
