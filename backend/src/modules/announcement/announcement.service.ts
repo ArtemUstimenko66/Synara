@@ -50,8 +50,12 @@ export class AnnouncementService {
     return updatedAnnouncement;
   }
 
-  async findAll(): Promise<Announcement[]> {
-    return this.announcementRepository.find({ relations: ['user'] });
+  async findAll(limit: number, offset: number): Promise<Announcement[]> {
+    return this.announcementRepository.find({
+      relations: ['user', 'files'],
+      take: limit,
+      skip: offset,
+    })
   }
 
   async findOne(id: number): Promise<Announcement> {

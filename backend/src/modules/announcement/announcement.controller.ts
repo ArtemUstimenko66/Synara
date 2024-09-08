@@ -44,8 +44,11 @@ export class AnnouncementController {
   @ApiOperation({ summary: 'Get all announcements' })
   @ApiResponse({ status: 200, type: [Announcement] })
   @Get()
-  findAll(): Promise<Announcement[]> {
-    return this.announcementService.findAll();
+  findAll(
+      @Query('limit') limit = 12,
+      @Query('offset') offset = 0,
+  ): Promise<Announcement[]> {
+    return this.announcementService.findAll(limit, offset);
   }
 
   @ApiOperation({ summary: 'Filter announcements by type' })
