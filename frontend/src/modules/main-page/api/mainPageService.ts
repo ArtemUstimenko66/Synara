@@ -8,13 +8,68 @@ export const getAnnouncements = async () => {
             ...announcement,
             datePosted: new Date(announcement.datePosted),
         }));
-        //console.log("announcements ->", formattedData);
+        console.log("announcements ->", formattedData);
         return formattedData;
     } catch (error: any) {
         console.error('Error receiving the announcements:', error);
         throw error;
     }
 };
+
+
+// export const getAnnouncements = async () => {
+//     try {
+//         const response = await api.get('/announcements', {
+//             params: {
+//                 limit: 12,
+//                 offset: 0
+//             },
+//             withCredentials: true
+//         });
+//         const formattedData = response.data.map((announcement: any) => ({
+//             ...announcement,
+//             datePosted: new Date(announcement.datePosted),
+//         }));
+//         console.log("announcements ->", formattedData);
+//         return formattedData;
+//     } catch (error: any) {
+//         console.error('Error receiving the announcements:', error);
+//         throw error;
+//     }
+// };
+
+export const getFilteredAnnouncements = async (categories: string[]) => {
+    const queryParams = new URLSearchParams();
+    categories.forEach(category => {
+        if (category) {
+            queryParams.append('type', category);
+        }
+    });
+    try {
+        const response = await api.get(`/announcements/filter?${queryParams.toString()}`);
+        console.log('Filtered announcements fetched successfully:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Failed to fetch filtered announcements:', error);
+        throw error;
+    }
+};
+
+
+export const searchAnnouncements = async (query: string) => {
+    try {
+        const response = await api.get(`/announcements/search`, {
+            params: { query },
+            withCredentials: true,
+        });
+        console.log("Search results ->", response.data);
+        return response.data;
+    } catch (error: any) {
+        console.error('Error searching announcements:', error);
+        throw error;
+    }
+};
+
 
 export const createAnnouncement = async (data: AnnouncementData) => {
     try {

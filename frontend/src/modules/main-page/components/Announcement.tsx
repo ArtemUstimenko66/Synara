@@ -25,6 +25,13 @@ const Announcement: React.FC<AnnouncementProps> = ({
                                                        images
                                                    }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const formattedDate = typeof datePosted === 'string' ? new Date(datePosted) : datePosted;
+
+    const currentDate = new Date();
+    const postedDate = new Date(datePosted);
+    const diffTime = Math.abs(postedDate.getTime() - currentDate.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
 
     return (
         <div className="bg-perfect-gray w-full rounded-3xl flex flex-col h-full">
@@ -41,14 +48,20 @@ const Announcement: React.FC<AnnouncementProps> = ({
                 <div>
                     <h4 className="text-relative-pl font-montserratMedium">{userName}</h4>
                     <span className="text-relative-h5 font-montserratMedium">
-                        {datePosted.toLocaleDateString('uk-UA')}
+                        {formattedDate.toLocaleDateString('uk-UA')}
                     </span>
                 </div>
             </div>
 
             {/* Category Badge */}
             <div className="flex justify-end w-full items-end ">
-                <span className="bg-blue-500 w-3/6 text-white px-4 pr-5 pl-10 py-1 font-montserratRegular font-normal tracking-wide rounded-l-full">
+                {diffDays <= 5 && (
+                    <div className="text-blue-500 font-montserratMedium px-6 font-medium border-2 border-dark-blue rounded-full text-relative-ps  mr-4">
+                        {diffDays} {diffDays === 1 ? 'день' : diffDays <= 4 ? 'дні' : 'днів'}
+                    </div>
+                )}
+                <span
+                    className="bg-blue-500 w-3/6 text-white px-4 pr-5 pl-10 py-1 font-montserratRegular font-normal tracking-wide rounded-l-full">
                     {getHelpTypeInUkrainian(typeHelp)}
                 </span>
             </div>

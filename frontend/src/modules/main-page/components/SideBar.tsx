@@ -6,18 +6,20 @@ import { Button } from "../../../ui/Button.tsx";
 import { logout } from "../../profile/api/profileService.ts";
 import Filters from "./Filters.tsx";
 import ModalLogout from "./ModalLogout.tsx";
-import {navItems} from "../../../data/navItemsSideBar.ts";
-
+import { navItems } from "../../../data/navItemsSideBar.ts";
 
 interface SideBarProps {
     isOpen: boolean;
     onClose: () => void;
     isFilters: boolean;
+    onApplyFilters: (filteredAnnouncements: any[]) => void;
 }
 
-export const SideBar: React.FC<SideBarProps> = ({ isOpen, onClose, isFilters }) => {
+export const SideBar: React.FC<SideBarProps> = ({ isOpen, onClose, isFilters, onApplyFilters }) => {
     const navigate = useNavigate();
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [categories, setCategories] = useState<string[]>([]);
+    const [urgency, setUrgency] = useState<string | null>(null);
 
     // logout
     const handleLogout = async () => {
@@ -41,13 +43,21 @@ export const SideBar: React.FC<SideBarProps> = ({ isOpen, onClose, isFilters }) 
 
             {/* Sidebar */}
             <div
-                className={`fixed top-0 right-0 bg-white z-40 overflow-hidden transform transition-transform duration-500 ease-in-out 
-                            ${isOpen ? 'translate-x-0' : 'translate-x-full'} w-1/4 h-full shadow-lg border-2 border-l-dark-blue border-t-dark-blue border-b-dark-blue rounded-l-3xl flex flex-col`}
+                className={`fixed top-0 right-0 bg-white z-40 overflow-hidden transform transition-transform duration-500 ease-in-out
+                    ${isOpen ? 'translate-x-0' : 'translate-x-full'} w-1/4 h-full shadow-lg border-2 border-l-dark-blue 
+                    border-t-dark-blue border-b-dark-blue rounded-l-3xl flex flex-col`}
             >
                 {isFilters ? (
                     // Filters
                     <div className="flex flex-col flex-grow p-5">
-                        <Filters />
+                        <Filters
+                            categories={categories}
+                            setCategories={setCategories}
+                            urgency={urgency}
+                            setUrgency={setUrgency}
+                            onApplyFilters={onApplyFilters}
+                            onCloseSidebar={onClose}
+                        />
                     </div>
                 ) : (
                     // Sidebar
