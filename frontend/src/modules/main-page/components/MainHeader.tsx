@@ -66,7 +66,7 @@ const MainHeader: React.FC = () => {
 
                 </div>
             </header>
-            <SideBar isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} isFilters={false}/>
+            <SideBar isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} isMap={false} isFilters={false}/>
         </>
     );
 };

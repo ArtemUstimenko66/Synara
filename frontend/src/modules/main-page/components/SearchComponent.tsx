@@ -1,4 +1,3 @@
-// src/modules/main-page/components/SearchComponent.tsx
 import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import SearchIcon from '../assets/searchIcon.svg?react';

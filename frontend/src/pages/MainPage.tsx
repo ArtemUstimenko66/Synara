@@ -10,15 +10,21 @@ import { SideBar } from "../modules/main-page/components/SideBar.tsx";
 import { getAnnouncements, searchAnnouncements, getFilteredAnnouncements } from "../modules/main-page/api/mainPageService.ts";
 import { Link, useSearchParams } from "react-router-dom";
 import { urgencyTranslations } from "../data/urgencyMap.ts";
+import { Map } from "../modules/main-page/components/Map.tsx";
 
 const MainPage: React.FC = () => {
     const [sortOrder, setSortOrder] = useState<'newest' | 'oldest'>('newest');
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isMapMenuOpen, setIsMapMenuOpen] = useState(false);
+
     const [announcements, setAnnouncements] = useState<any[]>([]);
     const [filteredAnnouncements, setFilteredAnnouncements] = useState<any[] | null>(null);
     const [searchParams] = useSearchParams();
-
+    const handleOpenMap = () => {
+        setIsMapMenuOpen(true);
+        setIsMobileMenuOpen(false); // Close sidebar
+    };
     // get announcements by search/filters
     useEffect(() => {
         const fetchAnnouncements = async () => {
@@ -204,8 +210,12 @@ const MainPage: React.FC = () => {
                     onClose={() => setIsMobileMenuOpen(false)}
                     isFilters={true}
                     onApplyFilters={handleApplyFilters}
+                    onOpenMap={handleOpenMap} // Pass the function to SideBar
                 />
-
+                <Map
+                    isOpen={isMapMenuOpen}
+                    onClose={() => setIsMapMenuOpen(false)}
+                />
                 {/* Footer */}
                 <Footer />
             </div>

@@ -2,15 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { Button } from "../../../ui/Button.tsx";
 import { getAnnouncements, getFilteredAnnouncements } from "../api/mainPageService.ts";
 import { helpTypesMap } from "../../../data/helpTypesMap.ts";
-import { Link, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { urgencyTranslations } from "../../../data/urgencyMap.ts";
 
 interface FiltersProps {
     onApplyFilters: (filteredAnnouncements: any[]) => void;
     onCloseSidebar: () => void;
+    onOpenMap: () => void; // Add this prop
 }
 
-const Filters: React.FC<FiltersProps> = ({ onApplyFilters, onCloseSidebar }) => {
+const Filters: React.FC<FiltersProps> = ({ onApplyFilters, onCloseSidebar,onOpenMap }) => {
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
     const [selectedUrgency, setSelectedUrgency] = useState<string | null>(null);
     const [isUkraineSelected, setIsUkraineSelected] = useState<boolean>(false);
@@ -141,9 +142,9 @@ const Filters: React.FC<FiltersProps> = ({ onApplyFilters, onCloseSidebar }) => 
                 >
                     Вся Україна
                 </button>
-                <Link to="/change-distance" className="w-full block text-center py-2 font-montserratRegular rounded-full underline">
+                <button onClick={onOpenMap} className="w-full block text-center py-2 font-montserratRegular rounded-full underline">
                     Змінити
-                </Link>
+                </button>
             </div>
 
             {/* Emergency */}

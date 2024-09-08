@@ -13,9 +13,10 @@ interface SideBarProps {
     onClose: () => void;
     isFilters: boolean;
     onApplyFilters: (filteredAnnouncements: any[]) => void;
+    onOpenMap: () => void; // Add this prop
 }
 
-export const SideBar: React.FC<SideBarProps> = ({ isOpen, onClose, isFilters, onApplyFilters }) => {
+export const SideBar: React.FC<SideBarProps> = ({ isOpen, onClose, isFilters, onApplyFilters,onOpenMap }) => {
     const navigate = useNavigate();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [categories, setCategories] = useState<string[]>([]);
@@ -57,6 +58,7 @@ export const SideBar: React.FC<SideBarProps> = ({ isOpen, onClose, isFilters, on
                             setUrgency={setUrgency}
                             onApplyFilters={onApplyFilters}
                             onCloseSidebar={onClose}
+                            onOpenMap={onOpenMap}
                         />
                     </div>
                 ) : (
