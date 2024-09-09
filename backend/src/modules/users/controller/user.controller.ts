@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Patch, Post } from '@nestjs/common';
 import { UsersService } from '../services/users.service';
 import { User } from '../entities/users.entity';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -14,5 +14,10 @@ export class UserController {
   @Post()
   async register(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);
+  }
+
+  @Get()
+  async getUsers() {
+    return this.userService.findAll();
   }
 }
