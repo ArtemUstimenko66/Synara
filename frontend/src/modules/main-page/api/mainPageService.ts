@@ -1,20 +1,59 @@
 import api from "../../main-api/api.ts";
 import AnnouncementData from "../interfaces/AnnouncementData.tsx";
 
-export const getAnnouncements = async () => {
+export const getAnnouncements = async (limit = 12, offset = 0) => {
     try {
-        const response = await api.get('/announcements', { withCredentials: true });
+        const response = await api.get('/announcements', {
+            params: {
+                limit,
+                offset
+            },
+            withCredentials: true
+        });
         const formattedData = response.data.map((announcement: any) => ({
             ...announcement,
             datePosted: new Date(announcement.datePosted),
         }));
-        //console.log("announcements ->", formattedData);
         return formattedData;
     } catch (error: any) {
         console.error('Error receiving the announcements:', error);
         throw error;
     }
 };
+
+
+export const getFilteredAnnouncements = async (categories: string[]) => {
+    const queryParams = new URLSearchParams();
+    categories.forEach(category => {
+        if (category) {
+            queryParams.append('type', category);
+        }
+    });
+    try {
+        const response = await api.get(`/announcements/filter?${queryParams.toString()}`);
+        console.log('Filtered announcements fetched successfully:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Failed to fetch filtered announcements:', error);
+        throw error;
+    }
+};
+
+
+export const searchAnnouncements = async (query: string) => {
+    try {
+        const response = await api.get(`/announcements/search`, {
+            params: { query },
+            withCredentials: true,
+        });
+        console.log("Search results ->", response.data);
+        return response.data;
+    } catch (error: any) {
+        console.error('Error searching announcements:', error);
+        throw error;
+    }
+};
+
 
 export const createAnnouncement = async (data: AnnouncementData) => {
     try {
