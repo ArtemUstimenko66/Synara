@@ -47,8 +47,9 @@ export class AnnouncementController {
   findAll(
       @Query('limit') limit = 12,
       @Query('offset') offset = 0,
+      @Query('sortOrder') sortOrder?: 'ASC' | 'DESC',
   ): Promise<Announcement[]> {
-    return this.announcementService.findAll(limit, offset);
+    return this.announcementService.findAll(limit, offset, sortOrder);
   }
 
   @ApiOperation({ summary: 'Filter announcements by type' })
@@ -67,8 +68,13 @@ export class AnnouncementController {
   @ApiOperation({ summary: 'Search announcements by title' })
   @ApiResponse({ status: 200, type: [Announcement] })
   @Get('search')
-  search(@Query('query') query: string): Promise<Announcement[]> {
-    return this.announcementService.search(query);
+  search(
+      @Query('query') query: string,
+      @Query('limit') limit = 12,
+      @Query('offset') offset = 0,
+      @Query('sortOrder') sortOrder?: 'ASC' | 'DESC',
+  ): Promise<Announcement[]> {
+    return this.announcementService.search(query, limit, offset, sortOrder);
   }
 
   @ApiOperation({ summary: 'Get an announcement by ID' })

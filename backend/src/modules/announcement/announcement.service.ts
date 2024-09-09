@@ -12,7 +12,7 @@ import { User } from '../users/entities/users.entity';
 import { PartialUpdateAnnouncementDto } from './dtos/update-announcement.dto';
 
 
-interface FileterOptions {
+interface FilterOptions {
   types?: TypeHelp[];
   sortOrder? : 'ASC' | 'DESC';
 }
@@ -51,11 +51,12 @@ export class AnnouncementService {
     return updatedAnnouncement;
   }
 
-  async findAll(limit: number, offset: number): Promise<Announcement[]> {
+  async findAll(limit: number, offset: number, sortOrder: 'ASC' | 'DESC' = 'DESC'): Promise<Announcement[]> {
     return this.announcementRepository.find({
       relations: ['user', 'files'],
       take: limit,
       skip: offset,
+      order: { datePosted: sortOrder},
     })
   }
 
@@ -70,7 +71,7 @@ export class AnnouncementService {
     return announcement;
   }
 
-  async search(query: string): Promise<Announcement[]> {
+  async search(query: string, limit: number, offset: number, sortOrder: 'ASC' | 'DESC' = 'DESC'): Promise<Announcement[]> {
     if (!query || query.trim() === '') {
       throw new BadRequestException('Search query cannot be empty');
     }
@@ -78,10 +79,13 @@ export class AnnouncementService {
       .createQueryBuilder('announcement')
       .where('announcement.description ILIKE :query', { query: `%${query}%` })
       .leftJoinAndSelect('announcement.user', 'user')
-      .getMany();
+        .orderBy('announcement.datePosted', sortOrder)
+        .take(limit)
+        .skip(offset)
+        .getMany();
   }
 
-  async filterAnnouncements(options: FileterOptions, limit: number, offset: number) : Promise<Announcement[]> {
+  async filterAnnouncements(options: FilterOptions, limit: number, offset: number) : Promise<Announcement[]> {
     const qb = this.announcementRepository
         .createQueryBuilder('announcement')
         .leftJoinAndSelect('announcement.user', 'user');
