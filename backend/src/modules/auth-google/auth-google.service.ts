@@ -55,7 +55,7 @@ export class AuthGoogleService {
       // Создаем нового пользователя и устанавливаем необходимые поля
       const newUser = this.userRepository.create(user);
       newUser.password = await this.passwordService.hashPassword(
-          this.generateRandomPassword(),
+        this.generateRandomPassword(),
       );
       console.log('New user before saving:', newUser); // Для отладки
 
@@ -72,7 +72,6 @@ export class AuthGoogleService {
       throw new InternalServerErrorException('Failed to register user');
     }
   }
-
 
   getTokens(user: User) {
     const accessToken = this.generateJwt({
