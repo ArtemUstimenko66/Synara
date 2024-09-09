@@ -14,6 +14,7 @@ import { PartialUpdateAnnouncementDto } from './dtos/update-announcement.dto';
 
 interface FileterOptions {
   types?: TypeHelp[];
+  sortOrder? : 'ASC' | 'DESC';
 }
 
 @Injectable()
@@ -80,7 +81,7 @@ export class AnnouncementService {
       .getMany();
   }
 
-  async filterAnnouncements(options: FileterOptions) : Promise<Announcement[]> {
+  async filterAnnouncements(options: FileterOptions, limit: number, offset: number) : Promise<Announcement[]> {
     const qb = this.announcementRepository
         .createQueryBuilder('announcement')
         .leftJoinAndSelect('announcement.user', 'user');
@@ -88,6 +89,15 @@ export class AnnouncementService {
     if(options.types && options.types.length > 0) {
       qb.andWhere('announcement.typeHelp IN (:...types)', { types: options.types });
     }
+
+    const sortOrder = options.sortOrder && ['ASC', 'DESC'].includes(options.sortOrder)
+    ? options.sortOrder
+        : 'DESC';
+
+    qb.orderBy('announcement.datePosted', sortOrder)
+        .take(limit)
+        .skip(offset);
+
     return qb.getMany();
   }
 

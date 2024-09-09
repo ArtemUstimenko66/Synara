@@ -56,9 +56,13 @@ export class AnnouncementController {
   @Get('filter')
   filterAnnouncement(
       @Query('type', new EnumValidationPipe(TypeHelp)) types?: TypeHelp[],
-  ) : Promise<Announcement[]> {
-    return this.announcementService.filterAnnouncements({ types });
+      @Query('limit') limit = 12,
+      @Query('offset') offset = 0,
+      @Query('sortOrder') sortOrder?: 'ASC' | 'DESC',
+  ): Promise<Announcement[]> {
+    return this.announcementService.filterAnnouncements({ types, sortOrder }, limit, offset);
   }
+
 
   @ApiOperation({ summary: 'Search announcements by title' })
   @ApiResponse({ status: 200, type: [Announcement] })
