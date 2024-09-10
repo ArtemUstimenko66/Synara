@@ -10,7 +10,6 @@ import { TypeHelp } from './type-help.enum';
 import { User } from '../users/entities/users.entity';
 import { File } from '../s3-storage/entities/file.entity';
 
-
 @Entity('announcement')
 export class Announcement {
   @ApiProperty({
@@ -27,7 +26,7 @@ export class Announcement {
     type: Date,
   })
   @Column()
-  datePosted: Date;
+  date_posted: Date;
 
   @ApiProperty({
     example: 'I need a psychological help',
@@ -42,7 +41,7 @@ export class Announcement {
     description: 'Number of views for the announcement',
     type: Number,
   })
-  @Column({default: 0})
+  @Column({ default: 0 })
   viewsCount: number;
 
   @ApiProperty({
@@ -50,16 +49,23 @@ export class Announcement {
     description: 'What kind of help somebody provide or need',
     type: String,
   })
-  @Column({type: 'enum', enum: TypeHelp, default: TypeHelp.Humanitarian})
-  typeHelp: TypeHelp;
+  @Column({ type: 'enum', enum: TypeHelp, default: TypeHelp.Humanitarian })
+  type_help: TypeHelp;
 
   @ApiProperty({
     example: 5,
     description: 'Number of responses to the announcement',
     type: Number,
   })
-  @Column({default: 0})
+  @Column({ default: 0 })
   responsesCount: number;
+
+  @ApiProperty({
+    example: true,
+    description: 'Urgency of the announcement',
+    type: Boolean,
+  })
+  isUrgent: boolean;
 
   @ManyToOne(() => User, (user) => user.announcements)
   user: User;

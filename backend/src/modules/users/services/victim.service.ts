@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { VictimsEntity } from '../entities/victim.entity';
 import { CreateVictimDto } from '../dtos/create-victim.dto';
-import { GeocodingService } from "./geocoding.service";
+import { GeocodingService } from './geocoding.service';
 
 @Injectable()
 export class VictimService {
@@ -18,12 +18,15 @@ export class VictimService {
     return await this.victimsRepository.save(victim);
   }
 
-  async getVictimCoordinates(id: number) : Promise<{ lat: number; lng: number }> {
+
+  async getVictimCoordinates(
+    id: number,
+  ): Promise<{ lat: number; lng: number }> {
     const victim = await this.victimsRepository.findOne({
       where: { id },
     });
 
-    if(!victim) {
+    if (!victim) {
       throw new Error('Victim not found');
     }
 

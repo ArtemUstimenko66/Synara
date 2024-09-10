@@ -6,10 +6,12 @@ import { AnnouncementService } from './announcement.service';
 import { AnnouncementController } from './announcement.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Announcement]),
+    ScheduleModule.forRoot({}),
     UsersModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],

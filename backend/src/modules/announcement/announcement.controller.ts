@@ -20,8 +20,8 @@ import { User } from '../users/entities/users.entity';
 import { PartialUpdateAnnouncementDto } from './dtos/update-announcement.dto';
 import { Roles } from '../auth/roles.decorator';
 import { Role } from '../users/enums/role.enum';
-import {EnumValidationPipe} from "./enum-validation.pipe";
-import {TypeHelp} from "./type-help.enum";
+import { EnumValidationPipe } from './enum-validation.pipe';
+import { TypeHelp } from './type-help.enum';
 
 @ApiTags('Announcement')
 @Controller('announcements')
@@ -44,37 +44,29 @@ export class AnnouncementController {
   @ApiOperation({ summary: 'Get all announcements' })
   @ApiResponse({ status: 200, type: [Announcement] })
   @Get()
-  findAll(
-      @Query('limit') limit = 12,
-      @Query('offset') offset = 0,
-      @Query('sortOrder') sortOrder?: 'ASC' | 'DESC',
-  ): Promise<Announcement[]> {
-    return this.announcementService.findAll(limit, offset, sortOrder);
+  findAll(): Promise<Announcement[]> {
+    return this.announcementService.findAll();
   }
 
-  @ApiOperation({ summary: 'Filter announcements by type' })
+  @ApiOperation({
+    summary: 'Find announcements with filters, search and sorting',
+  })
   @ApiResponse({ status: 200, type: [Announcement] })
-  @Get('filter')
-  filterAnnouncement(
-      @Query('type', new EnumValidationPipe(TypeHelp)) types?: TypeHelp[],
-      @Query('limit') limit = 12,
-      @Query('offset') offset = 0,
-      @Query('sortOrder') sortOrder?: 'ASC' | 'DESC',
+  @Get('/filter')
+  findAnnouncements(
+    @Query('query') query?: string,
+    @Query('type', new EnumValidationPipe(TypeHelp)) types?: TypeHelp[],
+    @Query('limit') limit = 12,
+    @Query('offset') offset = 0,
+    @Query('sortOrder') sortOrder: 'ASC' | 'DESC' = 'DESC',
   ): Promise<Announcement[]> {
-    return this.announcementService.filterAnnouncements({ types, sortOrder }, limit, offset);
-  }
-
-
-  @ApiOperation({ summary: 'Search announcements by title' })
-  @ApiResponse({ status: 200, type: [Announcement] })
-  @Get('search')
-  search(
-      @Query('query') query: string,
-      @Query('limit') limit = 12,
-      @Query('offset') offset = 0,
-      @Query('sortOrder') sortOrder?: 'ASC' | 'DESC',
-  ): Promise<Announcement[]> {
-    return this.announcementService.search(query, limit, offset, sortOrder);
+    return this.announcementService.findAnnouncements({
+      query,
+      types,
+      limit,
+      offset,
+      sortOrder,
+    });
   }
 
   @ApiOperation({ summary: 'Get an announcement by ID' })

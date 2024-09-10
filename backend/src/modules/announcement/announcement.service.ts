@@ -5,16 +5,20 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Announcement } from './announcement.entity';
-import { Repository } from 'typeorm';
+import { LessThan, Repository } from 'typeorm';
 import { TypeHelp } from './type-help.enum';
 import { CreateAnnouncementDto } from './dtos/create-announcement.dto';
 import { User } from '../users/entities/users.entity';
 import { PartialUpdateAnnouncementDto } from './dtos/update-announcement.dto';
+import { addDays } from 'date-fns';
+import { Cron } from '@nestjs/schedule';
 
-
-interface FilterOptions {
+interface FindAnnouncementsOptions {
+  query: string;
   types?: TypeHelp[];
-  sortOrder? : 'ASC' | 'DESC';
+  sortOrder?: 'ASC' | 'DESC';
+  limit: number;
+  offset: number;
 }
 
 @Injectable()
@@ -51,13 +55,10 @@ export class AnnouncementService {
     return updatedAnnouncement;
   }
 
-  async findAll(limit: number, offset: number, sortOrder: 'ASC' | 'DESC' = 'DESC'): Promise<Announcement[]> {
+  async findAll(): Promise<Announcement[]> {
     return this.announcementRepository.find({
       relations: ['user', 'files'],
-      take: limit,
-      skip: offset,
-      order: { datePosted: sortOrder},
-    })
+    });
   }
 
   async findOne(id: number): Promise<Announcement> {
@@ -71,38 +72,59 @@ export class AnnouncementService {
     return announcement;
   }
 
-  async search(query: string, limit: number, offset: number, sortOrder: 'ASC' | 'DESC' = 'DESC'): Promise<Announcement[]> {
-    if (!query || query.trim() === '') {
-      throw new BadRequestException('Search query cannot be empty');
-    }
-    return this.announcementRepository
-      .createQueryBuilder('announcement')
-      .where('announcement.description ILIKE :query', { query: `%${query}%` })
-      .leftJoinAndSelect('announcement.user', 'user')
-        .orderBy('announcement.datePosted', sortOrder)
-        .take(limit)
-        .skip(offset)
-        .getMany();
-  }
-
-  async filterAnnouncements(options: FilterOptions, limit: number, offset: number) : Promise<Announcement[]> {
+  async findAnnouncements(
+    options: FindAnnouncementsOptions,
+  ): Promise<Announcement[]> {
     const qb = this.announcementRepository
-        .createQueryBuilder('announcement')
-        .leftJoinAndSelect('announcement.user', 'user');
+      .createQueryBuilder('announcement')
+      .leftJoinAndSelect('announcement.user', 'user');
 
-    if(options.types && options.types.length > 0) {
-      qb.andWhere('announcement.typeHelp IN (:...types)', { types: options.types });
+    if (options.query && options.query.trim() !== '') {
+      qb.andWhere('announcement.description ILIKE :query', {
+        query: `%${options.query}%`,
+      });
     }
 
-    const sortOrder = options.sortOrder && ['ASC', 'DESC'].includes(options.sortOrder)
-    ? options.sortOrder
+    // filter by type help
+    if (options.types && options.types.length > 0) {
+      qb.andWhere('announcement.type_help IN (:...types)', {
+        types: options.types,
+      });
+    }
+
+    const sortOrder =
+      options.sortOrder && ['ASC', 'DESC'].includes(options.sortOrder)
+        ? options.sortOrder
         : 'DESC';
 
-    qb.orderBy('announcement.datePosted', sortOrder)
-        .take(limit)
-        .skip(offset);
+    qb.orderBy('announcement.date_posted', sortOrder)
+      .take(options.limit)
+      .skip(options.offset);
 
     return qb.getMany();
+  }
+
+  async updateUrgency(): Promise<void> {
+    const currentDate = new Date();
+
+    const thresholdDate = addDays(currentDate, 5);
+
+    const announcements = await this.announcementRepository.find({
+      where: {
+        date_posted: LessThan(thresholdDate),
+        isUrgent: false,
+      },
+    });
+
+    for (const announcement of announcements) {
+      announcement.isUrgent = true;
+      await this.announcementRepository.save(announcement);
+    }
+  }
+
+  @Cron('0 0 * * * *')
+  async handleCron() {
+    await this.updateUrgency();
   }
 
   async remove(id: number): Promise<void> {
