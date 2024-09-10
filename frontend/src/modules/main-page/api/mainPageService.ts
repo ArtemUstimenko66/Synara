@@ -22,15 +22,25 @@ export const getAnnouncements = async (limit = 12, offset = 0) => {
 };
 
 
-export const getFilteredAnnouncements = async (categories: string[]) => {
+export const getFilteredAnnouncements = async (categories: string[], limit = 12, offset = 0, sortOrder: 'ASC' | 'DESC' = 'ASC') => {
     const queryParams = new URLSearchParams();
     categories.forEach(category => {
         if (category) {
             queryParams.append('type', category);
         }
     });
+
+    queryParams.append('sortOrder', sortOrder);  // Добавляем параметр сортировки
+
     try {
-        const response = await api.get(`/announcements/filter?${queryParams.toString()}`);
+        const response = await api.get(`/announcements/filter?${queryParams.toString()}`, {
+            params: {
+                limit,
+                offset
+            },
+            withCredentials: true
+        });
+        console.log('request filter:', `/announcements/filter?${queryParams.toString()}`);
         console.log('Filtered announcements fetched successfully:', response.data);
         return response.data;
     } catch (error) {
@@ -38,6 +48,7 @@ export const getFilteredAnnouncements = async (categories: string[]) => {
         throw error;
     }
 };
+
 
 
 export const searchAnnouncements = async (query: string) => {

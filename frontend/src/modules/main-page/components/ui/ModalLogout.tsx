@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button} from "../../../ui/Button.tsx";
+import {Button} from "../../../../ui/Button.tsx";
 
 interface ModalProps {
     isOpen: boolean;

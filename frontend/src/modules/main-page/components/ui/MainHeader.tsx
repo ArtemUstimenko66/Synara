@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
-import LogoSynara from '../../../assets/images/logoSynara.svg?react';
-import MenuIcon from '../assets/menu.svg?react';
-import NotificationIcon from '../assets/notification.svg?react';
+import LogoSynara from '../../../../assets/images/logoSynara.svg?react';
+import MenuIcon from '../../assets/menu.svg?react';
+import NotificationIcon from '../../assets/notification.svg?react';
 
-import NavItem from "../../../ui/NavItem.tsx";
+import NavItem from "../../../../ui/NavItem.tsx";
 
-import { SideBar } from "./SideBar.tsx";
+import { SideBar } from "../SideBar.tsx";
 
 const MainHeader: React.FC = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);

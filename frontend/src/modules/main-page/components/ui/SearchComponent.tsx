@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import SearchIcon from '../assets/searchIcon.svg?react';
+import SearchIcon from '../../assets/searchIcon.svg?react';
 
 const SearchComponent: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState<string>('');

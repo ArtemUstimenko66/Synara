@@ -86,29 +86,8 @@ const Filters: React.FC<FiltersProps> = ({ onApplyFilters, onCloseSidebar,onOpen
         }
 
         setSearchParams(queryParams);
-
-        try {
-            const filteredAnnouncements = await getFilteredAnnouncements(translatedCategories);
-
-            const filteredByUrgency = filteredAnnouncements.filter(announcement => {
-                const currentDate = new Date();
-                const postedDate = new Date(announcement.datePosted);
-                const diffTime = Math.abs(postedDate.getTime() - currentDate.getTime());
-                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-                if (selectedUrgency === 'Терміново') {
-                    return diffDays <= 5;
-                } else if (selectedUrgency === 'Не терміново') {
-                    return diffDays > 5;
-                }
-                return true;
-            });
-
-            onApplyFilters(filteredByUrgency);
-            onCloseSidebar();
-        } catch (error) {
-            console.error('Failed to fetch filtered announcements:', error);
-        }
+        onCloseSidebar();
+        window.location.reload();
     };
 
     return (

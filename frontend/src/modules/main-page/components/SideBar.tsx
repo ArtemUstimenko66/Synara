@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../../../ui/Button.tsx";
 import { logout } from "../../profile/api/profileService.ts";
 import Filters from "./Filters.tsx";
-import ModalLogout from "./ModalLogout.tsx";
+import ModalLogout from "./ui/ModalLogout.tsx";
 import { navItems } from "../../../data/navItemsSideBar.ts";
 
 interface SideBarProps {

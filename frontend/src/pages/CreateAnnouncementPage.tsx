@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useRef, useState } from 'react';
-import MainHeader from "../modules/main-page/components/MainHeader.tsx";
+import MainHeader from "../modules/main-page/components/ui/MainHeader.tsx";
 import Wrapper from "../ui/Wrapper.tsx";
 import { Button } from "../ui/Button.tsx";
 import Footer from "../components/Footer.tsx";
