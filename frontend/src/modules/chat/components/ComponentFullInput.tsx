@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import SmileVector from '../../../../../../../Downloads/chat/assets/SmileVector.svg?react';
-import ImageVector from '../../../../../../../Downloads/chat/assets/ImageVector.svg?react';
-import PaperIcon from '../../../../../../../Downloads/chat/assets/PaperIcon.svg?react';
+import SmileVector from '../assets/SmileVector.svg?react';
+import ImageVector from '../assets/ImageVector.svg?react';
+import PaperIcon from '../assets/PaperIcon.svg?react';
 
 const ComponentFullInput: React.FC = () => {
     const [message, setMessage] = useState('');

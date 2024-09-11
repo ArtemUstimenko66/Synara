@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import CloseIcon from '../assets/close_icon.svg?react';
-import DownArrowIcon from '../../../../../../../Downloads/chat/assets/down_arrow.svg?react';
+import DownArrowIcon from '../assets/Down_Arrow.svg?react';
 import { Button } from "../../../ui/Button.tsx";
 import { ChatMiniComponent } from './ui/ChatMiniComponent.tsx';
-import {ChatMessagesList} from "./ChatMessagesList.tsx";  // Импортируем новый компонент
-import VectorZoom from '../../../../../../../Downloads/chat/assets/VectorZoom.svg?react';
+import {ChatMessagesList} from "./ChatMessagesList.tsx";
+
 interface Message {
     id: number;
     name: string;
@@ -87,7 +87,7 @@ export const SideBarChat: React.FC<SideBarChatProps> = ({ isOpen, onClose }) => 
                                 </p>
                                 <DownArrowIcon
                                     className={`h-4 w-4 transform transition-transform duration-300 ${
-                                        dropdownOpen ? 'rotate-180' : 'rotate-0'
+                                        dropdownOpen ? 'rotate-90' : '-rotate-90'
                                     }`}
                                 />
                             </div>

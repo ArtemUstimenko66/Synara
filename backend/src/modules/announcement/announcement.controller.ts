@@ -22,6 +22,7 @@ import { Roles } from '../auth/roles.decorator';
 import { Role } from '../users/enums/role.enum';
 import { EnumValidationPipe } from './enum-validation.pipe';
 import { TypeHelp } from './type-help.enum';
+import { FindAnnouncementsOptions } from './announcement.service';
 
 @ApiTags('Announcement')
 @Controller('announcements')
@@ -41,34 +42,29 @@ export class AnnouncementController {
     return this.announcementService.create(createAnnouncementDto, user);
   }
 
-  @ApiOperation({ summary: 'Get all announcements' })
-  @ApiResponse({ status: 200, type: [Announcement] })
-  @Get()
-  findAll(): Promise<Announcement[]> {
-    return this.announcementService.findAll();
-  }
-
   @ApiOperation({
     summary: 'Find announcements with filters, search and sorting',
   })
   @ApiResponse({ status: 200, type: [Announcement] })
-  @Get('/filter')
-  findAnnouncements(
+  @Get('/')
+  getAllAnnouncements(
     @Query('query') query?: string,
     @Query('type', new EnumValidationPipe(TypeHelp)) types?: TypeHelp[],
     @Query('limit') limit = 12,
     @Query('offset') offset = 0,
     @Query('sortOrder') sortOrder: 'ASC' | 'DESC' = 'DESC',
     @Query('isUrgent') isUrgent?: boolean,
-  ): Promise<Announcement[]> {
-    return this.announcementService.findAnnouncements({
+  ) {
+    const options: FindAnnouncementsOptions = {
       query,
       types,
+      sortOrder,
       limit,
       offset,
-      sortOrder,
       isUrgent,
-    });
+    };
+    const announcements = this.announcementService.findAnnouncements(options);
+    return announcements;
   }
 
   @ApiOperation({ summary: 'Get an announcement by ID' })

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import MainHeader from "../modules/main-page/components/ui/MainHeader.tsx";
 import SearchComponent from "../modules/main-page/components/ui/SearchComponent.tsx";
 import Announcement from "../modules/main-page/components/Announcement.tsx";
-import DownArrowIcon from '../modules/main-page/assets/Down_Arrow.svg?react';
+import DownArrowIcon from '../modules/main-page/assets/Down_Arrow_Main.svg?react';
 import Wrapper from "../ui/Wrapper.tsx";
 import { Button } from "../ui/Button.tsx";
 import Footer from "../components/Footer.tsx";

@@ -82,7 +82,7 @@ export const ChatMessagesList: React.FC<{ isOpen: boolean; onClose: () => void }
                 <div className="flex justify-between items-center mt-4 p-3">
                     <div className="flex items-center space-x-2">
                         <button onClick={onClose}>
-                            <DownArrowIcon className=" mr-5"/>
+                            <DownArrowIcon className="mr-5"/>
                         </button>
                         <p className="font-montserratRegular font-semibold text-base">Ольга Коваленко</p>
                     </div>

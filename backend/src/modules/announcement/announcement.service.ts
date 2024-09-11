@@ -13,7 +13,7 @@ import { PartialUpdateAnnouncementDto } from './dtos/update-announcement.dto';
 import { differenceInDays } from 'date-fns';
 import { Cron, CronExpression } from '@nestjs/schedule';
 
-interface FindAnnouncementsOptions {
+export interface FindAnnouncementsOptions {
   query: string;
   types?: TypeHelp[];
   sortOrder?: 'ASC' | 'DESC';
@@ -82,11 +82,12 @@ export class AnnouncementService {
   }
 
   async findAnnouncements(
-    options: FindAnnouncementsOptions,
+    options: Partial<FindAnnouncementsOptions> = {},
   ): Promise<Announcement[]> {
     const qb = this.announcementRepository
       .createQueryBuilder('announcement')
-      .leftJoinAndSelect('announcement.user', 'user');
+      .leftJoinAndSelect('announcement.user', 'user')
+      .leftJoinAndSelect('announcement.files', 'files');
 
     if (options.query && options.query.trim() !== '') {
       qb.andWhere('announcement.description ILIKE :query', {
@@ -103,8 +104,7 @@ export class AnnouncementService {
 
     // filter by urgency
     if (options.isUrgent !== undefined) {
-      qb.andWhere('announcement.is_urgent = :isUrgent', {    //!!!!!!   1
-
+      qb.andWhere('announcement.is_urgent = :isUrgent', {
         isUrgent: options.isUrgent,
       });
     }

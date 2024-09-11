@@ -32,7 +32,7 @@ export const getFilteredAnnouncements = async (
     const decodedQueryParams = decodeURIComponent(queryParams.toString());
 
     try {
-        const response = await api.get(`/announcements/filter?${decodedQueryParams}`, {
+        const response = await api.get(`/announcements/?${decodedQueryParams}`, {
             withCredentials: true,
         });
 
@@ -45,7 +45,7 @@ export const getFilteredAnnouncements = async (
         //         });
 
 
-        console.log('query->:', `/announcements/filter?${decodedQueryParams}`);
+        console.log('query->:', `/announcements/?${decodedQueryParams}`);
         console.log('Filtered and searched announcements fetched successfully:', response.data);
         return response.data;
     } catch (error) {

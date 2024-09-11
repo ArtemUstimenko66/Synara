@@ -2,15 +2,13 @@ import React, { useState } from 'react';
 import MainHeader from "../../main-page/components/ui/MainHeader.tsx";
 import Wrapper from "../../../ui/Wrapper.tsx";
 import { Button } from "../../../ui/Button.tsx";
-import DownArrowIcon from '../../../../../../../Downloads/chat/assets/down_arrow.svg?react';
-import { ChatMini } from '../../../../../../../Downloads/chat/components/ChatMini.tsx';
-import VectorZoom from '../../../../../../../Downloads/chat/assets/VectorZoom.svg?react';
-import PaperIcon from '../../../../../../../Downloads/chat/assets/PaperIcon.svg?react';
-import PhoneIcon from '../../../../../../../Downloads/chat/assets/PhoneIcon.svg?react';
-import CameraIcon from '../../../../../../../Downloads/chat/assets/CameraICon.svg?react';
-import InfoIcon from '../../../../../../../Downloads/chat/assets/InfoIcon.svg?react';
-import ChatComponentInput from "./ui/ChatComponentInput.tsx";
+import DownArrowIcon from '../assets/down_arrow.svg?react';
+
+import PhoneIcon from '../assets/PhoneIcon.svg?react';
+import CameraIcon from '../assets/CameraICon.svg?react';
+import InfoIcon from '../assets/InfoIcon.svg?react';
 import ComponentFullInput from "./ComponentFullInput.tsx";
+import {ChatMiniComponent} from "./ui/ChatMiniComponent.tsx";
 
 // Mock data for chat list
 const chatList = [
@@ -82,7 +80,7 @@ const FullChat: React.FC = () => {
                                         </p>
                                         <DownArrowIcon
                                             className={`h-4 w-4 transform transition-transform duration-300 ${
-                                                dropdownOpen ? 'rotate-180' : 'rotate-0'
+                                                dropdownOpen ? 'rotate-90' : '-rotate-90'
                                             }`}
                                         />
                                     </div>
@@ -115,7 +113,7 @@ const FullChat: React.FC = () => {
                         <ul className="space-y-4">
                             {filteredChatList.map((chat, index) => (
                                 <li key={chat.id}>
-                                    <ChatMini
+                                    <ChatMiniComponent
                                         message={chat}
                                         showDivider={index !== filteredChatList.length - 1}
                                         onChatClick={() => handleChatClick(chat.id)}
