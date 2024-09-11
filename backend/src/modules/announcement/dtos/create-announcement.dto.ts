@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { TypeHelp } from '../type-help.enum';
-import { IsNotEmpty, IsEnum, IsString, IsDate } from 'class-validator';
+import {IsNotEmpty, IsEnum, IsString, IsDate, IsBoolean} from 'class-validator';
 
 export class CreateAnnouncementDto {
   @ApiProperty({
@@ -20,6 +20,15 @@ export class CreateAnnouncementDto {
   @IsString()
   @IsNotEmpty()
   description: string;
+
+  @ApiProperty({
+    example: 'Urgent',
+    description: 'Urgent of the announcement',
+    type: String,
+  })
+  @IsBoolean()
+  @IsNotEmpty()
+  is_urgent: boolean;
 
   @ApiProperty({
     example: 'humanitarian',

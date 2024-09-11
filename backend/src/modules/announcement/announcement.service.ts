@@ -5,13 +5,13 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Announcement } from './announcement.entity';
-import { LessThan, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { TypeHelp } from './type-help.enum';
 import { CreateAnnouncementDto } from './dtos/create-announcement.dto';
 import { User } from '../users/entities/users.entity';
 import { PartialUpdateAnnouncementDto } from './dtos/update-announcement.dto';
-import { addDays } from 'date-fns';
-import { Cron } from '@nestjs/schedule';
+import { differenceInDays } from 'date-fns';
+import { Cron, CronExpression } from '@nestjs/schedule';
 
 interface FindAnnouncementsOptions {
   query: string;
@@ -19,6 +19,7 @@ interface FindAnnouncementsOptions {
   sortOrder?: 'ASC' | 'DESC';
   limit: number;
   offset: number;
+  isUrgent?: boolean;
 }
 
 @Injectable()
@@ -30,6 +31,12 @@ export class AnnouncementService {
     private userRepository: Repository<User>,
   ) {}
 
+  private updateUrgency(announcement: Announcement): void {
+    const today = new Date();
+    const daysUntilDeadline = differenceInDays(announcement.date_posted, today);
+    announcement.is_urgent = daysUntilDeadline <= 5;
+  }
+
   async create(
     createAnnouncementDto: CreateAnnouncementDto,
     user: User,
@@ -38,6 +45,7 @@ export class AnnouncementService {
       ...createAnnouncementDto,
       user,
     });
+    this.updateUrgency(announcement);
     return this.announcementRepository.save(announcement);
   }
 
@@ -52,6 +60,7 @@ export class AnnouncementService {
     if (!updatedAnnouncement) {
       throw new NotFoundException(`Announcement with ID ${id} not found`);
     }
+    this.updateUrgency(updatedAnnouncement);
     return updatedAnnouncement;
   }
 
@@ -92,6 +101,14 @@ export class AnnouncementService {
       });
     }
 
+    // filter by urgency
+    if (options.isUrgent !== undefined) {
+      qb.andWhere('announcement.is_urgent = :isUrgent', {    //!!!!!!   1
+
+        isUrgent: options.isUrgent,
+      });
+    }
+
     const sortOrder =
       options.sortOrder && ['ASC', 'DESC'].includes(options.sortOrder)
         ? options.sortOrder
@@ -104,27 +121,21 @@ export class AnnouncementService {
     return qb.getMany();
   }
 
-  async updateUrgency(): Promise<void> {
-    const currentDate = new Date();
-
-    const thresholdDate = addDays(currentDate, 5);
-
-    const announcements = await this.announcementRepository.find({
-      where: {
-        date_posted: LessThan(thresholdDate),
-        isUrgent: false,
-      },
-    });
+  @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
+  async handleUrgencyUpdate() {
+    const today = new Date();
+    const announcements = await this.announcementRepository.find();
 
     for (const announcement of announcements) {
-      announcement.isUrgent = true;
-      await this.announcementRepository.save(announcement);
+      const daysUntilDeadline = differenceInDays(
+        announcement.date_posted,
+        today,
+      );
+      if (daysUntilDeadline <= 5 && !announcement.is_urgent) {
+        announcement.is_urgent = true;
+        await this.announcementRepository.save(announcement);
+      }
     }
-  }
-
-  @Cron('0 0 * * * *')
-  async handleCron() {
-    await this.updateUrgency();
   }
 
   async remove(id: number): Promise<void> {

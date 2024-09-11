@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { UsersService } from '../services/users.service';
 import { User } from '../entities/users.entity';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -20,10 +20,9 @@ export class UserController {
     return this.userService.create(createUserDto);
   }
 
-  @Get(':id/coordinates')
-  async getVictimCoordinates(@Param('id') id: number) {
-    const coordinates = await this.victimService.getVictimCoordinates(id);
-    return coordinates;
+  @Get('coordinates-by-city')
+  async getVictimCoordinates(@Query('city') city: string) {
+    return this.victimService.findVictimsByCity(city);
   }
 
   @Get()

@@ -18,19 +18,24 @@ export class VictimService {
     return await this.victimsRepository.save(victim);
   }
 
+  async findVictimsByCity(city: string): Promise<any[]> {
+    const victims = await this.victimsRepository.find({ where: { city } });
 
-  async getVictimCoordinates(
-    id: number,
-  ): Promise<{ lat: number; lng: number }> {
-    const victim = await this.victimsRepository.findOne({
-      where: { id },
-    });
+    const victimsWithCoordinates = await Promise.all(
+      victims.map(async (victim) => {
+        const { street, houseNumber } = victim;
+        const address = `${city}, ${street}, ${houseNumber}`;
 
-    if (!victim) {
-      throw new Error('Victim not found');
-    }
+        const coordinates = await this.geocodingService.getCoordinates(address);
 
-    const address = `${victim.street} ${victim.houseNumber}, ${victim.city}, ${victim.region}, ${victim.flatNumber}`;
-    return this.geocodingService.getCoordinates(address);
+        return {
+          victimId: victim.id,
+          address,
+          coordinates,
+        };
+      }),
+    );
+
+    return victimsWithCoordinates;
   }
 }

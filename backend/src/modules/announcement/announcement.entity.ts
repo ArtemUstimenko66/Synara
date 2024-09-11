@@ -60,12 +60,13 @@ export class Announcement {
   @Column({ default: 0 })
   responsesCount: number;
 
+  @Column({ default: false })
   @ApiProperty({
     example: true,
     description: 'Urgency of the announcement',
     type: Boolean,
   })
-  isUrgent: boolean;
+  is_urgent: boolean;
 
   @ManyToOne(() => User, (user) => user.announcements)
   user: User;

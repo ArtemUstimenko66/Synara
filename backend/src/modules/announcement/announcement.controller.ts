@@ -59,6 +59,7 @@ export class AnnouncementController {
     @Query('limit') limit = 12,
     @Query('offset') offset = 0,
     @Query('sortOrder') sortOrder: 'ASC' | 'DESC' = 'DESC',
+    @Query('isUrgent') isUrgent?: boolean,
   ): Promise<Announcement[]> {
     return this.announcementService.findAnnouncements({
       query,
@@ -66,6 +67,7 @@ export class AnnouncementController {
       limit,
       offset,
       sortOrder,
+      isUrgent,
     });
   }
 

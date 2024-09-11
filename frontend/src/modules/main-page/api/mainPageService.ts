@@ -69,9 +69,9 @@ export const searchAnnouncements = async (query: string) => {
 export const createAnnouncement = async (data: AnnouncementData) => {
     try {
         const response = await api.post('/announcements', {
-            datePosted: data.datePosted,
+            date_posted: data.datePosted,
             description: data.description,
-            typeHelp: data.typeHelp,
+            type_help: data.typeHelp,
             viewsCount: 0,
             responsesCount: 0
         }, { withCredentials: true });

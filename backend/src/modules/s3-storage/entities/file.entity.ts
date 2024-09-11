@@ -40,11 +40,12 @@ export class File {
   })
   user?: User;
 
-  @ManyToOne(() => Announcement, (announcement) => announcement.files)
+  @ManyToOne(() => Announcement, (announcement) => announcement.files, {
+    onDelete: 'CASCADE',
+  })
   @ApiProperty({
     description: 'Announcement associated with the file',
     type: () => Announcement,
   })
   announcement?: Announcement;
 }
-

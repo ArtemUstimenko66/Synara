@@ -224,14 +224,17 @@ const MainPage: React.FC = () => {
                                             <Announcement
                                                 userName={`${announcement.user.firstName} ${announcement.user.lastName}`}
                                                 avatar={announcement.user.avatarUrl || 'https://via.placeholder.com/150'}
-                                                datePosted={announcement.datePosted}
+                                                datePosted={announcement.date_posted}
                                                 description={announcement.description}
-                                                typeHelp={announcement.typeHelp}
+                                                typeHelp={announcement.type_help}
                                                 viewsCount={announcement.viewsCount}
                                                 respondedCount={announcement.respondedCount}
                                                 urgency={urgencyTranslations[announcement.urgency] || announcement.urgency}
                                                 isUkraine={announcement.isUkraine}
                                                 address={announcement.address}
+                                                images={(announcement.files && announcement.files.length > 0)
+                                                    ? announcement.files.map((file: any) => file.fileUrl)
+                                                    : ['https://via.placeholder.com/150']}
                                             />
                                         </div>
                                     ))

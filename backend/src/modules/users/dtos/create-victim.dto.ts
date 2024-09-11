@@ -35,7 +35,7 @@ export class CreateVictimDto {
     description: 'House number of the victim',
   })
   @IsNumber({}, { message: 'House number must be a number' })
-  houseNumber: number;
+  houseNumber: string;
 
   @ApiProperty({
     example: '201',

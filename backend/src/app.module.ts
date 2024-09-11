@@ -20,7 +20,7 @@ import { AnnouncementModule } from './modules/announcement/announcement.module';
 import { TranslateModule } from './modules/translate/translate.module';
 import { ChatsModule } from './modules/real-time-chat/chats/chats.module';
 import { MessagesModule } from './modules/real-time-chat/messages/messages.module';
-import {UnBrokennessModule} from "./modules/unbrokenness/unbrokenness.module";
+import { UnBrokennessModule } from './modules/unbrokenness/unbrokenness.module';
 
 @Module({
   imports: [
@@ -49,7 +49,7 @@ import {UnBrokennessModule} from "./modules/unbrokenness/unbrokenness.module";
     TranslateModule,
     ChatsModule,
     MessagesModule,
-      UnBrokennessModule
+    UnBrokennessModule,
   ],
   controllers: [AppController],
   providers: [AppService],

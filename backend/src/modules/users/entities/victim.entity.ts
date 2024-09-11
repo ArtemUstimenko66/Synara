@@ -42,8 +42,8 @@ export class VictimsEntity {
     example: 99,
     description: "House number of the victim's residence",
   })
-  @Column({ type: 'int', nullable: true })
-  houseNumber: number;
+  @Column({ type: 'varchar', nullable: true })
+  houseNumber: string;
 
   @ApiProperty({
     example: 201,
@@ -59,7 +59,7 @@ export class VictimsEntity {
   @Column({ type: 'int', nullable: true })
   userId: number;
 
-  @OneToOne(() => User, (user) => user.victim)
+  @OneToOne(() => User, (user) => user.victim, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'userId' })
   user: User;
 }

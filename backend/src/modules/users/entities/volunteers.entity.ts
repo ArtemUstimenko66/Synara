@@ -54,7 +54,7 @@ export class VolunteersEntity {
   @Column({ type: 'int', nullable: true })
   volunteer_identification_number?: number;
 
-  @OneToOne(() => User, (user) => user.volunteer)
+  @OneToOne(() => User, (user) => user.volunteer, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'userId' })
   user: User;
 }
