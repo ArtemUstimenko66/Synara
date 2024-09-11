@@ -10,6 +10,7 @@ import ResetPasswordPage from "./pages/reset-password/ResetPasswordPage.tsx";
 import MainPage from "./pages/MainPage.tsx";
 import PrivateRoute from "./components/PrivateRoute.tsx";
 import CreateAnnouncementPage from "./pages/CreateAnnouncementPage.tsx";
+import FullChat from "./modules/chat/components/FullChat.tsx";
 
 const App: React.FC = () => {
     return (
@@ -30,6 +31,9 @@ const App: React.FC = () => {
             {/* main */}
             <Route path="/main" element={<PrivateRoute element={<MainPage />} />} />
             <Route path="/add-announcement" element={<PrivateRoute element={<CreateAnnouncementPage />} />} />
+
+            {/* chat */}
+            <Route path="/chat" element={<PrivateRoute element={<FullChat />} />} />
 
             {/* 404 */}
             <Route path="*" element={<NotFoundPage />} />

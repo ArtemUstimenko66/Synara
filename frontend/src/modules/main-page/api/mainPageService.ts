@@ -1,70 +1,58 @@
 import api from "../../main-api/api.ts";
 import AnnouncementData from "../interfaces/AnnouncementData.tsx";
 
-export const getAnnouncements = async (limit = 12, offset = 0) => {
-    try {
-        const response = await api.get('/announcements', {
-            params: {
-                limit,
-                offset
-            },
-            withCredentials: true
-        });
-        const formattedData = response.data.map((announcement: any) => ({
-            ...announcement,
-            datePosted: new Date(announcement.datePosted),
-        }));
-        return formattedData;
-    } catch (error: any) {
-        console.error('Error receiving the announcements:', error);
-        throw error;
-    }
-};
-
-
-export const getFilteredAnnouncements = async (categories: string[], limit = 12, offset = 0, sortOrder: 'ASC' | 'DESC' = 'ASC') => {
+export const getFilteredAnnouncements = async (
+    query: string,
+    categories: string[],
+    limit = 12,
+    offset = 0,
+    sortOrder: 'ASC' | 'DESC' = 'ASC',
+    urgency?: boolean
+) => {
     const queryParams = new URLSearchParams();
+
+    if (query) {
+        queryParams.append('query', query);
+    }
+
     categories.forEach(category => {
         if (category) {
             queryParams.append('type', category);
         }
     });
 
-    queryParams.append('sortOrder', sortOrder);  // Добавляем параметр сортировки
+    if (urgency !== undefined) {
+        queryParams.append('isUrgent', urgency.toString());
+    }
+
+    queryParams.append('limit', limit.toString());
+    queryParams.append('offset', offset.toString());
+    queryParams.append('sortOrder', sortOrder);
+
+    const decodedQueryParams = decodeURIComponent(queryParams.toString());
 
     try {
-        const response = await api.get(`/announcements/filter?${queryParams.toString()}`, {
-            params: {
-                limit,
-                offset
-            },
-            withCredentials: true
+        const response = await api.get(`/announcements/filter?${decodedQueryParams}`, {
+            withCredentials: true,
         });
-        console.log('request filter:', `/announcements/filter?${queryParams.toString()}`);
-        console.log('Filtered announcements fetched successfully:', response.data);
+
+        // const response = await api.get('/announcements', {
+        //             params: {
+        //                 limit,
+        //                 offset
+        //             },
+        //             withCredentials: true
+        //         });
+
+
+        console.log('query->:', `/announcements/filter?${decodedQueryParams}`);
+        console.log('Filtered and searched announcements fetched successfully:', response.data);
         return response.data;
     } catch (error) {
         console.error('Failed to fetch filtered announcements:', error);
         throw error;
     }
 };
-
-
-
-export const searchAnnouncements = async (query: string) => {
-    try {
-        const response = await api.get(`/announcements/search`, {
-            params: { query },
-            withCredentials: true,
-        });
-        console.log("Search results ->", response.data);
-        return response.data;
-    } catch (error: any) {
-        console.error('Error searching announcements:', error);
-        throw error;
-    }
-};
-
 
 export const createAnnouncement = async (data: AnnouncementData) => {
     try {
@@ -75,7 +63,6 @@ export const createAnnouncement = async (data: AnnouncementData) => {
             viewsCount: 0,
             responsesCount: 0
         }, { withCredentials: true });
-
         console.log('Announcement created successfully:', response.data);
         return response.data;
     } catch (error: any) {

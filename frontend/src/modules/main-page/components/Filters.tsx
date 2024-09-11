@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from "../../../ui/Button.tsx";
-import { getAnnouncements, getFilteredAnnouncements } from "../api/mainPageService.ts";
+import { getFilteredAnnouncements } from "../api/mainPageService.ts";
 import { helpTypesMap } from "../../../data/helpTypesMap.ts";
 import { useSearchParams } from "react-router-dom";
 import { urgencyTranslations } from "../../../data/urgencyMap.ts";
@@ -24,7 +24,7 @@ const Filters: React.FC<FiltersProps> = ({ onApplyFilters, onCloseSidebar,onOpen
     // sync filters with url
     useEffect(() => {
         const types = searchParams.getAll('type');
-        const urgency = searchParams.get('urgency');
+        const urgency = searchParams.get('isUrgent');
         const ukraine = searchParams.get('ukraine');
 
         if (types.length) {
@@ -64,8 +64,6 @@ const Filters: React.FC<FiltersProps> = ({ onApplyFilters, onCloseSidebar,onOpen
         setSearchParams({}); // Clear all URL parameters
 
         try {
-            const allAnnouncements = await getAnnouncements();
-            onApplyFilters(allAnnouncements);
             onCloseSidebar();
         } catch (error) {
             console.error('Error receiving the announcements:', error);
@@ -75,20 +73,36 @@ const Filters: React.FC<FiltersProps> = ({ onApplyFilters, onCloseSidebar,onOpen
     // apply filters
     const applyFilters = async () => {
         const translatedCategories = selectedCategories.map(category => helpTypesMap[category]);
-        const queryParams = new URLSearchParams();
 
-        translatedCategories.forEach(category => queryParams.append('type', category));
+        // Создаем копию существующих searchParams
+        const newSearchParams = new URLSearchParams(searchParams);
+
+        // Добавляем категории
+        newSearchParams.delete('type');  // Сначала очищаем текущие фильтры по категориям
+        translatedCategories.forEach(category => newSearchParams.append('type', category));
+
+        // Добавляем срочность (urgency)
         if (selectedUrgency) {
-            queryParams.append('urgency', urgencyTranslations[selectedUrgency]);
-        }
-        if (isUkraineSelected) {
-            queryParams.append('ukraine', 'true');
+            newSearchParams.set('isUrgent', urgencyTranslations[selectedUrgency]);
+        } else {
+            // Удаляем параметр isUrgent, если не выбран
+            newSearchParams.delete('isUrgent');
         }
 
-        setSearchParams(queryParams);
+        // Добавляем фильтр по всей Украине
+        if (isUkraineSelected) {
+            newSearchParams.set('ukraine', 'true');
+        } else {
+            newSearchParams.delete('ukraine');
+        }
+
+        // Обновляем параметры URL, сохраняя другие параметры
+        setSearchParams(newSearchParams);
+
+        // Закрываем сайдбар после применения фильтров
         onCloseSidebar();
-        window.location.reload();
     };
+
 
     return (
         <div className="p-4 w-full mx-4 rounded-lg">

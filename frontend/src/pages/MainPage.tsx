@@ -7,11 +7,11 @@ import Wrapper from "../ui/Wrapper.tsx";
 import { Button } from "../ui/Button.tsx";
 import Footer from "../components/Footer.tsx";
 import { SideBar } from "../modules/main-page/components/SideBar.tsx";
-import { getAnnouncements, searchAnnouncements, getFilteredAnnouncements } from "../modules/main-page/api/mainPageService.ts";
+import { getFilteredAnnouncements } from "../modules/main-page/api/mainPageService.ts";
 import { Link, useSearchParams } from "react-router-dom";
 import { urgencyTranslations } from "../data/urgencyMap.ts";
 import { Map } from "../modules/main-page/components/Map.tsx";
-import ChatButton from "../modules/chat/components/ChatButton.tsx";
+import ChatButton from "../modules/chat/components/ui/ChatButton.tsx";
 import {SideBarChat} from "../modules/chat/components/SideBarChat.tsx";
 
 const MainPage: React.FC = () => {
@@ -22,13 +22,14 @@ const MainPage: React.FC = () => {
 
     const [announcements, setAnnouncements] = useState<any[]>([]);
     const [filteredAnnouncements, setFilteredAnnouncements] = useState<any[] | null>(null);
-    const [searchParams] = useSearchParams();
+    const [searchParams, setSearchParams] = useSearchParams();
+
     const limit = 12;
+
     const [offset, setOffset] = useState(0);
     const [hasMore, setHasMore] = useState(true);
 
-    const [offsetFilter, setOffsetFilter] = useState(0);
-    const [hasMoreFilter, setHasMoreFilter] = useState(true);
+
     const [isChatSidebarOpen, setIsChatSidebarOpen] = useState(false);
 
 
@@ -41,43 +42,23 @@ const MainPage: React.FC = () => {
         const fetchAnnouncements = async () => {
             const query = searchParams.get('query') || '';
             const types = searchParams.getAll('type');
-            const urgency = searchParams.get('urgency');
-            const isUkraineSelected = searchParams.get('ukraine') === 'true';
+            const currentSortOrder = searchParams.get('sortOrder') as 'ASC' | 'DESC' || 'ASC';
+            const urgencyParam = searchParams.get('isUrgent');
+            const urgency = urgencyParam === 'true' ? true : (urgencyParam === 'false' ? false : undefined);
+
+            setOffset(0);
+            setSortOrder(currentSortOrder);
 
             try {
-                let data;
-                if (!query && types.length === 0 && !urgency && !isUkraineSelected) {
-                    setHasMoreFilter(false);
-                    data = await getAnnouncements(limit, offset);
-                    setAnnouncements(data);
-                    setOffset(offset + limit);
-                    if (data.length < limit) {
-                        setHasMore(false);
-                    }
-                } else if (query) {
-                    data = await searchAnnouncements(query);
-                } else {
-                    setHasMore(false);
-                    // Добавляем sortOrder в запрос
-                    data = await getFilteredAnnouncements(types, limit, offsetFilter, sortOrder);
-                    setAnnouncements(data);
-                    setOffsetFilter(offsetFilter + limit);
-                    if (data.length < limit) {
-                        setHasMoreFilter(false);
-                    }
-                }
-
-                if (urgency) {
-                    const currentDate = new Date();
-                    data = data.filter(announcement => {
-                        const postedDate = new Date(announcement.datePosted);
-                        const diffDays = Math.ceil(Math.abs(postedDate.getTime() - currentDate.getTime()) / (1000 * 60 * 60 * 24));
-                        return urgency === 'Urgent' ? diffDays <= 5 : diffDays > 5;
-                    });
-                }
-
+                const data = await getFilteredAnnouncements(query, types, limit, 0, sortOrder, urgency);
                 setAnnouncements(data);
-                setFilteredAnnouncements(null);
+                setOffset(limit);
+
+                if (data.length < limit) {
+                    setHasMore(false);
+                } else {
+                    setHasMore(true);
+                }
             } catch (error) {
                 console.error('Error fetching announcements:', error);
             }
@@ -86,37 +67,35 @@ const MainPage: React.FC = () => {
         fetchAnnouncements();
     }, [searchParams, sortOrder]);
 
+    // sort
     const handleSort = (order: 'ASC' | 'DESC') => {
         setSortOrder(order);
-        setOffsetFilter(0);
+        setOffset(0);
         toggleDropdown();
+        setSearchParams(prev => {
+            const newParams = new URLSearchParams(prev);
+            newParams.set('sortOrder', order);
+            if (prev.has('isUrgent')) {
+                newParams.set('isUrgent', prev.get('isUrgent')!);
+            }
+            return newParams;
+        });
+        window.location.reload();
     };
 
+    // pagination
     const loadMoreAnnouncements = async () => {
+        const types = searchParams.getAll('type');
+        const query = searchParams.getAll('query');
+        const urgencyParam = searchParams.get('isUrgent');
+        const urgency = urgencyParam === 'true' ? true : (urgencyParam === 'false' ? false : undefined);
         try {
-            const data = await getAnnouncements(limit, offset);
+            const data = await getFilteredAnnouncements(query, types, limit, offset, sortOrder, urgency);
             setAnnouncements(prev => [...prev, ...data]);
             setOffset(offset + limit);
             if (data.length < limit) {
                 setHasMore(false);
             }
-        } catch (error) {
-            console.error('Error loading more announcements:', error);
-        }
-    };
-
-
-    const loadMoreAnnouncementsFilter = async () => {
-        const types = searchParams.getAll('type');
-        try {
-            const data = await getFilteredAnnouncements(types, limit, offsetFilter);
-            setAnnouncements(prev => [...prev, ...data]);
-            setOffsetFilter(offsetFilter + limit);
-
-            if (data.length < limit) {
-                setHasMoreFilter(false);
-            }
-            console.log("offsetFilter -> ", offsetFilter);
         } catch (error) {
             console.error('Error loading more announcements:', error);
         }
@@ -137,9 +116,13 @@ const MainPage: React.FC = () => {
         setIsMobileMenuOpen(false);
     };
 
+    const backToFilters = () => {
+        setIsMapMenuOpen(false);
+        setIsMobileMenuOpen(true);
+    };
     return (
         <Wrapper>
-            <div className="min-h-screen bg-almost-white">
+            <div className=" bg-almost-white">
                 {/* Header */}
                 <MainHeader />
 
@@ -164,13 +147,14 @@ const MainPage: React.FC = () => {
 
                         <div className="w-3/4 flex flex-col items-end justify-end">
                             {/* Search Component */}
-                            <SearchComponent />
+                            <SearchComponent/>
 
                             <div className="w-full flex items-end justify-end relative">
                                 {/* Add Announcement Button */}
                                 <Link to="/add-announcement" className="mr-4">
                                     <Button hasBlue={true} className="px-4 mt-8 w-full">
-                                        <span className="text-montserratMedium text-relative-ps">Додати оголошення</span>
+                                        <span
+                                            className="text-montserratMedium text-relative-ps">Додати оголошення</span>
                                     </Button>
                                 </Link>
 
@@ -219,8 +203,9 @@ const MainPage: React.FC = () => {
                                     (filteredAnnouncements || announcements).map((announcement, index) => (
                                         <div
                                             key={index}
-                                            className={`w-full md:w-[32%] mr-[1vw] p-2 mt-4 ${(filteredAnnouncements || announcements).length === 2 ? (index === 0 ? 'md:justify-start' : 'md:justify-center') : 'md:justify-between'}`}
+                                            className={`w - full md:w-[32%] mr-[1vw] p-2 mt-4 ${(filteredAnnouncements || announcements).length === 2 ? (index === 0 ? 'md:justify-start' : 'md:justify-center') : 'md:justify-between'}`}
                                         >
+                                            {console.log('Files for announcement:', announcement.files)}
                                             <Announcement
                                                 userName={`${announcement.user.firstName} ${announcement.user.lastName}`}
                                                 avatar={announcement.user.avatarUrl || 'https://via.placeholder.com/150'}
@@ -237,16 +222,20 @@ const MainPage: React.FC = () => {
                                                     : ['https://via.placeholder.com/150']}
                                             />
                                         </div>
+
                                     ))
                                 ) : (
-                                    <div>Немає оголошень</div>
+                                    <div className="flex items-center justify-center my-[20%] w-full text-gray-500">
+                                        <div className="text-center font-montserratMedium">
+                                            Наразі немає оголошень за обраними фільтрами
+                                        </div>
+                                    </div>
                                 )}
                             </div>
                         </div>
                     </div>
 
                     {/* Load More Button */}
-
                     {hasMore && (
                         <div className="w-full flex justify-center mt-8">
                             <Button isFilled={true} className="uppercase" onClick={loadMoreAnnouncements}>
@@ -255,13 +244,6 @@ const MainPage: React.FC = () => {
                         </div>
                     )}
 
-                    {hasMoreFilter && (
-                        <div className="w-full flex justify-center mt-8">
-                            <Button isFilled={true} className="uppercase" onClick={loadMoreAnnouncementsFilter}>
-                                Показати ще
-                            </Button>
-                        </div>
-                    )}
                 </div>
             </div>
 
@@ -273,16 +255,22 @@ const MainPage: React.FC = () => {
                 onApplyFilters={handleApplyFilters}
                 onOpenMap={handleOpenMap}
             />
+
+            {/* Map */}
             <Map
                 isOpen={isMapMenuOpen}
                 onClose={() => setIsMapMenuOpen(false)}
+                onBackToFilters={backToFilters}
             />
+
             {/* Footer */}
-            <Footer />
-            <ChatButton onClick={toggleChatSidebar} /> {/* Передаем функцию открытия сайдбара */}
+            <Footer/>
+
+            {/* ChatButton */}
+            <ChatButton onClick={toggleChatSidebar}/>
 
             {/* SideBarChat */}
-            <SideBarChat isOpen={isChatSidebarOpen} onClose={toggleChatSidebar} /> {/* Передаем нужные пропсы */}
+            <SideBarChat isOpen={isChatSidebarOpen} onClose={toggleChatSidebar}/>
         </Wrapper>
     );
 };

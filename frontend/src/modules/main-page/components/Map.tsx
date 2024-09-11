@@ -14,6 +14,7 @@ import {Slider} from "@mui/material";
 interface SideBarProps {
     isOpen: boolean;
     onClose: () => void;
+    onBackToFilters: () => void;
 }
 
 function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
@@ -63,7 +64,9 @@ const staticMarkers = [
         position: { lat: 49.948734, lng: 36.374507 },
     },
 ];
-export const Map: React.FC<SideBarProps> = ({ isOpen, onClose }) => {
+export const Map: React.FC<SideBarProps> = ({ isOpen, onClose, onBackToFilters }) => {
+
+
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: "AIzaSyBvwqaJ4LM3SDPz1DRqW4Qv8DL2g8Wew-s",
     });
@@ -73,6 +76,7 @@ export const Map: React.FC<SideBarProps> = ({ isOpen, onClose }) => {
     const [circleRadius, setCircleRadius] = useState(10000); // Радиус 10 км в метрах
     const [visibleMarkers, setVisibleMarkers] = useState([]);
     const [userLocation, setUserLocation] = useState(null);
+    const [selectedCity, setSelectedCity] = useState(null); // Для выбранного города
 
     const handleActiveMarker = (marker) => {
         if (marker === activeMarker) {
@@ -138,10 +142,9 @@ export const Map: React.FC<SideBarProps> = ({ isOpen, onClose }) => {
     // };
 
 
+    // Обновляем центр карты и маркеры в радиусе при изменении геолокации или радиуса
     useEffect(() => {
-        const center = userLocation
-            ? userLocation
-            : { lat: 49.9935, lng: 36.2304 }; //kharkiv
+        const center = selectedCity?.position || userLocation || { lat: 49.9935, lng: 36.2304 }; // По умолчанию Харьков
         const markersWithinRadius = staticMarkers.filter((marker) => {
             const distance = getDistanceFromLatLonInKm(
                 center.lat,
@@ -152,7 +155,7 @@ export const Map: React.FC<SideBarProps> = ({ isOpen, onClose }) => {
             return distance <= circleRadius / 1000;
         });
         setVisibleMarkers(markersWithinRadius);
-    }, [circleRadius, userLocation]);
+    }, [circleRadius, userLocation, selectedCity]);
 
     // ask geolocation
     useEffect(() => {
@@ -178,6 +181,39 @@ export const Map: React.FC<SideBarProps> = ({ isOpen, onClose }) => {
             console.error("Geolocation is not supported by this browser.");
         }
     }, []);
+    const handleCitySelect = (city) => {
+        setSelectedCity(city); // Устанавливаем выбранный город
+    };
+
+    const handleApplyClick = () => {
+        if (selectedCity) {
+            setUserLocation(selectedCity.position); // Смена центра карты на выбранный город
+        }
+    };
+
+    const defaultRadius = 10000; // Радиус по умолчанию (10 км)
+    const kharkiv = { lat: 49.9935, lng: 36.2304 }; // Координаты Харькова
+
+    const handleClearClick = () => {
+        setCircleRadius(defaultRadius); // Сброс радиуса
+
+        // Сброс города
+        setSelectedCity(null);
+
+        // Если доступна геолокация пользователя, вернуть центр на его место
+        if (userLocation) {
+            setUserLocation(kharkiv);
+        } else {
+            // Если геолокация недоступна, вернуть центр на Харьков
+            setUserLocation(kharkiv);
+        }
+        console.log("user location:", userLocation);
+        console.log("kharkiv", kharkiv);
+    };
+
+    const handleBackClick = () => {
+        onBackToFilters(); // Возвращает к фильтрам
+    };
 
     return (
         <Fragment>
@@ -199,12 +235,12 @@ export const Map: React.FC<SideBarProps> = ({ isOpen, onClose }) => {
 
                     {/* Nav items */}
                     <div className="mt-4 flex flex-row w-full justify-center">
-                        <BackArrowMini className="h-5 w-5 mt-3 mr-12 justify-start"/>
+                        <BackArrowMini className="h-5 w-5 mt-3 mr-12 justify-start" onClick={handleBackClick}/>
                         <h2 className="text-h3 ml-12 mr-12 font-kharkiv text-center">Відстань пошуку</h2>
                     </div>
                     <div style={{display: "flex", flexDirection: "column", alignItems: "center", width: "100%"}}>
                         {/* Search input with icon */}
-                        <SearchComponentMap/>
+                        <SearchComponentMap onCitySelect={handleCitySelect}/>
 
                         {/* Radius Slider */}
                         <div className="radius-slider mb-2" style={{width: "95%"}}>
@@ -289,10 +325,11 @@ export const Map: React.FC<SideBarProps> = ({ isOpen, onClose }) => {
                     {/* Buttons */}
                     <div className="flex flex-col space-y-3 mx-8 mt-2">
                         <Button isFilled={true} className=" uppercase text-black py-3 md:text-pxl"
+                                onClick={handleApplyClick}
                         >
                             Застосувати
                         </Button>
-                        <Button hasBlue={true} className=" uppercase py-3 md:text-pxl">
+                        <Button onClick={handleClearClick} hasBlue={true} className=" uppercase py-3 md:text-pxl">
                             Очистити
                         </Button>
                     </div>

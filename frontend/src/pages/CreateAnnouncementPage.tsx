@@ -65,7 +65,8 @@ const CreateAnnouncementPage: React.FC = () => {
         setErrors(newErrors);
 
         if (Object.keys(newErrors).length === 0) {
-            const  formattedDate= convertDateToDBFormat(datePosted);
+            // Преобразование даты
+            const formattedDate = convertDateToDBFormat(datePosted);
             try {
                 const announcementData = {
                     description: localData.description || '',
@@ -87,6 +88,7 @@ const CreateAnnouncementPage: React.FC = () => {
             }
         }
     };
+
 
 
 
