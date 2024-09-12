@@ -13,9 +13,6 @@ import {ChatMiniComponent} from "./ui/ChatMiniComponent.tsx";
 // Mock data for chat list
 const chatList = [
     { id: 1, name: 'Ольга Коваленко', message: 'Lorem Ipsum - это текст-"рыба"', time: '19:27', imageUrl: 'https://randomuser.me/api/portraits/women/1.jpg', messages: ['Привіт, як справи?'], category: 'active' },
-    { id: 1, name: 'Ольга Коваленко', message: 'Lorem Ipsum - это текст-"рыба"', time: '19:27', imageUrl: 'https://randomuser.me/api/portraits/women/1.jpg', messages: ['Привіт, як справи?'], category: 'active' },
-    { id: 1, name: 'Ольга Коваленко', message: 'Lorem Ipsum - это текст-"рыба"', time: '19:27', imageUrl: 'https://randomuser.me/api/portraits/women/1.jpg', messages: ['Привіт, як справи?'], category: 'active' },
-
     { id: 5, name: 'Ирина Коваленко', message: 'Lorem Ipsum - это текст-"рыба"', time: '19:27', imageUrl: 'https://randomuser.me/api/portraits/women/12.jpg', messages: ['Привіт, як справи?'], category: 'active' },
     { id: 6, name: 'Настя Коваленко', message: 'Lorem Ipsum - это текст-"рыба"', time: '19:27', imageUrl: 'https://randomuser.me/api/portraits/women/13.jpg', messages: ['Привіт, як справи?'], category: 'active' },
     { id: 7, name: 'Юля Коваленко', message: 'Lorem Ipsum - это текст-"рыба"', time: '19:27', imageUrl: 'https://randomuser.me/api/portraits/women/14.jpg', messages: ['Привіт, як справи?'], category: 'active' },

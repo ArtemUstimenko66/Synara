@@ -10,6 +10,7 @@ import {
 } from "@react-google-maps/api";
 import SearchComponentMap from "./SearchComponentMap.tsx";
 import {Slider} from "@mui/material";
+import {searchMap} from "../api/mainPageService.ts";
 
 interface SideBarProps {
     isOpen: boolean;
@@ -35,34 +36,34 @@ function deg2rad(deg) {
 }
 
 const initialMarkers = [
-    {
-        id: 1,
-        name: "Qobustan",
-        position: { lat: 49.993520, lng: 36.259416 },
-    },
-    {
-        id: 2,
-        name: "Sumqayit",
-        position: { lat: 40.5788843, lng: 49.5485073 },
-    },
-    {
-        id: 3,
-        name: "Baku",
-        position: { lat: 40.3947365, lng: 49.6898045 },
-    },
+    // {
+    //     id: 1,
+    //     name: "Qobustan",
+    //     position: { lat: 49.993520, lng: 36.259416 },
+    // },
+    // {
+    //     id: 2,
+    //     name: "Sumqayit",
+    //     position: { lat: 40.5788843, lng: 49.5485073 },
+    // },
+    // {
+    //     id: 3,
+    //     name: "Baku",
+    //     position: { lat: 40.3947365, lng: 49.6898045 },
+    // },
 ];
 
 
 const staticMarkers = [
-    { id: 5, name: "Marker 1", position: { lat: 49.9939, lng: 36.2500 } },
-    { id: 6, name: "Marker 2", position: { lat: 49.9870, lng: 36.2200 } },
-    { id: 7, name: "Marker 3", position: { lat: 49.9800, lng: 36.2700 } },
-    { id: 8, name: "Marker 4", position: { lat: 49.9250, lng: 36.2800 } },
-    {
-        id: 9,
-        name: "Проспект Петра Григоренка",
-        position: { lat: 49.948734, lng: 36.374507 },
-    },
+    //{ id: 5, name: "Marker 1", position: { lat: 49.9939, lng: 36.2500 } },
+    // { id: 6, name: "Marker 2", position: { lat: 49.9870, lng: 36.2200 } },
+    // { id: 7, name: "Marker 3", position: { lat: 49.9800, lng: 36.2700 } },
+    // { id: 8, name: "Marker 4", position: { lat: 49.9250, lng: 36.2800 } },
+    // {
+    //     id: 9,
+    //     name: "Проспект Петра Григоренка",
+    //     position: { lat: 49.948734, lng: 36.374507 },
+    // },
 ];
 export const Map: React.FC<SideBarProps> = ({ isOpen, onClose, onBackToFilters }) => {
 
@@ -141,11 +142,22 @@ export const Map: React.FC<SideBarProps> = ({ isOpen, onClose, onBackToFilters }
     //     });
     // };
 
+// Example of usage
+    const loadCityMarkers = async (city: string) => {
+        try {
+            const dynamicMarkers = await searchMap(city);
+            const allMarkers = [...staticMarkers, ...dynamicMarkers];
+            console.log("All markers:", allMarkers);
+            setUserMarkers(allMarkers); // Update the markers in state
+        } catch (error) {
+            console.error("Error loading city markers:", error);
+        }
+    };
 
-    // Обновляем центр карты и маркеры в радиусе при изменении геолокации или радиуса
+    // Updates the markers visible within the radius based on selected city or user location
     useEffect(() => {
-        const center = selectedCity?.position || userLocation || { lat: 49.9935, lng: 36.2304 }; // По умолчанию Харьков
-        const markersWithinRadius = staticMarkers.filter((marker) => {
+        const center = selectedCity?.position || userLocation || { lat: 49.9935, lng: 36.2304 }; // Default to Kharkiv
+        const markersWithinRadius = userMarkers.filter((marker) => {
             const distance = getDistanceFromLatLonInKm(
                 center.lat,
                 center.lng,
@@ -155,7 +167,8 @@ export const Map: React.FC<SideBarProps> = ({ isOpen, onClose, onBackToFilters }
             return distance <= circleRadius / 1000;
         });
         setVisibleMarkers(markersWithinRadius);
-    }, [circleRadius, userLocation, selectedCity]);
+    }, [circleRadius, userLocation, selectedCity, userMarkers]);
+
 
     // ask geolocation
     useEffect(() => {
@@ -185,9 +198,10 @@ export const Map: React.FC<SideBarProps> = ({ isOpen, onClose, onBackToFilters }
         setSelectedCity(city); // Устанавливаем выбранный город
     };
 
-    const handleApplyClick = () => {
+    const handleApplyClick = async () => {
         if (selectedCity) {
             setUserLocation(selectedCity.position); // Смена центра карты на выбранный город
+            await loadCityMarkers(selectedCity.name);
         }
     };
 

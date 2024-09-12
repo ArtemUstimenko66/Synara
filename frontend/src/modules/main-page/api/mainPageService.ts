@@ -90,3 +90,33 @@ export const uploadDocument = async (file: File, announcementId: string) => {
         throw error;
     }
 };
+
+
+export const searchMap = async (city: string) => {
+    try {
+        const response = await api.get(`/users/coordinates-by-city`, {
+            withCredentials: true,
+            params: {
+                city: city,
+            },
+        });
+        console.log("Get city", `/users/coordinates-by-city`);
+        console.log('Response data:', response.data);
+        console.log('City:', city);
+
+        // Extract the victimId, address, and coordinates
+        const mappedMarkers = response.data.map((item: { victimId: number, address: string, coordinates: { lat: number, lng: number } }) => ({
+            id: item.victimId,  // Use victimId as id
+            name: item.address,  // Use address as the marker name
+            position: {
+                lat: item.coordinates.lat,
+                lng: item.coordinates.lng
+            }
+        }));
+
+        return mappedMarkers;
+    } catch (error) {
+        console.error("Failed to get city data:", error);
+        throw error;
+    }
+};
