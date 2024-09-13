@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useRef } from 'react';
 import SearchIcon from '../assets/searchIcon.svg?react';
-import SuggestionsList from './SuggestionsList.tsx'; // Импортируем новый компонент
+import SuggestionsList from './SuggestionsList.tsx';
+import {citiesWithCoordinates} from "../../../data/citiesWithCoordinates.ts"; // Импортируем новый компонент
 
 interface City {
     id: number;
@@ -10,27 +11,20 @@ interface City {
 
 interface SearchComponentMapProps {
     onCitySelect: (city: City) => void;
+    searchTerm: string;
+    setSearchTerm: (term: string) => void;
 }
 
-const ukraineCities: City[] = [
-    { id: 1, name: 'Київ', position: { lat: 50.4501, lng: 30.5234 } },
-    { id: 2, name: 'Харків', position: { lat: 49.9935, lng: 36.2304 } },
-    { id: 3, name: 'Одеса', position: { lat: 46.4825, lng: 30.7233 } },
-    { id: 4, name: 'Львів', position: { lat: 49.8397, lng: 24.0297 } },
-    { id: 5, name: 'Дніпро', position: { lat: 48.4647, lng: 35.0462 } },
-    // Добавьте другие города Украины
-];
 
-const SearchComponentMap: React.FC<SearchComponentMapProps> = ({ onCitySelect }) => {
-    const [searchTerm, setSearchTerm] = useState<string>('');
+
+const SearchComponentMap: React.FC<SearchComponentMapProps> = ({ onCitySelect, searchTerm, setSearchTerm }) => {
     const [activeSuggestionIndex, setActiveSuggestionIndex] = useState<number>(-1);
     const [showSuggestions, setShowSuggestions] = useState<boolean>(false);
     const inputRef = useRef<HTMLInputElement>(null); // Реф на инпут
 
-    // Мемоизированный поиск городов
     const filteredCities = useMemo(() => {
         return searchTerm.length > 0
-            ? ukraineCities.filter((city) =>
+            ? citiesWithCoordinates.filter((city) =>
                 city.name.toLowerCase().startsWith(searchTerm.toLowerCase())
             )
             : [];
@@ -39,13 +33,13 @@ const SearchComponentMap: React.FC<SearchComponentMapProps> = ({ onCitySelect })
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(event.target.value);
         setActiveSuggestionIndex(-1);
-        setShowSuggestions(true); // Показываем подсказки при вводе текста
+        setShowSuggestions(true);
     };
 
     const handleCitySelect = (city: City) => {
         setSearchTerm(city.name);
         setActiveSuggestionIndex(-1);
-        setShowSuggestions(false); // Скрываем подсказки после выбора
+        setShowSuggestions(false);
         onCitySelect(city);
     };
 

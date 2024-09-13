@@ -120,6 +120,15 @@ const MainPage: React.FC = () => {
         setIsMapMenuOpen(false);
         setIsMobileMenuOpen(true);
     };
+
+    // filter by map
+    const handleUsersByRadiusFound = (users: any[]) => {
+        setAnnouncements(users);
+        setIsMapMenuOpen(false);
+        setHasMore(false);
+    };
+
+
     return (
         <Wrapper>
             <div className=" bg-almost-white">
@@ -201,11 +210,7 @@ const MainPage: React.FC = () => {
                             <div className="w-full mt-4 ml-4 flex flex-wrap justify-start">
                                 {(filteredAnnouncements || announcements).length > 0 ? (
                                     (filteredAnnouncements || announcements).map((announcement, index) => (
-                                        <div
-                                            key={index}
-                                            className={`w - full md:w-[32%] mr-[1vw] p-2 mt-4 ${(filteredAnnouncements || announcements).length === 2 ? (index === 0 ? 'md:justify-start' : 'md:justify-center') : 'md:justify-between'}`}
-                                        >
-                                            {console.log('Files for announcement:', announcement.files)}
+                                        <div key={index} className="w-full md:w-[32%] mr-[1vw] p-2 mt-4">
                                             <Announcement
                                                 userName={`${announcement.user.firstName} ${announcement.user.lastName}`}
                                                 avatar={announcement.user.avatarUrl || 'https://via.placeholder.com/150'}
@@ -222,7 +227,6 @@ const MainPage: React.FC = () => {
                                                     : ['https://via.placeholder.com/150']}
                                             />
                                         </div>
-
                                     ))
                                 ) : (
                                     <div className="flex items-center justify-center my-[20%] w-full text-gray-500">
@@ -231,6 +235,7 @@ const MainPage: React.FC = () => {
                                         </div>
                                     </div>
                                 )}
+
                             </div>
                         </div>
                     </div>
@@ -261,6 +266,7 @@ const MainPage: React.FC = () => {
                 isOpen={isMapMenuOpen}
                 onClose={() => setIsMapMenuOpen(false)}
                 onBackToFilters={backToFilters}
+                onUsersByRadiusFound={handleUsersByRadiusFound}
             />
 
             {/* Footer */}

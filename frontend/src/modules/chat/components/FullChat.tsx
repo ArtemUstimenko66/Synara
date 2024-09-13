@@ -11,14 +11,56 @@ import ComponentFullInput from "./ComponentFullInput.tsx";
 import {ChatMiniComponent} from "./ui/ChatMiniComponent.tsx";
 
 // Mock data for chat list
+
 const chatList = [
-    { id: 1, name: 'Ольга Коваленко', message: 'Lorem Ipsum - это текст-"рыба"', time: '19:27', imageUrl: 'https://randomuser.me/api/portraits/women/1.jpg', messages: ['Привіт, як справи?'], category: 'active' },
-    { id: 5, name: 'Ирина Коваленко', message: 'Lorem Ipsum - это текст-"рыба"', time: '19:27', imageUrl: 'https://randomuser.me/api/portraits/women/12.jpg', messages: ['Привіт, як справи?'], category: 'active' },
-    { id: 6, name: 'Настя Коваленко', message: 'Lorem Ipsum - это текст-"рыба"', time: '19:27', imageUrl: 'https://randomuser.me/api/portraits/women/13.jpg', messages: ['Привіт, як справи?'], category: 'active' },
-    { id: 7, name: 'Юля Коваленко', message: 'Lorem Ipsum - это текст-"рыба"', time: '19:27', imageUrl: 'https://randomuser.me/api/portraits/women/14.jpg', messages: ['Привіт, як справи?'], category: 'active' },
-    { id: 2, name: 'Ольга Коваленко', message: 'Lorem Ipsum - это текст-"рыба"', time: '19:27', imageUrl: 'https://randomuser.me/api/portraits/women/3.jpg', messages: ['Як твої справи?'], category: 'archived' },
-    { id: 3, name: 'Дмитро Мельник', message: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати.', time: '10:05', imageUrl: 'https://randomuser.me/api/portraits/men/2.jpg', messages: ['Привіт, що робиш?'], category: 'blocked' },
-    { id: 4, name: 'Марія Кравчук', message: 'Lorem Ipsum - это текст-"рыба"', time: 'Пн', imageUrl: 'https://randomuser.me/api/portraits/women/4.jpg', messages: ['Привіт, як справи?'], category: 'active' },
+    // Категория 'active'
+    { id: 1, name: "Ольга Коваленко", message: "Lorem Ipsum - это текст-'рыба'", time: "19:27", imageUrl: "https://randomuser.me/api/portraits/women/1.jpg", category: 'active' },
+    { id: 2, name: "Дмитро Мельник", message: "Lorem Ipsum - это текст-'рыба', часто используемый в печати", time: "10:05", imageUrl: "https://randomuser.me/api/portraits/men/1.jpg", category: 'active' },
+    { id: 4, name: "Ольга Костенко", message: "Lorem Ipsum - это текст-'рыба', часто используемый в печати и веб-дизайне", time: "20.08.2024", imageUrl: "https://randomuser.me/api/portraits/women/3.jpg", category: 'active' },
+    { id: 7, name: "Максим Дубов", message: "Сообщение о чем-то важном", time: "11:30", imageUrl: "https://randomuser.me/api/portraits/men/3.jpg", category: 'active' },
+    { id: 9, name: "Володимир Бойко", message: "Не забудь про встречу завтра", time: "пт", imageUrl: "https://randomuser.me/api/portraits/men/4.jpg", category: 'active' },
+    { id: 13, name: "Ігор Петренко", message: "Документы готовы, могу отправить", time: "ср", imageUrl: "https://randomuser.me/api/portraits/men/6.jpg", category: 'active' },
+
+    // Добавляем еще 7 сообщений для категории 'active'
+    { id: 16, name: "Анна Гусева", message: "Привет! Как твои дела?", time: "09:00", imageUrl: "https://randomuser.me/api/portraits/women/9.jpg", category: 'active' },
+    { id: 17, name: "Петро Іванов", message: "У нас важная встреча сегодня", time: "15:00", imageUrl: "https://randomuser.me/api/portraits/men/8.jpg", category: 'active' },
+    { id: 18, name: "Марина Левчук", message: "Когда мы встретимся?", time: "17:30", imageUrl: "https://randomuser.me/api/portraits/women/10.jpg", category: 'active' },
+    { id: 19, name: "Юрій Поляков", message: "У меня вопросы по проекту", time: "12:15", imageUrl: "https://randomuser.me/api/portraits/men/9.jpg", category: 'active' },
+    { id: 20, name: "Ірина Григоренко", message: "Помоги с задачей", time: "08:30", imageUrl: "https://randomuser.me/api/portraits/women/11.jpg", category: 'active' },
+    { id: 21, name: "Сергій Ткаченко", message: "Где ты был вчера?", time: "13:45", imageUrl: "https://randomuser.me/api/portraits/men/10.jpg", category: 'active' },
+    { id: 22, name: "Олена Михайленко", message: "Как дела с отчетом?", time: "16:00", imageUrl: "https://randomuser.me/api/portraits/women/12.jpg", category: 'active' },
+
+    // Категория 'archived'
+    { id: 3, name: "Марія Кравчук", message: "Lorem Ipsum - это текст-'рыба'", time: "пн", imageUrl: "https://randomuser.me/api/portraits/women/2.jpg", category: 'archived' },
+    { id: 5, name: "Тарас Левченко", message: "Lorem Ipsum - это текст-'рыба', часто используемый", time: "15.08.2024", imageUrl: "https://randomuser.me/api/portraits/men/2.jpg", category: 'archived' },
+    { id: 10, name: "Катерина Литвиненко", message: "У меня для тебя сюрприз!", time: "чт", imageUrl: "https://randomuser.me/api/portraits/women/6.jpg", category: 'archived' },
+    { id: 12, name: "Людмила Ткаченко", message: "Давай встретимся на следующей неделе", time: "вт", imageUrl: "https://randomuser.me/api/portraits/women/7.jpg", category: 'archived' },
+    { id: 15, name: "Богдан Журавель", message: "Нужен совет по проекту", time: "09:15", imageUrl: "https://randomuser.me/api/portraits/men/7.jpg", category: 'archived' },
+
+    // Добавляем еще 7 сообщений для категории 'archived'
+    { id: 23, name: "Наталія Коваленко", message: "Сохрани это на будущее", time: "14:20", imageUrl: "https://randomuser.me/api/portraits/women/13.jpg", category: 'archived' },
+    { id: 24, name: "Василь Петров", message: "Обсудим завтра", time: "11:00", imageUrl: "https://randomuser.me/api/portraits/men/11.jpg", category: 'archived' },
+    { id: 25, name: "Софія Литвинова", message: "Как ты провел выходные?", time: "19:30", imageUrl: "https://randomuser.me/api/portraits/women/14.jpg", category: 'archived' },
+    { id: 26, name: "Олексій Кравченко", message: "Нужно встретиться для обсуждения", time: "08:15", imageUrl: "https://randomuser.me/api/portraits/men/12.jpg", category: 'archived' },
+    { id: 27, name: "Юлія Хоменко", message: "Не забудь про встречу", time: "16:00", imageUrl: "https://randomuser.me/api/portraits/women/15.jpg", category: 'archived' },
+    { id: 28, name: "Микола Зайцев", message: "Что нового у тебя?", time: "13:30", imageUrl: "https://randomuser.me/api/portraits/men/13.jpg", category: 'archived' },
+    { id: 29, name: "Оксана Назаренко", message: "Вижу, что работа кипит", time: "10:00", imageUrl: "https://randomuser.me/api/portraits/women/16.jpg", category: 'archived' },
+
+    // Категория 'blocked'
+    { id: 6, name: "Ірина Савченко", message: "Новый текст сообщения", time: "14:35", imageUrl: "https://randomuser.me/api/portraits/women/4.jpg", category: 'blocked' },
+    { id: 8, name: "Світлана Гончарова", message: "Привет! Как твои дела?", time: "08:45", imageUrl: "https://randomuser.me/api/portraits/women/5.jpg", category: 'blocked' },
+    { id: 11, name: "Олександр Ковальчук", message: "Звони, как только сможешь", time: "13:00", imageUrl: "https://randomuser.me/api/portraits/men/5.jpg", category: 'blocked' },
+    { id: 14, name: "Олена Сидоренко", message: "Спасибо за помощь!", time: "вчера", imageUrl: "https://randomuser.me/api/portraits/women/8.jpg", category: 'blocked' },
+
+    // Добавляем еще 8 сообщений для категории 'blocked'
+    { id: 30, name: "Олена Яценко", message: "Не могу найти документ", time: "09:30", imageUrl: "https://randomuser.me/api/portraits/women/17.jpg", category: 'blocked' },
+    { id: 31, name: "Максим Корниенко", message: "Когда ты вернешься?", time: "11:15", imageUrl: "https://randomuser.me/api/portraits/men/14.jpg", category: 'blocked' },
+    { id: 32, name: "Анастасія Гончарова", message: "Вам нужно срочно отписаться", time: "15:00", imageUrl: "https://randomuser.me/api/portraits/women/18.jpg", category: 'blocked' },
+    { id: 33, name: "Роман Шевченко", message: "Я вас не слышу", time: "12:30", imageUrl: "https://randomuser.me/api/portraits/men/15.jpg", category: 'blocked' },
+    { id: 34, name: "Світлана Романенко", message: "Проверьте вашу почту", time: "16:45", imageUrl: "https://randomuser.me/api/portraits/women/19.jpg", category: 'blocked' },
+    { id: 35, name: "Ігор Левченко", message: "Не могу найти контакт", time: "14:00", imageUrl: "https://randomuser.me/api/portraits/men/16.jpg", category: 'blocked' },
+    { id: 36, name: "Тетяна Григоренко", message: "Нужна помощь", time: "08:00", imageUrl: "https://randomuser.me/api/portraits/women/20.jpg", category: 'blocked' },
+    { id: 37, name: "Віктор Бондаренко", message: "Забыла пароль", time: "10:45", imageUrl: "https://randomuser.me/api/portraits/men/17.jpg", category: 'blocked' },
 ];
 
 const FullChat: React.FC = () => {

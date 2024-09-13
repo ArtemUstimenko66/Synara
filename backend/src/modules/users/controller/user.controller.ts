@@ -25,6 +25,15 @@ export class UserController {
     return this.victimService.findVictimsByCity(city);
   }
 
+  @Get('users-by-radius')
+  async getVictimsByRadius(
+      @Query('radius') radius: number,
+      @Query('city') city: string,
+  ) {
+    const decodedCity = decodeURIComponent(city);
+    return this.victimService.getUsersByRadius(radius, decodedCity);
+  }
+
   @Get()
   async getUsers() {
     return this.userService.findAll();

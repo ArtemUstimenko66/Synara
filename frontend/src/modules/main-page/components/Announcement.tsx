@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from "../../../ui/Button.tsx";
 import ModalInfo from "./ModalInfo.tsx";
-import {getHelpTypeInUkrainian} from "../../../data/helpTypesMap.ts";
+import { getHelpTypeInUkrainian } from "../../../data/helpTypesMap.ts";
 
 interface AnnouncementProps {
     userName: string;
@@ -29,9 +29,10 @@ const Announcement: React.FC<AnnouncementProps> = ({
 
     const currentDate = new Date();
     const postedDate = new Date(datePosted);
-    const diffTime = Math.abs(postedDate.getTime() - currentDate.getTime());
+    const diffTime = postedDate.getTime() - currentDate.getTime();
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
+    const isDateInFuture = diffTime > 0;  // !!! TODO: what to do when announcement expires?
 
     return (
         <div className="bg-perfect-gray w-full rounded-3xl flex flex-col h-full">
@@ -54,8 +55,9 @@ const Announcement: React.FC<AnnouncementProps> = ({
             </div>
 
             {/* Category Badge */}
-            <div className="flex justify-end w-full items-end ">
-                {diffDays <= 5 && (
+            <div className="flex justify-end w-full items-end">
+                {/* Показываем блок только если дата в будущем */}
+                {isDateInFuture && diffDays <= 5 && (
                     <div className="text-blue-500 font-montserratMedium px-6 font-medium border-2 border-dark-blue rounded-full text-relative-ps  mr-4">
                         {diffDays} {diffDays === 1 ? 'день' : diffDays <= 4 ? 'дні' : 'днів'}
                     </div>

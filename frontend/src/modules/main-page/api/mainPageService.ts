@@ -36,15 +36,6 @@ export const getFilteredAnnouncements = async (
             withCredentials: true,
         });
 
-        // const response = await api.get('/announcements', {
-        //             params: {
-        //                 limit,
-        //                 offset
-        //             },
-        //             withCredentials: true
-        //         });
-
-
         console.log('query->:', `/announcements/?${decodedQueryParams}`);
         console.log('Filtered and searched announcements fetched successfully:', response.data);
         return response.data;
@@ -53,6 +44,7 @@ export const getFilteredAnnouncements = async (
         throw error;
     }
 };
+
 
 export const createAnnouncement = async (data: AnnouncementData) => {
     try {
@@ -70,6 +62,7 @@ export const createAnnouncement = async (data: AnnouncementData) => {
         throw error;
     }
 };
+
 
 export const uploadDocument = async (file: File, announcementId: string) => {
     const formData = new FormData();
@@ -104,10 +97,9 @@ export const searchMap = async (city: string) => {
         console.log('Response data:', response.data);
         console.log('City:', city);
 
-        // Extract the victimId, address, and coordinates
         const mappedMarkers = response.data.map((item: { victimId: number, address: string, coordinates: { lat: number, lng: number } }) => ({
-            id: item.victimId,  // Use victimId as id
-            name: item.address,  // Use address as the marker name
+            id: item.victimId,
+            name: item.address,
             position: {
                 lat: item.coordinates.lat,
                 lng: item.coordinates.lng
@@ -120,3 +112,31 @@ export const searchMap = async (city: string) => {
         throw error;
     }
 };
+
+
+export const searchUsersByRadius = async (
+    radius: number,
+    city: string
+) => {
+    try {
+        console.log("city -> ", city);
+        console.log("radius -> ", radius);
+
+        const encodedCity = encodeURIComponent(city);
+
+        const response = await api.get(
+            `/users/users-by-radius?radius=${radius}&city=${encodedCity}`,
+            {
+                withCredentials: true,
+            }
+        );
+
+        console.log('Response data:', response.data);
+
+        return response.data;
+    } catch (error) {
+        console.error("Failed to get users by radius:", error);
+        throw error;
+    }
+};
+
