@@ -37,7 +37,7 @@ const ComponentFullInput: React.FC = () => {
             <div className="relative bg-transparent flex items-end w-full border-2 border-blue-500 rounded-2xl p-2 bg-white" style={{  bottom: 0 }}>
                 {/* Icons on the left */}
                 <div className="pr-2 flex">
-                    <SmileVector className="w-6 h-6 mr-2" />
+                    <SmileVector className="w-6 h-6 mr-2 cursor-pointer" onClick={togglePopup} />
                     <ImageVector className="w-6 h-6 mr-2" />
                 </div>
 
