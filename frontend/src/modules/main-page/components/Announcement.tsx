@@ -47,7 +47,7 @@ const Announcement: React.FC<AnnouncementProps> = ({
                 />
                 {/* User and Date */}
                 <div>
-                    <h4 className="text-relative-pl font-montserratMedium">{userName}</h4>
+                    <h4 className="text-relative-h5 xl:text-h5 font-montserratMedium">{userName}</h4>
                     <span className="text-relative-h5 font-montserratMedium">
                         {formattedDate.toLocaleDateString('uk-UA')}
                     </span>
@@ -58,12 +58,12 @@ const Announcement: React.FC<AnnouncementProps> = ({
             <div className="flex justify-end w-full items-end">
                 {/* Показываем блок только если дата в будущем */}
                 {isDateInFuture && diffDays <= 5 && (
-                    <div className="text-blue-500 font-montserratMedium px-6 font-medium border-2 border-dark-blue rounded-full text-relative-ps  mr-4">
+                    <div className="text-blue-500 font-montserratMedium px-[10%] font-medium border-2 border-dark-blue rounded-full text-relative-h5  mr-4">
                         {diffDays} {diffDays === 1 ? 'день' : diffDays <= 4 ? 'дні' : 'днів'}
                     </div>
                 )}
                 <span
-                    className="bg-blue-500 w-3/6 text-white px-4 pr-5 pl-10 py-1 font-montserratRegular font-normal tracking-wide rounded-l-full">
+                    className="bg-blue-500 w-7/12 text-white text-relative-h5 px-4 pr-5 pl-10 py-1 font-montserratRegular font-normal tracking-wide rounded-l-full">
                     {getHelpTypeInUkrainian(typeHelp)}
                 </span>
             </div>

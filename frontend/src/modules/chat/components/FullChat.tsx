@@ -7,11 +7,12 @@ import DownArrowIcon from '../assets/down_arrow.svg?react';
 import PhoneIcon from '../assets/PhoneIcon.svg?react';
 import CameraIcon from '../assets/CameraICon.svg?react';
 import InfoIcon from '../assets/InfoIcon.svg?react';
-import ComponentFullInput from "./ComponentFullInput.tsx";
+
 import {ChatMiniComponent} from "./ui/ChatMiniComponent.tsx";
+import MainHeaderFullChat from "./MainHeaderFullChat.tsx";
+import ComponentFullInput from "./ComponentFullInput.tsx";
 
 // Mock data for chat list
-
 const chatList = [
     // Категория 'active'
     { id: 1, name: "Ольга Коваленко", message: "Lorem Ipsum - это текст-'рыба'", time: "19:27", imageUrl: "https://randomuser.me/api/portraits/women/1.jpg", messages: ['Привіт, як справи?'], category: 'active' },
@@ -63,8 +64,6 @@ const chatList = [
     { id: 37, name: "Віктор Бондаренко", message: "Забыла пароль", time: "10:45", imageUrl: "https://randomuser.me/api/portraits/men/17.jpg", messages: ['Привіт, як справи?'], category: 'blocked' },
 ];
 
-
-
 const FullChat: React.FC = () => {
     const [selectedChatId, setSelectedChatId] = useState<number | null>(null);
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -101,16 +100,16 @@ const FullChat: React.FC = () => {
             <div className="min-h-screen bg-almost-white flex">
 
                 {/* Header */}
-                <MainHeader />
+                <MainHeaderFullChat/>
 
                 {/* Left Chat List Panel */}
-                <div className="w-1/3 bg-white mt-16 relative">
+                <div className="xl:w-1/3 md:w-2/4 bg-white mt-16 relative">
                     <div className="p-4">
                         <div className="flex justify-center items-center mb-4 relative">
                             <div className="flex flex-wrap justify-center items-center relative">
                                 <Button
                                     isFilled={true}
-                                    className={`bg-perfect-yellow  text-black w-60 text-center py-2 px-4 transition-all duration-0 ${
+                                    className={`bg-perfect-yellow   text-black w-60 text-center py-2 px-4 transition-all duration-0 ${
                                         dropdownOpen ? 'rounded-b-none rounded-t-3xl' : 'rounded-3xl'
                                     } mb-8`}
                                     onClick={toggleDropdown}
@@ -130,7 +129,7 @@ const FullChat: React.FC = () => {
                                 {/* Dropdown Menu */}
                                 {dropdownOpen && (
                                     <div
-                                        className="absolute mt-[9.8vh] w-60 bg-perfect-yellow rounded-b-2xl text-black shadow-lg z-10">
+                                        className="absolute md:mt-24 xl:mt-[9.8vh] w-60 bg-perfect-yellow rounded-b-2xl text-black shadow-lg z-10">
                                         <ul>
                                             {getAvailableFilters(filter).map((option) => (
                                                 <div key={option.key}
@@ -171,7 +170,7 @@ const FullChat: React.FC = () => {
                 </div>
 
                 {/*Right Chat Detail Panel*/}
-                <div className="w-2/3 flex flex-col p-8 mt-12">
+                <div className="xl:w-2/3 md:w-2/3 flex flex-col p-8 mt-12">
                     {selectedChat ? (
                         <div className="text-left w-full h-full flex flex-col">
                             {/* Header with contact information */}
@@ -179,18 +178,18 @@ const FullChat: React.FC = () => {
                                 <img
                                     src={selectedChat.imageUrl}
                                     alt={selectedChat.name}
-                                    className="w-12 h-12 rounded-full mr-4"
+                                    className="xl:w-12 xl:h-12 md:w-20 md:h-20 rounded-full mr-4"
                                 />
-                                <h3 className="text-lg font-semibold">{selectedChat.name}</h3>
+                                <h3 className="xl:text-lg font-semibold md:text-h5">{selectedChat.name}</h3>
                                 <div className="ml-auto flex space-x-4">
                                     {/* Icons for call, video call, and settings */}
-                                    <Button className="bg-transparent p-2">
+                                    <Button className="bg-transparent xl:p-2 md:p-2">
                                         <PhoneIcon className="h-6 w-6"/>
                                     </Button>
-                                    <Button className="bg-transparent p-2">
+                                    <Button className="bg-transparent xl:p-2 md:p-1">
                                         <CameraIcon className="h-6 w-6"/>
                                     </Button>
-                                    <Button className="bg-transparent p-2">
+                                    <Button className="bg-transparent xl:p-2 md:p-1">
                                         <InfoIcon className="h-6 w-6"/>
                                     </Button>
                                 </div>
@@ -201,8 +200,8 @@ const FullChat: React.FC = () => {
                                 {selectedChat.messages.map((message, index) => (
                                     <div
                                         key={index}
-                                        className={`max-w-md p-3 rounded-xl ${
-                                            index % 2 === 0 ? 'bg-baby-blue text-left self-start' : 'bg-pale-yellow text-right self-end'
+                                        className={`max-w-md p-3 rounded-xl md:text-h5 xl:text-xs-pxl ${
+                                            index % 2 === 0 ? 'bg-blue-100 text-left self-start' : 'bg-yellow-100 text-right self-end'
                                         }`}
                                     >
                                         {message}
@@ -212,24 +211,26 @@ const FullChat: React.FC = () => {
                                 {/* Example with an image message */}
                                 <div className="max-w-md self-end">
                                     <img
-                                        src="https://via.placeholder.com/300"
+                                        src="https://via.placeholder.com/300"  // Замените на фактический URL изображения
                                         alt="Attached"
                                         className="rounded-lg shadow-md"
                                     />
-                                    <p className="text-gray-500 text-xs mt-1 text-right">11:55</p>
+                                    <p className="text-gray-500 xl:text-xs md:text-xs-pl mt-1 text-right">11:55</p>
                                 </div>
                             </div>
 
                             {/* Input for sending a message */}
-                            <div className="mt-4 mb-8 items-center">
+                            <div className="mt-4 md:mb-0 xl:mb-8 items-center">
                                 <ComponentFullInput/>
                             </div>
                         </div>
                     ) : (
                         <div className="flex flex-col items-center justify-center h-full text-center">
                             <div className="w-60 h-52 bg-dark-blue rounded-3xl mb-4"></div>
-                            <h3 className="text-lg font-montserratMedium font-semibold">Почніть з того, на чому зупинилися</h3>
-                            <p className="text-gray-500 font-montserratMedium">Виберіть розмову і починайте спілкуватися.</p>
+                            <h3 className="text-lg font-montserratMedium font-semibold">Почніть з того, на чому
+                                зупинилися</h3>
+                            <p className="text-gray-500 font-montserratMedium">Виберіть розмову і починайте
+                                спілкуватися.</p>
                         </div>
 
                     )}

@@ -138,71 +138,80 @@ const MainPage: React.FC = () => {
                 {/* Main content */}
                 <div className="w-full mt-[5%] px-4">
                     <div className="flex flex-col md:flex-row md:space-x-4">
-                        <div className="w-1/4 flex flex-col items-start justify-start">
+                        <div className="w-full md:w-1/2 xl:w-1/4 flex flex-col items-start justify-start">
                             {/* Help Map Button */}
-                            <Button hasBlue={true} className="uppercase px-8 py-3 w-full">Карта допомоги</Button>
+                            <Button hasBlue={true}
+                                    className="uppercase text-relative-h5 px-8 py-3 my-5 w-full xl:w-full">
+                                Карта допомоги
+                            </Button>
 
                             {/* Filters Button */}
-                            <div className="w-full flex items-end justify-start">
+                            <div className="w-full flex items-start justify-start md:mt-0">
                                 <Button
                                     hasBlue={true}
-                                    className="px-4 mt-8 w-3/6"
+                                    className="px-4 text-relative-h5 w-full md:w-1/2 xl:w-3/6"
                                     onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                                 >
-                                    <span className="text-montserratMedium text-relative-ps">Фільтрувати</span>
+                                    <span className="text-montserratMedium text-relative-h5">Фільтрувати</span>
                                 </Button>
                             </div>
                         </div>
 
-                        <div className="w-3/4 flex flex-col items-end justify-end">
+                        <div className="w-full  md:w-1/2 xl:w-3/4 flex flex-col items-end justify-end">
                             {/* Search Component */}
-                            <SearchComponent/>
+                            <div className="w-full mt-4  mb-3 md:mt-0">
+                                <SearchComponent/>
+                            </div>
 
-                            <div className="w-full flex items-end justify-end relative">
+                            <div
+                                className="w-full flex flex-col md:flex-row md:space-x-4 items-end justify-end mt-4 md:mt-0">
                                 {/* Add Announcement Button */}
-                                <Link to="/add-announcement" className="mr-4">
-                                    <Button hasBlue={true} className="px-4 mt-8 w-full">
+                                <Link to="/add-announcement" className="w-full md:w-1/2 xl:w-auto">
+                                    <Button hasBlue={true} className="px-4 w-full md:w-auto xl:w-auto">
                                         <span
-                                            className="text-montserratMedium text-relative-ps">Додати оголошення</span>
+                                            className="text-montserratMediumtext-relative-h5">Додати оголошення</span>
                                     </Button>
                                 </Link>
 
                                 {/* Sort Button with Dropdown */}
-                                <div className="w-3/12 relative">
-                                    <Button
-                                        hasBlue={true}
-                                        className={`px-2 z-11 mt-8 w-3/4 flex items-center justify-center space-x-3
-                                            transition-all duration-0 ${isDropdownOpen ? 'rounded-b-none rounded-t-3xl' : 'rounded-3xl'}`}
-                                        onClick={toggleDropdown}
-                                    >
-                                        <span className="text-montserratMedium text-relative-ps">Сортування за</span>
-                                        <DownArrowIcon
-                                            className={`h-3 w-3 mt-1 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`}
-                                        />
-                                    </Button>
-
-                                    {isDropdownOpen && (
-                                        <div
-                                            className="w-3/4 bg-white border-2 border-blue-500 rounded-b-3xl absolute left-0 top-full z-10 -mt-1"
+                                <div className="w-full md:w-1/2 xl:w-auto mt-4 md:mt-0 flex justify-end">
+                                    <div className="relative w-full md:w-3/4 xl:w-auto">
+                                        <Button
+                                            hasBlue={true}
+                                            className={`px-2 z-11 w-full md:w-auto xl:w-auto text-relative-h5 flex items-center justify-center space-x-3 transition-all duration-0 ${isDropdownOpen ? 'rounded-b-none rounded-t-3xl' : 'rounded-3xl'}`}
+                                            onClick={toggleDropdown}
                                         >
+                                            <span
+                                                className="text-montserratMedium text-relative-h5">Сортування за</span>
+                                            <DownArrowIcon
+                                                className={`h-3 w-3 mt-1 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`}
+                                            />
+                                        </Button>
+
+                                        {isDropdownOpen && (
                                             <div
-                                                className={`cursor-pointer py-2 px-4 border-b-2 border-blue-500 ${sortOrder === 'DESC' ? 'text-blue-500' : 'text-black'}`}
-                                                onClick={() => handleSort('DESC')}
-                                            >
-                                                Спочатку нові
+                                                className="w-full xl:w-3/4 bg-white border-2 border-blue-500 rounded-b-3xl absolute left-0 top-full z-10 -mt-1">
+                                                <div
+                                                    className={`cursor-pointer py-2 px-4 border-b-2 border-blue-500 ${sortOrder === 'DESC' ? 'text-blue-500' : 'text-black'}`}
+                                                    onClick={() => handleSort('DESC')}
+                                                >
+                                                    Спочатку нові
+                                                </div>
+                                                <div
+                                                    className={`cursor-pointer py-2 px-4 ${sortOrder === 'ASC' ? 'text-blue-500' : 'text-black'}`}
+                                                    onClick={() => handleSort('ASC')}
+                                                >
+                                                    Спочатку старі
+                                                </div>
                                             </div>
-                                            <div
-                                                className={`cursor-pointer py-2 px-4 ${sortOrder === 'ASC' ? 'text-blue-500' : 'text-black'}`}
-                                                onClick={() => handleSort('ASC')}
-                                            >
-                                                Спочатку старі
-                                            </div>
-                                        </div>
-                                    )}
+                                        )}
+                                    </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
+
 
                     {/* Announcements */}
                     <div className="flex flex-col md:flex-row">
@@ -210,7 +219,7 @@ const MainPage: React.FC = () => {
                             <div className="w-full mt-4 ml-4 flex flex-wrap justify-start">
                                 {(filteredAnnouncements || announcements).length > 0 ? (
                                     (filteredAnnouncements || announcements).map((announcement, index) => (
-                                        <div key={index} className="w-full md:w-[32%] mr-[1vw] p-2 mt-4">
+                                        <div key={index} className="w-full md:w-[48%] xl:w-[32%] mr-[1vw] p-2 mt-4">
                                             <Announcement
                                                 userName={`${announcement.user.firstName} ${announcement.user.lastName}`}
                                                 avatar={announcement.user.avatarUrl || 'https://via.placeholder.com/150'}
@@ -235,10 +244,10 @@ const MainPage: React.FC = () => {
                                         </div>
                                     </div>
                                 )}
-
                             </div>
                         </div>
                     </div>
+
 
                     {/* Load More Button */}
                     {hasMore && (

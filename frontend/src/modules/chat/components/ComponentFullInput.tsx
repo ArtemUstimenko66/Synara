@@ -20,11 +20,10 @@ const ComponentFullInput: React.FC = () => {
     };
 
     return (
-        <div className=" bg-transparent bottom-0 left-0 w-full p-4" style={{ zIndex: 100 }}>
-
-            {/* Stickers popup */}
+        <div className="relative bg-transparent bottom-0 left-0 w-full p-4" style={{ zIndex: 100 }}>
+            {/* Emoji popup */}
             {isPopupVisible && (
-                <div className="absolute bottom-16 left-0 bg-white ml-4 border border-dark-blue p-4 rounded-2xl shadow-lg z-50">
+                <div className="absolute bottom-16 left-0 bg-white xl:mb-0 md:mb-4 ml-4 border border-dark-blue p-4 rounded-2xl shadow-lg z-50">
                     <div className="grid grid-cols-4 gap-2">
                         {/* Example grid similar to your image */}
                         {Array.from({ length: 12 }).map((_, idx) => (
@@ -34,11 +33,11 @@ const ComponentFullInput: React.FC = () => {
                 </div>
             )}
 
-            <div className="relative bg-transparent flex items-end w-full border-2 border-blue-500 rounded-2xl p-2 bg-white" style={{  bottom: 0 }}>
+            <div className="relative bg-transparent flex items-end w-full xl:h-12 md:h-14 border-2 border-blue-500 rounded-2xl p-2 bg-white" style={{ bottom: 0 }}>
                 {/* Icons on the left */}
                 <div className="pr-2 flex">
-                    <SmileVector className="w-6 h-6 mr-2 cursor-pointer" onClick={togglePopup} />
-                    <ImageVector className="w-6 h-6 mr-2" />
+                    <SmileVector className="xl:w-6 xl:h-6 md:w-8 md:h-8 mr-2 cursor-pointer" onClick={togglePopup} />
+                    <ImageVector className="xl:w-6 xl:h-6 md:w-8 md:h-8 mr-2" />
                 </div>
 
                 {/* Textarea for the input */}
@@ -48,7 +47,7 @@ const ComponentFullInput: React.FC = () => {
                     placeholder="Ваше повідомлення"
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    className="w-full bg-transparent resize-none text-almost-black text-pd font-montserratRegular placeholder-gray-500 focus:outline-none overflow-hidden"
+                    className="w-full bg-transparent resize-none text-almost-black md:text-xs-pxl xl:text-pd font-montserratRegular placeholder-gray-500 focus:outline-none overflow-hidden"
                     style={{
                         maxHeight: '150px',
                         height: 'auto',
@@ -57,7 +56,7 @@ const ComponentFullInput: React.FC = () => {
                 />
 
                 {/* Icon on the right */}
-                <PaperIcon className="w-8 h-6 mr-2" />
+                <PaperIcon className="xl:w-8 xl:h-6 md:w-10 md:h-8 mr-2" />
             </div>
         </div>
     );

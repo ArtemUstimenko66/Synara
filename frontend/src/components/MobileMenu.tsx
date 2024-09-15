@@ -2,6 +2,7 @@ import React from 'react';
 import NavItem from "../ui/NavItem.tsx";
 import { Button } from "../ui/Button.tsx";
 import { Link } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
 
 export const MobileMenu = ({ isOpen = false }) => {
     const navItems = [
@@ -12,9 +13,11 @@ export const MobileMenu = ({ isOpen = false }) => {
         { text: "Як це працює", to: "/how-it-works" }
     ];
 
+    const isSmallScreen = useMediaQuery({ query: '(max-width: 768px)' });
+
     return (
         <div
-            className={`fixed top-16 left-0 right-0 bg-white z-20 overflow-hidden transform transition-all duration-700 ease-in-out ${isOpen ? 'h-[calc(100vh-4rem)]' : 'h-0'}`}
+            className={`fixed top-16 left-0 right-0 bg-white z-20 overflow-hidden transform transition-all ${isSmallScreen ? 'duration-700 ease-in-out' : 'hidden'} ${isOpen ? 'h-[calc(100vh-4rem)]' : 'h-0'}`}
         >
             <nav className="h-full flex flex-col my-10 sm:mx-5 md:mx-20 space-y-5 text-lg box-border w-[90%]">
                 {navItems.map((item, index) => (
