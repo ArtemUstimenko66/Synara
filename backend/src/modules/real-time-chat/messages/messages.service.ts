@@ -16,12 +16,15 @@ export class MessagesService {
     private chatRepository: Repository<Chat>,
   ) {}
 
-  async findByChatId(chatId: number): Promise<Message[]> {
+  async findByChatId(chatId: number, skip: number, take: number): Promise<Message[]> {
     return this.messageRepository.find({
       where: {
         chat: { id: chatId },
       },
-      relations: ['chat', 'sender'],
+      skip,
+      take,
+      order: { id: 'DESC'},
+      //relations: ['chat', 'sender'],
     });
   }
 

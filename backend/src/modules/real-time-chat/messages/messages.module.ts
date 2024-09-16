@@ -8,6 +8,7 @@ import { Chat } from '../chats/chat.entity';
 import { UsersModule } from '../../users/modules/users.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import {MessageController} from "./message.controller";
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     }),
   ],
   providers: [MessagesService, MessagesGateway],
+  controllers: [MessageController],
   exports: [MessagesService, TypeOrmModule],
 })
 export class MessagesModule {}
