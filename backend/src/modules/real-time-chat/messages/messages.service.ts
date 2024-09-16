@@ -29,6 +29,7 @@ export class MessagesService {
     content: string,
     chatId: number,
     senderId: number,
+    type: 'text' | 'image',
   ): Promise<Message> {
     const chat = await this.chatRepository.findOne({ where: { id: chatId } });
     const sender = await this.userRepository.findOne({
@@ -43,6 +44,7 @@ export class MessagesService {
       content,
       chat,
       sender,
+      type,
     });
 
     return this.messageRepository.save(message);

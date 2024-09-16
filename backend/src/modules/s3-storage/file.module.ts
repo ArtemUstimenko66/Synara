@@ -11,6 +11,6 @@ import { Announcement } from '../announcement/announcement.entity';
   imports: [TypeOrmModule.forFeature([File, User, Announcement])],
   controllers: [FileController],
   providers: [S3Service, FileService, S3Config],
-  exports: [],
+  exports: [S3Service],
 })
 export class FileModule {}

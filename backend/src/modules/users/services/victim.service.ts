@@ -18,6 +18,12 @@ export class VictimService {
     return await this.victimsRepository.save(victim);
   }
 
+  async findByUserId(userId: number): Promise<VictimsEntity> {
+    return this.victimsRepository.findOne({
+      where: { userId },
+    });
+  }
+
   async findVictimsByCity(city: string): Promise<any[]> {
     const victims = await this.victimsRepository.find({ where: { city } });
 

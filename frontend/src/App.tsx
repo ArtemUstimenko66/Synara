@@ -11,9 +11,14 @@ import MainPage from "./pages/MainPage.tsx";
 import PrivateRoute from "./components/PrivateRoute.tsx";
 import CreateAnnouncementPage from "./pages/CreateAnnouncementPage.tsx";
 import FullChat from "./modules/chat/components/FullChat.tsx";
+import Chat from "./components/Chat.tsx";
+import {WebSocketProvider} from "./components/WebSocketContext.tsx";
 
 const App: React.FC = () => {
+
+    const chatId = 13;
     return (
+        <WebSocketProvider>
         <Routes>
             <Route path="/" element={<Navigate to="/home" replace />} />
             {/* home */}
@@ -34,10 +39,12 @@ const App: React.FC = () => {
 
             {/* chat */}
             <Route path="/chat" element={<PrivateRoute element={<FullChat />} />} />
+            <Route path="/chats" element={<Chat chatId={chatId}/>} />
 
             {/* 404 */}
             <Route path="*" element={<NotFoundPage />} />
         </Routes>
+        </WebSocketProvider>
     );
 };
 

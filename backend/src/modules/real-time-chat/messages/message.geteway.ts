@@ -30,6 +30,7 @@ export class MessagesGateway {
     messageData: {
       chatId: number;
       content: string;
+      type: 'text' | 'image';
     },
     @ConnectedSocket() client: Socket,
   ) {
@@ -55,6 +56,7 @@ export class MessagesGateway {
       messageData.content,
       messageData.chatId,
       userId,
+      messageData.type,
     );
     console.log('Message created:', message);
 

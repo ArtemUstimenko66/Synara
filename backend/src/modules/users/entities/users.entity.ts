@@ -101,11 +101,11 @@ export class User {
 
   @ApiProperty({
     example: 'https://example.com/avatar.jpg',
-    description: 'Avatar of the user',
+    description: 'URL to the users avatar',
     type: Number,
   })
-  @Column({ type: 'varchar', length: 100, nullable: true })
-  avatarUrl?: number;
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  avatarUrl?: string;
 
   @ApiProperty({
     example: false,

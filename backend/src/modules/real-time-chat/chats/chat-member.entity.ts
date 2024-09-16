@@ -1,15 +1,8 @@
-import {
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-  PrimaryColumn,
-} from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { Chat } from './chat.entity';
 import { User } from '../../users/entities/users.entity';
 
-@Entity()
+@Entity('chat_member')
 export class ChatMember {
   @PrimaryColumn()
   chatId: number;

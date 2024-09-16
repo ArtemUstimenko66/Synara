@@ -22,6 +22,7 @@ export class AuthService {
 
   async generateTokens(user: User) {
     const volunteer = await this.volunteerService.findByUserId(user.id);
+    const victim = await this.victimService.findByUserId(user.id);
 
     const payload = {
       id: user.id,
@@ -36,6 +37,16 @@ export class AuthService {
             supports: volunteer.supports,
             volunteerIdentificationNumber:
               volunteer.volunteer_identification_number,
+          }
+        : null,
+      victim: victim
+        ? {
+            id: victim.id,
+            region: victim.region,
+            city: victim.city,
+            street: victim.street,
+            houseNumber: victim.houseNumber,
+            flatNumber: victim.flatNumber,
           }
         : null,
     };

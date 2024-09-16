@@ -13,6 +13,12 @@ export class Chat {
   @Column({ default: false })
   isGroup: boolean;
 
+  @Column({ default: false })
+  isArchived: boolean;
+
+  @Column({ default: false })
+  isBlocked: boolean;
+
   @OneToMany(() => ChatMember, (chatMember) => chatMember.chat)
   members: ChatMember[];
 

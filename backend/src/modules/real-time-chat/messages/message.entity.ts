@@ -16,6 +16,9 @@ export class Message {
   @Column('text')
   content: string;
 
+  @Column({ type: 'varchar', default: 'text' })
+  type: 'text' | 'image';
+
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   timestamp: Date;
 

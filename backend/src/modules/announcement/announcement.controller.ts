@@ -54,6 +54,7 @@ export class AnnouncementController {
     @Query('offset') offset = 0,
     @Query('sortOrder') sortOrder: 'ASC' | 'DESC' = 'DESC',
     @Query('isUrgent') isUrgent?: boolean,
+    // radius
   ) {
     const options: FindAnnouncementsOptions = {
       query,
