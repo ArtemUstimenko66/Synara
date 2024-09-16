@@ -69,7 +69,7 @@ export const SideBarChat: React.FC<SideBarChatProps> = ({ isOpen, onClose }) => 
 
             <div
                 className={`fixed top-0 right-0 bg-white z-50 overflow-hidden transform transition-transform duration-500 ease-in-out
-                    ${isOpen ? 'translate-x-0' : 'translate-x-full'} w-1/4 h-full shadow-lg border-2 border-l-dark-blue 
+                    ${isOpen ? 'translate-x-0' : 'translate-x-full'} xl:w-1/4 md:w-2/3 h-full shadow-lg border-2 border-l-dark-blue 
                     border-t-dark-blue border-b-dark-blue rounded-l-3xl flex flex-col p-6`}
             >
                 <div className="flex justify-center items-center mb-4 relative">
@@ -136,7 +136,7 @@ export const SideBarChat: React.FC<SideBarChatProps> = ({ isOpen, onClose }) => 
                         </div>
                         {/* Ссылка внизу */}
                         <div className="mt-4 flex justify-center">
-                            <a href="/chat" className="text-blue-500 text-sm font-montserratMedium underline">
+                            <a href="/chat" className="text-blue-500 xl:text-sm md:text-xs-pxl font-montserratMedium underline">
                                 Переглянути все в папці "Вхідні"
                             </a>
                         </div>

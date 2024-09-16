@@ -10,11 +10,13 @@ import {
 } from "@react-google-maps/api";
 import SearchComponentMap from "./SearchComponentMap.tsx";
 import {Slider} from "@mui/material";
+import { searchMap, searchUsersByRadius} from "../api/mainPageService.ts";
 
 interface SideBarProps {
     isOpen: boolean;
     onClose: () => void;
     onBackToFilters: () => void;
+    onUsersByRadiusFound: (users: any[]) => void;
 }
 
 function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
@@ -35,37 +37,38 @@ function deg2rad(deg) {
 }
 
 const initialMarkers = [
-    {
-        id: 1,
-        name: "Qobustan",
-        position: { lat: 49.993520, lng: 36.259416 },
-    },
-    {
-        id: 2,
-        name: "Sumqayit",
-        position: { lat: 40.5788843, lng: 49.5485073 },
-    },
-    {
-        id: 3,
-        name: "Baku",
-        position: { lat: 40.3947365, lng: 49.6898045 },
-    },
+    // {
+    //     id: 1,
+    //     name: "Qobustan",
+    //     position: { lat: 49.993520, lng: 36.259416 },
+    // },
+    // {
+    //     id: 2,
+    //     name: "Sumqayit",
+    //     position: { lat: 40.5788843, lng: 49.5485073 },
+    // },
+    // {
+    //     id: 3,
+    //     name: "Baku",
+    //     position: { lat: 40.3947365, lng: 49.6898045 },
+    // },
 ];
-
 
 const staticMarkers = [
-    { id: 5, name: "Marker 1", position: { lat: 49.9939, lng: 36.2500 } },
-    { id: 6, name: "Marker 2", position: { lat: 49.9870, lng: 36.2200 } },
-    { id: 7, name: "Marker 3", position: { lat: 49.9800, lng: 36.2700 } },
-    { id: 8, name: "Marker 4", position: { lat: 49.9250, lng: 36.2800 } },
-    {
-        id: 9,
-        name: "Проспект Петра Григоренка",
-        position: { lat: 49.948734, lng: 36.374507 },
-    },
+    //{ id: 5, name: "Marker 1", position: { lat: 49.9939, lng: 36.2500 } },
+    // { id: 6, name: "Marker 2", position: { lat: 49.9870, lng: 36.2200 } },
+    // { id: 7, name: "Marker 3", position: { lat: 49.9800, lng: 36.2700 } },
+    // { id: 8, name: "Marker 4", position: { lat: 49.9250, lng: 36.2800 } },
+    // {
+    //     id: 9,
+    //     name: "Проспект Петра Григоренка",
+    //     position: { lat: 49.948734, lng: 36.374507 },
+    // },
 ];
-export const Map: React.FC<SideBarProps> = ({ isOpen, onClose, onBackToFilters }) => {
 
+
+
+export const Map: React.FC<SideBarProps> = ({ isOpen, onClose, onBackToFilters, onUsersByRadiusFound }) => {
 
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: "AIzaSyBvwqaJ4LM3SDPz1DRqW4Qv8DL2g8Wew-s",
@@ -73,10 +76,10 @@ export const Map: React.FC<SideBarProps> = ({ isOpen, onClose, onBackToFilters }
 
     const [activeMarker, setActiveMarker] = useState(null);
     const [userMarkers, setUserMarkers] = useState(initialMarkers);
-    const [circleRadius, setCircleRadius] = useState(10000); // Радиус 10 км в метрах
+    const [circleRadius, setCircleRadius] = useState(10000);
     const [visibleMarkers, setVisibleMarkers] = useState([]);
     const [userLocation, setUserLocation] = useState(null);
-    const [selectedCity, setSelectedCity] = useState(null); // Для выбранного города
+    const [selectedCity, setSelectedCity] = useState(null);
 
     const handleActiveMarker = (marker) => {
         if (marker === activeMarker) {
@@ -142,10 +145,21 @@ export const Map: React.FC<SideBarProps> = ({ isOpen, onClose, onBackToFilters }
     // };
 
 
-    // Обновляем центр карты и маркеры в радиусе при изменении геолокации или радиуса
+    const loadCityMarkers = async (city: string) => {
+        try {
+            const dynamicMarkers = await searchMap(city);
+            const allMarkers = [...staticMarkers, ...dynamicMarkers];
+            console.log("All markers:", allMarkers);
+            setUserMarkers(allMarkers);
+        } catch (error) {
+            console.error("Error loading city markers:", error);
+        }
+    };
+
+    // set markers
     useEffect(() => {
-        const center = selectedCity?.position || userLocation || { lat: 49.9935, lng: 36.2304 }; // По умолчанию Харьков
-        const markersWithinRadius = staticMarkers.filter((marker) => {
+        const center = selectedCity?.position || userLocation || { lat: 49.9935, lng: 36.2304 };
+        const markersWithinRadius = userMarkers.filter((marker) => {
             const distance = getDistanceFromLatLonInKm(
                 center.lat,
                 center.lng,
@@ -155,7 +169,8 @@ export const Map: React.FC<SideBarProps> = ({ isOpen, onClose, onBackToFilters }
             return distance <= circleRadius / 1000;
         });
         setVisibleMarkers(markersWithinRadius);
-    }, [circleRadius, userLocation, selectedCity]);
+    }, [circleRadius, userLocation, selectedCity, userMarkers]);
+
 
     // ask geolocation
     useEffect(() => {
@@ -182,161 +197,180 @@ export const Map: React.FC<SideBarProps> = ({ isOpen, onClose, onBackToFilters }
         }
     }, []);
     const handleCitySelect = (city) => {
-        setSelectedCity(city); // Устанавливаем выбранный город
+        setSelectedCity(city);
     };
 
-    const handleApplyClick = () => {
+    const handleApplyClick = async () => {
         if (selectedCity) {
-            setUserLocation(selectedCity.position); // Смена центра карты на выбранный город
+            setUserLocation(selectedCity.position);
+            await loadCityMarkers(selectedCity.name);
+
+            try {
+                const radiusInKm = circleRadius / 1000;
+                const usersByRadius = await searchUsersByRadius(radiusInKm, selectedCity.name);
+                console.log("Users by radius:", usersByRadius);
+
+                onUsersByRadiusFound(usersByRadius);
+
+                await loadCityMarkers(selectedCity.name);
+            } catch (error) {
+                console.error("Error fetching users by radius:", error);
+            }
         }
     };
 
-    const defaultRadius = 10000; // Радиус по умолчанию (10 км)
-    const kharkiv = { lat: 49.9935, lng: 36.2304 }; // Координаты Харькова
+    const defaultRadius = 10000;
+    const kharkiv = { lat: 49.9935, lng: 36.2304 };
+
+    // clear filter
+    const [searchTerm, setSearchTerm] = useState(""); // Состояние для ввода города
+
 
     const handleClearClick = () => {
-        setCircleRadius(defaultRadius); // Сброс радиуса
-
-        // Сброс города
+        setCircleRadius(defaultRadius);
         setSelectedCity(null);
+        setSearchTerm(""); // Очистить поле ввода
 
-        // Если доступна геолокация пользователя, вернуть центр на его место
-        if (userLocation) {
-            setUserLocation(kharkiv);
-        } else {
-            // Если геолокация недоступна, вернуть центр на Харьков
-            setUserLocation(kharkiv);
-        }
+        setUserLocation(kharkiv);
+
         console.log("user location:", userLocation);
         console.log("kharkiv", kharkiv);
     };
 
+
+
     const handleBackClick = () => {
-        onBackToFilters(); // Возвращает к фильтрам
+        onBackToFilters();
     };
 
     return (
         <Fragment>
-        <>
-            {isOpen && (
-                <div
-                    className="fixed inset-0 bg-black opacity-50 z-40"
-                    onClick={onClose}
-                ></div>
-            )}
+            <>
+                {isOpen && (
+                    <div
+                        className="fixed inset-0 bg-black opacity-50 z-40"
+                        onClick={onClose}
+                    ></div>
+                )}
 
-            {/* Sidebar */}
-            <div
-                className={`fixed top-0 right-0 bg-white z-40 overflow-hidden transform transition-transform duration-500 ease-in-out
+                {/* Sidebar */}
+                <div
+                    className={`fixed top-0 right-0 bg-white z-40 overflow-hidden transform transition-transform duration-500 ease-in-out
                     ${isOpen ? 'translate-x-0' : 'translate-x-full'} w-2/6 h-full shadow-lg border-2 border-l-dark-blue 
                     border-t-dark-blue border-b-dark-blue rounded-l-3xl flex flex-col`}
-            >
-                <div className="flex flex-col flex-grow">
+                >
+                    <div className="flex flex-col flex-grow">
 
-                    {/* Nav items */}
-                    <div className="mt-4 flex flex-row w-full justify-center">
-                        <BackArrowMini className="h-5 w-5 mt-3 mr-12 justify-start" onClick={handleBackClick}/>
-                        <h2 className="text-h3 ml-12 mr-12 font-kharkiv text-center">Відстань пошуку</h2>
-                    </div>
-                    <div style={{display: "flex", flexDirection: "column", alignItems: "center", width: "100%"}}>
-                        {/* Search input with icon */}
-                        <SearchComponentMap onCitySelect={handleCitySelect}/>
-
-                        {/* Radius Slider */}
-                        <div className="radius-slider mb-2" style={{width: "95%"}}>
-                            <label style={{
-                                display: "flex",
-                                justifyContent: "space-between",
-                                alignItems: "center",
-                                marginBottom: "1px"
-                            }}>
-                                <span className="mt-2 text-xs-ps font-montserratRegular">Радіус:</span>
-                                <span className="text-xs-ps font-montserratRegular">{(circleRadius / 1000).toFixed(0)} км</span>
-                            </label>
-                            <Slider
-                                id="radius"
-                                size="small"
-                                aria-label="Small"
-                                min={1000}
-                                max={20000}
-
-                                value={circleRadius}
-                                onChange={(e) => setCircleRadius(Number(e.target.value))}
+                        {/* Nav items */}
+                        <div className="mt-4 flex flex-row w-full justify-center">
+                            <BackArrowMini className="h-5 w-5 mt-3 mr-12 justify-start" onClick={handleBackClick}/>
+                            <h2 className="text-h3 ml-12 mr-12 font-kharkiv text-center">Відстань пошуку</h2>
+                        </div>
+                        <div style={{display: "flex", flexDirection: "column", alignItems: "center", width: "100%"}}>
+                            {/* Search input with icon */}
+                            <SearchComponentMap
+                                onCitySelect={handleCitySelect}
+                                searchTerm={searchTerm}
+                                setSearchTerm={setSearchTerm}
                             />
 
+
+
+                            {/* Radius Slider */}
+                            <div className="radius-slider mb-2" style={{width: "95%"}}>
+                                <label style={{
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    alignItems: "center",
+                                    marginBottom: "1px"
+                                }}>
+                                    <span className="mt-2 text-xs-ps font-montserratRegular">Радіус:</span>
+                                    <span className="text-xs-ps font-montserratRegular">{(circleRadius / 1000).toFixed(0)} км</span>
+                                </label>
+                                <Slider
+                                    id="radius"
+                                    size="small"
+                                    aria-label="Small"
+                                    min={1000}
+                                    max={20000}
+
+                                    value={circleRadius}
+                                    onChange={(e) => setCircleRadius(Number(e.target.value))}
+                                />
+
+                            </div>
+                        </div>
+                        {isLoaded ? (
+                            <GoogleMap
+                                center={userLocation || {lat: 49.993520, lng: 36.259416}}
+                                zoom={10}
+                                // onClick={handleMapClick}
+                                onLoad={(map) => map.setOptions({clickableIcons: false})}
+                                mapContainerStyle={{width: "100%", height: "60vh"}}
+                            >
+                                {userMarkers.map(({id, name, position}) => (
+                                    <MarkerF
+                                        key={id}
+                                        position={position}
+                                        title={name}
+                                        onClick={() => handleActiveMarker(id)}
+                                    >
+                                        {activeMarker === id ? (
+                                            <InfoWindowF onCloseClick={() => setActiveMarker(null)}>
+                                                <div>
+                                                    <p>{name}</p>
+                                                </div>
+                                            </InfoWindowF>
+                                        ) : null}
+                                    </MarkerF>
+                                ))}
+
+
+                                <CircleF
+                                    center={userLocation || {lat: 49.9935, lng: 36.2304}}
+                                    radius={circleRadius}
+                                    options={{
+                                        fillColor: "#6dc7f4",
+                                        fillOpacity: 0.3,
+                                        strokeColor: "#728dbd",
+                                        strokeOpacity: 0.8,
+                                        strokeWeight: 2,
+                                    }}
+                                />
+
+
+                                {visibleMarkers.map(({id, name, position}) => (
+                                    <MarkerF
+                                        key={id}
+                                        position={position}
+                                        onClick={() => handleActiveMarker(id)}
+                                    >
+                                        {activeMarker === id ? (
+                                            <InfoWindowF onCloseClick={() => setActiveMarker(null)}>
+                                                <div>
+                                                    <p>{name}</p>
+                                                </div>
+                                            </InfoWindowF>
+                                        ) : null}
+                                    </MarkerF>
+                                ))}
+                            </GoogleMap>
+                        ) : null}
+                        {/* Buttons */}
+                        <div className="flex flex-col space-y-3 mx-8 mt-2">
+                            <Button isFilled={true} className=" uppercase text-black py-3 md:text-pxl"
+                                    onClick={handleApplyClick}
+                            >
+                                Застосувати
+                            </Button>
+                            <Button onClick={handleClearClick} hasBlue={true} className=" uppercase py-3 md:text-pxl">
+                                Очистити
+                            </Button>
                         </div>
                     </div>
-                    {isLoaded ? (
-                        <GoogleMap
-                            center={userLocation || {lat: 49.993520, lng: 36.259416}}
-                            zoom={10}
-                            // onClick={handleMapClick}
-                            onLoad={(map) => map.setOptions({clickableIcons: false})}
-                            mapContainerStyle={{width: "100%", height: "60vh"}}
-                        >
-                            {userMarkers.map(({id, name, position}) => (
-                                <MarkerF
-                                    key={id}
-                                    position={position}
-                                    title={name}
-                                    onClick={() => handleActiveMarker(id)}
-                                >
-                                    {activeMarker === id ? (
-                                        <InfoWindowF onCloseClick={() => setActiveMarker(null)}>
-                                            <div>
-                                                <p>{name}</p>
-                                            </div>
-                                        </InfoWindowF>
-                                    ) : null}
-                                </MarkerF>
-                            ))}
-
-
-                            <CircleF
-                                center={userLocation || {lat: 49.9935, lng: 36.2304}}
-                                radius={circleRadius}
-                                options={{
-                                    fillColor: "#6dc7f4",
-                                    fillOpacity: 0.3,
-                                    strokeColor: "#728dbd",
-                                    strokeOpacity: 0.8,
-                                    strokeWeight: 2,
-                                }}
-                            />
-
-
-                            {visibleMarkers.map(({id, name, position}) => (
-                                <MarkerF
-                                    key={id}
-                                    position={position}
-                                    onClick={() => handleActiveMarker(id)}
-                                >
-                                    {activeMarker === id ? (
-                                        <InfoWindowF onCloseClick={() => setActiveMarker(null)}>
-                                            <div>
-                                                <p>{name}</p>
-                                            </div>
-                                        </InfoWindowF>
-                                    ) : null}
-                                </MarkerF>
-                            ))}
-                        </GoogleMap>
-                    ) : null}
-                    {/* Buttons */}
-                    <div className="flex flex-col space-y-3 mx-8 mt-2">
-                        <Button isFilled={true} className=" uppercase text-black py-3 md:text-pxl"
-                                onClick={handleApplyClick}
-                        >
-                            Застосувати
-                        </Button>
-                        <Button onClick={handleClearClick} hasBlue={true} className=" uppercase py-3 md:text-pxl">
-                            Очистити
-                        </Button>
-                    </div>
                 </div>
-            </div>
 
-        </>
+            </>
         </Fragment>
 
     );

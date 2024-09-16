@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
-import LogoSynara from '../../../../assets/images/logoSynara.svg?react';
-import MenuIcon from '../../assets/menu.svg?react';
-import NotificationIcon from '../../assets/notification.svg?react';
+import LogoSynara from '../../../assets/images/logoSynara.svg?react';
 
-import NavItem from "../../../../ui/NavItem.tsx";
+import MenuIcon from '../../main-page/assets/menu.svg?react';
+import NotificationIcon from '../../main-page/assets/notification.svg?react';
 
-import { SideBar } from "../SideBar.tsx";
+import NavItem from "../../../ui/NavItem.tsx";
+import { SideBar } from "../../main-page/components/SideBar.tsx";
 
-const MainHeader: React.FC = () => {
+const MainHeaderFullChat: React.FC = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isVisible, setIsVisible] = useState(true);
     const [isAtTop, setIsAtTop] = useState(true);
@@ -40,12 +40,12 @@ const MainHeader: React.FC = () => {
                 <div className="flex justify-between 0 pl-[5%] items-center px-8 py-8 md:ml-10 md:mr-4 xl:ml-20 xl:mr-36">
 
                     {/* Logo */}
-                    <Link to="/main">
+                    <Link to="/main" className="xl:flex hidden">
                         <LogoSynara className="text-xl font-bold xl:mr-[10%] md:mr-14"/>
                     </Link>
 
                     {/* Nav items */}
-                    <nav className="xl:flex space-x-16 sm:hidden md:hidden ">
+                    <nav className="flex space-x-16 ">
                         <NavItem text="ГОЛОВНА" to="/main"/>
                         <NavItem text="ПРО НАС" to="/about"/>
                         <NavItem text="ЗБОРИ" to="/collections"/>
@@ -56,11 +56,11 @@ const MainHeader: React.FC = () => {
                     {/* Buttons */}
                     <div className="flex space-x-8 ">
                         <div className="flex ml-auto cursor-pointer"
-                                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
                             {<MenuIcon className="h-6 w-6"/>}
                         </div>
-                        <button>
-                            <NotificationIcon className="h-6 w-6"/>
+                        <button className="xl:flex hidden">
+                            <NotificationIcon className="xl:flex h-6 w-6"/>
                         </button>
                     </div>
 
@@ -71,4 +71,4 @@ const MainHeader: React.FC = () => {
     );
 };
 
-export default MainHeader;
+export default MainHeaderFullChat;

@@ -7,6 +7,7 @@ import { logout } from "../../profile/api/profileService.ts";
 import Filters from "./Filters.tsx";
 import ModalLogout from "./ui/ModalLogout.tsx";
 import { navItems } from "../../../data/navItemsSideBar.ts";
+import MenuCloseIcon from '../../../assets/images/icon-close-menu.svg?react';
 
 interface SideBarProps {
     isOpen: boolean;
@@ -45,8 +46,8 @@ export const SideBar: React.FC<SideBarProps> = ({ isOpen, onClose, isFilters, on
             {/* Sidebar */}
             <div
                 className={`fixed top-0 right-0 bg-white z-40 overflow-hidden transform transition-transform duration-500 ease-in-out
-                    ${isOpen ? 'translate-x-0' : 'translate-x-full'} w-1/4 h-full shadow-lg border-2 border-l-dark-blue 
-                    border-t-dark-blue border-b-dark-blue rounded-l-3xl flex flex-col`}
+                    ${isOpen ? 'translate-x-0' : 'translate-x-full'} w-full xl:w-1/4 h-full  xl:border-2 xl:border-l-dark-blue 
+                    xl:border-t-dark-blue xl:border-b-dark-blue xl:rounded-l-3xl flex flex-col`}
             >
                 {isFilters ? (
                     // Filters
@@ -65,27 +66,32 @@ export const SideBar: React.FC<SideBarProps> = ({ isOpen, onClose, isFilters, on
                     // Sidebar
                     <div className="flex flex-col mx-4 flex-grow">
                         {/* Logo */}
-                        <div className="flex justify-center mt-6 mb-8">
-                            <LogoSynara className="w-28 h-28" />
+                        <div className="flex w-[90%] justify-between items-center ml-[5%] mt-6 xl:mb-8 sm:mb-0">
+                            <LogoSynara className="w-28 h-28"/>
+                            <MenuCloseIcon className="h-7 w-7 cursor-pointer" onClick={onClose}/>
                         </div>
 
+
                         {/* Nav items */}
-                        <nav className="flex flex-col mx-5 space-y-5 text-lg flex-grow">
+                        <nav className="flex flex-col w-full mx-5 space-y-5 text-lg flex-grow">
                             {navItems.map((item, index) => (
                                 <div key={item.to} className="flex flex-col">
-                                    <NavItem text={item.text} to={item.to} />
+                                    <NavItem text={item.text} to={item.to}/>
                                     {index < navItems.length - 1 && (
-                                        <div className="border-b border-gray-300 mt-5"></div>
+                                        <div className="xl:border-b xl:border-gray-300 xl:mt-5 sm:mt-0"></div>
                                     )}
                                 </div>
+
                             ))}
                         </nav>
 
                         {/* Buttons */}
                         <div className="flex flex-col space-y-5 mx-5 mb-6">
-                            <Button hasBlue={true} onClick={() => setIsModalOpen(true)} className="w-full py-3 md:text-pxl">ВИЙТИ З АКАУНТУ</Button>
+                            <Button hasBlue={true} onClick={() => setIsModalOpen(true)}
+                                    className="w-full py-3 md:text-pxl">ВИЙТИ З АКАУНТУ</Button>
                             <Link to="/comments" className="w-full">
-                                <Button isFilled={true} className="w-full text-black py-3 md:text-pxl">ЗАЛИШИТИ ВІДГУК</Button>
+                                <Button isFilled={true} className="w-full text-black py-3 md:text-pxl">ЗАЛИШИТИ
+                                    ВІДГУК</Button>
                             </Link>
                         </div>
                     </div>
@@ -95,7 +101,10 @@ export const SideBar: React.FC<SideBarProps> = ({ isOpen, onClose, isFilters, on
             {/* Modal for logout confirmation */}
             <ModalLogout
                 isOpen={isModalOpen}
-                onClose={() => { setIsModalOpen(false); onClose(); }}
+                onClose={() => {
+                    setIsModalOpen(false);
+                    onClose();
+                }}
                 onConfirm={handleLogout}
             />
         </>

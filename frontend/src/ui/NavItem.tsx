@@ -14,7 +14,7 @@ const NavItem: React.FC<NavItemProps> = ({ text = "", to, isLast = false }) => {
     return (
         <Link to={to} className='relative flex flex-col items-start'>
             <span
-                className={`text-medium-gray xl:text-pl md:text-pxl Montserrat cursor-pointer hover:text-almost-black}`}
+                className={`text-medium-gray xl:text-pl md:text-pxl sm:text-pd Montserrat cursor-pointer hover:text-almost-black}`}
             >
                 {text}
             </span>
