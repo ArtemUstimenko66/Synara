@@ -8,6 +8,7 @@ import Filters from "./Filters.tsx";
 import ModalLogout from "./ui/ModalLogout.tsx";
 import { navItems } from "../../../data/navItemsSideBar.ts";
 import MenuCloseIcon from '../../../assets/images/icon-close-menu.svg?react';
+import {useTranslation} from "react-i18next";
 
 interface SideBarProps {
     isOpen: boolean;
@@ -22,6 +23,7 @@ export const SideBar: React.FC<SideBarProps> = ({ isOpen, onClose, isFilters, on
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [categories, setCategories] = useState<string[]>([]);
     const [urgency, setUrgency] = useState<string | null>(null);
+    const {t}= useTranslation();
 
     // logout
     const handleLogout = async () => {
@@ -88,10 +90,9 @@ export const SideBar: React.FC<SideBarProps> = ({ isOpen, onClose, isFilters, on
                         {/* Buttons */}
                         <div className="flex flex-col space-y-5 mx-5 mb-6">
                             <Button hasBlue={true} onClick={() => setIsModalOpen(true)}
-                                    className="w-full py-3 md:text-pxl">ВИЙТИ З АКАУНТУ</Button>
+                                    className="w-full py-3 md:text-pxl">{t('logoutUPPER')}</Button>
                             <Link to="/comments" className="w-full">
-                                <Button isFilled={true} className="w-full text-black py-3 md:text-pxl">ЗАЛИШИТИ
-                                    ВІДГУК</Button>
+                                <Button isFilled={true} className="w-full text-black py-3 md:text-pxl">{t('leave_feedback')}</Button>
                             </Link>
                         </div>
                     </div>

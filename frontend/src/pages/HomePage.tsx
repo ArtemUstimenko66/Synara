@@ -32,6 +32,7 @@ import DateRangeCalendarWithButton from "../ui/Calendar.tsx";
 import Review from "../components/Review.tsx";
 import Wrapper from "../ui/Wrapper.tsx";
 import HowItWorksSM from "../ui/HowItWorksSM.tsx";
+import {useTranslation} from "react-i18next";
 
 
 const reviews = [
@@ -141,6 +142,10 @@ const HomePage: React.FC = () => {
     const scrollingContainerRef = useRef<HTMLDivElement>(null);
     const scrollingContainerRefDonation = useRef<HTMLDivElement>(null);
 
+
+    const { t } = useTranslation();
+
+
     const handleMouseEnter = (index: number) => {
         setIsPaused(true);
         setHoveredIndex(index);
@@ -230,13 +235,14 @@ const HomePage: React.FC = () => {
                         <div
                             className="relative text-center order-2 xl:order-1 xl:text-left  md:text-left xl:w-11/12 mt-12 xl:mt-64 mr-16 md:mt-relative-smlg">
                             <h1 className='xl:text-h1 sm:text-h5 sm:text-center sm:ml-12 md:ml-0 xl:ml-0 font-kharkiv whitespace-pre-line mt-6 mb-0 tracking-tight md:text-relative-h3xl md:text-left'>
-                                {`НАДІЯ НА КРИЛАХ ПОВЕРТАЄТЬСЯ`}
+                                {t('hope_on_wings_returns')}
                             </h1>
                             <p className='text-medium-gray font-montserratRegular sm:ml-8 md:ml-0 sm:text-xs-ps xl:ml-0  mt-1 mb-4 whitespace-pre-line xl:text-pl md:text-relative-pxl md:text-left'>
-                                {`У важкі часи ми стаємо сильнішими разом. Приєднуйтесь до нашої\n спільноти підтримки та допомоги.`}
+                                {t('under_hope_on_wings_returns')}
+
                             </p>
                             <Button className="sm:ml-8 xl:ml-0 md:ml-0 md:mt-0 sm:mt-6 xl:mt-0"
-                                    isFilled={true}>ПРИЄДНАТИСЯ</Button>
+                                    isFilled={true}>{t('joinUPPER')}</Button>
                         </div>
                         <div
                             className="hidden xl:w-1/2 xl:mt-20 xl:flex xl:order-2 md:flex md:order-2 md:mt-relative-md md:w-1/2">
@@ -256,30 +262,19 @@ const HomePage: React.FC = () => {
                         <div
                             className="relative text-center order-2 xl:order-2 md:order-2 xl:text-left md:text-left xl:ml-24 xl:w-11/12">
                             <h1 className='xl:text-h1 sm:text-h4 sm:mb-4 sm:mt-8 md:mt-0  md:mb-0 xl: text-almost-white font-kharkiv xl:whitespace-pre-line xl:mt-6 mb-0 xl:tracking-tight md:text-relative-h3xl'>
-                                {`ХТО МИ?`}
+                                {t('who_are_we')}
                             </h1>
                             <p className='text-almost-white sm:text-left sm:m-4 md:m-0 xl:m-0 sm:text-xs-ps font-montserratRegular xl:text-pl md:text-relative-pxl xl:mt-1 xl:mb-4 md:mb-relative-sm whitespace-pre-line md:whitespace-pre-line'>
-                                {`Synara — це платформа, створена українцями для українців.
-                                    У ці складні часи, коли наша країна переживає випробування, ми
-                                    об'єднуємо тих, хто потребує допомоги, з тими, хто готовий її надати. Ми
-                                    віримо в силу людської доброти та солідарності, і знаємо, що разом ми
-                                    можемо подолати будь-які труднощі.
-
-                                    Наша місія — створити безпечний, зручний та доступний простір, де кожен,
-                                    хто постраждав від війни, зможе знайти необхідну підтримку, відновити
-                                    надію та повірити у світле майбутнє. Ми прагнемо не лише задовольнити
-                                    нагальні потреби людей, але й допомогти їм знайти сили та ресурси для
-                                    відбудови свого життя та своєї країни.`}
+                                {t('description_synara')}
                             </p>
                             <PlaceholderHorizontal className="xl:hidden md:hidden sm:w-[80%] sm:mx-auto"/>
-                            <Button className="sm:hidden xl:flex md:flex" hasBorder={true}>ЧИТАТИ ДАЛІ</Button>
+                            <Button className="sm:hidden xl:flex md:flex" hasBorder={true}>{t('read_moreUPPER')}</Button>
                         </div>
                     </section>
 
                     {/* Third section - the last collections of money*/}
                     <section className="w-full h-auto flex flex-col items-center xl:mt-64 md:mt-[10vw]">
-                        <h2 className="xl:text-h2 sm:mt-24 xl:mt-0 sm:text-h5  md:text-relative-h3xl font-kharkiv xl:mb-16 md:mb-16 sm:mb-4">ОСТАННІ
-                            ЗБОРИ</h2>
+                        <h2 className="xl:text-h2 sm:mt-24 xl:mt-0 sm:text-h5  md:text-relative-h3xl font-kharkiv xl:mb-16 md:mb-16 sm:mb-4">{t('last_collectionUPPER')}</h2>
                         <div
                             className="sm:hidden md:block xl:block grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-6 xl:flex xl:flex-row xl:gap-16 justify-center items-center">
 
@@ -419,16 +414,14 @@ const HomePage: React.FC = () => {
                         </div>
 
                         <div className="xl:mt-16 md:mt-16 sm:mt-4">
-                            <Button isFilled={true}>ПЕРЕГЛЯНУТИ ІНШІ</Button>
+                            <Button isFilled={true}>{t('VIEW_OTHERS_UPPER')}</Button>
                         </div>
                     </section>
 
 
                     {/* Fourth section - join us */}
                     <section className="w-full h-auto flex flex-col items-center mt-32 px-4 md:px-8">
-                        <h2 className="xl:text-h2 sm:text-h4 md:text-relative-h3xl sm:mb-8 sm:text-h5  font-kharkiv xl:mb-24 md:mb-16 text-center">ПРИЄДНУЙСЯ
-                            ДО
-                            НАС</h2>
+                        <h2 className="xl:text-h2 sm:text-h4 md:text-relative-h3xl sm:mb-8 sm:text-h5  font-kharkiv xl:mb-24 md:mb-16 text-center">{t('JOIN_TO_US_UPPER')}</h2>
                         <div
                             className="flex flex-col xl:flex-row  md:flex-row justify-center items-center space-y-10 xl:space-y-0 md:space-y-0 xl:space-x-32 md:space-x-16">
 
@@ -440,10 +433,9 @@ const HomePage: React.FC = () => {
                                         className="w-24 sm:w-40 md:ml-8 sm:mr-8 xl:mr-0 sm:h-40 h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"/>
                                 </div>
                                 <div className="sm:flex-row">
-                                    <h3 className="xl:text-center sm:text-center xl:text-h3 md:text-relative-h3xl font-kharkiv mt-4 w-full max-w-xs md:max-w-sm xl:max-w-md">Ставай
-                                        волонтером</h3>
+                                    <h3 className="xl:text-center sm:text-center xl:text-h3 md:text-relative-h3xl font-kharkiv mt-4 w-full max-w-xs md:max-w-sm xl:max-w-md">{t('Become_a_volunteer')}</h3>
                                     <p className="sm:text-xs xl:text-xs-pxl text-center font-montserratRegular mt-2 w-full max-w-xs md:max-w-sm xl:max-w-md">
-                                        Маєш бажання допомогти? Стань волонтером та зміни світ на краще!
+                                        {t('Under_Become_a_volunteer')}
                                     </p>
 
                                 </div>
@@ -457,10 +449,9 @@ const HomePage: React.FC = () => {
                                         className="sm:hidden md:block xl:block w-24 sm:w-40 md:ml-8 sm:mr-8 xl:mr-0 sm:h-40 h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"/>
                                 </div>
                                 <div className="sm:flex-row">
-                                    <h3 className="xl:text-center sm:text-center xl:text-h3 md:text-relative-h3xl font-kharkiv mt-4 w-full max-w-xs md:max-w-sm xl:max-w-md">Отримуй
-                                        допомогу</h3>
+                                    <h3 className="xl:text-center sm:text-center xl:text-h3 md:text-relative-h3xl font-kharkiv mt-4 w-full max-w-xs md:max-w-sm xl:max-w-md">{t('get_help')}</h3>
                                     <p className="sm:text-xs xl:text-xs-pxl text-center font-montserratRegular mt-2 w-full max-w-xs md:max-w-sm xl:max-w-md">
-                                        Потребуєш підтримки? Ми допоможемо. Залиш заявку просто зараз.
+                                        {t('under_get_help')}
                                     </p>
                                 </div>
                                 <div>
@@ -477,10 +468,9 @@ const HomePage: React.FC = () => {
                                         className="w-24 sm:w-40 md:ml-8 sm:mr-8 xl:mr-0 sm:h-40 h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"/>
                                 </div>
                                 <div className="sm:flex-row">
-                                    <h3 className="xl:text-center sm:text-center xl:text-h3 md:text-relative-h3xl font-kharkiv mt-4 w-full max-w-xs md:max-w-sm xl:max-w-md">Донать
-                                        на ЗСУ</h3>
+                                    <h3 className="xl:text-center sm:text-center xl:text-h3 md:text-relative-h3xl font-kharkiv mt-4 w-full max-w-xs md:max-w-sm xl:max-w-md">{t('donate_ZSU')}</h3>
                                     <p className="sm:text-xs xl:text-xs-pxl text-center font-montserratRegular mt-2 w-full max-w-xs md:max-w-sm xl:max-w-md">
-                                        Ваша підтримка забезпечує ЗСУ необхідним для звільнення наших земель.
+                                        {t('under_donate_ZSU')}
                                     </p>
                                 </div>
                             </div>
@@ -493,9 +483,7 @@ const HomePage: React.FC = () => {
                         <HowItWorksSM />
                     ) : (
                         <section className="w-full h-auto flex flex-col items-center mt-32">
-                            <h2 className="xl:text-h2 md:text-relative-h3xl sm:text-h5  font-kharkiv mb-20 text-center">ЯК
-                                ЦЕ
-                                ПРАЦЮЄ</h2>
+                            <h2 className="xl:text-h2 md:text-relative-h3xl sm:text-h5  font-kharkiv mb-20 text-center">{t('how_it_works')}</h2>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 xl:ml-3 md:ml-6">
 
                                 {/* Card 1 */}
@@ -506,10 +494,9 @@ const HomePage: React.FC = () => {
                                             1
                                         </div>
                                         <div className="ml-2 md:ml-4">
-                                            <h3 className="text-left xl:text-h3 md:text-relative-h3xl font-kharkiv text-dark-blue">Зареєструйтесь:</h3>
+                                            <h3 className="text-left xl:text-h3 md:text-relative-h3xl font-kharkiv text-dark-blue">{t('register')}</h3>
                                             <p className="text-left xl:text-h4 md:text-relative-md font-montserratMedium mt-2 w-full">
-                                                Створіть обліковий запис та оберіть свою роль: "Потерпілий" або
-                                                "Волонтер".
+                                                {t('under_register')}
                                             </p>
                                         </div>
                                     </div>
@@ -527,10 +514,9 @@ const HomePage: React.FC = () => {
                                             2
                                         </div>
                                         <div className="ml-2">
-                                            <h3 className="text-left xl:text-h3 md:text-relative-h3xl font-kharkiv text-dark-blue">Допомога
-                                                поруч:</h3>
+                                            <h3 className="text-left xl:text-h3 md:text-relative-h3xl font-kharkiv text-dark-blue">{t('help_is_nearby')}</h3>
                                             <p className="text-left xl:text-h4 md:text-relative-md font-montserratMedium mt-2 w-full">
-                                                Створіть оголошення або знайдіть допомогу.
+                                                {t('under_help_is_nearby')}
                                             </p>
                                         </div>
                                     </div>
@@ -544,12 +530,9 @@ const HomePage: React.FC = () => {
                                             3
                                         </div>
                                         <div className="ml-2 md:ml-4">
-                                            <h3 className="text-left xl:text-h3 md:text-relative-h3xl font-kharkiv text-dark-blue">Зв'яжіться
-                                                та допоможіть:</h3>
+                                            <h3 className="text-left xl:text-h3 md:text-relative-h3xl font-kharkiv text-dark-blue">{t('get_in_touch_and_help')}</h3>
                                             <p className="text-left xl:text-h4 md:text-relative-md font-montserratMedium mt-2 w-full">
-                                                Спілкуйтеся з іншими користувачами через чат або відеозв'язок та
-                                                організуйте
-                                                допомогу.
+                                                {t('under_get_in_touch_and_help')}
                                             </p>
                                         </div>
                                     </div>
@@ -567,12 +550,9 @@ const HomePage: React.FC = () => {
                                             4
                                         </div>
                                         <div className="ml-2">
-                                            <h3 className="text-left xl:text-h3 md:text-relative-h3xl font-kharkiv text-dark-blue">Залиште
-                                                відгук:</h3>
+                                            <h3 className="text-left xl:text-h3 md:text-relative-h3xl font-kharkiv text-dark-blue">{t('leave_a_review')}</h3>
                                             <p className="text-left xl:text-h4 md:text-relative-md font-montserratMedium mt-2 w-full">
-                                                Поділіться своїм досвідом та допоможіть іншим користувачам зробити
-                                                правильний
-                                                вибір.
+                                                {t('under_leave_a_review')}
                                             </p>
                                         </div>
                                     </div>
@@ -580,7 +560,7 @@ const HomePage: React.FC = () => {
 
                             </div>
                             <div className="mt-12 md:mt-16">
-                                <Button isFilled={true}>ДЕТАЛЬНІШЕ</Button>
+                                <Button isFilled={true}>{t('more_detailsUPPER')}</Button>
                             </div>
                         </section>
                     )}
@@ -588,8 +568,7 @@ const HomePage: React.FC = () => {
 
                     {/* Sixth section - why us */}
                     <section className="w-full h-auto flex flex-col items-center mt-32">
-                        <h2 className="xl:text-h2 md:text-relative-h3xl sm:text-h4 sm:text-h5  font-kharkiv sm:mb-8 md:mb-20 xl:mb-20 text-center">ЧОМУ
-                            САМЕ МИ</h2>
+                        <h2 className="xl:text-h2 md:text-relative-h3xl sm:text-h4 sm:text-h5  font-kharkiv sm:mb-8 md:mb-20 xl:mb-20 text-center">{t('why_usUPPER')}</h2>
                         <div className="flex xl:gap-12 md:gap-6 sm:ml-8 md:ml-0 xl:ml-0">
                             <div className="flex-1 flex flex-col xl:ml-6 md:ml-6">
                                 <div className="flex flex-row sm:space-x-16 xl:space-x-12 md:space-x-6">
@@ -605,9 +584,9 @@ const HomePage: React.FC = () => {
                                 </div>
                                 <div
                                     className="flex sm:text-xs sm:space-x-10 flex-row font-bold font-montserratMedium xl:space-x-20 md:space-x-6 xl:text-pl md:text-relative-pxl text-md_body xl:mt-0 md:mt-2 text-gray-500">
-                                    <div>Користувачів</div>
-                                    <div>Волонтерів</div>
-                                    <div>Раз допомогли</div>
+                                    <div>{t('users')}</div>
+                                    <div>{t('volunteers')}</div>
+                                    <div>{t('count_of_help')}</div>
                                 </div>
                                 <div>
                                     <BlueCube className="md:hidden xl:hidden sm:w-[90%] sm:h-auto sm:mt-6"/>
@@ -617,36 +596,27 @@ const HomePage: React.FC = () => {
                                     <div className="flex items-center">
                                         <VectorBlue
                                             className="xl:w-10 xl:h-10 md:w-10 md:h-10 sm:w-10 sm:h-10 sm:mr-4 md:mr-0 xl:mr-0"/>
-                                        <p className="xl:ml-8 md:ml-4 sm:text-xs-ps font-montserratRegular xl:text-pl md:text-relative-pxl">Перевірені
-                                            волонтери: Ми ретельно перевіряємо кожного волонтера, щоб забезпечити вашу
-                                            безпеку та довіру.</p>
+                                        <p className="xl:ml-8 md:ml-4 sm:text-xs-ps font-montserratRegular xl:text-pl md:text-relative-pxl">{t('why_us_1')}</p>
                                     </div>
                                     <div className="flex items-center">
                                         <VectorBlue
                                             className="xl:w-10 xl:h-10 md:w-10 md:h-10 sm:w-10 sm:h-10 sm:mr-4 md:mr-0 xl:mr-0"/>
-                                        <p className="xl:ml-8 md:ml-4 sm:text-xs-ps font-montserratRegular xl:text-pl md:text-relative-pxl">Швидкий
-                                            пошук допомоги: Зручні фільтри та інтуїтивний інтерфейс допоможуть швидко
-                                            знайти потрібну допомогу.</p>
+                                        <p className="xl:ml-8 md:ml-4 sm:text-xs-ps font-montserratRegular xl:text-pl md:text-relative-pxl">{t('why_us_2')}</p>
                                     </div>
                                     <div className="flex items-center">
                                         <VectorBlue
                                             className="xl:w-8 xl:h-8 md:w-8 md:h-8 sm:w-8 sm:h-8 sm:mr-4 md:mr-0 xl:mr-0"/>
-                                        <p className="xl:ml-8 md:ml-4 sm:text-xs-ps font-montserratRegular xl:text-pl md:text-relative-pxl">Прозорість
-                                            та звітність: Ми відкрито звітуємо про всі зібрані кошти та надану
-                                            допомогу.</p>
+                                        <p className="xl:ml-8 md:ml-4 sm:text-xs-ps font-montserratRegular xl:text-pl md:text-relative-pxl">{t('why_us_3')}</p>
                                     </div>
                                     <div className="flex items-center">
                                         <VectorBlue
                                             className="xl:w-10 xl:h-10 md:w-10 md:h-10 sm:w-10 sm:h-10 sm:mr-4 md:mr-0 xl:mr-0"/>
-                                        <p className="xl:ml-8 md:ml-4 sm:text-xs-ps font-montserratRegular xl:text-pl md:text-relative-pxl">Зручна
-                                            комунікація: Спілкуйтеся з волонтерами та іншими користувачами через зручний
-                                            чат та відеозв'язок.</p>
+                                        <p className="xl:ml-8 md:ml-4 sm:text-xs-ps font-montserratRegular xl:text-pl md:text-relative-pxl">{t('why_us_4')}</p>
                                     </div>
                                     <div className="flex items-center">
                                         <VectorBlue
                                             className="xl:w-8 xl:h-8 md:w-8 md:h-8 sm:w-8 sm:h-8 sm:mr-4 md:mr-0 xl:mr-0"/>
-                                        <p className="xl:ml-8 md:ml-4 sm:text-xs-ps font-montserratRegular xl:text-pl md:text-relative-pxl">Підтримка
-                                            24/7: Наша команда завжди готова допомогти вам з будь-якими питаннями.</p>
+                                        <p className="xl:ml-8 md:ml-4 sm:text-xs-ps font-montserratRegular xl:text-pl md:text-relative-pxl">{t('why_us_5')}</p>
                                     </div>
                                 </div>
                             </div>
@@ -661,11 +631,10 @@ const HomePage: React.FC = () => {
 
                     {/* Seventh section - our statistics */}
                     <section className="w-full h-auto flex flex-col items-center mt-40">
-                        <h2 className="xl:text-h2 sm:text-h3 md:text-relative-h2 sm:text-h5  font-kharkiv sm:mb-4 md:mb-16 xl:mb-16 text-center">НАША
-                            СТАТИСТИКА</h2>
+                        <h2 className="xl:text-h2 sm:text-h3 md:text-relative-h2 sm:text-h5  font-kharkiv sm:mb-4 md:mb-16 xl:mb-16 text-center">{t('our_statisticUPPER')}</h2>
 
                         <div className="flex flex-col md:hidden xl:hidden sm:block">
-                            <div className="sm:text-pxll sm:text-center font-kharkiv">За період</div>
+                            <div className="sm:text-pxll sm:text-center font-kharkiv">{t('during_the_period')}</div>
                             <DateRangeCalendarWithButton/>
                         </div>
 
@@ -686,7 +655,7 @@ const HomePage: React.FC = () => {
                                 <div
                                     className="xl:mt-24 sm:mr-12 md:mr-0 xl:mr-0 sm:mb-8 md:mb-0 xl:mb-0 xl:ml-16 md:mt-6 md:ml-2 absolute inset-0 flex flex-col items-center justify-center text-white text-h3 text-center">
                                     <h2 className="xl:mb-4 sm:text-h3 md:mb-2 font-montserratMedium text-white font-extrabold xl:text-5xl md:text-relative-h1">350</h2>
-                                    <p className="xl:text-xl sm:text-xs-pxl md:text-relative-h4 font-montserratRegular text-white whitespace-pre-line">{`Гуманітарної \nдопомоги`}</p>
+                                    <p className="xl:text-xl sm:text-xs-pxl md:text-relative-h4 font-montserratRegular text-white whitespace-pre-line">{t('humanitarian_aid')}</p>
                                 </div>
                             </div>
 
@@ -694,7 +663,7 @@ const HomePage: React.FC = () => {
                             <div
                                 className="sm:hidden md:block xl:block relative w-64 h-64 mx-auto flex items-center justify-center xl:mt-48 xl:ml-32 md:mt-32 md:ml-8">
                                 <div className="text-center mt-24">
-                                    <div className="xl:text-h3 md:text-relative-h3 font-kharkiv mb-4">За період</div>
+                                    <div className="xl:text-h3 md:text-relative-h3 font-kharkiv mb-4">{t('during_the_period')}</div>
                                     <DateRangeCalendarWithButton/>
                                 </div>
                             </div>
@@ -713,7 +682,7 @@ const HomePage: React.FC = () => {
                                 <div
                                     className="xl:mt-8 xl:ml-12 md:mt-0 md:ml-2 absolute inset-0 flex flex-col items-center justify-center text-white text-h3 text-center">
                                     <h2 className="font-montserratMedium sm:text-h3 font-extrabold text-white xl:text-5xl md:text-relative-h1">285</h2>
-                                    <p className="xl:mt-4 md:mt-2 sm:text-xs-pxl xl:text-xl md:text-relative-h4 font-montserratRegular whitespace-pre-line text-white">{`Інформаційної\nдопомоги`}</p>
+                                    <p className="xl:mt-4 md:mt-2 sm:text-xs-pxl xl:text-xl md:text-relative-h4 font-montserratRegular whitespace-pre-line text-white">{t('informational_help')}</p>
                                 </div>
                             </div>
 
@@ -732,7 +701,7 @@ const HomePage: React.FC = () => {
                                 <div
                                     className="xl:mt-40 xl:ml-40 md:mt-10 md:ml-10 sm:-mt-4 sm:-ml-10 absolute inset-0 flex flex-col items-center justify-center text-white text-h3 text-center">
                                     <h2 className="font-montserratMedium sm:text-h3 font-extrabold text-white xl:text-5xl md:text-relative-h1">435k</h2>
-                                    <p className="xl:mt-4 sm:text-xs-pxl md:mt-2 xl:text-xl md:text-relative-h4 whitespace-pre-line font-montserratRegular text-white">{`Гривень\nна ЗСУ`}</p>
+                                    <p className="xl:mt-4 sm:text-xs-pxl md:mt-2 xl:text-xl md:text-relative-h4 whitespace-pre-line font-montserratRegular text-white">{t('hryvnia_to_ZSU')}</p>
                                 </div>
                             </div>
 
@@ -754,7 +723,7 @@ const HomePage: React.FC = () => {
                                 <div
                                     className="xl:mt-12 md:mt-1 xl:ml-56 md:ml-24 sm:mt-0 sm:ml-0 absolute inset-0 flex flex-col items-center justify-center text-white text-h3 text-center">
                                     <h2 className="font-montserratMedium sm:text-h3 font-extrabold text-white xl:text-5xl md:text-relative-h1">543</h2>
-                                    <p className="xl:mt-4 sm:text-xs-pxl md:mt-2 xl:text-xl md:text-relative-h4 whitespace-pre-line font-montserratRegular text-white">{`Психологічної\nдопомоги`}</p>
+                                    <p className="xl:mt-4 sm:text-xs-pxl md:mt-2 xl:text-xl md:text-relative-h4 whitespace-pre-line font-montserratRegular text-white">{t('psychological_help')}</p>
                                 </div>
                             </div>
 
@@ -767,8 +736,7 @@ const HomePage: React.FC = () => {
 
                     {/* Eighth section - our feedbacks */}
                     <section className="w-full h-auto flex flex-col items-center mt-16">
-                        <h2 className="xl:text-h2 md:text-relative-h2 sm:text-h5 font-kharkiv mb-12 text-center">ВІДГУКИ ПРО
-                            НАС</h2>
+                        <h2 className="xl:text-h2 md:text-relative-h2 sm:text-h5 font-kharkiv mb-12 text-center">{t('reviews_about_usUPPER')}</h2>
 
                         <div
                             className="relative w-full overflow-hidden"
@@ -868,7 +836,7 @@ const HomePage: React.FC = () => {
 
                         {/* App Details */}
                         <div className="md:ml-16 xl:ml-16 flex flex-col justify-center">
-                            <h3 className="xl:text-h5 sm:text-h5 sm:mt-6 xl:mt-0 md:mt-0 md:text-left  xl:text-left sm:text-center md:text-relative-h3 font-kharkiv text-black w-30 whitespace-pre-line">{`Завантажуйте\n безкоштовно додаток Synara`}</h3>
+                            <h3 className="xl:text-h5 sm:text-h5 sm:mt-6 xl:mt-0 md:mt-0 md:text-left  xl:text-left sm:text-center md:text-relative-h3 font-kharkiv text-black w-30 whitespace-pre-line">{t('download_Synara_for_free')}</h3>
 
                             {/* App Icon and Text */}
                             <div className="sm:mt-8 flex items-start xl:mb-4 md:mb-1 xl:mt-10 md:mt-4">

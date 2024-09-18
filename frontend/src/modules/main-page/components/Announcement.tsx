@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Button } from "../../../ui/Button.tsx";
 import ModalInfo from "./ModalInfo.tsx";
-import { getHelpTypeInUkrainian } from "../../../data/helpTypesMap.ts";
+import {getHelpToKey, getHelpTypeInUkrainian} from "../../../data/helpTypesMap.ts";
+import {useTranslation} from "react-i18next";
 
 interface AnnouncementProps {
     userName: string;
@@ -31,6 +32,7 @@ const Announcement: React.FC<AnnouncementProps> = ({
     const postedDate = new Date(datePosted);
     const diffTime = postedDate.getTime() - currentDate.getTime();
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    const {t} = useTranslation();
 
     const isDateInFuture = diffTime > 0;  // !!! TODO: what to do when announcement expires?
 
@@ -59,12 +61,12 @@ const Announcement: React.FC<AnnouncementProps> = ({
                 {/* Показываем блок только если дата в будущем */}
                 {isDateInFuture && diffDays <= 5 && (
                     <div className="text-blue-500 font-montserratMedium px-[10%] font-medium border-2 border-dark-blue rounded-full text-relative-h5  mr-4">
-                        {diffDays} {diffDays === 1 ? 'день' : diffDays <= 4 ? 'дні' : 'днів'}
+                        {diffDays} {diffDays === 1 ? t('day_announcement') : diffDays <= 4 ? t('day_announcement_v_2') : t('day_announcement_v_3')}
                     </div>
                 )}
                 <span
                     className="bg-blue-500 w-7/12 text-white text-relative-h5 px-4 pr-5 pl-10 py-1 font-montserratRegular font-normal tracking-wide rounded-l-full">
-                    {getHelpTypeInUkrainian(typeHelp)}
+                     {t(getHelpToKey(typeHelp))}
                 </span>
             </div>
 
@@ -80,7 +82,7 @@ const Announcement: React.FC<AnnouncementProps> = ({
                     onClick={() => setIsModalOpen(true)}
                     className="uppercase px-4 py-2 rounded-full text-relative-p bg-perfect-yellow"
                 >
-                    Детальніше
+                    {t('more_details')}
                 </Button>
             </div>
 

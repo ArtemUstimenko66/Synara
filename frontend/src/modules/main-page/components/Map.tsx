@@ -11,6 +11,7 @@ import {
 import SearchComponentMap from "./SearchComponentMap.tsx";
 import {Slider} from "@mui/material";
 import { searchMap, searchUsersByRadius} from "../api/mainPageService.ts";
+import {useTranslation} from "react-i18next";
 
 interface SideBarProps {
     isOpen: boolean;
@@ -242,6 +243,7 @@ export const Map: React.FC<SideBarProps> = ({ isOpen, onClose, onBackToFilters, 
     const handleBackClick = () => {
         onBackToFilters();
     };
+    const {t} = useTranslation();
 
     return (
         <Fragment>
@@ -264,7 +266,7 @@ export const Map: React.FC<SideBarProps> = ({ isOpen, onClose, onBackToFilters, 
                         {/* Nav items */}
                         <div className="mt-4 flex flex-row w-full justify-center">
                             <BackArrowMini className="h-5 w-5 mt-3 mr-12 justify-start" onClick={handleBackClick}/>
-                            <h2 className="text-h3 ml-12 mr-12 font-kharkiv text-center">Відстань пошуку</h2>
+                            <h2 className="text-h3 ml-12 mr-12 font-kharkiv text-center">{t('distance_search')}</h2>
                         </div>
                         <div style={{display: "flex", flexDirection: "column", alignItems: "center", width: "100%"}}>
                             {/* Search input with icon */}
@@ -284,7 +286,7 @@ export const Map: React.FC<SideBarProps> = ({ isOpen, onClose, onBackToFilters, 
                                     alignItems: "center",
                                     marginBottom: "1px"
                                 }}>
-                                    <span className="mt-2 text-xs-ps font-montserratRegular">Радіус:</span>
+                                    <span className="mt-2 text-xs-ps font-montserratRegular">{t('radius')}</span>
                                     <span className="text-xs-ps font-montserratRegular">{(circleRadius / 1000).toFixed(0)} км</span>
                                 </label>
                                 <Slider
@@ -361,10 +363,10 @@ export const Map: React.FC<SideBarProps> = ({ isOpen, onClose, onBackToFilters, 
                             <Button isFilled={true} className=" uppercase text-black py-3 md:text-pxl"
                                     onClick={handleApplyClick}
                             >
-                                Застосувати
+                                {t('apply')}
                             </Button>
                             <Button onClick={handleClearClick} hasBlue={true} className=" uppercase py-3 md:text-pxl">
-                                Очистити
+                                {t('clear')}
                             </Button>
                         </div>
                     </div>

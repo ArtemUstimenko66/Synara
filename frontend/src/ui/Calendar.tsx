@@ -4,6 +4,7 @@ import { format, addDays } from 'date-fns';
 import { uk } from 'date-fns/locale';
 import { DateRange } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
+import {useTranslation} from "react-i18next";
 
 export default function DateRangePickerWithButton() {
     const [open, setOpen] = useState(false);
@@ -24,6 +25,7 @@ export default function DateRangePickerWithButton() {
             setOpen(false);
         }
     };
+    const {t} = useTranslation();
 
     const formatDateRange = (range: DateRange) => {
         if (range?.from && range?.to) {
@@ -45,15 +47,16 @@ export default function DateRangePickerWithButton() {
                 <div className="absolute mt-2 z-10 bg-white p-4 rounded-lg shadow-lg xl:-left-10 md:-left-10 sm:-left-14">
                     {/* Text above the buttons */}
                     <div className="text-lg font-semibold mb-4 ml-3 text-left">
-                        За останній:
+                        {t('from_last')}
                     </div>
+
 
                     {/* Button group in a row */}
                     <div className="flex justify-around mb-2">
-                        <button className="bg-another-blue text-white py-1 px-4 rounded-full">День</button>
-                        <button className="bg-another-blue text-white py-1 px-4 rounded-full">Неділя</button>
-                        <button className="bg-another-blue text-white py-1 px-4 rounded-full">Місяць</button>
-                        <button className="bg-another-blue text-white py-1 px-4 rounded-full">Рік</button>
+                        <button className="bg-another-blue text-white py-1 px-4 rounded-full">{t('day')}</button>
+                        <button className="bg-another-blue text-white py-1 px-4 rounded-full">{t('week')}</button>
+                        <button className="bg-another-blue text-white py-1 px-4 rounded-full">{t('month')}</button>
+                        <button className="bg-another-blue text-white py-1 px-4 rounded-full">{t('year')}</button>
                     </div>
 
                     {/* Line below the buttons */}

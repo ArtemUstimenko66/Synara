@@ -6,12 +6,15 @@ import { MobileMenu } from "./MobileMenu.tsx";
 import MenuCloseIcon from '../assets/images/icon-close-menu.svg?react';
 import MenuIcon from '../assets/images/icon-menu.svg?react';
 import LogoSynara from '../assets/images/logoSynara.svg?react';
+import LanguageSelector from "./LanguageSelector.tsx";
+import {useTranslation} from "react-i18next";
 
 const Header: React.FC = () => {
     const [isVisible, setIsVisible] = useState(true);
     const [isAtTop, setIsAtTop] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const { t } = useTranslation();
 
     const handleScroll = () => {
         const currentScrollY = window.scrollY;
@@ -42,20 +45,20 @@ const Header: React.FC = () => {
 
                 {/* Элементы навигации для компьютера */}
                 <nav className="flex-grow hidden md:hidden sm:hidden xl:flex xl:space-x-20 md:space-x-10 xl:mr-10 md:mr-5 items-center">
-                    <NavItem text="ГОЛОВНА" to="/home" />
-                    <NavItem text="ПРО НАС" to="/about" />
-                    <NavItem text="ЗБОРИ" to="/collections" />
-                    <NavItem text="КАРТИ" to="/maps" />
-                    <NavItem text="ЯК ЦЕ ПРАЦЮЄ" to="/how-it-works" />
+                    <NavItem text={t('mainUPPER')} to="/home" />
+                    <NavItem text={t('about_usUPPER')} to="/about" />
+                    <NavItem text={t('collectionsUPPER')} to="/collections" />
+                    <NavItem text={t('mapUPPER')} to="/maps" />
+                    <NavItem text={t('how_it_worksUPPER')} to="/how-it-works" />
                 </nav>
 
                 {/* Кнопки для аутентификации */}
                 <div className="hidden xl:flex space-x-5">
                     <Link to="/login">
-                        <Button>УВІЙТИ</Button>
+                        <Button>{t('log_inUPPER')}</Button>
                     </Link>
                     <Link to="/registration">
-                        <Button isFilled={true}>РЕЄСТРАЦІЯ</Button>
+                        <Button isFilled={true}>{t('registrationUPPER')}</Button>
                     </Link>
                 </div>
 
@@ -66,7 +69,7 @@ const Header: React.FC = () => {
                     {isMobileMenuOpen ? <MenuCloseIcon /> : <MenuIcon />}
                 </div>
             </div>
-
+            <LanguageSelector/>
             {/* Мобильное меню */}
             <MobileMenu isOpen={isMobileMenuOpen} />
         </header>

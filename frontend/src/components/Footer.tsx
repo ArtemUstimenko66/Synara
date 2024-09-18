@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import LogoFooter from '../assets/images/logo_Footer.svg?react';
 import DownArrow from '../assets/images/Down_Arrow.svg?react';
+import {useTranslation} from "react-i18next";
 
 library.add(faFacebookF, faInstagram, faTwitter, faTelegramPlane);
 
@@ -28,6 +29,7 @@ const AccordionSection: React.FC<{ title: string }> = ({ title, children }) => {
 };
 
 const Footer: React.FC = () => {
+    const { t } = useTranslation();
     const isSmallScreen = useMediaQuery({query: '(max-width: 640px)'});
     const isHomePage = location.pathname === '/home';
     return (
@@ -35,28 +37,31 @@ const Footer: React.FC = () => {
             {isSmallScreen ? (
                 <>
                     <div className="border border-dark-blue mb-4 w-full"></div>
-                    <AccordionSection title="НАВІГАЦІЯ">
+                    <AccordionSection title={t('navigationUPPER')}>
                         <ul>
-                            <li className="my-2"><a href="#" className="hover:underline">Головна</a></li>
-                            <li className="my-2"><a href="#" className="hover:underline">Про нас</a></li>
-                            <li className="my-2"><a href="#" className="hover:underline">Збори</a></li>
-                            <li className="my-2"><a href="#" className="hover:underline">Карти</a></li>
-                            <li className="my-2"><a href="#" className="hover:underline">Як це працює</a></li>
-                        </ul>
-                    </AccordionSection>
-                    <div className="border border-dark-blue mb-4 w-full"></div>
-                    <AccordionSection title="ІНФОРМАЦІЯ">
-                        <ul>
-                            <li className="my-2"><a href="#" className="hover:underline">Умови використання</a></li>
-                            <li className="my-2"><a href="#" className="hover:underline">Політика конфіденційності</a>
+                            <li className="my-2"><a href="#" className="hover:underline">{t('main')}</a></li>
+                            <li className="my-2"><a href="#" className="hover:underline">{t('about_us')}</a></li>
+                            <li className="my-2"><a href="#" className="hover:underline">{t('collection')}</a></li>
+                            <li className="my-2"><a href="#" className="hover:underline">{t('maps')}</a></li>
+                            <li className="my-2"><a href="#" className="hover:underline">{t('how_it_worksLOWER')}</a>
                             </li>
-                            <li className="my-2"><a href="#" className="hover:underline">Найчастіші питання</a></li>
                         </ul>
                     </AccordionSection>
                     <div className="border border-dark-blue mb-4 w-full"></div>
-                    <AccordionSection title="ЗВ'ЯЗОК">
+                    <AccordionSection title={t('informationUPPER')}>
+                        <ul>
+                            <li className="my-2"><a href="#" className="hover:underline">{t('terms_of_use')}</a></li>
+                            <li className="my-2"><a href="#" className="hover:underline">{t('privacy_policy')}</a>
+                            </li>
+                            <li className="my-2"><a href="#"
+                                                    className="hover:underline">{t('the_most_frequent_questions')}</a>
+                            </li>
+                        </ul>
+                    </AccordionSection>
+                    <div className="border border-dark-blue mb-4 w-full"></div>
+                    <AccordionSection title={t('communicationUPPER')}>
                         <p className="mt-2">0-800-501-701</p>
-                        <p className="mb-2">Всеукраїнський телефон довіри</p>
+                        <p className="mb-2">{t('all_ukrainian_hotline')}</p>
                         <p className="my-2">synara.support@email.com</p>
                         <div className="mt-2 flex space-x-4">
                             <a href="#" aria-label="Facebook">
@@ -76,7 +81,7 @@ const Footer: React.FC = () => {
                     <div className="border border-dark-blue mb-4 w-full"></div>
                     <div className="flex items-center justify-center">
                         <Link to=".">
-                            <LogoFooter className="text-xl font-bold w-[45%] xl:mr-32 md:mr-14" />
+                            <LogoFooter className="text-xl font-bold w-[45%] xl:mr-32 md:mr-14"/>
                         </Link>
 
                     </div>
@@ -96,43 +101,43 @@ const Footer: React.FC = () => {
                         </div>
                         {/* Navigation section */}
                         <div className="mt-4 ml-2 md:mt-0 md:-ml-8 xl:mr-14">
-                            <h3 className="font-bold mb-2">НАВІГАЦІЯ</h3>
+                            <h3 className="font-bold mb-2">{t('navigationUPPER')}</h3>
                             <div className="flex space-x-8">
                                 {!isHomePage && (
                                     <ul>
-                                    <li><a href="#" className="hover:underline">Профіль</a></li>
-                                    <li><a href="#" className="hover:underline">Чат</a></li>
-                                    <li><a href="#" className="hover:underline">Петиції</a></li>
-                                    <li><a href="#" className="hover:underline">Оголошення</a></li>
-                                    <li><a href="#" className="hover:underline">Статистика</a></li>
-                                    <li><a href="#" className="hover:underline">Налаштування</a></li>
+                                        <li><a href="#" className="hover:underline">{t('profile')}</a></li>
+                                        <li><a href="#" className="hover:underline">{t('chat')}</a></li>
+                                        <li><a href="#" className="hover:underline">{t('petitions')}</a></li>
+                                        <li><a href="#" className="hover:underline">{t('advertisement')}</a></li>
+                                        <li><a href="#" className="hover:underline">{t('statistic')}</a></li>
+                                        <li><a href="#" className="hover:underline">{t('settings')}</a></li>
                                     </ul>
-                                    )
+                                )
                                 }
 
                                 <ul>
-                                    <li><a href="#" className="hover:underline">Головна</a></li>
-                                    <li><a href="#" className="hover:underline">Про нас</a></li>
-                                    <li><a href="#" className="hover:underline">Збори</a></li>
-                                    <li><a href="#" className="hover:underline">Карти</a></li>
-                                    <li><a href="#" className="hover:underline">Як це працює</a></li>
+                                    <li><a href="#" className="hover:underline">{t('main')}</a></li>
+                                    <li><a href="#" className="hover:underline">{t('about_us')}</a></li>
+                                    <li><a href="#" className="hover:underline">{t('collection')}</a></li>
+                                    <li><a href="#" className="hover:underline">{t('maps')}</a></li>
+                                    <li><a href="#" className="hover:underline">{t('how_it_worksLOWER')}</a></li>
                                 </ul>
                             </div>
                         </div>
                         {/* Info section */}
                         <div className="mt-4 ml-24 xl:mr-0 md:mt-0 md:mr-22 xl:ml-14 md:ml-4">
-                            <h3 className="font-bold mb-2">ІНФОРМАЦІЯ</h3>
+                            <h3 className="font-bold mb-2">{t('informationUPPER')}</h3>
                             <ul>
-                                <li><a href="#" className="hover:underline">Умови використання</a></li>
-                                <li><a href="#" className="hover:underline">Політика конфіденційності</a></li>
-                                <li><a href="#" className="hover:underline">Найчастіші питання</a></li>
+                                <li><a href="#" className="hover:underline">{t('terms_of_use')}</a></li>
+                                <li><a href="#" className="hover:underline">{t('privacy_policy')}</a></li>
+                                <li><a href="#" className="hover:underline">{t('the_most_frequent_questions')}</a></li>
                             </ul>
                         </div>
                         {/* Contact section */}
                         <div className="mt-4 md:mt-0 text-left  xl:mr-24 md:mr-0 md:ml-12 xl:ml-20">
-                            <h3 className="font-bold mb-2">ЗВ'ЯЗОК</h3>
+                            <h3 className="font-bold mb-2">{t('communicationUPPER')}</h3>
                             <p>0-800-501-701</p>
-                            <p className="mb-4">Всеукраїнський телефон довіри</p>
+                            <p className="mb-4">{t('all_ukrainian_hotline')}</p>
                             <p>synara.support@email.com</p>
                             <div className="mt-2 flex justify-start space-x-4">
                                 <a href="#" aria-label="Facebook">

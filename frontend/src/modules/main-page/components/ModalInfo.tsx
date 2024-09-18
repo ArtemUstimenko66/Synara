@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from "../../../ui/Button.tsx";
+import {useTranslation} from "react-i18next";
 
 interface ModalInfoProps {
     isOpen: boolean;
@@ -16,6 +17,8 @@ interface ModalInfoProps {
 }
 
 const ModalInfo: React.FC<ModalInfoProps> = ({ isOpen, onClose, announcement }) => {
+    const {t} = useTranslation();
+
     if (!isOpen) return null;
 
     return (
@@ -29,7 +32,7 @@ const ModalInfo: React.FC<ModalInfoProps> = ({ isOpen, onClose, announcement }) 
                     {/* Avatar */}
                     <img
                         src={announcement.avatar}
-                        alt={`Аватар ${announcement.userName}`}
+                        alt={`${t('avatar')} ${announcement.userName}`}
                         className="rounded-full w-32 h-32 mb-4"
                     />
 
@@ -43,13 +46,13 @@ const ModalInfo: React.FC<ModalInfoProps> = ({ isOpen, onClose, announcement }) 
                                 {announcement.description}
                             </p>
                             <p className="font-montserratRegular font-semibold text-relative-p mb-6">
-                                Тип допомоги: {announcement.typeHelp}
+                                {t('type_of_help')}: {announcement.typeHelp}
                             </p>
                             <p className="text-relative-p mb-6 font-semibold font-montserratRegular">
-                                Кількість переглядів: {announcement.viewsCount}
+                                {t('count_views')}: {announcement.viewsCount}
                             </p>
                             <p className="text-relative-p font-semibold font-montserratRegular">
-                                Кількість відгукнувшихся: {announcement.respondedCount}
+                                {t('respondents_number')}: {announcement.respondedCount}
                             </p>
                         </div>
 
@@ -74,11 +77,11 @@ const ModalInfo: React.FC<ModalInfoProps> = ({ isOpen, onClose, announcement }) 
                     {/* Buttons */}
                     <div className="flex justify-center space-x-4 mt-6">
                         <Button hasBlue={true} className="bg-dark-blue uppercase text-white py-2 px-4 w-100px">
-                            Відгукнутись
+                            {t('respond')}
                         </Button>
                         <Button hasBlue={true} className="border uppercase text-blue-500 py-2 px-4 w-100px"
                                 onClick={onClose}>
-                            Зберегти
+                            {t('save')}
                         </Button>
                     </div>
                 </div>
