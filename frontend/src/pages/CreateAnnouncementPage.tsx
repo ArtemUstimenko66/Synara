@@ -12,6 +12,7 @@ import {convertDateToDBFormat} from "../modules/main-page/helpers/convertDateToD
 import {translateHelpType} from "../modules/main-page/helpers/translateHelpType.ts";
 import {uploadAllDocuments} from "../modules/main-page/helpers/uploadAllDocuments.ts";
 import {validateFields} from "../modules/main-page/validation/validateFields.ts";
+import {useTranslation} from "react-i18next";
 
 const CreateAnnouncementPage: React.FC = () => {
     const [datePosted, setDatePosted] = useState<string>('');
@@ -90,6 +91,7 @@ const CreateAnnouncementPage: React.FC = () => {
     };
 
 
+    const {t} = useTranslation();
 
 
     return (
@@ -100,14 +102,14 @@ const CreateAnnouncementPage: React.FC = () => {
                 <MainHeader />
 
                 {/* Main part */}
-                <h2 className="text-h2 font-kharkiv text-center mt-24">Заповніть дані</h2>
+                <h2 className="text-h2 font-kharkiv text-center mt-24">{t('fill_the_data')}</h2>
 
                 {/* Date */}
                 <div className="w-full mb-4">
-                    <label className="font-montserratRegular mb-2">Дата*</label>
+                    <label className="font-montserratRegular mb-2">{t('date')}*</label>
                     <input
                         type="text"
-                        placeholder="ДД / ММ / РРРР"
+                        placeholder={t('date_format')}
                         value={datePosted}
                         onChange={handleDateChange}
                         className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
@@ -117,10 +119,10 @@ const CreateAnnouncementPage: React.FC = () => {
 
                 {/* Description */}
                 <div className="w-full flex flex-col mb-4">
-                    <label className="font-montserratRegular mb-2">Опис*</label>
+                    <label className="font-montserratRegular mb-2">{t('description')}*</label>
                     <textarea
                         value={localData.description}
-                        placeholder="Ваш опис"
+                        placeholder={t('your_description')}
                         className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue resize-none"
                         rows={6}
                         onChange={(e) => setLocalData(prevData => ({ ...prevData, description: e.target.value }))}
@@ -130,9 +132,9 @@ const CreateAnnouncementPage: React.FC = () => {
 
                 {/* Help type */}
                 <div className="w-full mb-4">
-                    <label className="font-montserratRegular mb-2">Яку допомогу ви можете надавати:*</label>
+                    <label className="font-montserratRegular mb-2">{t('enter_type_of_given_help')}:*</label>
                     <div className="flex mt-4 space-x-10 flex-wrap gap-1">
-                        {['Психологічна', 'Гуманітарна', 'Інформаційна', 'Матеріальна'].map(helpType => (
+                        {['Психологічна', 'Гуманітарна', 'Інформаційна', 'Матеріальна'].map((helpType, index) => (
                             <button
                                 key={helpType}
                                 onClick={() => handleHelpSelect(helpType)}
@@ -142,7 +144,7 @@ const CreateAnnouncementPage: React.FC = () => {
                                         : 'border-light-blue'
                                 }`}
                             >
-                                {helpType}
+                                {t(`categories${index + 1}`)}
                             </button>
                         ))}
                     </div>
@@ -151,12 +153,12 @@ const CreateAnnouncementPage: React.FC = () => {
                 {/* Add photo */}
                 <div className="w-full mb-4">
                     <div className="flex flex-col">
-                        <label className="font-montserratRegular">Додати фото</label>
+                        <label className="font-montserratRegular">{t('add_photo')}</label>
                         <button
                             className="w-52 mb-2 mt-2 p-2 uppercase text-center border-2 rounded-lg outline-none border-light-blue text-light-blue"
                             onClick={() => fileInputRef.current?.click()}
                         >
-                            Додати
+                            {t('add')}
                         </button>
                         <input
                             ref={fileInputRef}
@@ -185,7 +187,7 @@ const CreateAnnouncementPage: React.FC = () => {
                     className="w-full text-almost-white uppercase font-montserratRegular py-4 rounded-full mb-6"
                     onClick={handleSubmit}
                 >
-                    Додати
+                    {t('add')}
                 </Button>
 
                 {/* Sidebar */}

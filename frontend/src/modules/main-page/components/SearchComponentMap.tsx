@@ -2,6 +2,7 @@ import React, { useState, useMemo, useRef } from 'react';
 import SearchIcon from '../assets/searchIcon.svg?react';
 import SuggestionsList from './SuggestionsList.tsx';
 import {citiesWithCoordinates} from "../../../data/citiesWithCoordinates.ts"; // Импортируем новый компонент
+import {useTranslation} from "react-i18next";
 
 interface City {
     id: number;
@@ -54,6 +55,7 @@ const SearchComponentMap: React.FC<SearchComponentMapProps> = ({ onCitySelect, s
             handleCitySelect(filteredCities[activeSuggestionIndex]);
         }
     };
+    const {t} = useTranslation();
 
     return (
         <div className="relative flex flex-col w-[95%] bg-blue-100 rounded-2xl p-1">
@@ -65,7 +67,7 @@ const SearchComponentMap: React.FC<SearchComponentMapProps> = ({ onCitySelect, s
                     onChange={handleSearchChange}
                     onKeyDown={handleKeyDown}
                     ref={inputRef}
-                    placeholder="Введіть місто"
+                    placeholder={t('enter_city')}
                     className="w-full bg-transparent text-almost-black placeholder-gray-500 focus:outline-none"
                 />
             </div>

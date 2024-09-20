@@ -3,14 +3,16 @@ import NavItem from "../ui/NavItem.tsx";
 import { Button } from "../ui/Button.tsx";
 import { Link } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
+import {useTranslation} from "react-i18next";
 
 export const MobileMenu = ({ isOpen = false }) => {
+    const { t } = useTranslation();
     const navItems = [
-        { text: "Головна", to: "/home" },
-        { text: "Про нас", to: "/about" },
-        { text: "Збори", to: "/collections" },
-        { text: "Карти", to: "/maps" },
-        { text: "Як це працює", to: "/how-it-works" }
+        { text: t('main'), to: "/home" },
+        { text: t('about_us'), to: "/about" },
+        { text: t('collection'), to: "/collections" },
+        { text: t('maps'), to: "/maps" },
+        { text: t('how_it_worksLOWER'), to: "/how-it-works" }
     ];
 
     const isSmallScreen = useMediaQuery({ query: '(max-width: 768px)' });
@@ -25,10 +27,10 @@ export const MobileMenu = ({ isOpen = false }) => {
                 ))}
                 <div className="flex flex-col space-y-5 md:mr-14 sm:mr-0 mt-auto">
                     <Link to="/login" className="w-full mt-8">
-                        <Button hasBlue={true} className="w-full md:text-pxl">УВІЙТИ</Button>
+                        <Button hasBlue={true} className="w-full md:text-pxl">{t('log_inUPPER')}</Button>
                     </Link>
                     <Link to="/registration" className="w-full">
-                        <Button isFilled={true} className="w-full text-black md:text-pxl">РЕЄСТРАЦІЯ</Button>
+                        <Button isFilled={true} className="w-full text-black md:text-pxl">{t('registrationUPPER')}</Button>
                     </Link>
                 </div>
             </nav>

@@ -13,6 +13,7 @@ import { urgencyTranslations } from "../data/urgencyMap.ts";
 import { Map } from "../modules/main-page/components/Map.tsx";
 import ChatButton from "../modules/chat/components/ui/ChatButton.tsx";
 import {SideBarChat} from "../modules/chat/components/SideBarChat.tsx";
+import {useTranslation} from "react-i18next";
 
 const MainPage: React.FC = () => {
     const [sortOrder, setSortOrder] = useState<'ASC' | 'DESC'>('ASC');
@@ -25,6 +26,7 @@ const MainPage: React.FC = () => {
     const [searchParams, setSearchParams] = useSearchParams();
 
     const limit = 12;
+    const {t} = useTranslation();
 
     const [offset, setOffset] = useState(0);
     const [hasMore, setHasMore] = useState(true);
@@ -142,7 +144,7 @@ const MainPage: React.FC = () => {
                             {/* Help Map Button */}
                             <Button hasBlue={true}
                                     className="uppercase text-relative-h5 px-8 py-3 my-5 w-full xl:w-full">
-                                Карта допомоги
+                                {t('map_of_help')}
                             </Button>
 
                             {/* Filters Button */}
@@ -152,7 +154,7 @@ const MainPage: React.FC = () => {
                                     className="px-4 text-relative-h5 w-full md:w-1/2 xl:w-3/6"
                                     onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                                 >
-                                    <span className="text-montserratMedium text-relative-h5">Фільтрувати</span>
+                                    <span className="text-montserratMedium text-relative-h5">{t('filter')}</span>
                                 </Button>
                             </div>
                         </div>
@@ -169,7 +171,7 @@ const MainPage: React.FC = () => {
                                 <Link to="/add-announcement" className="w-full md:w-1/2 xl:w-auto">
                                     <Button hasBlue={true} className="px-4 w-full md:w-auto xl:w-auto">
                                         <span
-                                            className="text-montserratMediumtext-relative-h5">Додати оголошення</span>
+                                            className="text-montserratMediumtext-relative-h5">{t('add_announcement')}</span>
                                     </Button>
                                 </Link>
 
@@ -182,7 +184,7 @@ const MainPage: React.FC = () => {
                                             onClick={toggleDropdown}
                                         >
                                             <span
-                                                className="text-montserratMedium text-relative-h5">Сортування за</span>
+                                                className="text-montserratMedium text-relative-h5">{t('sort_by')}</span>
                                             <DownArrowIcon
                                                 className={`h-3 w-3 mt-1 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`}
                                             />
@@ -195,13 +197,13 @@ const MainPage: React.FC = () => {
                                                     className={`cursor-pointer py-2 px-4 border-b-2 border-blue-500 ${sortOrder === 'DESC' ? 'text-blue-500' : 'text-black'}`}
                                                     onClick={() => handleSort('DESC')}
                                                 >
-                                                    Спочатку нові
+                                                    {t('firstly_new')}
                                                 </div>
                                                 <div
                                                     className={`cursor-pointer py-2 px-4 ${sortOrder === 'ASC' ? 'text-blue-500' : 'text-black'}`}
                                                     onClick={() => handleSort('ASC')}
                                                 >
-                                                    Спочатку старі
+                                                    {t('old_for_first')}
                                                 </div>
                                             </div>
                                         )}
@@ -240,7 +242,7 @@ const MainPage: React.FC = () => {
                                 ) : (
                                     <div className="flex items-center justify-center my-[20%] w-full text-gray-500">
                                         <div className="text-center font-montserratMedium">
-                                            Наразі немає оголошень за обраними фільтрами
+                                            {t('no_announcements_by_this_filters')}
                                         </div>
                                     </div>
                                 )}
@@ -253,7 +255,7 @@ const MainPage: React.FC = () => {
                     {hasMore && (
                         <div className="w-full flex justify-center mt-8">
                             <Button isFilled={true} className="uppercase" onClick={loadMoreAnnouncements}>
-                                Показати ще
+                                {t('show_more')}
                             </Button>
                         </div>
                     )}

@@ -7,6 +7,8 @@ import NotificationIcon from '../../assets/notification.svg?react';
 import NavItem from "../../../../ui/NavItem.tsx";
 
 import { SideBar } from "../SideBar.tsx";
+import {useTranslation} from "react-i18next";
+import LanguageSelector from "../../../../components/LanguageSelector.tsx";
 
 const MainHeader: React.FC = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -29,6 +31,7 @@ const MainHeader: React.FC = () => {
             window.removeEventListener('scroll', handleScroll);
         };
     }, [lastScrollY]);
+    const {t} = useTranslation();
 
     return (
         <>
@@ -37,6 +40,7 @@ const MainHeader: React.FC = () => {
             ${isVisible ? 'header-slide-in' : 'header-slide-out'} 
             ${isAtTop ? 'transition-background-color' : 'bg-white shadow-sm'}`}
             >
+                <LanguageSelector/>
                 <div className="flex justify-between 0 pl-[5%] items-center px-8 py-8 md:ml-10 md:mr-4 xl:ml-20 xl:mr-36">
 
                     {/* Logo */}
@@ -45,12 +49,12 @@ const MainHeader: React.FC = () => {
                     </Link>
 
                     {/* Nav items */}
-                    <nav className="xl:flex space-x-16 sm:hidden md:hidden ">
-                        <NavItem text="ГОЛОВНА" to="/main"/>
-                        <NavItem text="ПРО НАС" to="/about"/>
-                        <NavItem text="ЗБОРИ" to="/collections"/>
-                        <NavItem text="КАРТИ" to="/maps"/>
-                        <NavItem text="ЯК ЦЕ ПРАЦЮЄ" to="/how-it-works"/>
+                    <nav className="flex space-x-16 ">
+                        <NavItem text={t('mainUPPER')} to="/main"/>
+                        <NavItem text={t('about_usUPPER')} to="/about"/>
+                        <NavItem text={t('collectionsUPPER')} to="/collections"/>
+                        <NavItem text={t('mapUPPER')} to="/maps"/>
+                        <NavItem text={t('how_it_worksUPPER')} to="/how-it-works"/>
                     </nav>
 
                     {/* Buttons */}

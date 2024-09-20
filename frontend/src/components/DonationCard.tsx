@@ -1,4 +1,5 @@
 import React from 'react';
+import {useTranslation} from "react-i18next";
 
 interface DonationCardProps {
     title: string;
@@ -10,6 +11,8 @@ interface DonationCardProps {
 }
 
 const DonationCard: React.FC<DonationCardProps> = ({ title, description, goal, raised, percentage, className }) => {
+    const { t } = useTranslation();
+
     return (
         <div className={`w-full xl:w-4/12 sm:h-[110vw] md:w-auto xl:h-[40vw] md:h-[54vw] border-4 border-dark-blue rounded-3xl p-8 flex flex-col justify-between ${className}`}>
             <div className="xl:mt-4 md:mt-4 sm:mt-0">
@@ -19,8 +22,8 @@ const DonationCard: React.FC<DonationCardProps> = ({ title, description, goal, r
                 </p>
             </div>
             <div className="mt-8">
-                <p className="xl:text-pxl md:text-relative-h3 font-montserratMedium mt-4">Ціль: {goal.toLocaleString()}</p>
-                <p className="xl:text-pxl md:text-relative-h4 font-montserratRegular">Зібрано: {raised.toLocaleString()}</p>
+                <p className="xl:text-pxl md:text-relative-h3 font-montserratMedium mt-4">{t('goal')}: {goal.toLocaleString()}</p>
+                <p className="xl:text-pxl md:text-relative-h4 font-montserratRegular">{t('collected')}: {raised.toLocaleString()}</p>
                 <div className="w-full bg-almost-white h-11 border-2 border-dark-blue rounded-3xl mt-6 xl:mt-12">
                     <div
                         className="bg-dark-blue h-10 rounded-3xl flex items-center justify-center"

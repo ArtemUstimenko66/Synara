@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import SearchIcon from '../../assets/searchIcon.svg?react';
+import {useTranslation} from "react-i18next";
 
 const SearchComponent: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState<string>('');
@@ -20,6 +21,7 @@ const SearchComponent: React.FC = () => {
             }
         }
     };
+    const {t} = useTranslation();
 
     return (
         <div className="flex items-center w-full bg-blue-100 rounded-full p-2">
@@ -31,7 +33,7 @@ const SearchComponent: React.FC = () => {
                 value={searchTerm}
                 onChange={handleInputChange}
                 onKeyPress={handleKeyPress}
-                placeholder="Пошук оголошення"
+                placeholder={t('search_announcement')}
                 className="w-full bg-transparent text-almost-black text-montserratMedium placeholder-gray-500 focus:outline-none"
                 ref={inputRef}
             />
