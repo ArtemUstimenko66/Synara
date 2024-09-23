@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import { useLocation } from 'react-router-dom';
-import VectorHomePage from '../assets/images/VectorHomePage.svg?react';
+import MainIllustration from '../assets/images/MainIllustration.svg?react';
 
 interface WrapperProps {
     children: ReactNode;
@@ -14,7 +14,7 @@ const Wrapper: React.FC<WrapperProps> = ({ children }) => {
         <div className="relative min-h-screen min-w-full flex flex-col">
             {isHomePage && (
                 <div className="absolute top-0 left-0 right-0 w-full h-full z-0 overflow-hidden">
-                    <VectorHomePage className="w-full h-auto sm:hidden xl:block md:block"/>
+                    <MainIllustration className="w-full h-auto sm:hidden xl:block md:block"/>
                     <div className="xl:hidden sm:hidden absolute h-[27vw] md:flex md:bg-dark-blue w-full overflow-hidden"/>
                 </div>
             )}

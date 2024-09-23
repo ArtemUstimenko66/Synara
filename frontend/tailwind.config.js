@@ -20,7 +20,8 @@ module.exports = {
         'baby-blue': '#B1CEF0',
         'pale-yellow': '#EDBC64',
         'perfect-yellow': '#FAA206',
-        'another-blue': '#0000fe'
+        'another-blue': '#0000fe',
+        'burgundy-red': '#B63232'
       },
       fontFamily: {
         kharkiv: ['Kharkiv Tone', 'sans-serif'],

@@ -8,6 +8,7 @@ import TwitterLoginButton from "../../registration/components/ui/TwitterLoginBut
 import VectorWhite from '../../../assets/images/VectorWhite.svg?react';
 import Cookies from 'js-cookie';
 import {login} from "../api/loginService.ts";
+import {useTranslation} from "react-i18next";
 
 const LoginMain: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -34,12 +35,12 @@ const LoginMain: React.FC = () => {
 
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailPattern.test(email)) {
-            errors.email = 'Невірний формат електронної пошти';
+            errors.email = t('incorrect_format_email');
             valid = false;
         }
 
         if (password.length < 6) {
-            errors.password = 'Пароль повинен містити не менше 6 символів';
+            errors.password = t('password_must_be_longer_than_6');
             valid = false;
         }
 
@@ -51,8 +52,8 @@ const LoginMain: React.FC = () => {
         console.log('handleLogin')
         if (validate()) {
             try {
-                const response = await login(email, password);
-                const { accessToken } = response;
+                await login(email, password);
+                //const { accessToken } = response;
 
                 if (selectedOptions.terms) {
                     Cookies.set('email', email, { expires: 7 });
@@ -64,7 +65,7 @@ const LoginMain: React.FC = () => {
             } catch (error: any) {
                 if (error.response && error.response.status === 401) {
                     console.error('401 : Неправильний email або пароль.');
-                    setGeneralError('Неправильний email або пароль.');
+                    setGeneralError(t('incorrect_email_password'));
                 } else {
                     console.error('Login failed', error);
                 }
@@ -79,15 +80,17 @@ const LoginMain: React.FC = () => {
         }));
     };
 
+    const { t } = useTranslation();
+
     return (
         <div className="flex flex-col w-full">
             <div className="flex w-full space-x-4 mb-4 xl:mt-10 sm:mt-2">
                 <div className="w-full xl:mb-4 mb-2">
-                    <label className="font-montserratRegular xl:mb-2 mb-0">Пошта</label>
+                    <label className="font-montserratRegular xl:mb-2 mb-0">{t('email')}</label>
                     <input
                         type="email"
                         name="email"
-                        placeholder="Адреса електронної пошти"
+                        placeholder={t('email_address')}
                         className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
@@ -96,11 +99,11 @@ const LoginMain: React.FC = () => {
                 </div>
             </div>
             <div className="w-full mb-6 relative">
-                <label className="font-montserratRegular mb-2">Пароль</label>
+                <label className="font-montserratRegular mb-2">{t('password')}</label>
                 <input
                     type={showPassword ? 'text' : 'password'}
                     name="password"
-                    placeholder="Ваш пароль"
+                    placeholder={t('your_password')}
                     className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue xl:pr-10"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
@@ -136,12 +139,11 @@ const LoginMain: React.FC = () => {
                                 </span>
                             )}
                         </span>
-                        Запам'ятати мене
+                        {t('remember_me')}
                     </label>
                 </div>
                 <Link to="/reset-password"
-                   className="text-almost-black text-sm sm:sm:items-center font-montserratRegular font-bold underline">Забули
-                    пароль?</Link>
+                      className="text-almost-black text-sm sm:sm:items-center font-montserratRegular font-bold underline">{t('forgot_password')}</Link>
             </div>
             {generalError && <p className="text-red-500 text-center mb-5">{generalError}</p>}
             <Button
@@ -149,11 +151,11 @@ const LoginMain: React.FC = () => {
                 className="w-full bg-perfect-yellow text-almost-black py-3 rounded-full mb-5 xl:mt-0 sm:mt-5 hover:bg-perfect-yellow transition"
                 onClick={handleLogin}
             >
-                УВІЙТИ
+                {t('log_inUPPER')}
             </Button>
 
             <div className="flex items-center justify-center w-full xl:mb-10 sm:mb-5 xl:mt-5 sm:mt-1 text-gray-500">
-                <span className="mx-4">Або увійти за допомогою</span>
+                <span className="mx-4">{t('or_log_in_via')}</span>
             </div>
 
             <div className="flex w-full justify-between mb-5">
@@ -162,9 +164,8 @@ const LoginMain: React.FC = () => {
             </div>
 
             <div className="flex w-full justify-center xl:mt-6 sm:mt-1">
-                <p className="text-sm font-montserratRegular">
-                    У вас ще немає аккаунта? <Link to="/registration"
-                                                className="text-almost-black font-bold underline">Зареєструватись</Link>
+                <p className="text-sm font-montserratRegular">{t('do_not_have_an_account_yet')} <Link to="/registration"
+                                                                                                      className="text-almost-black font-bold underline">{t('to_register')}</Link>
                 </p>
             </div>
         </div>

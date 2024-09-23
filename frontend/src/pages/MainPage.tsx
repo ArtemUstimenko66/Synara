@@ -88,7 +88,7 @@ const MainPage: React.FC = () => {
     // pagination
     const loadMoreAnnouncements = async () => {
         const types = searchParams.getAll('type');
-        const query = searchParams.getAll('query');
+        const query = searchParams.get('query') || '';
         const urgencyParam = searchParams.get('isUrgent');
         const urgency = urgencyParam === 'true' ? true : (urgencyParam === 'false' ? false : undefined);
         try {
@@ -126,7 +126,7 @@ const MainPage: React.FC = () => {
     // filter by map
     const handleUsersByRadiusFound = (users: any[]) => {
         setAnnouncements(users);
-        setIsMapMenuOpen(false);
+      //  setIsMapMenuOpen(false);
         setHasMore(false);
     };
 

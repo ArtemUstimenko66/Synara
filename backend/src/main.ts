@@ -24,7 +24,10 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
 
   const PORT = configService.get<number>('PORT', 8080);
-  const corsOrigin = configService.get<string>('CORS_ORIGIN', '*');
+  const corsOrigin = [
+    'https://synara.help',
+    'https://www.synara.help'
+  ];
 
   app.enableCors({
     origin: corsOrigin,

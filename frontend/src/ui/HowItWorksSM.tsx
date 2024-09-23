@@ -48,7 +48,7 @@ const HowItWorksSM = () => {
         <section className="w-full h-auto flex flex-col items-center mt-16">
             <h2 className="text-h5 font-kharkiv mb-10 mt-10 text-center">{t('how_it_works')}</h2>
             <div className="flex items-center w-80 mb-8 mx-5 justify-center">
-                {steps.map((step, index) => (
+                {steps.map((_, index) => (
                     <React.Fragment key={index}>
                         <div className="cursor-pointer flex flex-col items-center" onClick={() => setActiveStep(index)}>
                             <div

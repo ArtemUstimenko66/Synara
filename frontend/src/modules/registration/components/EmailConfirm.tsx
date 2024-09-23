@@ -7,11 +7,11 @@ import { prepareUserDataForBackend } from "../helpers/utils/userDataPreparation"
 interface EmailConfirmProps {
     userData: User;
     onNextStep: () => void;
-    setUserData: (data: Partial<User>) => void;
+    setUserData: (data: any) => void;
 }
 
 const EmailConfirm: React.FC<EmailConfirmProps> = ({ userData, onNextStep }) => {
-    const [emailSent, setEmailSent] = useState<boolean>(false);
+    const [, setEmailSent] = useState<boolean>(false);
     const registrationDoneRef = useRef<boolean>(false);
     const effectExecuted = useRef<boolean>(false);
 
@@ -25,6 +25,7 @@ const EmailConfirm: React.FC<EmailConfirmProps> = ({ userData, onNextStep }) => 
                         const preparedData = prepareUserDataForBackend(userData);
                         console.log("Registering user with data:", preparedData);
 
+                        // @ts-ignore
                         const data = await registerUser(preparedData);
                         console.log("Registration successful:", data);
 
@@ -70,7 +71,6 @@ const EmailConfirm: React.FC<EmailConfirmProps> = ({ userData, onNextStep }) => 
             <Button
                 className="w-full bg-perfect-yellow text-almost-black py-4 rounded-full mb-8 xl:text-relative-pl md:text-relative-h3 sm:text-relative-h2"
                 onClick={handleResend}
-                disabled={emailSent}
             >
                 НАДІСЛАТИ ЛИСТ ЩЕ РАЗ
             </Button>
@@ -78,7 +78,6 @@ const EmailConfirm: React.FC<EmailConfirmProps> = ({ userData, onNextStep }) => 
                 hasBlue={true}
                 className="w-full text-almost-black py-4 rounded-full mb-8 xl:text-relative-pl md:text-relative-h3 sm:text-relative-h2"
                 onClick={onNextStep}
-                disabled={emailSent}
             >
                 ПРОЙТИ ДВОФАКТОРНУ АУТЕНТИФІКАЦІЮ
             </Button>

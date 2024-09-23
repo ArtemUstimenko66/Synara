@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef } from 'react';
+import React, {useState, useMemo, useRef} from 'react';
 import SearchIcon from '../assets/searchIcon.svg?react';
 import SuggestionsList from './SuggestionsList.tsx';
 import {citiesWithCoordinates} from "../../../data/citiesWithCoordinates.ts"; // Импортируем новый компонент
@@ -11,14 +11,17 @@ interface City {
 }
 
 interface SearchComponentMapProps {
-    onCitySelect: (city: City) => void;
+    onCitySelect?: (city: React.SetStateAction<null>) => void
     searchTerm: string;
     setSearchTerm: (term: string) => void;
 }
 
 
-
-const SearchComponentMap: React.FC<SearchComponentMapProps> = ({ onCitySelect, searchTerm, setSearchTerm }) => {
+const SearchComponentMap: React.FC<SearchComponentMapProps> = ({
+                                                                   onCitySelect,
+                                                                   searchTerm,
+                                                                   setSearchTerm,
+                                                               }) => {
     const [activeSuggestionIndex, setActiveSuggestionIndex] = useState<number>(-1);
     const [showSuggestions, setShowSuggestions] = useState<boolean>(false);
     const inputRef = useRef<HTMLInputElement>(null); // Реф на инпут
@@ -41,6 +44,7 @@ const SearchComponentMap: React.FC<SearchComponentMapProps> = ({ onCitySelect, s
         setSearchTerm(city.name);
         setActiveSuggestionIndex(-1);
         setShowSuggestions(false);
+        // @ts-ignore
         onCitySelect(city);
     };
 
@@ -57,10 +61,11 @@ const SearchComponentMap: React.FC<SearchComponentMapProps> = ({ onCitySelect, s
     };
     const {t} = useTranslation();
 
+    // @ts-ignore
     return (
         <div className="relative flex flex-col w-[95%] bg-blue-100 rounded-2xl p-1">
             <div className="flex items-center h-8 bg-blue-100 rounded-full ">
-                <SearchIcon className="w-8 h-8 mr-4" />
+                <SearchIcon className="w-8 h-8 mr-4"/>
                 <input
                     type="text"
                     value={searchTerm}

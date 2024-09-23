@@ -4,6 +4,7 @@ import  { useState } from "react";
 import { Button } from "../../ui/Button.tsx";
 import {resetPassword} from "../../modules/reset-password/api/resetPasswordService.ts";
 import LogoSynara from '../../assets/images/logoSynara.svg?react';
+import {useTranslation} from "react-i18next";
 const NewPasswordPage = () => {
     const navigate = useNavigate();
     const [password, setPassword] = useState('');
@@ -14,20 +15,21 @@ const NewPasswordPage = () => {
     const handleBackArrowClick = () => {
         navigate('/login');
     };
+    const {t} = useTranslation();
 
     const handleSubmit = async () => {
         if (!password || !confirmPassword) {
-            setError('Поле не може бути пустим.');
+            setError(t('the_field_cannot_be_empty'));
             return;
         }
 
         if (password !== confirmPassword) {
-            setError('Паролі не збігаються.');
+            setError(t('password_are_not_equal'));
             return;
         }
 
         if (password.length < 6) {
-            setError('Пароль повинен містити не менше 6 символів.');
+            setError(t('password_need_be_longer_6'));
             return;
         }
 
@@ -36,7 +38,7 @@ const NewPasswordPage = () => {
         try {
             const email = localStorage.getItem('userEmail');
             if (!email) {
-                setError('Не вдалося отримати електронну адресу. Будь ласка, повторіть спробу.');
+                setError(t('invalid_email_repeat'));
                 return;
             }
 
@@ -76,20 +78,20 @@ const NewPasswordPage = () => {
                     <div className="max-w-2xl xl:ml-24 sm:mx-5 xl:mx-0 xl:mt-7 sm:mt-2 max-h-screen flex flex-col justify-start flex-grow">
 
                         <h1 className="uppercase font-kharkiv xl:text-relative-h2 sm:text-relative-xlh1 mb-relative-ssm mt-relative-ssm">
-                            Створення нового пароля
+                            {t('creating_new_password')}
                         </h1>
                         <h2 className="font-kharkiv xl:text-relative-h3 sm:text-relative-xlh2 mb-relative-ssm mt-relative-ssm">
-                            Заповніть поле
+                            {t('fill_field')}
                         </h2>
 
                         <div className="flex flex-col w-full">
                             {/* Поле ввода пароля */}
                             <div className="w-full mb-6 relative">
-                                <label className="font-montserratRegular mb-2">Пароль</label>
+                                <label className="font-montserratRegular mb-2">{t('password')}</label>
                                 <input
                                     type={'text'}
                                     name="password"
-                                    placeholder="Створіть новий пароль"
+                                    placeholder={t('create_new_password')}
                                     className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue pr-10"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
@@ -98,11 +100,11 @@ const NewPasswordPage = () => {
 
                             {/* Поле подтверждения пароля */}
                             <div className="w-full mb-2 relative">
-                                <label className="font-montserratRegular mb-2">Підтвердження пароля</label>
+                                <label className="font-montserratRegular mb-2">{t('confirming_password')}</label>
                                 <input
                                     type={'text'}
                                     name="confirmPassword"
-                                    placeholder="Повторіть новий пароль"
+                                    placeholder={t('repeat_new_password')}
                                     className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue pr-10"
                                     value={confirmPassword}
                                     onChange={(e) => setConfirmPassword(e.target.value)}
@@ -118,7 +120,7 @@ const NewPasswordPage = () => {
                                 className="w-full bg-perfect-yellow text-almost-black py-3 rounded-full mt-6 hover:bg-perfect-yellow transition"
                                 onClick={handleSubmit}
                             >
-                                ПРОДОВЖИТИ
+                                {t('continueUPPER')}
                             </Button>
                         </div>
                     </div>

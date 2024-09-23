@@ -49,10 +49,10 @@ const MainHeader: React.FC = () => {
                     </Link>
 
                     {/* Nav items */}
-                    <nav className="flex space-x-16 ">
+                    <nav className="space-x-16 xl:flex sm:hidden md:hidden">
                         <NavItem text={t('mainUPPER')} to="/main"/>
                         <NavItem text={t('about_usUPPER')} to="/about"/>
-                        <NavItem text={t('collectionsUPPER')} to="/collections"/>
+                        <NavItem text={t('collectionsUPPER')} to="/donations"/>
                         <NavItem text={t('mapUPPER')} to="/maps"/>
                         <NavItem text={t('how_it_worksUPPER')} to="/how-it-works"/>
                     </nav>
@@ -70,7 +70,14 @@ const MainHeader: React.FC = () => {
 
                 </div>
             </header>
-            <SideBar isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} isMap={false} isFilters={false}/>
+            <SideBar
+                isOpen={isMobileMenuOpen}
+                onClose={() => setIsMobileMenuOpen(false)}
+                isFilters={false}
+                onApplyFilters={() => {}}
+                onOpenMap={() => {}}
+            />
+
         </>
     );
 };

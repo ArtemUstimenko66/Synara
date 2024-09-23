@@ -46,9 +46,9 @@ const LoginPage = () => {
                     <div className="max-w-2xl xl:ml-24 md:ml-0 sm:ml-0 xl:mt-7 sm:mt-4 flex flex-col xl:justify-start sm:justify-center flex-grow ">
                         {/* Заголовок */}
                         <div className="w-full flex xl:items-start sm:items-center xl:justify-start sm:justify-center ">
-                        <h1 className="font-kharkiv xl:ml-0 xl:text-relative-h2 sm:text-relative-h1 xl:mb-relative-ssm mt-relative-ssm">
-                            ВХІД В АККАУНТ
-                        </h1>
+                            <h1 className="font-kharkiv xl:ml-0 xl:text-relative-h2 sm:text-relative-h1 xl:mb-relative-ssm mt-relative-ssm">
+                                ВХІД В АККАУНТ
+                            </h1>
                         </div>
 
                         <div className="flex-grow flex flex-col justify-between w-full overflow-hidden">

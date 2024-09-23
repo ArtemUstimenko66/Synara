@@ -4,7 +4,9 @@ import ReactDOM from 'react-dom';
 interface City {
     id: number;
     name: string;
+    position: { lat: number; lng: number };
 }
+
 
 interface SuggestionsListProps {
     cities: City[];

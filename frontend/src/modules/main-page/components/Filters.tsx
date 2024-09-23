@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from "../../../ui/Button.tsx";
-import { getFilteredAnnouncements } from "../api/mainPageService.ts";
 import { helpTypesMap } from "../../../data/helpTypesMap.ts";
 import { useSearchParams } from "react-router-dom";
 import { urgencyTranslations } from "../../../data/urgencyMap.ts";
@@ -12,7 +11,7 @@ interface FiltersProps {
     onOpenMap: () => void; // Add this prop
 }
 
-const Filters: React.FC<FiltersProps> = ({ onApplyFilters, onCloseSidebar,onOpenMap }) => {
+const Filters: React.FC<FiltersProps> = ({ onCloseSidebar, onOpenMap }) => {
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
     const [selectedUrgency, setSelectedUrgency] = useState<string | null>(null);
     const [isUkraineSelected, setIsUkraineSelected] = useState<boolean>(false);
@@ -20,7 +19,6 @@ const Filters: React.FC<FiltersProps> = ({ onApplyFilters, onCloseSidebar,onOpen
     const [searchParams, setSearchParams] = useSearchParams();
 
     const categories = ['Психологічна', 'Гуманітарна', 'Інформаційна', 'Матеріальна'];
-    const urgencies = ['Терміново', 'Не терміново'];
 
     // sync filters with url
     useEffect(() => {

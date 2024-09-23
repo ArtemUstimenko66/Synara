@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from "../../../ui/Button.tsx";
 import {sendResetEmail} from "../api/resetPasswordService.ts";
+import {useTranslation} from "react-i18next";
 
 
 type UpdatePasswordInfoProps = {
@@ -26,17 +27,19 @@ const UpdatePassword: React.FC<UpdatePasswordInfoProps> = ({ onNextStep }) => {
         }
     };
 
+    const {t} = useTranslation();
+
     return (
         <div className="flex flex-col w-full">
             <div className="flex w-full space-x-4 mb-4">
                 <div className="w-full mb-4">
-                    <h1 className="uppercase font-kharkiv xl:text-relative-h2 sm:text-relative-xlh1 mb-relative-ssm mt-relative-ssm">Відновлення пароля</h1>
-                    <h2 className="font-kharkiv xl:text-relative-h3 sm:text-relative-h1 mb-relative-ssm mt-relative-ssm">Заповніть поле</h2>
-                    <label className="font-montserratRegular mb-2">Пошта</label>
+                    <h1 className="uppercase font-kharkiv xl:text-relative-h2 sm:text-relative-xlh1 mb-relative-ssm mt-relative-ssm">{t('password_recovery')}</h1>
+                    <h2 className="font-kharkiv xl:text-relative-h3 sm:text-relative-h1 mb-relative-ssm mt-relative-ssm">{t('fill_field')}</h2>
+                    <label className="font-montserratRegular mb-2">{t('email')}</label>
                     <input
                         type="email"
                         name="email"
-                        placeholder="Адреса електронної пошти"
+                        placeholder={t('email_address')}
                         className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
@@ -50,7 +53,7 @@ const UpdatePassword: React.FC<UpdatePasswordInfoProps> = ({ onNextStep }) => {
                 onClick={handleSubmit}
                 className="w-full uppercase bg-perfect-yellow text-almost-black py-3 rounded-full mb-5 hover:bg-perfect-yellow transition"
             >
-                Продовжити
+                {t('continue')}
             </Button>
         </div>
     );

@@ -21,8 +21,6 @@ interface SideBarProps {
 export const SideBar: React.FC<SideBarProps> = ({ isOpen, onClose, isFilters, onApplyFilters,onOpenMap }) => {
     const navigate = useNavigate();
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [categories, setCategories] = useState<string[]>([]);
-    const [urgency, setUrgency] = useState<string | null>(null);
     const {t}= useTranslation();
 
     // logout
@@ -55,10 +53,6 @@ export const SideBar: React.FC<SideBarProps> = ({ isOpen, onClose, isFilters, on
                     // Filters
                     <div className="flex flex-col flex-grow p-5">
                         <Filters
-                            categories={categories}
-                            setCategories={setCategories}
-                            urgency={urgency}
-                            setUrgency={setUrgency}
                             onApplyFilters={onApplyFilters}
                             onCloseSidebar={onClose}
                             onOpenMap={onOpenMap}

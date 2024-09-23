@@ -27,13 +27,6 @@ const AddressVolunteer: React.FC<AddressVolunteerInfoProps> = ({ onNextStep, set
     const [regionOptions, setRegionOptions] = useState<string[]>([]);
     const [cityOptions, setCityOptions] = useState<string[]>([]);
 
-    const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const { name, value } = e.target;
-        setLocalData(prevData => ({
-            ...prevData,
-            [name]: value,
-        }));
-    };
 
     const handleRegionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const userInput = event.target.value;
@@ -57,6 +50,7 @@ const AddressVolunteer: React.FC<AddressVolunteerInfoProps> = ({ onNextStep, set
         setSelectedCity(userInput);
 
         if (userInput.length > 0 && selectedRegion) {
+            // @ts-ignore
             const filteredCities = regionsWithCities[selectedRegion].filter(city =>
                 city.toLowerCase().includes(userInput.toLowerCase())
             );
@@ -133,6 +127,7 @@ const AddressVolunteer: React.FC<AddressVolunteerInfoProps> = ({ onNextStep, set
         if (!selectedCity) {
             newErrors.city = 'Будь ласка, виберіть місто';
         }
+        // @ts-ignore
         if (localData.phoneNumber.length <= 5) {
             newErrors.phoneNumber = 'Будь ласка, введіть номер телефону';
         }
@@ -146,6 +141,7 @@ const AddressVolunteer: React.FC<AddressVolunteerInfoProps> = ({ onNextStep, set
     };
     const handleSubmit = () => {
         if(validateFields()) {
+            // @ts-ignore
             setUserData(prev => ({
                 ...prev,
                 region: selectedRegion,
@@ -157,6 +153,7 @@ const AddressVolunteer: React.FC<AddressVolunteerInfoProps> = ({ onNextStep, set
             onNextStep();
         }
     };
+
 
     return (
         <div className="flex flex-col items-start xl:pr-8 xl:pb-8 w-full">
@@ -299,8 +296,7 @@ const AddressVolunteer: React.FC<AddressVolunteerInfoProps> = ({ onNextStep, set
                 </div>
                 {errors.helpTypes && <p className="text-red-500 text-sm">{errors.helpTypes}</p>}
             </div>
-
-            {(localData.helpTypes.includes('Психологічна') || localData.helpTypes.includes('Інформаційна')) && (
+            {(localData?.helpTypes?.includes('Психологічна') || localData?.helpTypes?.includes('Інформаційна')) && (
                 <div className="w-full mb-4">
                     <div className="flex flex-col">
                         <label className="xl:text-xs-pl sm:text-pd font-montserratRegular">Документи, підтверджуючі кваліфікацію</label>

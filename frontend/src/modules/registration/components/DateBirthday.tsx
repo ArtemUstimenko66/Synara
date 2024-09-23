@@ -1,12 +1,13 @@
 import React, { useState, ChangeEvent } from 'react';
 import VectorWhite from '../../../assets/images/VectorWhite.svg?react';
 import { Button } from "../../../ui/Button";
-import { User } from "../interfaces/User";
+
+import {useTranslation} from "react-i18next";
 
 type DateBirthdayProps = {
     onNextStep: () => void;
     selectedRole: string | null;
-    setUserData: (data: Partial<User>) => void;
+    setUserData: (data: any) => void;
 };
 
 const DateBirthday: React.FC<DateBirthdayProps> = ({ onNextStep, selectedRole, setUserData }) => {
@@ -38,42 +39,42 @@ const DateBirthday: React.FC<DateBirthdayProps> = ({ onNextStep, selectedRole, s
         const newErrors: { [key: string]: string } = {};
 
         if (!dateOfBirth || !/^\d{2} \/ \d{2} \/ \d{4}$/.test(dateOfBirth)) {
-            newErrors.dateOfBirth = 'Будь ласка, введіть коректну дату (ДД / ММ / РРРР)';
+            newErrors.dateOfBirth = t('enter_valid_data');
         } else {
             const [day, month, year] = dateOfBirth.split(" / ").map(Number);
             const currentYear = new Date().getFullYear();
 
             if (month < 1 || month > 12) {
-                newErrors.dateOfBirth = 'Місяць повинен бути між 01 та 12';
+                newErrors.dateOfBirth = t('enter_valid_month');
             } else {
                 const daysInMonth = new Date(year, month, 0).getDate();
                 if (day < 1 || day > daysInMonth) {
-                    newErrors.dateOfBirth = `День повинен бути між 01 та ${daysInMonth} для обраного місяця`;
+                    newErrors.dateOfBirth = `${t('enter_valid_date1')} ${daysInMonth} ${t('enter_valid_date2')}`;
                 }
                 if (year < 1900 || year > currentYear) {
-                    newErrors.dateOfBirth = `Рік повинен бути між 1900 та ${currentYear}`;
+                    newErrors.dateOfBirth = `${t('enter_valid_year')} ${currentYear}`;
                 }
             }
         }
 
         // Validate gender selection
         if (!selectedGender) {
-            newErrors.gender = 'Будь ласка, виберіть стать';
+            newErrors.gender = t('choose_gender');
         }
 
         // Validate UNP
         if (!unp) {
-            newErrors.unp = 'Будь ласка, введіть РНОКПП';
+            newErrors.unp = t('enter_valid_itn');
         } else if (isNaN(Number(unp))) {
-            newErrors.unp = 'РНОКПП повинно бути числом';
+            newErrors.unp = t('itn_is_a_number');
         }
 
         // Validate agreement to terms and personal data processing
         if (!selectedOptions.terms) {
-            newErrors.terms = 'Ви повинні погодитися з правилами користування';
+            newErrors.terms = t('you_must_agree_to_the_terms_of_use');
         }
         if (!selectedOptions.personalData) {
-            newErrors.personalData = 'Ви повинні дати згоду на обробку персональних даних';
+            newErrors.personalData = t('you_must_consent_to_the_processing_of_personal_data');
         }
 
         setErrors(newErrors);
@@ -99,6 +100,7 @@ const DateBirthday: React.FC<DateBirthdayProps> = ({ onNextStep, selectedRole, s
                 console.log("Updated User Data: ", localData);
 
                 if (typeof setUserData === 'function') {
+                    // @ts-ignore
                     setUserData(prev => ({...prev, ...localData}));
                     onNextStep();
                 } else {
@@ -117,15 +119,17 @@ const DateBirthday: React.FC<DateBirthdayProps> = ({ onNextStep, selectedRole, s
         }));
     };
 
+    const { t } = useTranslation();
+
     return (
         <div className="flex flex-col items-start pr-8 pb-8 w-full">
-            <h2 className="sm:text-xs-pxl xl:text-relative-h4 font-kharkiv mb-4">Заповніть данні</h2>
+            <h2 className="sm:text-xs-pxl xl:text-relative-h4 font-kharkiv mb-4">{t('fill_in_the_data')}</h2>
 
             <div className="sm:w-full xl:w-full mb-4">
-                <label className="font-montserratRegular mb-2">Дата народження*</label>
+                <label className="font-montserratRegular mb-2">{t('birthday')}*</label>
                 <input
                     type="text"
-                    placeholder="ДД / ММ / РРРР"
+                    placeholder={t('date_format')}
                     value={dateOfBirth}
                     onChange={handleDateChange}
                     className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
@@ -134,7 +138,7 @@ const DateBirthday: React.FC<DateBirthdayProps> = ({ onNextStep, selectedRole, s
             </div>
 
             <div className="w-full mb-4">
-                <label className="font-montserratRegular mb-2">Ваша стать:</label>
+                <label className="font-montserratRegular mb-2">{t('your_gender')}:</label>
                 <div className="flex w-full space-x-2">
                     <button
                         onClick={() => setSelectedGender('Жінка')}
@@ -142,7 +146,7 @@ const DateBirthday: React.FC<DateBirthdayProps> = ({ onNextStep, selectedRole, s
                             selectedGender === 'Жінка' ? 'bg-dark-blue border-dark-blue text-white' : 'border-light-blue'
                         }`}
                     >
-                        Жінка
+                        {t('woman')}
                     </button>
                     <button
                         onClick={() => setSelectedGender('Чоловік')}
@@ -150,7 +154,7 @@ const DateBirthday: React.FC<DateBirthdayProps> = ({ onNextStep, selectedRole, s
                             selectedGender === 'Чоловік' ? 'bg-dark-blue border-dark-blue text-white' : 'border-light-blue'
                         }`}
                     >
-                        Чоловік
+                        {t('man')}
                     </button>
                     <button
                         onClick={() => setSelectedGender('Інше')}
@@ -158,7 +162,7 @@ const DateBirthday: React.FC<DateBirthdayProps> = ({ onNextStep, selectedRole, s
                             selectedGender === 'Інше' ? 'bg-dark-blue border-dark-blue text-white' : 'border-light-blue'
                         }`}
                     >
-                        Інше
+                        {t('other_gender')}
                     </button>
                 </div>
                 {errors.gender && <p className="text-red-500 text-sm">{errors.gender}</p>}
@@ -168,9 +172,9 @@ const DateBirthday: React.FC<DateBirthdayProps> = ({ onNextStep, selectedRole, s
                 {selectedRole === 'volunteer' && (
                     <div className="sm:w-full xl:w-1/2 sm:mb-0 xl:mb-4">
                         <label
-                            className="xl:block sm:hidden font-montserratRegular whitespace-pre-line mb-0">{`Номер волонтерського\n посвідчення`}</label>
+                            className="xl:block sm:hidden font-montserratRegular whitespace-pre-line mb-0">{t('number_vipn1')}</label>
                         <label
-                            className="xl:hidden sm:block font-montserratRegular whitespace-pre-line sm:mb-2">{`Номер волонтерського посвідчення`}</label>
+                            className="xl:hidden sm:block font-montserratRegular whitespace-pre-line sm:mb-2">{t('number_vipn2')}</label>
                         <input
                             type="text"
                             name="volunteerId"
@@ -183,7 +187,7 @@ const DateBirthday: React.FC<DateBirthdayProps> = ({ onNextStep, selectedRole, s
                 )}
                 <div
                     className={`${selectedRole === 'volunteer' ? 'sm:w-full xl:w-1/2 sm:mt-2 xl:mt-6' : 'w-full'} mb-4`}>
-                <label className="font-montserratRegular mb-2">РНОКПП</label>
+                    <label className="font-montserratRegular mb-2">{t('itn')}</label>
                     <input
                         type="text"
                         name="unp"
@@ -216,10 +220,10 @@ const DateBirthday: React.FC<DateBirthdayProps> = ({ onNextStep, selectedRole, s
                             </span>
                         )}
                     </span>
-                    Я погоджуюся з <a href="#" className="underline font-bold">Правилами користування</a> та <a href="#"
-                                                                                                                className="underline font-bold">Політикою</a>
-                    <p className="underline sm:hidden xl:block font-bold ml-6">конфіденційності</p>
-                    <p className="underline sm:block xl:hidden font-bold">конфіденційності</p>
+                    {t('i_agree_with')} <a href="#" className="underline font-bold">{t('terms_of_use2')}</a> {t('and')} <a href="#"
+                                                                                                                           className="underline font-bold">{t('politics')}</a>
+                    <p className="underline sm:hidden xl:block font-bold ml-6">{t('privacy')}</p>
+                    <p className="underline sm:block xl:hidden font-bold">{t('privacy')}</p>
                 </label>
                 {errors.terms && <p className="text-red-500 text-sm">{errors.terms}</p>}
             </div>
@@ -244,7 +248,7 @@ const DateBirthday: React.FC<DateBirthdayProps> = ({ onNextStep, selectedRole, s
                             </span>
                         )}
                     </span>
-                    Я даю згоду на обробку моїх персональних даних
+                    {t('i_consent_to_the_processing_of_my_personal_data')}
                 </label>
                 {errors.personalData && <p className="text-red-500 text-sm">{errors.personalData}</p>}
             </div>
@@ -269,7 +273,7 @@ const DateBirthday: React.FC<DateBirthdayProps> = ({ onNextStep, selectedRole, s
                             </span>
                         )}
                     </span>
-                    Я хочу отримувати оновлення та інформацію про нові можливості
+                    {t('i_want_get_updates_about_new_opportunities')}
                 </label>
             </div>
 
@@ -277,7 +281,7 @@ const DateBirthday: React.FC<DateBirthdayProps> = ({ onNextStep, selectedRole, s
                 className="w-full bg-perfect-yellow text-almost-black py-4 rounded-full mb-6 hover:bg-perfect-yellow transition"
                 onClick={handleSubmit}
             >
-                ПРОДОВЖИТИ
+                {t('continueUPPER')}
             </Button>
         </div>
     );

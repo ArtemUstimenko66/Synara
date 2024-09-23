@@ -49,7 +49,7 @@ export const getFilteredAnnouncements = async (
 export const createAnnouncement = async (data: AnnouncementData) => {
     try {
         const response = await api.post('/announcements', {
-            date_posted: data.datePosted,
+            date_posted: data.datePosted || '',
             description: data.description,
             type_help: data.typeHelp,
             viewsCount: 0,

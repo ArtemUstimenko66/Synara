@@ -4,7 +4,7 @@ import { useMediaQuery } from 'react-responsive';
 
 import CountUp from 'react-countup';
 
-import Placeholder from '../assets/images/Placeholder.svg?react';
+
 import PlaceholderHorizontal from '../assets/images/PlaceholderHorizontal.svg?react';
 import PlaceholderSquare from '../assets/images/PlaceholderSquare.svg?react';
 import BlueCube from '../assets/images/Blue_cube.svg?react';
@@ -244,16 +244,11 @@ const HomePage: React.FC = () => {
                             <Button className="sm:ml-8 xl:ml-0 md:ml-0 md:mt-0 sm:mt-6 xl:mt-0"
                                     isFilled={true}>{t('joinUPPER')}</Button>
                         </div>
-                        <div
-                            className="hidden xl:w-1/2 xl:mt-20 xl:flex xl:order-2 md:flex md:order-2 md:mt-relative-md md:w-1/2">
-                            <Placeholder
-                                className="xl:w-11/12 xl:h-auto md:w-relative-elg md:h-auto md:ml-relative-lg md:mt-relative-sm"/>
-                        </div>
                     </section>
 
                     {/* Second section - about us */}
                     <section
-                        className='w-full flex justify-center sm:mt-96 sm:bg-dark-blue  flex-col xl:flex-row md:flex-row xl:mt-[20vw] md:mt-[14vw] '>
+                        className='w-full flex justify-center sm:mt-96 sm:bg-dark-blue md:bg-transparent xl:bg-transparent  flex-col xl:flex-row md:flex-row xl:mt-[20vw] md:mt-[14vw] '>
                         <div
                             className="hidden xl:flex xl:order-1 md:flex md:order-1 xl:w-1/2 md:w-relative-1/2">
                             <PlaceholderHorizontal
@@ -395,7 +390,7 @@ const HomePage: React.FC = () => {
                                             key={index}
                                             className={`review-item fixed-height ${hoveredIndexDonation === index ? 'hovered' : ''}`}
                                             onMouseEnter={() => handleMouseEnterDonation(index)}
-                                            onMouseLeave={() => handleMouseLeaveDonation(index)}
+                                            onMouseLeave={() => handleMouseLeaveDonation()}
                                         >
                                             <div className="mx-auto max-w-md">
                                                 <DonationCard

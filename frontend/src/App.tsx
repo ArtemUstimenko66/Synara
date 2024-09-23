@@ -11,9 +11,10 @@ import MainPage from "./pages/MainPage.tsx";
 import PrivateRoute from "./components/PrivateRoute.tsx";
 import CreateAnnouncementPage from "./pages/CreateAnnouncementPage.tsx";
 import FullChat from "./modules/chat/components/FullChat.tsx";
+import {WebSocketProvider} from "./hooks/WebSocketContext.tsx";
+import DonationPage from "./pages/DonationPage.tsx";
 
 const App: React.FC = () => {
-
     return (
         <Routes>
             <Route path="/" element={<Navigate to="/home" replace />} />
@@ -34,8 +35,10 @@ const App: React.FC = () => {
             <Route path="/add-announcement" element={<PrivateRoute element={<CreateAnnouncementPage />} />} />
 
             {/* chat */}
-            <Route path="/chat" element={<PrivateRoute element={<FullChat />} />} />
-            {/*<Route path="/chats" element={<Chat chatId={chatId}/>} />*/}
+            <Route path="/chat" element={<PrivateRoute element={<WebSocketProvider> <FullChat /> </WebSocketProvider>} />} />
+
+            {/*collection*/}
+            <Route path="/donations" element={<PrivateRoute element={<DonationPage />} />} />
 
             {/* 404 */}
             <Route path="*" element={<NotFoundPage />} />

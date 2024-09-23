@@ -1,9 +1,9 @@
-import {refreshToken} from "../../../profile/api/profileService.ts";
+import {refreshToken} from "../../profile/api/profileService.ts";
 
 export const authInterceptor = (api: any) => {
     api.interceptors.response.use(
-        response => response,
-        async error => {
+        (response: any) => response,
+        async (error: { config: any; response: { status: number; }; }) => {
             const originalRequest = error.config;
 
             if (error.response && error.response.status === 401 && !originalRequest._retry) {

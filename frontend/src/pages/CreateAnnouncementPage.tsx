@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useRef, useState } from 'react';
-import MainHeader from "../modules/main-page/components/ui/MainHeader.tsx";
+
 import Wrapper from "../ui/Wrapper.tsx";
 import { Button } from "../ui/Button.tsx";
 import Footer from "../components/Footer.tsx";
@@ -13,6 +13,7 @@ import {translateHelpType} from "../modules/main-page/helpers/translateHelpType.
 import {uploadAllDocuments} from "../modules/main-page/helpers/uploadAllDocuments.ts";
 import {validateFields} from "../modules/main-page/validation/validateFields.ts";
 import {useTranslation} from "react-i18next";
+import MainHeader from "../modules/main-page/components/ui/MainHeader.tsx";
 
 const CreateAnnouncementPage: React.FC = () => {
     const [datePosted, setDatePosted] = useState<string>('');
@@ -42,6 +43,7 @@ const CreateAnnouncementPage: React.FC = () => {
             ...prevData,
             helpTypes: [helpType],
         }));
+        console.log("localDATA", localData);
     };
 
     const handleDocumentUpload = (event: ChangeEvent<HTMLInputElement>) => {
@@ -66,8 +68,7 @@ const CreateAnnouncementPage: React.FC = () => {
         setErrors(newErrors);
 
         if (Object.keys(newErrors).length === 0) {
-            // Преобразование даты
-            const formattedDate = convertDateToDBFormat(datePosted);
+            const  formattedDate= convertDateToDBFormat(datePosted);
             try {
                 const announcementData = {
                     description: localData.description || '',
@@ -90,9 +91,7 @@ const CreateAnnouncementPage: React.FC = () => {
         }
     };
 
-
     const {t} = useTranslation();
-
 
     return (
         <Wrapper>
@@ -170,10 +169,11 @@ const CreateAnnouncementPage: React.FC = () => {
                         />
                         <div>
                             {localData.documents?.map((doc, index) => (
-                                <div key={index} className="flex items-center justify-between mt-1 p-3 rounded-lg border-2 bg-baby-blue border-baby-blue">
+                                <div key={index}
+                                     className="flex items-center justify-between mt-1 p-3 rounded-lg border-2 bg-baby-blue border-baby-blue">
                                     <p className="font-montserratRegular text-sm">{doc.name}</p>
                                     <button onClick={() => handleRemoveDocument(doc.name)}>
-                                        <DeleteImg />
+                                        <DeleteImg/>
                                     </button>
                                 </div>
                             ))}
@@ -191,7 +191,13 @@ const CreateAnnouncementPage: React.FC = () => {
                 </Button>
 
                 {/* Sidebar */}
-                <SideBar isOpen={false} onClose={() => {}} isFilters={true} />
+                <SideBar
+                    isOpen={false}
+                    onClose={() => {}}
+                    isFilters={false}
+                    onApplyFilters={() => {}}
+                    onOpenMap={() => {}}
+                />
 
                 {/* Footer */}
                 <Footer />

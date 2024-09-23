@@ -50,6 +50,7 @@ const Registration = () => {
         console.log("User data after update:", userData);
     }, [userData, currentStep]);
 
+
     const steps = [
         {
             component: (

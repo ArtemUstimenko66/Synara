@@ -9,7 +9,7 @@ export const sendCodeToPhoneNumber = async (phoneNumber: string) => {
     }
 };
 
-export const verifyCode = async (phoneNumber: string, code: string) => {
+export const verifyCode = async (phoneNumber: string, code: string): Promise<{ success: boolean }> => {
     if (!phoneNumber) {
         throw new Error('Phone number is not available');
     }
@@ -17,11 +17,10 @@ export const verifyCode = async (phoneNumber: string, code: string) => {
         const response = await api.post('/sms/verify-code', { phoneNumber, code });
         localStorage.removeItem('phoneNumber');
         console.log("Code verified successfully:", response.data);
+
+        return { success: true };
     } catch (error) {
         console.error("Error verifying code:", error);
+        return { success: false };
     }
 };
-
-
-
-

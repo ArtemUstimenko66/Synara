@@ -43,6 +43,7 @@ const AddressVictim: React.FC<AddressVictimInfoProps> = ({ userData, setUserData
         setSelectedCity(userInput);
 
         if (userInput.length > 0 && selectedRegion) {
+            // @ts-ignore
             const filteredCities = regionsWithCities[selectedRegion].filter(city =>
                 city.toLowerCase().includes(userInput.toLowerCase())
             );

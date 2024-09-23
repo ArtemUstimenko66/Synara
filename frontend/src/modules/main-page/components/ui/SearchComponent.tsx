@@ -5,7 +5,7 @@ import {useTranslation} from "react-i18next";
 
 const SearchComponent: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState<string>('');
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [, setSearchParams] = useSearchParams();
     const inputRef = useRef<HTMLInputElement>(null);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

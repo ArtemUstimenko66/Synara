@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { User } from '../../modules/registration/interfaces/User';
+import {User} from "../interfaces/User.tsx";
+
 
 interface RegistrationState {
     currentStep: number;

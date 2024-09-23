@@ -12,6 +12,9 @@ interface AnnouncementProps {
     typeHelp: string;
     viewsCount: number;
     respondedCount: number;
+    urgency: string;
+    isUkraine: boolean;
+    address: string;
     images: string[];
 }
 
@@ -23,6 +26,7 @@ const Announcement: React.FC<AnnouncementProps> = ({
                                                        typeHelp,
                                                        viewsCount,
                                                        respondedCount,
+                                                       urgency,
                                                        images
                                                    }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -58,9 +62,10 @@ const Announcement: React.FC<AnnouncementProps> = ({
 
             {/* Category Badge */}
             <div className="flex justify-end w-full items-end">
-                {/* Показываем блок только если дата в будущем */}
-                {isDateInFuture && diffDays <= 5 && (
-                    <div className="text-blue-500 font-montserratMedium px-[10%] font-medium border-2 border-dark-blue rounded-full text-relative-h5  mr-4">
+                {/* Показываем блок только если дата в будущем и если срочность истинна */}
+                {isDateInFuture && urgency && diffDays <= 5 && (
+                    <div
+                        className="text-blue-500 font-montserratMedium px-[10%] font-medium border-2 border-dark-blue rounded-full text-relative-h5 mr-4">
                         {diffDays} {diffDays === 1 ? t('day_announcement') : diffDays <= 4 ? t('day_announcement_v_2') : t('day_announcement_v_3')}
                     </div>
                 )}

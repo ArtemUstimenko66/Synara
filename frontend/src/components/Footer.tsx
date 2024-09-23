@@ -11,7 +11,7 @@ import {useTranslation} from "react-i18next";
 
 library.add(faFacebookF, faInstagram, faTwitter, faTelegramPlane);
 
-const AccordionSection: React.FC<{ title: string }> = ({ title, children }) => {
+const AccordionSection: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
@@ -21,12 +21,13 @@ const AccordionSection: React.FC<{ title: string }> = ({ title, children }) => {
                 onClick={() => setIsOpen(!isOpen)}
             >
                 <h3 className="font-montserratMedium">{title}</h3>
-                <DownArrow className={`transform transition-transform ${isOpen ? 'rotate-180' : ''}`}/>
+                <DownArrow className={`transform transition-transform ${isOpen ? 'rotate-180' : ''}`} />
             </div>
             {isOpen && <div className="mt-2">{children}</div>}
         </div>
     );
 };
+
 
 const Footer: React.FC = () => {
     const { t } = useTranslation();
@@ -36,7 +37,7 @@ const Footer: React.FC = () => {
         <footer className="xl:py-8 md:py-8 mt-4 xl:w-[90%] md:w-[90%] sm:w-[100%] justify-center flex flex-col font-montserratRegular">
             {isSmallScreen ? (
                 <>
-                    <div className="border border-dark-blue mb-4 w-full"></div>
+                    <div className="border border-gray-200 mb-4 w-full"></div>
                     <AccordionSection title={t('navigationUPPER')}>
                         <ul>
                             <li className="my-2"><a href="#" className="hover:underline">{t('main')}</a></li>
@@ -47,7 +48,7 @@ const Footer: React.FC = () => {
                             </li>
                         </ul>
                     </AccordionSection>
-                    <div className="border border-dark-blue mb-4 w-full"></div>
+                    <div className="border border-gray-200 mb-4 w-full"></div>
                     <AccordionSection title={t('informationUPPER')}>
                         <ul>
                             <li className="my-2"><a href="#" className="hover:underline">{t('terms_of_use')}</a></li>
@@ -58,7 +59,7 @@ const Footer: React.FC = () => {
                             </li>
                         </ul>
                     </AccordionSection>
-                    <div className="border border-dark-blue mb-4 w-full"></div>
+                    <div className="border border-gray-200 mb-4 w-full"></div>
                     <AccordionSection title={t('communicationUPPER')}>
                         <p className="mt-2">0-800-501-701</p>
                         <p className="mb-2">{t('all_ukrainian_hotline')}</p>
@@ -78,7 +79,7 @@ const Footer: React.FC = () => {
                             </a>
                         </div>
                     </AccordionSection>
-                    <div className="border border-dark-blue mb-4 w-full"></div>
+                    <div className="border border-gray-200 mb-4 w-full"></div>
                     <div className="flex items-center justify-center">
                         <Link to=".">
                             <LogoFooter className="text-xl font-bold w-[45%] xl:mr-32 md:mr-14"/>

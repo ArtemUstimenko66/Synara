@@ -6,7 +6,7 @@ export const getProfile = async () => {
         });
         return response.data;
     } catch (error) {
-        console.error('Failed to fetch profile', error.response || error);
+        console.error('Failed to fetch profile', error);
         throw error;
     }
 }

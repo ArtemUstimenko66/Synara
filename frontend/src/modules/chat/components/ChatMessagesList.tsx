@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import CloseIcon from '../assets/close_icon.svg?react';
-import DownArrowIcon from '../assets/down_arrow.svg?react';
+import DownArrowIcon from '../assets/Down_Arrow.svg?react';
 import BurgerIcon from '../assets/BurgerIcon.svg?react';
 import DoubleVector from '../assets/DoubleVector.svg?react';
 import ChatComponentInput from "./ui/ChatComponentInput.tsx";
@@ -83,23 +83,6 @@ const formatDateLabel = (dateStr: string) => {
 };
 
 export const ChatMessagesList: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
-    const [newMessage, setNewMessage] = useState('');
-
-    const handleSendMessage = () => {
-        if (newMessage.trim() === '') return;
-
-        const newMsg = {
-            id: messages.length + 1,
-            name: 'Me',
-            message: newMessage,
-            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-            date: new Date().toISOString().split('T')[0],
-            isSentByMe: true,
-        };
-        messages.push(newMsg);
-        setNewMessage('');
-    };
-
     let lastDate = '';
 
     return (

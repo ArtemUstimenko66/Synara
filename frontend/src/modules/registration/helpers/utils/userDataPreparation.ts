@@ -33,7 +33,7 @@ export const prepareUserDataForBackend = (userData: User) => {
             volunteerDetails: {
                 region: userData.region,
                 city: userData.city,
-                supports: userData.helpTypes.map(type => helpTypesMap[type] || type),
+                supports: userData.helpTypes ? userData.helpTypes.map(type => helpTypesMap[type] || type) : [],
                 volunteer_identification_number: userData.volunteerId,
             },
         };

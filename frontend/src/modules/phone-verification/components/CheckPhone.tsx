@@ -2,10 +2,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Button } from "../../../ui/Button.tsx";
 import { User } from "../../registration/interfaces/User.tsx";
 import {sendCodeToPhoneNumber, verifyCode} from "../api/phoneVerificationService.ts";
+import {useTranslation} from "react-i18next";
 
 type UpdatePasswordInfoProps = {
     userData: User;
-    setUserData: (data: Partial<User>) => void;
+    setUserData: (data: any) => void;
 };
 
 const CheckPhone: React.FC<UpdatePasswordInfoProps> = ({ userData }) => {
@@ -28,6 +29,8 @@ const CheckPhone: React.FC<UpdatePasswordInfoProps> = ({ userData }) => {
         }
     };
 
+    const {t} = useTranslation();
+
     const handleVerifyCode = async () => {
         if (userData.phoneNumber && code) {
             try {
@@ -35,11 +38,11 @@ const CheckPhone: React.FC<UpdatePasswordInfoProps> = ({ userData }) => {
                 if (response.success) {
                     setError(null);
                 } else {
-                    setError('Код неправильний. Будь ласка, спробуйте ще раз.');
+                    setError(t('cod_invalid_try_again'));
                 }
             } catch (error) {
                 console.error("Error verify code: ", error);
-                setError('Відбулася помилка під час перевірки коду. Будь ласка, спробуйте ще раз.');
+                setError(t('error_with_checking_cod'));
             }
         }
     };
@@ -48,13 +51,13 @@ const CheckPhone: React.FC<UpdatePasswordInfoProps> = ({ userData }) => {
         <div className="flex flex-col w-11/12 justify-center">
             <div className="flex w-full space-x-4 mb-4 sm:mr-20 xl:mr-0">
                 <div className="w-full mb-4">
-                    <h1 className="uppercase font-kharkiv xl:text-relative-h2 sm:text-relative-xlh1 md:text-relative-h1 mb-relative-ssm xl:mt-relative-ssm">ДВОФАКТОРНА АУТЕНТИФІКАЦІЯ</h1>
-                    <h2 className="font-kharkiv xl:text-relative-h3 sm:text-relative-xlh2  md:text-relative-h3 mb-relative-ssm mt-relative-ssm">Заповніть поле</h2>
+                    <h1 className="uppercase font-kharkiv xl:text-relative-h2 sm:text-relative-xlh1 md:text-relative-h1 mb-relative-ssm xl:mt-relative-ssm">{t('two_factors_authUPPER')}</h1>
+                    <h2 className="font-kharkiv xl:text-relative-h3 sm:text-relative-xlh2  md:text-relative-h3 mb-relative-ssm mt-relative-ssm">{t('fill_field')}</h2>
                     <h3 className="xl:text-relative-pl sm:text-relative-h2 md:text-relative-h3 whitespace-pre-line font-montserratRegular mb-8 ">
-                        Ми надіслали код підтвердження на номер телефону
+                        {t('cod_phone_sent')}
                         <b> {userData.phoneNumber}</b>
                     </h3>
-                    <label className="font-montserratRegular xl:text-relative-pl md:text-relative-h3 sm:text-relative-h2 mb-2">Код</label>
+                    <label className="font-montserratRegular xl:text-relative-pl md:text-relative-h3 sm:text-relative-h2 mb-2">{t('cod')}</label>
                     <input
                         type="password"
                         name="code"
@@ -74,14 +77,14 @@ const CheckPhone: React.FC<UpdatePasswordInfoProps> = ({ userData }) => {
                 Перевірити код
             </Button>
             <div className="flex items-center justify-center w-full mb-5 xl:text-relative-pl sm:text-relative-h2 md:text-relative-h3 text-almost-black">
-                <span className="mx-4">Вам не прийшов код?</span>
+                <span className="mx-4">{t('you_have_not_phone_cod')}</span>
             </div>
             <Button
                 hasBlue={true}
                 className="w-full uppercase xl:text-relative-pl sm:text-relative-h2 md:text-relative-h3 py-3 rounded-full mb-5"
                 onClick={handleResendCode}
             >
-                Надіслати код ще раз
+                {t('resend_phone_cod')}
             </Button>
         </div>
     );
