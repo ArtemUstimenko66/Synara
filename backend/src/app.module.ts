@@ -38,7 +38,7 @@ import { UnBrokennessModule } from './modules/unbrokenness/unbrokenness.module';
     UsersModule,
     VolunteersModule,
     VictimsModule,
-    SmsModule,
+    //SmsModule,
     CacheModule,
     ConfirmEmailModule,
     SendEmailModule,
