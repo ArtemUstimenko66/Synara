@@ -3,7 +3,7 @@ import axios, { AxiosInstance } from 'axios';
 
 
 const api: AxiosInstance = axios.create({
-    baseURL: 'https://synara.help', // https
+    baseURL: 'https://synara.help/api', // https
     headers: {
         'Content-Type': 'application/json',
     },

@@ -25,7 +25,7 @@ import { CreateVictimDto } from '../../users/dtos/create-victim.dto';
 import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('Authorization')
-@Controller('api/auth')
+@Controller('/api/auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
