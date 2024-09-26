@@ -25,7 +25,7 @@ import { TypeHelp } from './type-help.enum';
 import { FindAnnouncementsOptions } from './announcement.service';
 
 @ApiTags('Announcement')
-@Controller('announcements')
+@Controller('api/announcements')
 @UseGuards(JwtAuthGuard)
 export class AnnouncementController {
   constructor(private readonly announcementService: AnnouncementService) {}
