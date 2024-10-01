@@ -28,6 +28,8 @@ export class AuthService {
       id: user.id,
       email: user.email,
       phone: user.phoneNumber,
+      birthDate: user.birthDate,
+      unp: user.UNP,
       roles: [user.role],
       volunteer: volunteer
         ? {
@@ -35,8 +37,14 @@ export class AuthService {
             region: volunteer.region,
             city: volunteer.city,
             supports: volunteer.supports,
+            rating: volunteer.rating,
+            startWorkingDay: volunteer.startWorkingDay,
+            endWorkingDay: volunteer.endWorkingDay,
+            startTime: volunteer.startTime,
+            endTime: volunteer.endTime,
+            description: volunteer.description,
             volunteerIdentificationNumber:
-              volunteer.volunteer_identification_number,
+            volunteer.volunteer_identification_number,
           }
         : null,
       victim: victim

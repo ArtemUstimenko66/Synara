@@ -27,8 +27,6 @@ export class AnnouncementService {
   constructor(
     @InjectRepository(Announcement)
     private announcementRepository: Repository<Announcement>,
-    @InjectRepository(User)
-    private userRepository: Repository<User>,
   ) {}
 
   private updateUrgency(announcement: Announcement): void {
@@ -87,7 +85,8 @@ export class AnnouncementService {
     const qb = this.announcementRepository
       .createQueryBuilder('announcement')
       .leftJoinAndSelect('announcement.user', 'user')
-      .leftJoinAndSelect('announcement.files', 'files');
+        .leftJoinAndSelect('user.volunteer', 'volunteer')
+        .leftJoinAndSelect('announcement.files', 'files');
 
     if (options.query && options.query.trim() !== '') {
       qb.andWhere('announcement.description ILIKE :query', {

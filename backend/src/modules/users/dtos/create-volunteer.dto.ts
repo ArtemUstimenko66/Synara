@@ -4,9 +4,10 @@ import {
   IsEnum,
   IsArray,
   IsOptional,
-  IsNumber,
+  IsNumber, IsDecimal, Min, Max,
 } from 'class-validator';
 import { SupportType } from '../enums/support-type.enum';
+import {WorkingDays} from "../enums/working-days.enum";
 
 export class CreateVolunteerDto {
   @ApiProperty({
@@ -40,7 +41,7 @@ export class CreateVolunteerDto {
     each: true,
     message: 'Each support type must be a valid SupportType',
   })
-  supports: SupportType[];
+  supports: SupportType;
 
   @ApiProperty({
     example: 12345,
@@ -50,4 +51,55 @@ export class CreateVolunteerDto {
   @IsOptional()
   @IsNumber({}, { message: 'Volunteer identification number must be a number' })
   volunteer_identification_number?: number;
+
+  @IsOptional()
+  @IsDecimal( { decimal_digits: '1,1'})
+  @Min(0)
+  @Max(5)
+  rating?: number;
+
+  @ApiProperty({
+    example: ['Monday', 'Wednesday', 'Friday'],
+    description: 'Working days of the volunteer',
+    required: false,
+  })
+
+  @ApiProperty({
+    example: 'Monday',
+    description: 'Start working day of the volunteer',
+  })
+  @IsOptional()
+  @IsString({ message: 'Start working day must be a string' })
+  startWorkingDay?: WorkingDays;
+
+  @ApiProperty({
+    example: 'Friday',
+    description: 'End working day of the volunteer',
+  })
+  @IsOptional()
+  @IsString({ message: 'End working day must be a string' })
+  endWorkingDay?: WorkingDays;
+
+  @ApiProperty({
+    example: '09:00',
+    description: 'Start time of the volunteer\'s working hours in HH:mm format',
+  })
+  @IsString({ message: 'Working hours must be a string' })
+  startTime?: string;
+
+  @ApiProperty({
+    example: '17:00',
+    description: 'End time of the volunteer\'s working hours in HH:mm format',
+  })
+  @IsString({ message: 'Working hours must be a string' })
+  endTime?: string;
+
+  @ApiProperty({
+    example: 'Helping the elderly with daily tasks.',
+    description: 'Description of the volunteer’s activities',
+    required: false,
+  })
+  @IsOptional()
+  @IsString({ message: 'Description must be a string' })
+  description?: string;
 }

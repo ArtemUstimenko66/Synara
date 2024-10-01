@@ -151,6 +151,6 @@ export class AuthController {
       maxAge: 604800000,
       sameSite: 'none',
     });
-    res.redirect('https://8925-109-87-124-110.ngrok-free.app/profile');
+    res.redirect('synara.help/profile');
   }
 }

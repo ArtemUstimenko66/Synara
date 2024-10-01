@@ -22,6 +22,9 @@ export class Message {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   timestamp: Date;
 
+  @Column({type: 'boolean', default: false})
+  isRead: Boolean;
+
   @ManyToOne(() => User, (user) => user.messages, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'senderId' })
   sender: User;

@@ -29,6 +29,22 @@ export class Announcement {
   date_posted: Date;
 
   @ApiProperty({
+    example: 'Important Announcement',
+    description: 'Title of the announcement',
+    type: String,
+  })
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  title: string;
+
+  @ApiProperty({
+    example: 'Here are the detailed instructions for assistance...',
+    description: 'Details of the announcement',
+    type: String,
+  })
+  @Column({ type: 'text', nullable: true })
+  details: string;
+
+  @ApiProperty({
     example: 'I need a psychological help',
     description: 'What help somebody need, or what help somebody gives',
     type: String,
@@ -43,6 +59,14 @@ export class Announcement {
   })
   @Column({ default: 0 })
   viewsCount: number;
+
+  @ApiProperty({
+    example: 'Shelter at X location',
+    description: 'Current location of the victim',
+    type: String,
+  })
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  currentLocation: string;
 
   @ApiProperty({
     example: 'humanitarian',
@@ -67,6 +91,14 @@ export class Announcement {
     type: Boolean,
   })
   is_urgent: boolean;
+
+  @ApiProperty({
+    example: '2024-08-25',
+    description: 'Date when the announcement was created',
+    type: Date,
+  })
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: Date
 
   @ManyToOne(() => User, (user) => user.announcements)
   user: User;

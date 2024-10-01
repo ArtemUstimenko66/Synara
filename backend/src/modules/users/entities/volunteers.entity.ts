@@ -2,6 +2,7 @@ import { Column, Entity, OneToOne, PrimaryGeneratedColumn, JoinColumn } from 'ty
 import { ApiProperty } from '@nestjs/swagger';
 import { SupportType } from '../enums/support-type.enum';
 import { User } from './users.entity';
+import { WorkingDays } from "../enums/working-days.enum";
 
 @Entity('volunteers')
 export class VolunteersEntity {
@@ -37,7 +38,7 @@ export class VolunteersEntity {
     array: true,
     nullable: true,
   })
-  supports: SupportType[];
+  supports: SupportType;
 
   @ApiProperty({
     example: 1,
@@ -53,6 +54,49 @@ export class VolunteersEntity {
   })
   @Column({ type: 'int', nullable: true })
   volunteer_identification_number?: number;
+
+  @ApiProperty({
+    example: 4.5,
+    description: 'Rating of the volunteer (from 0 to 5 stars)',
+    required: false,
+  })
+  @Column({ type: 'decimal', precision: 2, scale: 1, nullable: true })
+  rating?: number;
+
+  @ApiProperty({
+    example: 'Monday',
+    description: 'Start working day of the volunteer',
+  })
+  @Column({ nullable: true })
+  startWorkingDay?: WorkingDays;
+
+  @ApiProperty({
+    example: 'Friday',
+    description: 'End working day of the volunteer',
+  })
+  @Column({ nullable: true })
+  endWorkingDay?: WorkingDays;
+
+  @ApiProperty({
+    example: '09:00',
+    description: 'Start time of the volunteer\'s working hours in HH:mm format',
+  })
+  @Column({ nullable: true })
+  startTime?: string;
+
+  @ApiProperty({
+    example: '17:00',
+    description: 'End time of the volunteer\'s working hours in HH:mm format',
+  })
+  @Column({ nullable: true })
+  endTime?: string;
+
+  @ApiProperty({
+    example: 'Helping the elderly with daily tasks.',
+    description: 'Description of the volunteer’s activities',
+  })
+  @Column({ type: 'text', nullable: true })
+  description: string;
 
   @OneToOne(() => User, (user) => user.volunteer, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'userId' })

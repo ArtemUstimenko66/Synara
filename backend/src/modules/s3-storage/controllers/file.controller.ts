@@ -12,7 +12,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
 
 @ApiTags('Files')
-@Controller('api/files')
+@Controller('files')
 export class FileController {
   private readonly bucket: string;
 
@@ -40,5 +40,14 @@ export class FileController {
       announcementId,
     );
     return { file: fileRecord };
+  }
+
+  @Post('upload-gathering-file')
+  @UseInterceptors(FileInterceptor('file'))
+  async uploadGatheringFile(
+    @UploadedFile() file: Express.Multer.File,
+    @Body('gatheringId') gatheringId: number,
+  ) {
+    return this.fileService.uploadGatheringFile(gatheringId, file, this.bucket);
   }
 }

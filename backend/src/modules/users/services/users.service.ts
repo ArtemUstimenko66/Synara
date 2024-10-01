@@ -14,6 +14,12 @@ export class UsersService {
     private s3Service: S3Service,
   ) {}
 
+  private calculateAge(birthDate: Date) : number {
+    const ageDiff = Date.now() - new Date(birthDate).getTime();
+    const ageDate = new Date(ageDiff);
+    return Math.abs(ageDate.getUTCFullYear() - 1970);
+  }
+
   async create(createUserDto: CreateUserDto): Promise<User> {
     const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
     const user = this.userRepository.create({
@@ -21,6 +27,25 @@ export class UsersService {
       password: hashedPassword,
       role: createUserDto.role || Role.Guest,
     });
+
+    if(user.birthDate) {
+      user.age = this.calculateAge(user.birthDate);
+    }
+
+    return this.userRepository.save(user);
+  }
+
+  async updateUser(id: number, updateUserDto: any) : Promise<User> {
+    const user = await this.findById(id);
+    if (!user) {
+      throw new BadRequestException('User not found');
+    }
+
+    Object.assign(user, updateUserDto);
+
+    if(user.birthDate) {
+      user.age = this.calculateAge(user.birthDate);
+    }
     return this.userRepository.save(user);
   }
 
@@ -31,7 +56,7 @@ export class UsersService {
   async findById(id: number): Promise<User> {
     return this.userRepository.findOne({
       where: { id },
-      relations: ['volunteer', 'victim'],
+      relations: ['volunteer', 'victim', 'announcements', 'gatherings'],
     });
   }
 

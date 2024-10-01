@@ -6,11 +6,13 @@ import { UsersService } from '../services/users.service';
 import { UserController } from '../controller/user.controller';
 import { VictimsModule } from './victims.module';
 import { FileModule } from '../../s3-storage/file.module';
+import {VolunteersModule} from "./volunteers.module";
 @Module({
   imports: [
     TypeOrmModule.forFeature([User]),
     forwardRef(() => AuthModule),
     VictimsModule,
+    VolunteersModule,
     FileModule,
   ],
   controllers: [UserController],

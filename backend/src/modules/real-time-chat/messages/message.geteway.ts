@@ -74,4 +74,33 @@ export class MessagesGateway {
     client.join(room);
     return { event: 'joinedChat', data: { room } };
   }
+
+
+  @SubscribeMessage('markAsRead')
+  async handleMarkMessageAsRead(
+      @MessageBody() data: { messageId: number },
+      @ConnectedSocket() client: Socket
+  ) {
+    const token = client.handshake.headers.cookie
+        ?.split('; ')
+        .find((row) => row.startsWith('accessToken='))
+        ?.split('=')[1];
+
+    if (!token) {
+      throw new Error('No token provided');
+    }
+
+    let userId: number;
+    try {
+      const payload = this.jwtService.verify(token);
+      userId = payload.id;
+    } catch (e) {
+      throw new Error('Invalid token');
+    }
+
+    const updatedMessage = await this.messageService.markMessageAsRead(data.messageId);
+
+    this.server.to(`chat_${updatedMessage.chat.id}`).emit('messageRead', updatedMessage);
+  }
+
 }

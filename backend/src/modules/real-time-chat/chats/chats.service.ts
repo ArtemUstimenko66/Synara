@@ -1,47 +1,73 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Chat } from './chat.entity';
 import { Repository } from 'typeorm';
 import { ChatMember } from './chat-member.entity';
+import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
+import { Message } from '../messages/message.entity';
 
 @Injectable()
 export class ChatsService {
   constructor(
-    @InjectRepository(Chat)
-    private chatsRepository: Repository<Chat>,
-    @InjectRepository(ChatMember)
-    private chatMembersRepository: Repository<ChatMember>,
+      @InjectRepository(Chat)
+      private chatsRepository: Repository<Chat>,
+      @InjectRepository(ChatMember)
+      private chatMembersRepository: Repository<ChatMember>,
+      private readonly configService: ConfigService,
+      private readonly jwtService: JwtService,
+      @InjectRepository(Message)
+      private messagesRepository: Repository<Message>,
   ) {}
 
   async findAll(): Promise<Chat[]> {
     return this.chatsRepository.find({ relations: ['members'] });
   }
 
+  async markMessageAsRead(idMessage: number) {
+    const messageToUpdate = await this.messagesRepository.findOne({
+      where: { id: idMessage },
+    });
+    if (!messageToUpdate) {
+      throw new BadRequestException('Incorrect message id');
+    } else {
+      messageToUpdate.isRead = true;
+      return await this.messagesRepository.save(messageToUpdate);
+    }
+  }
+
   async getChats(
-    userId: number,
-    filters: { archived?: boolean; blocked?: boolean; username?: string },
+      userId: number,
+      filters: { archived?: boolean; blocked?: boolean; username: string },
   ) {
     const queryBuilder = this.chatsRepository
-      .createQueryBuilder('chat')
-      .leftJoinAndSelect('chat.members', 'chatMember')
-      .leftJoinAndSelect('chatMember.user', 'users')
-      .leftJoin(
-        'chat.messages',
-        'lastMessage',
-        `lastMessage.id = (
-        SELECT m.id FROM message m
-        WHERE m."chatId" = chat.id
-        ORDER BY m.timestamp DESC
-        LIMIT 1
-      )`,
-      )
-      .addSelect(['lastMessage.content', 'lastMessage.timestamp'])
-      .where('chatMember.userId = :userId', { userId });
+        .createQueryBuilder('chat')
+        .leftJoinAndSelect('chat.members', 'chatMember')
+        .leftJoinAndSelect('chatMember.user', 'users')
+        .leftJoin(
+            'chat.messages',
+            'lastMessage',
+            `lastMessage.id = (
+              SELECT m.id FROM message m
+              WHERE m."chatId" = chat.id
+              ORDER BY m.timestamp DESC
+              LIMIT 1
+            )`,
+        )
+        .addSelect(['lastMessage.content', 'lastMessage.timestamp'])
+        .where(
+            'chat.id IN (SELECT cm."chatId" FROM "chat_member" cm WHERE cm."userId" = :userId)',
+            { userId },
+        )
 
     if (filters.username) {
       queryBuilder.andWhere(
-        '(users.firstName LIKE :username OR users.lastName ILIKE :username)',
-        { username: `%${filters.username}%` },
+          '(users.firstName LIKE :username OR users.lastName LIKE :username)',
+          { username: `%${filters.username}%` },
       );
     }
 
@@ -57,13 +83,15 @@ export class ChatsService {
       });
     }
 
+    queryBuilder.orderBy('lastMessage.timestamp', 'DESC');
+
     return queryBuilder.getMany();
   }
 
   async create(
-    chatData: Partial<Chat>,
-    userIds: number[],
-    currentUserId: number,
+      chatData: Partial<Chat>,
+      userIds: number[],
+      currentUserId: number,
   ): Promise<Chat> {
     const chat = this.chatsRepository.create(chatData);
     const savedChat = await this.chatsRepository.save(chat);
@@ -114,4 +142,5 @@ export class ChatsService {
     chat.isBlocked = false;
     return this.chatsRepository.save(chat);
   }
+
 }

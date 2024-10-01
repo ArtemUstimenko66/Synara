@@ -11,11 +11,11 @@ async function bootstrap() {
   app.use(cookieParser());
 
   app.use(
-    session({
-      secret: 'secsecsec',
-      resave: false,
-      saveUninitialized: false,
-    }),
+      session({
+        secret: 'secsecsec',
+        resave: false,
+        saveUninitialized: false,
+      }),
   );
 
   app.use(passport.initialize());
@@ -38,11 +38,11 @@ async function bootstrap() {
   });
 
   const config = new DocumentBuilder()
-    .setTitle('API Documentation')
-    .setDescription('The API description')
-    .setVersion('1.0')
-    .addTag('api')
-    .build();
+      .setTitle('API Documentation')
+      .setDescription('The API description')
+      .setVersion('1.0')
+      .addTag('api')
+      .build();
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/docs', app, document);

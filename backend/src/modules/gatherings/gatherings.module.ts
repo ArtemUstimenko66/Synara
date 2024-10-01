@@ -1,17 +1,14 @@
 import { Module } from '@nestjs/common';
+import { GatheringsController } from './gatherings.controller';
+import { GatheringsService } from './gatherings.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Chat } from './chat.entity';
-import { ChatMember } from './chat-member.entity';
-import { ChatsController } from './chats.controller';
-import { ChatsService } from './chats.service';
+import { Gatherings } from './entity/gatherings.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { MessagesModule } from '../messages/messages.module';
+
 @Module({
   imports: [
-    ConfigModule,
-    MessagesModule,
-    TypeOrmModule.forFeature([Chat, ChatMember]),
+    TypeOrmModule.forFeature([Gatherings]),
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -21,8 +18,8 @@ import { MessagesModule } from '../messages/messages.module';
       }),
     }),
   ],
-  controllers: [ChatsController],
-  providers: [ChatsService],
-  exports: [ChatsService],
+  controllers: [GatheringsController],
+  providers: [GatheringsService],
+  exports: [GatheringsService, TypeOrmModule],
 })
-export class ChatsModule {}
+export class GatheringsModule {}

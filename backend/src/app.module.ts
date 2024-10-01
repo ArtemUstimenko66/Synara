@@ -21,7 +21,8 @@ import { TranslateModule } from './modules/translate/translate.module';
 import { ChatsModule } from './modules/real-time-chat/chats/chats.module';
 import { MessagesModule } from './modules/real-time-chat/messages/messages.module';
 import { UnBrokennessModule } from './modules/unbrokenness/unbrokenness.module';
-
+import { GatheringsModule } from './modules/gatherings/gatherings.module';
+import { PetitionModule } from "./modules/petition/petition.module";
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -38,7 +39,7 @@ import { UnBrokennessModule } from './modules/unbrokenness/unbrokenness.module';
     UsersModule,
     VolunteersModule,
     VictimsModule,
-    //SmsModule,
+    SmsModule,
     CacheModule,
     ConfirmEmailModule,
     SendEmailModule,
@@ -50,6 +51,8 @@ import { UnBrokennessModule } from './modules/unbrokenness/unbrokenness.module';
     ChatsModule,
     MessagesModule,
     UnBrokennessModule,
+    GatheringsModule,
+    PetitionModule
   ],
   controllers: [AppController],
   providers: [AppService],

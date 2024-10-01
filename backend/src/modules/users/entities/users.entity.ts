@@ -1,6 +1,6 @@
 import {
   Column,
-  Entity,
+  Entity, ManyToOne,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -8,12 +8,14 @@ import {
 import { ApiProperty } from '@nestjs/swagger';
 import { Role } from '../enums/role.enum';
 import { VolunteersEntity } from './volunteers.entity';
-import { Gender } from '../enums/gender.enum';
+import { GenderType } from '../enums/gender.enum';
 import { VictimsEntity } from './victim.entity';
 import { File } from '../../s3-storage/entities/file.entity';
 import { Announcement } from '../../announcement/announcement.entity';
 import { ChatMember } from '../../real-time-chat/chats/chat-member.entity';
 import { Message } from '../../real-time-chat/messages/message.entity';
+import { Gatherings } from "../../gatherings/entity/gatherings.entity";
+import { Petition  } from "../../petition/petition.entity";
 
 @Entity('users')
 export class User {
@@ -76,6 +78,14 @@ export class User {
   birthDate?: Date;
 
   @ApiProperty({
+    example: 30,
+    description: 'Age of the user',
+    type: Number,
+  })
+  @Column({ type: 'int', nullable: true })
+  age?: number;
+
+  @ApiProperty({
     example: 'guest',
     description: 'Role of the user in the system',
     type: String,
@@ -88,8 +98,8 @@ export class User {
     description: 'Gender of the user',
     type: String,
   })
-  @Column({ type: 'enum', enum: Gender, default: Gender.Other })
-  gender?: Gender;
+  @Column({ type: 'enum', enum: GenderType, nullable: true })
+  gender?: GenderType;
 
   @ApiProperty({
     example: 1234567890,
@@ -140,4 +150,10 @@ export class User {
 
   @OneToMany(() => Message, (message) => message.sender)
   messages: Message[];
+
+  @OneToMany(() => Gatherings, (gatherings) => gatherings.user)
+  gatherings?: Gatherings[];
+
+  @OneToMany(() => Petition, (petitions) => petitions.author)
+  petitions: User;
 }

@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Role } from '../enums/role.enum';
-import { Gender } from '../enums/gender.enum';
+import { GenderType } from '../enums/gender.enum';
 import {
   IsEmail,
   IsNotEmpty,
@@ -11,6 +11,7 @@ import {
   IsEnum,
   IsNumber,
 } from 'class-validator';
+import {SupportType} from "../enums/support-type.enum";
 
 export class CreateUserDto {
   @ApiProperty({
@@ -68,8 +69,11 @@ export class CreateUserDto {
     description: 'The gender of the user',
     example: 'male',
   })
-  @IsEnum(Gender, { message: 'Invalid gender value' })
-  gender?: Gender;
+  @IsEnum(GenderType, {
+    each: true,
+    message: 'Each gender type  must be a valid GenderType',
+  })
+  gender?: GenderType;
 
   @ApiProperty({
     example: '1234567890',

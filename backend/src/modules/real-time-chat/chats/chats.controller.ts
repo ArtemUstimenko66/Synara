@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Get,
@@ -28,7 +29,7 @@ interface CustomRequest extends Request {
 }
 
 @ApiTags('Chats')
-@Controller('api/chats')
+@Controller('chats')
 export class ChatsController {
   constructor(private readonly chatsService: ChatsService) {}
 
@@ -37,16 +38,28 @@ export class ChatsController {
   //   return this.chatsService.findAll();
   // }
 
+  // @UseGuards(JwtAuthGuard)
+  // @Post('/mark-read')
+  // async markMessageRead(@Body('idMessage') idMessage: number) {
+  //   return this.chatsService.markMessageAsRead(idMessage);
+  // }
+
   @UseGuards(JwtAuthGuard)
   @Get()
   async getChats(
-    @Req() req: CustomRequest,
-    @Query('archived') archived?: boolean,
-    @Query('blocked') blocked?: boolean,
-    @Query('username') username?: string,
+      @Req() req: CustomRequest,
+      @Query('archived') archived?: boolean,
+      @Query('blocked') blocked?: boolean,
+      @Query('username') username?: string
   ) {
+    // const accessToken = req.cookies['accessToken'];
+    // console.log(accessToken);
     const userId = req.user.id;
-    return this.chatsService.getChats(userId, { archived, blocked, username });
+    return this.chatsService.getChats(
+        userId,
+        { archived, blocked, username },
+        // accessToken,
+    );
   }
 
   @ApiOperation({ summary: 'Create chat' })
@@ -60,8 +73,8 @@ export class ChatsController {
   @UseGuards(JwtAuthGuard)
   @Post()
   create(
-    @Body() createChatDto: CreateChatDto,
-    @Req() req: CustomRequest,
+      @Body() createChatDto: CreateChatDto,
+      @Req() req: CustomRequest,
   ): Promise<Chat> {
     const { name, isGroup, userIds } = createChatDto;
     const currentUserId = req.user.id;

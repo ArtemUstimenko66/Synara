@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import {BadRequestException, Injectable} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Message } from './message.entity';
@@ -24,7 +24,7 @@ export class MessagesService {
       skip,
       take,
       order: { id: 'DESC'},
-      //relations: ['chat', 'sender'],
+      relations: ['chat', 'sender'],
     });
   }
 
@@ -52,4 +52,20 @@ export class MessagesService {
 
     return this.messageRepository.save(message);
   }
+
+  async markMessageAsRead(idMessage: number) {
+    const messageToUpdate = await this.messageRepository.findOne({
+      where: { id: idMessage },
+      relations: ['chat'],
+    });
+
+    if (!messageToUpdate) {
+      throw new BadRequestException('Incorrect message id');
+    }
+
+    messageToUpdate.isRead = true;
+    //console.log("!!!!! -> ", messageToUpdate);
+    return await this.messageRepository.save(messageToUpdate);
+  }
+
 }
