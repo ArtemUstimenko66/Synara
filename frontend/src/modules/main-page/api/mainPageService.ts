@@ -140,3 +140,74 @@ export const searchUsersByRadius = async (
     }
 };
 
+export const fetchAnnouncementDetails = async (id: number) => {
+    try {
+        const response = await api.get(`/announcements/${id}`, { withCredentials: true });
+        return response.data;
+    } catch (error) {
+        console.error("Ошибка при получении деталей обьявления:", error);
+        throw error;
+    }
+};
+
+
+
+
+export const getFilteredVolunteers = async (
+    query: string,
+    categories: string[],
+    limit = 12,
+    offset = 0,
+    sortOrder: 'ASC' | 'DESC' = 'ASC',
+   // urgency?: boolean,
+    genderParam: string,
+    ageFrom: number,
+    ageTo: number
+) => {
+    const queryParams = new URLSearchParams();
+
+    if (query) {
+        queryParams.append('query', query);
+    }
+
+    categories.forEach(category => {
+        if (category) {
+            queryParams.append('supports', category);
+        }
+    });
+
+    // if (urgency !== undefined) {
+    //     queryParams.append('isUrgent', urgency.toString());
+    // }
+
+    queryParams.append('limit', limit.toString());
+    queryParams.append('offset', offset.toString());
+    queryParams.append('sortOrder', sortOrder);
+
+    if (genderParam) {
+        queryParams.append('gender', genderParam);
+    }
+
+    if (ageFrom && ageFrom !== 0) {
+        queryParams.append('minAge', ageFrom.toString());
+    }
+
+    if (ageTo && ageTo !== 0) {
+        queryParams.append('maxAge', ageTo.toString());
+    }
+
+    const decodedQueryParams = decodeURIComponent(queryParams.toString());
+
+    try {
+        const response = await api.get(`/users/volunteer/?${decodedQueryParams}`, {
+            withCredentials: true,
+        });
+
+        console.log('query->:', `/users/volunteer/?${decodedQueryParams}`);
+        console.log('Filtered and searched volunteers fetched successfully:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Failed to fetch filtered volunteers:', error);
+        throw error;
+    }
+};

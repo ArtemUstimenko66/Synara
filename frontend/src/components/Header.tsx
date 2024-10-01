@@ -47,7 +47,7 @@ const Header: React.FC = () => {
                 <nav className="flex-grow hidden md:hidden sm:hidden xl:flex xl:space-x-20 md:space-x-10 xl:mr-10 md:mr-5 items-center">
                     <NavItem text={t('mainUPPER')} to="/home" />
                     <NavItem text={t('about_usUPPER')} to="/about" />
-                    <NavItem text={t('collectionsUPPER')} to="/collections" />
+                    <NavItem text={t('collectionsUPPER')} to="/gatherings" />
                     <NavItem text={t('mapUPPER')} to="/maps" />
                     <NavItem text={t('how_it_worksUPPER')} to="/how-it-works" />
                 </nav>

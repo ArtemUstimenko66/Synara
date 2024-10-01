@@ -9,6 +9,7 @@ import ModalLogout from "./ui/ModalLogout.tsx";
 import { navItems } from "../../../data/navItemsSideBar.ts";
 import MenuCloseIcon from '../../../assets/images/icon-close-menu.svg?react';
 import {useTranslation} from "react-i18next";
+import {useMediaQuery} from "react-responsive";
 
 interface SideBarProps {
     isOpen: boolean;
@@ -32,6 +33,8 @@ export const SideBar: React.FC<SideBarProps> = ({ isOpen, onClose, isFilters, on
             console.error('Logout failed', error);
         }
     };
+
+    const isSmallScreen = useMediaQuery({ query: '(max-width: 768px)' });
 
     return (
         <>
@@ -62,31 +65,33 @@ export const SideBar: React.FC<SideBarProps> = ({ isOpen, onClose, isFilters, on
                     // Sidebar
                     <div className="flex flex-col mx-4 flex-grow">
                         {/* Logo */}
-                        <div className="flex w-[90%] justify-between items-center ml-[5%] mt-6 xl:mb-8 sm:mb-0">
-                            <LogoSynara className="w-28 h-28"/>
-                            <MenuCloseIcon className="h-7 w-7 cursor-pointer" onClick={onClose}/>
+                        <div className="flex w-[90%] justify-between items-center ml-[5%]  xl:mb-8 sm:mb-0">
+                            <LogoSynara className="w-28 h-auto my-[3vh]"/>
+                            <MenuCloseIcon className="h-auto w-auto cursor-pointer" onClick={onClose}/>
                         </div>
 
 
                         {/* Nav items */}
-                        <nav className="flex flex-col w-full mx-5 space-y-5 text-lg flex-grow">
-                            {navItems.map((item, index) => (
-                                <div key={item.to} className="flex flex-col">
-                                    <NavItem text={item.text} to={item.to}/>
-                                    {index < navItems.length - 1 && (
+                        <nav className="flex flex-col w-[90%] mx-5 space-y-3 text-lg flex-grow">
+                            {navItems.slice(0, isSmallScreen ? navItems.length : 7).map((item, index) => (
+                                <div key={`${item.to}-${index}`} className="flex flex-col">
+                                    <NavItem text={item.text} to={item.to} />
+                                    {index < navItems.length - 1  && (
                                         <div className="xl:border-b xl:border-gray-300 xl:mt-5 sm:mt-0"></div>
                                     )}
                                 </div>
-
                             ))}
+
+
+
                         </nav>
 
                         {/* Buttons */}
-                        <div className="flex flex-col space-y-5 mx-5 mb-6">
+                        <div className="flex flex-col xl:space-y-5 sm:space-y-2 mx-5 mb-6">
                             <Button hasBlue={true} onClick={() => setIsModalOpen(true)}
-                                    className="w-full py-3 md:text-pxl">{t('logoutUPPER')}</Button>
+                                    className="w-full xl:py-3 sm:py-2 md:text-pxl">{t('logoutUPPER')}</Button>
                             <Link to="/comments" className="w-full">
-                                <Button isFilled={true} className="w-full text-black py-3 md:text-pxl">{t('leave_feedback')}</Button>
+                                <Button isFilled={true} className="w-full text-black xl:py-3 sm:py-2 md:text-pxl">{t('leave_feedback')}</Button>
                             </Link>
                         </div>
                     </div>

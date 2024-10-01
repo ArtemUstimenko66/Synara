@@ -10,7 +10,14 @@ import { User } from "../../modules/registration/interfaces/User";
 import BackArrowComponent from "../../modules/registration/components/ui/BackArrow.tsx";
 import CheckPhone from "../../modules/phone-verification/components/CheckPhone.tsx";
 import {useNavigate} from "react-router-dom";
-import LogoSynara from '../../assets/images/logoSynara.svg?react';
+import LogoSynara from '../../assets/images/logoRegistration.svg?react';
+import LogoSynaraBlue from '../../assets/images/logoSynara.svg?react';
+import FirstShag from '../../assets/images/FirstShag.svg?react';
+import VictimSecond from '../../assets/images/VictimSecond.svg?react';
+import VolunteerSecond from '../../assets/images/VolunteerSecond.svg?react';
+import EmailAccept from '../../assets/images/EmailAccept.svg?react';
+import AuntidificationSecond from '../../assets/images/AuntidificationSecond.svg?react';
+
 const Registration = () => {
     const [currentStep, setCurrentStep] = useState(1);
 
@@ -120,11 +127,50 @@ const Registration = () => {
     const handleBackArrowClick = () => {
         navigate('/home');
     };
+    const renderStepImage = () => {
+        if (currentStep === 1) {
+            return <div className="mb-[150%]"></div>;  // Общая картинка для первого шага
+        }
 
+        if (userData.role === 'victim') {
+            switch (currentStep) {
+                case 2:
+                    return <FirstShag className="pr-[37%]"/>;
+                case 3:
+                    return <VictimSecond className="pr-[55%]"/>;
+                case 4:
+                    return <VictimSecond className="pr-[55%]"/>;
+                case 5:
+                    return <EmailAccept className="pr-[55%]"/>;
+                case 6:
+                    return <AuntidificationSecond className="pr-[55%]"/>;
+                // Добавляем картинки для других шагов, если нужно
+                default:
+                    return null;
+            }
+        } else if (userData.role === 'volunteer') {
+            switch (currentStep) {
+                case 2:
+                    return <FirstShag className="pr-[37%]"/>;
+                case 3:
+                    return <VolunteerSecond className="pr-[55%]"/>;
+                case 4:
+                    return <VolunteerSecond className="pr-[55%]"/>;
+                case 5:
+                    return <EmailAccept className="pr-[55%]"/>;
+                case 6:
+                    return <AuntidificationSecond className="pr-[55%]"/>;
+                default:
+                    return null;
+            }
+        }
+        return null;
+    };
     return (
         <div className="bg-dark-blue min-h-screen h-screen flex ">
-            <div className="w-2/6 p-8 xl:flex md:hidden sm:hidden items-left justify-left mt-10 ml-28">
-                <div className="text-almost-white font-montserratRegular font-bold text-relative-h4">LOGO</div>
+            <div className="w-2/6 p-8 xl:flex md:hidden sm:hidden items-left flex flex-col justify-center mt-10 ">
+                <LogoSynara className="text-almost-white font-montserratRegular font-bold text-relative-h4"></LogoSynara>
+                {renderStepImage()}
             </div>
             <div
                 className="xl:w-5/6 md:w-full sm:w-full bg-almost-white xl:rounded-l-3xl h-full xl:px-relative-md flex flex-col xl:items-start xl:justify-start sm:items-center sm:justify-center">
@@ -133,7 +179,7 @@ const Registration = () => {
                         <BackArrowComponent onClick={handleBackArrowClick}/>
                     </div>
                     <div className="flex w-full justify-center ">
-                        <LogoSynara className="xl:hidden md:flex sm:flex  sm:w-24 sm:h-24"/>
+                        <LogoSynaraBlue className="xl:hidden md:flex sm:flex  sm:w-24 sm:h-24"/>
                     </div>
                 </div>
 

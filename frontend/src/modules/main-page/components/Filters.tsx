@@ -4,27 +4,39 @@ import { helpTypesMap } from "../../../data/helpTypesMap.ts";
 import { useSearchParams } from "react-router-dom";
 import { urgencyTranslations } from "../../../data/urgencyMap.ts";
 import {useTranslation} from "react-i18next";
+import {useAuth} from "../../../hooks/useAuth.ts";
+import {genderTranslations} from "../../../data/genderTranslations.ts";
 
 interface FiltersProps {
     onApplyFilters: (filteredAnnouncements: any[]) => void;
     onCloseSidebar: () => void;
-    onOpenMap: () => void; // Add this prop
+    onOpenMap: () => void;
 }
 
 const Filters: React.FC<FiltersProps> = ({ onCloseSidebar, onOpenMap }) => {
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
     const [selectedUrgency, setSelectedUrgency] = useState<string | null>(null);
+    const [selectedGender, setSelectedGender] = useState<string | null>(null);
     const [isUkraineSelected, setIsUkraineSelected] = useState<boolean>(false);
+    const [ageFrom, setAgeFrom] = useState('');
+    const [ageTo, setAgeTo] = useState('');
 
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const categories = ['Психологічна', 'Гуманітарна', 'Інформаційна', 'Матеріальна'];
+    const { role } = useAuth();
+
+    const categories = role === "victim"
+        ? ['Психологічна', 'Гуманітарна', 'Інформаційна', 'Матеріальна']
+        : ['Психологічна', 'Гуманітарна', 'Інформаційна'];
 
     // sync filters with url
     useEffect(() => {
         const types = searchParams.getAll('type');
         const urgency = searchParams.get('isUrgent');
+        const gender = searchParams.get('gender');
         const ukraine = searchParams.get('ukraine');
+        const ageTo = searchParams.get('ageTo');
+        const ageFrom = searchParams.get('ageFrom');
 
         if (types.length) {
             const selectedCategoriesFromUrl = types
@@ -37,6 +49,20 @@ const Filters: React.FC<FiltersProps> = ({ onCloseSidebar, onOpenMap }) => {
             const selectedUrgencyFromUrl = Object.keys(urgencyTranslations).find(key => urgencyTranslations[key] === urgency) || null;
             setSelectedUrgency(selectedUrgencyFromUrl);
         }
+
+        if (gender) {
+            const selectedGenderFromUrl = Object.keys(genderTranslations).find(key => genderTranslations[key] === gender) || null;
+            setSelectedGender(selectedGenderFromUrl);
+        }
+
+        if (ageFrom) {
+            setSelectedUrgency(ageFrom);
+        }
+
+        if (ageTo) {
+            setSelectedUrgency(ageTo);
+        }
+
 
         setIsUkraineSelected(ukraine === 'true');
     }, [searchParams]);
@@ -51,6 +77,10 @@ const Filters: React.FC<FiltersProps> = ({ onCloseSidebar, onOpenMap }) => {
         setSelectedUrgency(prev => (prev === urgency ? null : urgency));
     };
 
+    const selectGender = (gender: string) => {
+        setSelectedGender(prev => (prev === gender ? null : gender));
+    };
+
     const toggleUkraineSelection = () => {
         setIsUkraineSelected(prev => !prev);
     };
@@ -59,7 +89,10 @@ const Filters: React.FC<FiltersProps> = ({ onCloseSidebar, onOpenMap }) => {
     const clearSelections = async () => {
         setSelectedCategories([]);
         setSelectedUrgency(null);
+        setSelectedGender(null);
         setIsUkraineSelected(false);
+        setAgeFrom('');
+        setAgeTo('');
         setSearchParams({}); // Clear all URL parameters
 
         try {
@@ -88,6 +121,24 @@ const Filters: React.FC<FiltersProps> = ({ onCloseSidebar, onOpenMap }) => {
             newSearchParams.delete('isUrgent');
         }
 
+        if (selectedGender) {
+            newSearchParams.set('gender', genderTranslations[selectedGender]);
+        } else {
+            newSearchParams.delete('gender');
+        }
+
+        if (ageTo) {
+            newSearchParams.set('ageTo', ageTo);
+        } else {
+            newSearchParams.delete('ageTo');
+        }
+
+        if (ageFrom) {
+            newSearchParams.set('ageFrom', ageFrom);
+        } else {
+            newSearchParams.delete('ageFrom');
+        }
+
         // Добавляем фильтр по всей Украине
         if (isUkraineSelected) {
             newSearchParams.set('ukraine', 'true');
@@ -103,6 +154,12 @@ const Filters: React.FC<FiltersProps> = ({ onCloseSidebar, onOpenMap }) => {
     };
 
     const {t} = useTranslation();
+
+    const handleNumericInput = (value: string, setter: { (value: React.SetStateAction<string>): void; (value: React.SetStateAction<string>): void; (arg0: any): void; }) => {
+        if (/^\d*$/.test(value)) { // Regex to allow only digits
+            setter(value);
+        }
+    };
 
     return (
         <div className="p-4 w-full mx-4 rounded-lg">
@@ -141,37 +198,91 @@ const Filters: React.FC<FiltersProps> = ({ onCloseSidebar, onOpenMap }) => {
                 </button>
             </div>
 
-            {/* Emergency */}
-            <div className="mb-4">
-                <h3 className="text-lg font-montserratRegular mb-4">{t('urgency')}</h3>
-                <div className="space-y-2">
-                    {/*{urgencies.map((urgency, index) => (*/}
-                    {/*    <button*/}
-                    {/*        key={index}*/}
-                    {/*        onClick={() => selectUrgency(urgency)}*/}
-                    {/*        className={`w-full py-1 font-montserratRegular border border-dark-blue rounded-full*/}
-                    {/*            ${selectedUrgency === urgency ? 'bg-dark-blue text-white' : ''}`}*/}
-                    {/*    >*/}
-                    {/*        {urgency}*/}
-                    {/*    </button>*/}
-                    {/*))}*/}
-                    <button
-                        onClick={() => selectUrgency('Терміново')}
-                        className={`w-full py-1 font-montserratRegular border border-dark-blue rounded-full
+            { role ==="volunteer"
+                ?
+                <>
+                    {/* Emergency */}
+                    <div className="mb-4">
+                        <h3 className="text-lg font-montserratRegular mb-4">{t('urgency')}</h3>
+                        <div className="space-y-2">
+                            {/*{urgencies.map((urgency, index) => (*/}
+                            {/*    <button*/}
+                            {/*        key={index}*/}
+                            {/*        onClick={() => selectUrgency(urgency)}*/}
+                            {/*        className={`w-full py-1 font-montserratRegular border border-dark-blue rounded-full*/}
+                            {/*            ${selectedUrgency === urgency ? 'bg-dark-blue text-white' : ''}`}*/}
+                            {/*    >*/}
+                            {/*        {urgency}*/}
+                            {/*    </button>*/}
+                            {/*))}*/}
+                            <button
+                                onClick={() => selectUrgency('Терміново')}
+                                className={`w-full py-1 font-montserratRegular border border-dark-blue rounded-full
                                 ${selectedUrgency === 'Терміново' ? 'bg-dark-blue text-white' : ''}`}
-                    >
-                        {t('urgently')}
-                    </button>
+                            >
+                                {t('urgently')}
+                            </button>
 
-                    <button
-                        onClick={() => selectUrgency('Не терміново')}
-                        className={`w-full py-1 font-montserratRegular border border-dark-blue rounded-full
+                            <button
+                                onClick={() => selectUrgency('Не терміново')}
+                                className={`w-full py-1 font-montserratRegular border border-dark-blue rounded-full
                                 ${selectedUrgency === 'Не терміново' ? 'bg-dark-blue text-white' : ''}`}
-                    >
-                        {t('not_urgent')}
-                    </button>
-                </div>
-            </div>
+                            >
+                                {t('not_urgent')}
+                            </button>
+                        </div>
+                    </div>
+                </>
+                :
+                <>
+                    {/* Age */}
+                    <div className="mb-4">
+                        <h3 className="text-lg font-montserratRegular mb-2">{t('age')}</h3>
+                        <div className="border border-dark-blue items-center rounded-full">
+                            <div className="flex gap-2 items-center justify-center py-1">
+                                <p className="text-pl font-montserratRegular">{t('from')}</p>
+                                <input
+                                    type="text"
+                                    className="w-1/3 px-1 rounded"
+                                    value={ageFrom}
+                                    onChange={(e) => handleNumericInput(e.target.value, setAgeFrom)}
+                                />
+                                <p className="text-pl font-montserratRegular">{t('to')}</p>
+                                <input
+                                    type="text"
+                                    className="w-1/3 px-1 rounded"
+                                    value={ageTo}
+                                    onChange={(e) => handleNumericInput(e.target.value, setAgeTo)}
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Gender */}
+                    <div className="mb-4">
+                        <h3 className="text-lg font-montserratRegular mb-4">{t('gender')}</h3>
+                        <div className="space-y-2">
+                            <button
+                                onClick={() => selectGender('Чоловіча')}
+                                className={`w-full py-1 font-montserratRegular border border-dark-blue rounded-full
+                                   ${selectedGender === 'Чоловіча' ? 'bg-dark-blue text-white' : ''}`}
+                            >
+                                {t('male')}
+                            </button>
+
+                            <button
+                                onClick={() => selectGender('Жіноча')}
+                                className={`w-full py-1 font-montserratRegular border border-dark-blue rounded-full
+                                ${selectedGender === 'Жіноча' ? 'bg-dark-blue text-white' : ''}`}
+                            >
+                                {t('female')}
+                            </button>
+                        </div>
+                    </div>
+
+                </>
+            }
+
 
             {/* Buttons apply / clear */}
             <div className="flex flex-col space-y-5 mt-10">

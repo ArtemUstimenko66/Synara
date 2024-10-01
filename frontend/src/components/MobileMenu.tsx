@@ -9,12 +9,12 @@ export const MobileMenu = ({ isOpen = false }) => {
     const navItems = [
         { text: t('main'), to: "/home" },
         { text: t('about_us'), to: "/about" },
-        { text: t('collection'), to: "/collections" },
+        { text: t('collection'), to: "/gatherings" },
         { text: t('maps'), to: "/maps" },
         { text: t('how_it_worksLOWER'), to: "/how-it-works" }
     ];
 
-    const isSmallScreen = useMediaQuery({ query: '(max-width: 768px)' });
+    const isSmallScreen = useMediaQuery({ query: '(max-width: 1024px)' });
 
     return (
         <div

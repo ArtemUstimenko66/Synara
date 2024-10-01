@@ -192,7 +192,13 @@
   "all_ukraine": "Вся Україна",
   "change": "Змінити",
   "urgency": "Терміновість",
+  "gender": "Стать",
+  "to": "До:",
+  "from": "Від:",
+  "age": "Вік",
   "urgently": "Терміново",
+  "male": "Чоловіча",
+  "female": "Жіноча",
   "not_urgent": "Не терміново",
   "apply": "Застосувати",
   "clear": "Очистити",
@@ -212,6 +218,7 @@
   "yes": "Так",
   "no": "Ні",
   "search_announcement": "Пошук оголошення",
+  "search_volunteer": "Пошук волонтера",
   "enter_city": "Введіть місто",
   "logoutUPPER": "ВИЙТИ З АКАУНТУ",
   "profileUPPER": "ПРОФІЛЬ",
@@ -239,6 +246,7 @@
   "add_announcement": "Додати оголошення",
   "sort_by": "Сортування за",
   "firstly_new": "Спочатку нові",
+  "by_rating": "Рейтингом",
   "old_for_first": "Спочатку старі",
   "no_announcements_by_this_filters": "Немає оголошень за вибраними фільтрами",
   "show_more": "Показати ще",
@@ -247,5 +255,12 @@
   "categories2": "Гуманітарна",
   "categories3": "Інформаційна",
   "categories4": "Матеріальна",
-  "map_of_help": "КАРТА ДОПОМОГИ"
+  "map_of_help": "КАРТА ДОПОМОГИ",
+
+  "propositions": "Пропозиції",
+  "volunteerSearch": "Пошук волонтера",
+  "cookie_policy": "Політика використання cookies",
+  "priority": "Пріоритетність:",
+  "gathered_money": "Сума зібраних коштів:",
+  "ending_date": "Термін завершення:"
 }

@@ -1,7 +1,8 @@
 import api from "../../main-api/api.ts";
-import { formatMessageTime } from "../helpers/formatMessageTime.ts";
-import { formatTime } from "../helpers/formatTime.ts";
-import { determineMessageType } from "../helpers/determineMessageType.ts";
+import {formatMessageTime} from "../helpers/formatMessageTime.ts";
+import {determineMessageType} from "../helpers/determineMessageType.ts";
+import {formatTime} from "../helpers/formatTime.ts";
+
 interface Message {
     content: string;
     senderId: number;
@@ -33,8 +34,12 @@ export const fetchChats = async (filter: 'active' | 'archived' | 'blocked', user
 
         return response.data.map((chat: any) => {
             const lastMessage = chat.messages.length > 0 ? chat.messages[chat.messages.length - 1] : null;
-            const firstMember = chat.members[0]?.user || {};
 
+            const memberUser = chat.members.length === 2
+                ? chat.members[1]?.user
+                : chat.members[0]?.user
+
+            const firstMember = memberUser || {};
             return {
                 id: chat.id,
                 name: `${firstMember.firstName} ${firstMember.lastName}`,

@@ -89,7 +89,7 @@ const ComponentFullInput: React.FC<{
     };
 
     return (
-        <div className="relative h-auto bg-transparent bottom-0 left-0 w-full p-5">
+        <div className="relative h-auto bg-transparent bottom-0 left-0 w-full sm:p-0 xl:p-5">
             {/* Sticker popup */}
             {isPopupVisible && (
                 <div className="absolute bottom-[8vh] left-0 bg-white xl:mb-0 md:mb-4 ml-4 border border-dark-blue p-4 rounded-2xl shadow-lg z-10">

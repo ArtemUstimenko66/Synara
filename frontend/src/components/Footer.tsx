@@ -39,24 +39,39 @@ const Footer: React.FC = () => {
                 <>
                     <div className="border border-gray-200 mb-4 w-full"></div>
                     <AccordionSection title={t('navigationUPPER')}>
-                        <ul>
-                            <li className="my-2"><a href="#" className="hover:underline">{t('main')}</a></li>
-                            <li className="my-2"><a href="#" className="hover:underline">{t('about_us')}</a></li>
-                            <li className="my-2"><a href="#" className="hover:underline">{t('collection')}</a></li>
-                            <li className="my-2"><a href="#" className="hover:underline">{t('maps')}</a></li>
-                            <li className="my-2"><a href="#" className="hover:underline">{t('how_it_worksLOWER')}</a>
-                            </li>
-                        </ul>
+
+                        <div className="flex space-x-8">
+                            {!isHomePage && (
+                                <ul>
+                                    <li><a href="/profile" className="hover:underline">{t('profile')}</a></li>
+                                    <li><a href="/chat" className="hover:underline">{t('chat')}</a></li>
+                                    <li><a href="/main" className="hover:underline">{t('advertisement')}</a></li>
+                                    <li><a href="/propositions" className="hover:underline">{t('propositions')}</a></li>
+                                    <li><a href="/petitions" className="hover:underline">{t('petitions')}</a></li>
+                                    <li><a href="/main" className="hover:underline">{t('volunteerSearch')}</a></li>
+                                    {/*<li><a href="#" className="hover:underline">{t('statistic')}</a></li>*/}
+                                    {/*<li><a href="#" className="hover:underline">{t('settings')}</a></li>*/}
+                                </ul>
+                            )
+                            }
+
+                            <ul>
+                                <li><a href="/main" className="hover:underline">{t('main')}</a></li>
+                                <li><a href="/about" className="hover:underline">{t('about_us')}</a></li>
+                                <li><a href="/gatherings" className="hover:underline">{t('collection')}</a></li>
+                                <li><a href="/maps" className="hover:underline">{t('maps')}</a></li>
+                                <li><a href="/how-it-works" className="hover:underline">{t('how_it_worksLOWER')}</a>
+                                </li>
+                            </ul>
+                        </div>
                     </AccordionSection>
                     <div className="border border-gray-200 mb-4 w-full"></div>
                     <AccordionSection title={t('informationUPPER')}>
                         <ul>
-                            <li className="my-2"><a href="#" className="hover:underline">{t('terms_of_use')}</a></li>
-                            <li className="my-2"><a href="#" className="hover:underline">{t('privacy_policy')}</a>
-                            </li>
-                            <li className="my-2"><a href="#"
-                                                    className="hover:underline">{t('the_most_frequent_questions')}</a>
-                            </li>
+                            <li><a href="/terms-of-use" className="hover:underline">{t('terms_of_use')}</a></li>
+                            <li><a href="/privacy-policy" className="hover:underline">{t('privacy_policy')}</a></li>
+                            <li><a href="/cookie-policy" className="hover:underline">{t('cookie_policy')}</a></li>
+                            <li><a href="/faq" className="hover:underline">{t('the_most_frequent_questions')}</a></li>
                         </ul>
                     </AccordionSection>
                     <div className="border border-gray-200 mb-4 w-full"></div>
@@ -66,7 +81,7 @@ const Footer: React.FC = () => {
                         <p className="my-2">synara.support@email.com</p>
                         <div className="mt-2 flex space-x-4">
                             <a href="#" aria-label="Facebook">
-                                <FontAwesomeIcon icon={['fab', 'facebook-f']}/>
+                            <FontAwesomeIcon icon={['fab', 'facebook-f']}/>
                             </a>
                             <a href="#" aria-label="Instagram">
                                 <FontAwesomeIcon icon={['fab', 'instagram']}/>
@@ -106,22 +121,24 @@ const Footer: React.FC = () => {
                             <div className="flex space-x-8">
                                 {!isHomePage && (
                                     <ul>
-                                        <li><a href="#" className="hover:underline">{t('profile')}</a></li>
-                                        <li><a href="#" className="hover:underline">{t('chat')}</a></li>
-                                        <li><a href="#" className="hover:underline">{t('petitions')}</a></li>
-                                        <li><a href="#" className="hover:underline">{t('advertisement')}</a></li>
-                                        <li><a href="#" className="hover:underline">{t('statistic')}</a></li>
-                                        <li><a href="#" className="hover:underline">{t('settings')}</a></li>
+                                        <li><a href="/profile" className="hover:underline">{t('profile')}</a></li>
+                                        <li><a href="/chat" className="hover:underline">{t('chat')}</a></li>
+                                        <li><a href="/main" className="hover:underline">{t('advertisement')}</a></li>
+                                        <li><a href="/propositions" className="hover:underline">{t('propositions')}</a></li>
+                                        <li><a href="/petitions" className="hover:underline">{t('petitions')}</a></li>
+                                        <li><a href="/main" className="hover:underline">{t('volunteerSearch')}</a></li>
+                                        {/*<li><a href="#" className="hover:underline">{t('statistic')}</a></li>*/}
+                                        {/*<li><a href="#" className="hover:underline">{t('settings')}</a></li>*/}
                                     </ul>
                                 )
                                 }
 
                                 <ul>
-                                    <li><a href="#" className="hover:underline">{t('main')}</a></li>
-                                    <li><a href="#" className="hover:underline">{t('about_us')}</a></li>
-                                    <li><a href="#" className="hover:underline">{t('collection')}</a></li>
-                                    <li><a href="#" className="hover:underline">{t('maps')}</a></li>
-                                    <li><a href="#" className="hover:underline">{t('how_it_worksLOWER')}</a></li>
+                                    <li><a href="/main" className="hover:underline">{t('main')}</a></li>
+                                    <li><a href="/about" className="hover:underline">{t('about_us')}</a></li>
+                                    <li><a href="/gatherings" className="hover:underline">{t('collection')}</a></li>
+                                    <li><a href="/maps" className="hover:underline">{t('maps')}</a></li>
+                                    <li><a href="/how-it-works" className="hover:underline">{t('how_it_worksLOWER')}</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -129,9 +146,11 @@ const Footer: React.FC = () => {
                         <div className="mt-4 ml-24 xl:mr-0 md:mt-0 md:mr-22 xl:ml-14 md:ml-4">
                             <h3 className="font-bold mb-2">{t('informationUPPER')}</h3>
                             <ul>
-                                <li><a href="#" className="hover:underline">{t('terms_of_use')}</a></li>
-                                <li><a href="#" className="hover:underline">{t('privacy_policy')}</a></li>
-                                <li><a href="#" className="hover:underline">{t('the_most_frequent_questions')}</a></li>
+                                <li><a href="/terms-of-use" className="hover:underline">{t('terms_of_use')}</a></li>
+                                <li><a href="/privacy-policy" className="hover:underline">{t('privacy_policy')}</a></li>
+                                <li><a href="/cookie-policy" className="hover:underline">{t('cookie_policy')}</a></li>
+                                <li><a href="/faq" className="hover:underline">{t('the_most_frequent_questions')}</a>
+                                </li>
                             </ul>
                         </div>
                         {/* Contact section */}

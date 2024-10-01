@@ -1,12 +1,12 @@
 import React from 'react';
 
 interface ButtonProps {
-    children?: React.ReactNode; // Используйте ReactNode для дочерних элементов
+    children?: React.ReactNode;
     hasBorder?: boolean;
     hasBlue?: boolean;
     isFilled?: boolean;
     className?: string;
-    onClick?: () => void; // Опционально, если нет обработки клика
+    onClick?: () => void;
 }
 
 export const Button: React.FC<ButtonProps> = ({

@@ -2,7 +2,7 @@ import {
   Body,
   Controller, Delete,
   Get,
-  Param, Patch,
+  Param, ParseArrayPipe, Patch,
   Post,
   Query, Req,
   UseGuards,
@@ -17,16 +17,19 @@ import { Gatherings } from './entity/gatherings.entity';
 import { FindGatheringsOptions } from './interfaces/find-gathering-options.interface';
 import { Request } from 'express';
 import {User} from "../users/entities/users.entity";
+import {TypeEnding} from "./enums/TypeEnding";
 
 @ApiTags('Gatherings')
-@Controller('gatherings')
-@UseGuards(JwtAuthGuard)
+@Controller('api/gatherings')
+
 export class GatheringsController {
   constructor(private readonly gatheringService: GatheringsService) {}
+
 
   @ApiOperation({ summary: 'Create a new gathering' })
   @ApiResponse({ status: 201, type: Gatherings })
   @Post()
+  @UseGuards(JwtAuthGuard)
   @Roles(Role.Volunteer, Role.Victim, Role.Guest)
   create(
       @Body() createGatheringDto: CreateUpdateGatheringDto,
@@ -42,16 +45,25 @@ export class GatheringsController {
   @ApiResponse({ status: 200, type: [Gatherings] })
   @Get('/')
   async getAllGatherings(
-    @Query('query') query?: string,
-    @Query('limit') limit = 12,
-    @Query('offset') offset = 0,
-    @Query('sortOrder') sortOrder: 'ASC' | 'DESC' = 'DESC',
+      @Query('query') query?: string,
+      @Query('limit') limit = 12,
+      @Query('offset') offset = 0,
+      @Query('isUrgent') isUrgent?: boolean,
+      @Query('moneyTo') moneyTo?: number,
+      @Query('moneyFrom') moneyFrom?: number,
+      @Query('typeEnding', new ParseArrayPipe({ items: String, optional: true }))
+          typeEnding?: TypeEnding[],
+      @Query('sortOrder') sortOrder: 'ASC' | 'DESC' = 'DESC',
   ) {
     const options: FindGatheringsOptions = {
       query,
       limit,
       offset,
       sortOrder,
+      isUrgent,
+      moneyFrom,
+      moneyTo,
+      typeEnding,
     };
     return this.gatheringService.findGatherings(options);
   }
@@ -65,16 +77,18 @@ export class GatheringsController {
 
   @ApiOperation({ summary: 'Partially update a gathering by ID' })
   @ApiResponse({ status: 200, type: Gatherings })
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   update(
-    @Param('id') id: number,
-    @Body() updateAnnouncementDto: CreateUpdateGatheringDto,
+      @Param('id') id: number,
+      @Body() updateAnnouncementDto: CreateUpdateGatheringDto,
   ): Promise<Gatherings> {
     return this.gatheringService.update(+id, updateAnnouncementDto);
   }
 
   @ApiOperation({ summary: 'Delete a gathering by ID' })
   @ApiResponse({ status: 204 })
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   delete(@Param('id') id: string): Promise<void> {
     return this.gatheringService.delete(+id);

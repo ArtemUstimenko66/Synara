@@ -9,6 +9,7 @@ import { Repository } from 'typeorm';
 import { CreateUpdateGatheringDto } from './dtos/create-update-gathering.dto';
 import { FindGatheringsOptions } from './interfaces/find-gathering-options.interface';
 import { User } from '../users/entities/users.entity';
+import {TypeEnding} from "./enums/TypeEnding";
 @Injectable()
 export class GatheringsService {
   constructor(
@@ -57,30 +58,106 @@ export class GatheringsService {
   }
 
   async findOne(id: number): Promise<Gatherings> {
-    const gathering = await this.gatheringRepository.findOne({ where: { id } });
+    const gathering = await this.gatheringRepository
+        .createQueryBuilder('gathering')
+        .leftJoinAndSelect('gathering.user', 'user')
+        .where('gathering.id = :id', { id })
+        .getOne();
+
     if (!gathering) {
       throw new BadRequestException(`Gathering with id ${id} not found`);
     }
+
     return gathering;
   }
 
+
   async findGatherings(
-    options: Partial<FindGatheringsOptions> = {},
+      options: Partial<FindGatheringsOptions> = {},
   ): Promise<Gatherings[]> {
     const qb = this.gatheringRepository.createQueryBuilder('gathering')
         .leftJoinAndSelect('gathering.user', 'user');
     if (options.query && options.query.trim() !== '') {
       const lowerCaseQuery = options.query.toLowerCase();
       qb.andWhere(
-        '(LOWER(gathering.description) LIKE LOWER(:query) OR LOWER(gathering.name) LIKE LOWER(:query))',
-        { query: `%${lowerCaseQuery}%` },
+          '(LOWER(gathering.description) LIKE LOWER(:query) OR LOWER(gathering.name) LIKE LOWER(:query))',
+          { query: `%${lowerCaseQuery}%` },
       );
+    }
+
+
+    if (options.isUrgent !== undefined) {
+      if (options.isUrgent) {
+        const currentDate = new Date();
+        const afterFiveDays = new Date();
+        afterFiveDays.setDate(currentDate.getDate() + 5);
+
+        qb.andWhere(
+            'gathering.endGathering BETWEEN :currentDate AND :afterFiveDays',
+            {
+              currentDate: currentDate.toISOString(),
+              afterFiveDays: afterFiveDays.toISOString(),
+            },
+        );
+      }
+    }
+
+    if (options.moneyTo !== undefined) {
+      qb.andWhere('gathering.goal <= :moneyTo', {
+        moneyTo: options.moneyTo,
+      });
+    }
+    if (options.moneyFrom !== undefined) {
+      qb.andWhere('gathering.goal >= :moneyFrom', {
+        moneyFrom: options.moneyFrom,
+      });
+    }
+
+    if (options.typeEnding && options.typeEnding.length > 0) {
+      const currentDate = new Date();
+
+      if (options.typeEnding.includes(TypeEnding.EndsThisWeek)) {
+        const endOfWeek = new Date();
+        //чтоб было только до конца недели
+        // const dayOfWeek = currentDate.getDay();
+        // const daysUntilEndOfWeek = 7 - (dayOfWeek === 0 ? 7 : dayOfWeek);
+        // endOfWeek.setDate(currentDate.getDate() + daysUntilEndOfWeek);
+
+        endOfWeek.setDate(currentDate.getDate() + 7);
+
+        qb.andWhere(
+            'gathering.endGathering BETWEEN :currentDate AND :endOfWeek',
+            {
+              currentDate: currentDate.toISOString(),
+              endOfWeek: endOfWeek.toISOString(),
+            },
+        );
+      }
+      if (options.typeEnding.includes(TypeEnding.EndsThisMonth)) {
+        const endOfMonth = new Date(currentDate);
+        endOfMonth.setMonth(
+            currentDate.getMonth() + 1 > 11
+                ? currentDate.getMonth() - 11
+                : currentDate.getMonth() + 1,
+        );
+        endOfMonth.setDate(0);
+
+        console.log(endOfMonth.toISOString());
+
+        qb.andWhere(
+            'gathering.endGathering BETWEEN :currentDate AND :endOfMonth',
+            {
+              currentDate: currentDate.toISOString(),
+              endOfMonth: endOfMonth.toISOString(),
+            },
+        );
+      }
     }
 
     const sortOrder = options.sortOrder ?? 'DESC';
     qb.orderBy('gathering.createdAt', sortOrder)
-      .take(options.limit)
-      .skip(options.offset);
+        .take(options.limit)
+        .skip(options.offset);
 
     return qb.getMany();
   }

@@ -2,31 +2,26 @@ import React, {useState, useEffect, useRef, useCallback} from 'react';
 
 import ComponentFullInput from './ComponentFullInput';
 import Wrapper from "../../../ui/Wrapper.tsx";
-import MainHeaderFullChat from "./MainHeaderFullChat.tsx";
+
 import { Button } from "../../../ui/Button.tsx";
 import { ChatMiniComponent } from "./ui/ChatMiniComponent.tsx";
-
 import { useAuth } from "../../../hooks/useAuth.ts";
 import { useWebSocket } from "../../../hooks/WebSocketContext.tsx";
-
 import { formatTime } from "../helpers/formatTime.ts";
 import { formatDate } from "../helpers/formatDate.ts";
 import {determineMessageType} from "../helpers/determineMessageType.ts";
 import {
-    archiveChat,
-    blockChat,
     fetchChats,
     fetchMessages,
     handleSendFile,
-    unarchiveChat,
-    unblockChat
 } from "../api/chatService.ts";
 
 import {debounce} from "lodash";
 
-import DownArrowIcon from '../assets/Down_Arrow.svg?react';
+import StartContinue from '../assets/StarctContinue.svg?react';
+import DownArrowIcon from '../assets/down_arrow.svg?react';
 import PhoneIcon from '../assets/PhoneIcon.svg?react';
-import CameraIcon from '../assets/CameraICon.svg?react';
+import CameraIcon from '../assets/CameraIcon.svg?react';
 import InfoIcon from '../assets/InfoIcon.svg?react';
 import Message from "../interfaces/Message.tsx";
 import Chat from "../interfaces/Chat.tsx";
@@ -39,6 +34,12 @@ import UnreadVector from '../assets/UnRead.svg?react';
 import BellIcon from '../assets/Bell_Img.svg?react';
 import LockImg from '../assets/Lock_Img.svg?react';
 import ProfileImg from '../assets/ProfilePageImg.svg?react';
+import {handleChatClick} from "../handlers/handleChatClick.ts";
+import {handleBlockChat} from "../handlers/handleBlockChat.ts";
+import {handleScroll} from "../handlers/handleScroll.ts";
+import {handleArchiveChat} from "../handlers/handleArchiveChat.ts";
+import {useMediaQuery} from "react-responsive";
+import MainHeader from "../../main-page/components/ui/MainHeader.tsx";
 
 
 const FullChat: React.FC = () => {
@@ -117,24 +118,16 @@ const FullChat: React.FC = () => {
     }, [selectedChatId]);
 
     // debounced scroll for pagination
-    const handleScroll = useCallback(
-        debounce(() => {
-            const element = chatContainerRef.current;
-            if (element && element.scrollTop === 0 && !loading && hasMore) {
-                loadMessages();
-            }
-        }, 300),
-        [loading, hasMore]
-    );
+    const onScroll = () => handleScroll(chatContainerRef, loading, hasMore, loadMessages);
 
     // add scroll event listener to the chat container
     useEffect(() => {
         const element = chatContainerRef.current;
         if (element) {
-            element.addEventListener('scroll', handleScroll);
-            return () => element.removeEventListener('scroll', handleScroll);
+            element.addEventListener('scroll', onScroll);
+            return () => element.removeEventListener('scroll', onScroll);
         }
-    }, [handleScroll]);
+    }, [onScroll]);
 
     // func to load messages
     const loadMessages = useCallback(async () => {
@@ -271,30 +264,9 @@ const FullChat: React.FC = () => {
     }, [socket, selectedChatId]);
 
 
-    // on chat click
-    const handleChatClick = (chatId: number) => {
-        const savedChatId = localStorage.getItem('selectedChatId');
-        const parsedChatId = savedChatId ? parseInt(savedChatId, 10) : null;
-        const newChatId = (parsedChatId === chatId) ? null : chatId;
-        setSelectedChatId(newChatId);
-        if (newChatId !== null) {
-            localStorage.setItem('selectedChatId', newChatId.toString());
-        } else {
-            localStorage.removeItem('selectedChatId');
-        }
-        setSkip(0);
-        setMessages([]);
-        setHasMore(true);
-        setChatList(prevChatList =>
-            prevChatList.map(chat =>
-                chat.id === chatId
-                    ? { ...chat, unreadCount: 0 }
-                    : chat
-            )
-        );
-    };
 
-    const selectedChat = chatList.find(chat => chat.id === selectedChatId);
+
+
 
     const toggleDropdown = () => {
         setDropdownOpen(!dropdownOpen);
@@ -347,29 +319,22 @@ const FullChat: React.FC = () => {
         setInfoMenuOpen(!infoMenuOpen);
     };
 
-    // block / unblock chat
-    const handleBlockChat = async (chatId: number | null, isBlocked: boolean) => {
-        if (chatId === null) return; // или обработка ошибки
 
-        try {
-            isBlocked ? await unblockChat(chatId) : await blockChat(chatId);
-            loadChats(filter, username);
-            toggleInfoMenu();
-        } catch (error) {
-            console.error('Error updating chat block status:', error);
+    const handleBlockChatWrapper = (chatId: number | null, isBlocked: boolean) => {
+        handleBlockChat(chatId, isBlocked, loadChats, toggleInfoMenu, filter, username);
+
+        if (isSmallScreen) {
+            setIsChatOpen(false);
         }
     };
 
-    // archive / unarchive chat
-    const handleArchiveChat = async (chatId: number | null, isArchived: boolean) => {
-        if (chatId === null) return; // или обработка ошибки
 
-        try {
-            isArchived ? await unarchiveChat(chatId) : await archiveChat(chatId);
-            loadChats(filter, username);
-            toggleInfoMenu();
-        } catch (error) {
-            console.error('Error updating chat archive status:', error);
+// archive / unarchive chat
+    const archiveChat = (chatId: number | null, isArchived: boolean) => {
+        handleArchiveChat(chatId, isArchived, loadChats, toggleInfoMenu, filter, username);
+
+        if (isSmallScreen) {
+            setIsChatOpen(false);
         }
     };
 
@@ -403,15 +368,41 @@ const FullChat: React.FC = () => {
     };
 
 
+
+
+    const isSmallScreen = useMediaQuery({ query: '(max-width: 768px)' });
+
+    const selectedChat = chatList.find((chat) => chat.id === selectedChatId);
+    const [isChatOpen, setIsChatOpen] = useState(false);
+
+
+    const onCloseChat = () => {
+        setSelectedChatId(null);
+        setIsChatOpen(false);
+    };
+
+
+    const handleChatClickWrapper = (chatId: number) => {
+        handleChatClick(chatId, setSelectedChatId, setSkip, setMessages, setHasMore, setChatList);
+        if (isSmallScreen) {
+            setIsChatOpen(true);
+        }
+    };
+
     return (
         <Wrapper>
-            <div className="h-screen bg-almost-white flex">
-                <MainHeaderFullChat />
-                <div className="xl:w-1/3 md:w-2/4 bg-white mt-[13vh] relative">
-                    <div className="flex items-center space-x-4 mb-8">
+            <MainHeader />
+            <div className="h-[85vh]  fixed xl:w-10/12 sm:w-full xl:h-screen bg-almost-white xl:ml-[2%] ml-0 flex ">
+
+
+                <div
+                    className={`${isSmallScreen ? 'w-full' : 'xl:w-1/3'} ${isSmallScreen && isChatOpen ? 'hidden' : ''} mt-[10vh] bg-white relative`}>
+
+                    <div
+                        className={`xl:w-full w-[90%] xl:ml-0 ml-[5%] mb-8 ${isSmallScreen ? 'flex flex-col space-y-4' : 'flex items-center space-x-4'}`}>
                         <Button
                             isFilled={true}
-                            className={`bg-perfect-yellow text-black w-60 text-center py-2 px-4 transition-all duration-0 ${
+                            className={`bg-perfect-yellow text-black w-full xl:w-[14vw] text-center py-2 px-5 transition-all duration-0 ${
                                 dropdownOpen ? 'rounded-b-none rounded-t-3xl' : 'rounded-3xl'
                             }`}
                             onClick={toggleDropdown}
@@ -428,28 +419,26 @@ const FullChat: React.FC = () => {
                             </div>
                         </Button>
 
-                        <div className="relative flex items-center">
+                        <div className={`relative flex items-center ${isSmallScreen ? 'w-full' : 'flex-grow'}`}>
                             <Input
                                 type="text"
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
                                 onKeyDown={handleSearchKeyDown}
-                                className="w-full mx-2 font-montserratMedium rounded"
+                                className="w-full font-montserratMedium rounded"
                             />
-                            <VectorZoom
-                                className="cursor-pointer h-5 w-5"
-                            />
+                            <VectorZoom className="cursor-pointer h-5 w-5 absolute right-2"/>
                         </div>
                     </div>
 
                     {dropdownOpen && (
                         <div
-                            className="absolute -mt-[3.3vh] w-60 bg-perfect-yellow rounded-b-2xl text-black shadow-lg z-10">
+                            className="absolute -mt-[3.3vh] w-[14vw] bg-perfect-yellow rounded-b-2xl text-black shadow-lg z-10">
                             <ul>
                                 {getAvailableFilters(filter).map((option) => (
                                     <div key={option.key}
                                          className="flex space-x-2 items-center px-2 mb-1 justify-between">
-                                    <li
+                                        <li
                                             className="px-4 py-2 font-montserratMedium cursor-pointer"
                                             onClick={() =>
                                                 handleFilterChange(option.key as 'active' | 'archived' | 'blocked')
@@ -473,7 +462,7 @@ const FullChat: React.FC = () => {
                     >
                         <ul className="space-y-1">
                             {filteredChatList.map((chat, index) => (
-                                <li key={chat.id}>
+                                <li key={index}>
                                     <ChatMiniComponent
                                         message={{
                                             id: chat.id,
@@ -485,7 +474,7 @@ const FullChat: React.FC = () => {
                                         }}
                                         showDivider={index !== filteredChatList.length - 1}
                                         unreadCount={chat.unreadCount}
-                                        onChatClick={() => handleChatClick(chat.id)}
+                                        onChatClick={() => handleChatClickWrapper(chat.id)}
                                     />
                                 </li>
                             ))}
@@ -493,42 +482,47 @@ const FullChat: React.FC = () => {
                     </div>
                 </div>
 
-                <div className="xl:w-2/3 md:w-2/3 flex flex-col p-8 mt-[9vh] h-[93vh]">
+
+                <div
+                    className={`${isSmallScreen ? 'h-full' : 'h-full xl:w-2/3'} ${isSmallScreen && !isChatOpen ? 'hidden' : ''} w-full flex flex-col p-8 mt-[6vh]`}>
                     {selectedChat ? (
-                        <div className="text-left w-full h-full flex flex-col">
-                            <div className="flex items-center mb-4">
+                        <div className="text-left w-full h-[83vh] flex space-y-2 flex-col">
+                            <div className="flex items-center mb-4 w-full">
+                                <button onClick={onCloseChat} className="sm:flex xl:hidden">
+                                    <DownArrowIcon className="h-4 w-4 mr-5"/>
+                                </button>
                                 <img src={selectedChat.imageUrl} alt={selectedChat.name}
-                                     className="xl:w-12 xl:h-12 md:w-20 md:h-20 rounded-full mr-4 font-montserratRegular"/>
-                                <h3 className="xl:text-lg font-montserratMedium font-medium xl:text-xs-pxl ">{selectedChat.name}</h3>
-                                <div className="ml-auto flex space-x-4">
-                                    <Button className="bg-transparent xl:p-2 md:p-2"><PhoneIcon
-                                        className="h-6 w-6"/></Button>
-                                    <Button className="bg-transparent xl:p-2 md:p-1"><CameraIcon
-                                        className="h-6 w-6"/></Button>
+                                     className="xl:w-12 xl:h-12 md:w-20 md:h-20 rounded-full mr-4 font-montserratRegular hidden xl:flex"/>
+                                <h3 className=" font-montserratMedium font-medium xl:text-xs-pxl ">{selectedChat.name}</h3>
+                                <div className="ml-auto flex xl:space-x-2 space-x-1">
+                                    <Button className="bg-transparent xl:p-2 px-0"><PhoneIcon
+                                        className="h-6 w-6 sm:h-7 sm:w-7 pl-2"/></Button>
+                                    <Button className="bg-transparent xl:p-2 px-0"><CameraIcon
+                                        className="h-6 w-6  sm:h-7 sm:w-7 pl-2"/></Button>
                                     <div className="relative">
-                                        <Button className="bg-transparent xl:p-2 md:p-1" onClick={toggleInfoMenu}>
-                                            <InfoIcon className="h-6 w-6"/>
+                                        <Button className="bg-transparent xl:p-2 px-0" onClick={toggleInfoMenu}>
+                                            <InfoIcon className="h-6 w-6 sm:h-7 sm:w-7 pl-2"/>
                                         </Button>
 
-                                        {/* Выпадающий список */}
+                                        {/* Выпадающий список block/archive/profile */}
                                         {infoMenuOpen && (
                                             <div
                                                 className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg z-10">
                                                 <ul className="py-2">
                                                     <li className="flex items-start justify-start px-4 py-4 cursor-pointer hover:bg-gray-100">
-                                                        <ProfileImg className="h-6 w-6 mr-3"/>
+                                                        <ProfileImg className="xl:h-6 xl:w-6 mr-3"/>
                                                         <span>Подивитися профіль</span>
                                                     </li>
                                                     <li className="flex items-start px-4 py-2 cursor-pointer hover:bg-gray-100 text-red-500">
                                                         <Button
-                                                            className="bg-transparent items-start justify-start flex xl:p-2 md:p-1 items-start"
+                                                            className="bg-transparent  justify-start flex xl:p-2 md:p-1 items-start"
                                                             onClick={() => {
                                                                 if (selectedChatId !== null) {
-                                                                    handleBlockChat(selectedChatId, selectedChat?.isBlocked);
+                                                                    handleBlockChatWrapper(selectedChatId, selectedChat?.isBlocked);
                                                                 }
                                                             }}
                                                         >
-                                                            <LockImg className="h-6 w-6 mr-3 -ml-2"/>
+                                                            <LockImg className="xl:h-6 xl:w-6  mr-3 -ml-2"/>
                                                             <span>{selectedChat?.isBlocked ? 'Розблокувати' : 'Заблокувати'}</span>
                                                         </Button>
                                                     </li>
@@ -537,11 +531,11 @@ const FullChat: React.FC = () => {
                                                             className="bg-transparent flex xl:p-2 md:p-1 items-start"
                                                             onClick={() => {
                                                                 if (selectedChatId !== null) {
-                                                                    handleArchiveChat(selectedChatId, selectedChat?.isArchived);
+                                                                    archiveChat(selectedChatId, selectedChat?.isArchived);
                                                                 }
                                                             }}
                                                         >
-                                                            <BellIcon className="h-6 w-6 mr-3 -ml-2"/>
+                                                            <BellIcon className="xl:h-6 xl:w-6 mr-3 -ml-2"/>
                                                             <span>{selectedChat?.isArchived ? 'Розархівувати' : 'Архівувати'}</span>
                                                         </Button>
                                                     </li>
@@ -555,9 +549,9 @@ const FullChat: React.FC = () => {
                             </div>
 
                             {/* Messages content */}
-                            <div className="flex-1 overflow-y-auto"
+                            <div className="flex-1 overflow-y-auto xl:h-[100vh] h-[90vh]"
                                  style={{scrollbarWidth: 'none', msOverflowStyle: 'none'}} ref={chatContainerRef}
-                                 onScroll={handleScroll}>
+                                 onScroll={onScroll}>
                                 <ul className="space-y-1">
                                     {formattedMessages.length === 0 ? (
                                         <li className="text-center text-gray-500 font-montserratRegular">
@@ -569,12 +563,14 @@ const FullChat: React.FC = () => {
                                                 <li key={index}
                                                     className="text-center text-gray-500 font-montserratRegular">{item.date}</li>
                                             ) : (
-                                                <div key={index} className={`flex ${item.sender.id === userId ? 'justify-end' : 'justify-start'}`}>
+                                                <div key={index}
+                                                     className={`flex ${item.sender.id === userId ? 'justify-end' : 'justify-start'}`}>
                                                     <div
                                                         className={`p-3 rounded-xl ${item.type === 'text' ? (item.sender.id === userId ? 'bg-pale-yellow' : 'bg-baby-blue') : 'bg-transparent'} max-w-xs`}>
 
                                                         {/* message */}
-                                                        <div className={`flex ${item.type === 'text' ? 'flex-row' : 'flex-col'}`}>
+                                                        <div
+                                                            className={`flex ${item.type === 'text' ? 'flex-row' : 'flex-col'}`}>
                                                             {/* first column */}
                                                             <div
                                                                 className={`flex-1 ${item.type === 'text' ? 'flex items-center' : ''}`}
@@ -587,31 +583,34 @@ const FullChat: React.FC = () => {
                                                                 {item.type === 'text' ? (
                                                                     <p>{item.content}</p>
                                                                 ) : (
-                                                                    <img src={item.content} alt="Chat Image" className="w-full rounded-[5%]" />
+                                                                    <img src={item.content} alt="Chat Image"
+                                                                         className="w-full rounded-[5%]"/>
                                                                 )}
                                                             </div>
 
                                                             {/* second column */}
                                                             {item.type === 'text' ? (
                                                                 <div className="flex items-end justify-end ml-2">
-                                                                    <span className="font-montserratRegular text-gray-500 text-xs">{item.formattedTime}</span>
+                                                                    <span
+                                                                        className="font-montserratRegular text-gray-500 text-xs">{item.formattedTime}</span>
                                                                     {item.sender.id === userId && (
                                                                         item.isRead ? (
-                                                                            <ReadVector />
+                                                                            <ReadVector/>
                                                                         ) : (
-                                                                            <UnreadVector />
+                                                                            <UnreadVector/>
                                                                         )
                                                                     )}
                                                                 </div>
                                                             ) : (
                                                                 <div className="flex flex-col items-end mt-2">
                                                                     <div className="flex items-center space-x-1">
-                                                                        <span className="font-montserratRegular text-gray-500 text-xs">{item.formattedTime}</span>
+                                                                        <span
+                                                                            className="font-montserratRegular text-gray-500 text-xs">{item.formattedTime}</span>
                                                                         {item.sender.id === userId && (
                                                                             item.isRead ? (
-                                                                                <ReadVector />
+                                                                                <ReadVector/>
                                                                             ) : (
-                                                                                <UnreadVector />
+                                                                                <UnreadVector/>
                                                                             )
                                                                         )}
                                                                     </div>
@@ -628,19 +627,23 @@ const FullChat: React.FC = () => {
                             </div>
 
                             <ComponentFullInput onSendMessage={handleSendMessage} onFileChange={handleFileChange}
-                                                onSendFile={handleSendFile} selectedChatId={selectedChatId} // Передаем selectedChatId
+                                                onSendFile={handleSendFile} selectedChatId={selectedChatId}
                                                 socket={socket}/>
                         </div>
+
                     ) : (
                         <div className="flex flex-col items-center justify-center h-full text-center">
-                            <div className="w-60 h-52 bg-dark-blue rounded-3xl mb-4"></div>
+                            <StartContinue/>
                             <h3 className="text-lg font-montserratMedium font-semibold">Почніть з того, на чому
                                 зупинилися</h3>
                             <p className="text-gray-500 font-montserratMedium">Виберіть розмову і починайте
                                 спілкуватися.</p>
                         </div>
                     )}
+
+
                 </div>
+
             </div>
         </Wrapper>
     );

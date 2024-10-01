@@ -1,21 +1,16 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import CloseIcon from '../assets/close_icon.svg?react';
 import DownArrowIcon from '../assets/Down_Arrow.svg?react';
+import NoChats from '../assets/NoChats.svg?react';
 import { Button } from "../../../ui/Button.tsx";
 import { ChatMiniComponent } from './ui/ChatMiniComponent.tsx';
 import { ChatMessagesList } from "./ChatMessagesList.tsx";
 import { fetchChats } from "../api/chatService.ts";
 import { debounce } from 'lodash';
-import {determineMessageType} from "../helpers/determineMessageType.ts";
+import { determineMessageType } from "../helpers/determineMessageType.ts";
+import Chat from "../interfaces/Chat.tsx";
 
-interface Message {
-    unreadCount: number;
-    id: number;
-    name: string;
-    message: string;
-    time: string;
-    imageUrl: string;
-}
+
 
 interface SideBarChatProps {
     isOpen: boolean;
@@ -23,18 +18,24 @@ interface SideBarChatProps {
 }
 
 export const SideBarChat: React.FC<SideBarChatProps> = ({ isOpen, onClose }) => {
-    const [chats, setChats] = useState<Message[]>([]);
+    const [chats, setChats] = useState<Chat[]>([]);
     const [isChatListOpen, setIsChatListOpen] = useState(false);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
     const [filter, setFilter] = useState<'active' | 'archived' | 'blocked'>('active');
     const [dropdownOpen, setDropdownOpen] = useState(false);
-
+    const [selectedChat, setSelectedChat] = useState<Chat | null>(null);
+    const [selectedChatId, setSelectedChatId] = useState<number | null>(null);
     useEffect(() => {
+        setSelectedChat(null);
+        setSelectedChatId(null);
         const savedFilter = localStorage.getItem('chatFilter') as 'active' | 'archived' | 'blocked' | null;
         if (savedFilter) {
             setFilter(savedFilter);
         }
+        fetchChatData(filter);
+        console.log( "fetchChatData", fetchChatData(filter))
+        console.log( "isOpen", isOpen)
     }, []);
 
     const fetchChatData = useCallback(debounce(async (filter: 'active' | 'archived' | 'blocked') => {
@@ -50,11 +51,20 @@ export const SideBarChat: React.FC<SideBarChatProps> = ({ isOpen, onClose }) => 
         }
     }, 300), []);
 
+
+
     useEffect(() => {
         if (isOpen) {
             fetchChatData(filter);
+            //console.log( "!!!!!!!!!!!!!!!!! ",fetchChatData(filter))
+        } else {
+            // Сбрасываем состояния при закрытии
+            setIsChatListOpen(false);
+            setSelectedChat(null);
+            setSelectedChatId(null);
         }
     }, [isOpen, filter, fetchChatData]);
+
 
     const toggleChatListOpen = () => {
         setIsChatListOpen(!isChatListOpen);
@@ -67,6 +77,7 @@ export const SideBarChat: React.FC<SideBarChatProps> = ({ isOpen, onClose }) => 
     const handleFilterChange = (newFilter: 'active' | 'archived' | 'blocked') => {
         setFilter(newFilter);
         setDropdownOpen(false);
+        setSelectedChat(null);
     };
 
     const filterOptions = [
@@ -79,17 +90,31 @@ export const SideBarChat: React.FC<SideBarChatProps> = ({ isOpen, onClose }) => 
         return filterOptions.filter(option => option.key !== currentFilter);
     };
 
+    const handleChatClick = (chat: Chat, chatId: number) => {
+        setSelectedChat(chat);
+        setSelectedChatId(chatId);
+        toggleChatListOpen();
+        setIsChatListOpen(true);
+    };
+
+    useEffect(() => {
+        if (!isChatListOpen) {
+            fetchChatData(filter);
+        }
+    }, [isChatListOpen, filter, fetchChatData]);
+
+
     return (
         <>
             {isOpen && <div className="fixed inset-0 bg-black opacity-50 z-40" onClick={onClose}></div>}
 
             <div
-                className={`fixed top-0 right-0 bg-white z-50 overflow-hidden transform transition-transform duration-500 ease-in-out
+                className={`fixed top-0 right-0 bg-white z-50  transform transition-transform duration-500 ease-in-out
                 ${isOpen ? 'translate-x-0' : 'translate-x-full'} xl:w-1/4 md:w-2/3 h-full shadow-lg border-2 border-l-dark-blue
                 border-t-dark-blue border-b-dark-blue rounded-l-3xl flex flex-col p-6`}
             >
-                <div className="flex justify-center items-center mb-4 relative">
-                    <div className="flex flex-wrap justify-center items-center relative">
+                <div className="flex justify-center items-center mb-4 ">
+                    <div className="flex flex-wrap justify-center items-center  ">
                         <Button
                             isFilled={true}
                             className={`bg-perfect-yellow text-black w-60 text-center py-2 px-4 transition-all duration-0 ${
@@ -110,7 +135,7 @@ export const SideBarChat: React.FC<SideBarChatProps> = ({ isOpen, onClose }) => 
                         </Button>
 
                         {dropdownOpen && (
-                            <div className="absolute mt-[9.8vh] w-60 bg-perfect-yellow rounded-b-2xl text-black shadow-lg z-10">
+                            <div className="absolute mt-[9.8vh] w-60 bg-perfect-yellow rounded-b-2xl text-black shadow-lg z-50">
                                 <ul>
                                     {getAvailableFilters(filter).map(option => (
                                         <div key={option.key} className="flex space-x-2 items-center px-2 mb-1 justify-between">
@@ -159,7 +184,7 @@ export const SideBarChat: React.FC<SideBarChatProps> = ({ isOpen, onClose }) => 
                                         imageUrl: chat.imageUrl,
                                     }}
                                     showDivider={index < chats.length - 1}
-                                    onChatClick={toggleChatListOpen}
+                                    onChatClick={() => handleChatClick(chat, chat.id)}
                                     unreadCount={chat.unreadCount}
                                 />
                             ))}
@@ -172,7 +197,7 @@ export const SideBarChat: React.FC<SideBarChatProps> = ({ isOpen, onClose }) => 
                     </>
                 ) : (
                     <div className="flex flex-col items-center justify-center flex-grow mx-5">
-                        <div className="bg-dark-blue w-[70%] h-[30%] rounded-3xl mb-4"></div>
+                        <NoChats />
                         <p className="text-center font-montserratMedium font-medium text-lg mb-2">У вас поки немає чатів</p>
                         <p className="text-center font-montserratMedium font-normal text-sm">
                             У вас поки немає чатів. Почніть розмову з іншими користувачами, щоб надати або отримати допомогу
@@ -180,7 +205,9 @@ export const SideBarChat: React.FC<SideBarChatProps> = ({ isOpen, onClose }) => 
                     </div>
                 )}
 
-                <ChatMessagesList isOpen={isChatListOpen} onClose={toggleChatListOpen} />
+                {selectedChatId !== null && (
+                    <ChatMessagesList isOpen={isChatListOpen} onClose={toggleChatListOpen}  chatId={selectedChatId} chatChoose={selectedChat} />
+                )}
             </div>
         </>
     );

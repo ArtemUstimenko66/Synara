@@ -2,7 +2,10 @@ import { useEffect, useState } from 'react';
 import BackArrowComponent from "../../modules/registration/components/ui/BackArrow.tsx";
 import LoginMain from "../../modules/login/components/LoginMain.tsx";
 import { UserLogin } from "../../modules/login/interfaces/UserLogin.tsx";
-import LogoSynara from '../../assets/images/logoSynara.svg?react';
+import LogoSynara from '../../assets/images/logoRegistration.svg?react';
+import LogoSynaraBlue from '../../assets/images/logoSynara.svg?react';
+import LoginMainPicture from '../../assets/images/LoginMain.svg?react';
+import LoginMainSMMD from '../../assets/images/LoginMainSMMD.svg?react';
 
 const LoginPage = () => {
     const [currentStep, setCurrentStep] = useState(1);
@@ -28,16 +31,18 @@ const LoginPage = () => {
 
     return (
         <div className="bg-dark-blue min-h-screen h-screen flex ">
-            <div className="w-2/6 p-8 xl:flex md:hidden sm:hidden items-left justify-left mt-10 ml-28">
-                <div className="text-almost-white font-montserratRegular font-bold text-relative-h4">LOGO</div>
+            <div className="w-2/6 p-8 xl:flex md:hidden sm:hidden items-left flex flex-col justify-center mt-10 ">
+                <LogoSynara
+                    className="text-almost-white font-montserratRegular font-bold text-relative-h4"></LogoSynara>
+                <LoginMainPicture className="pr-[37%]"/>
             </div>
 
-            <div className="xl:w-5/6 md:w-full sm:w-full bg-almost-white xl:rounded-l-3xl h-full xl:px-relative-md flex flex-col xl:items-start xl:justify-start sm:items-center sm:justify-center">
+            <div
+                className="xl:w-5/6 md:w-full sm:w-full bg-almost-white xl:rounded-l-3xl h-full xl:px-relative-md flex flex-col xl:items-start xl:justify-start sm:items-center sm:justify-center">
 
-                <LogoSynara className="xl:hidden md:flex sm:flex mt-relative-sm sm:w-24 sm:h-24" />
+                <LogoSynaraBlue className="xl:hidden md:flex sm:flex mt-relative-sm sm:w-24 sm:h-24" />
 
-                <div className="py-8 bg-dark-blue rounded-3xl xl:hidden sm:w-5/6 sm:h-[30%]  sm:mt-6 flex items-center justify-left mt-4" />
-
+                <LoginMainSMMD className=" bg-dark-blue sm:block rounded-3xl md:block  xl:hidden sm:w-2/4 sm:h-[30%]  sm:mt-6 flex  mt-4" />
                 <div className="flex xl:w-full xl:items-start xl:justify-start sm:items-center sm:justify-center sm:w-11/12 h-full">
                     {currentStep > 1 && currentStep < steps.length && (
                         <BackArrowComponent onClick={() => setCurrentStep(currentStep - 1)} />

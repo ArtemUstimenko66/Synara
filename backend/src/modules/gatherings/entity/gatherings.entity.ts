@@ -79,7 +79,7 @@ export class Gatherings {
     description: 'Start of the gathering',
     type: Date,
   })
-  @Column({ type: 'date', nullable: false })
+  @Column({ type: 'date', nullable: true })
   startGathering: Date;
 
   @ApiProperty({
@@ -87,7 +87,7 @@ export class Gatherings {
     description: 'End of the gathering',
     type: Date,
   })
-  @Column({ type: 'date', nullable: false })
+  @Column({ type: 'date', nullable: true })
   endGathering: Date;
 
   @ApiProperty({
@@ -105,6 +105,7 @@ export class Gatherings {
   })
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
+
 
   @ManyToOne(() => User, (user) => user.gatherings)
   user?: User;

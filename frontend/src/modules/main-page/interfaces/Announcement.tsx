@@ -1,4 +1,5 @@
 export interface Announcement {
+    //name: string;
     viewsCount: number;
     responsesCount: number;
     description: string;

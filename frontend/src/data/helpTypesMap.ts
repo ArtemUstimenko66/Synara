@@ -22,3 +22,17 @@ export const getHelpToKey = (typeHelp: string) : string => {
     const entry = Object.entries(helpToKeyMap).find(([, value]) => value === typeHelp);
     return entry ? entry[0] : typeHelp;
 }
+
+
+export const helpTypesMapEngToUkr: { [key: string]: string } = {
+    humanitarian: 'Гуманітарна',
+    informational: 'Інформаційна',
+    psychological: 'Психологічна',
+    material: 'Матеріальна',
+};
+
+export const getHelpTypeInUkrainianEngToUkr = (typeHelp: string): string => {
+    return helpTypesMapEngToUkr[typeHelp] || typeHelp;
+};
+
+
