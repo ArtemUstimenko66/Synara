@@ -27,8 +27,6 @@ export class AnnouncementService {
   constructor(
     @InjectRepository(Announcement)
     private announcementRepository: Repository<Announcement>,
-    @InjectRepository(User)
-    private userRepository: Repository<User>,
   ) {}
 
   private updateUrgency(announcement: Announcement): void {
