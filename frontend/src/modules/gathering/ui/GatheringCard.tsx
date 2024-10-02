@@ -24,7 +24,7 @@ const GatheringCard: React.FC<DonationCardProps> = ({ title, description, goal, 
 			<div className="mt-4">
 				<p className="xl:text-pxl md:text-relative-h3 font-montserratMedium mt-4">{t('goal')}: {goal.toLocaleString()}</p>
 				<p className="xl:text-pxl md:text-relative-h4 font-montserratRegular">{t('collected')}: {raised.toLocaleString()}</p>
-				<div className="w-full bg-almost-white h-11 border-2 border-dark-blue rounded-3xl mt-6 xl:mt-12">
+				<div className="w-full bg-almost-white h-11 border-2 border-dark-blue rounded-3xl mt-6 xl:mt-3">
 					<div
 						className="bg-dark-blue h-10 rounded-3xl flex items-center justify-center"
 						style={{ width: `${Math.floor(percentage)}%` }}

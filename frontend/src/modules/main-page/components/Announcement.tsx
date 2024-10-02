@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from 'react-router-dom';
 
 interface AnnouncementProps {
-    id: string;  // Добавлен ID объявления
+    id: string;
     userName: string;
     avatar: string;
     datePosted: Date;
@@ -15,7 +15,7 @@ interface AnnouncementProps {
 }
 
 const Announcement: React.FC<AnnouncementProps> = ({
-                                                       id,  // Принимаем ID как пропс
+                                                       id,
                                                        userName,
                                                        avatar,
                                                        datePosted,
