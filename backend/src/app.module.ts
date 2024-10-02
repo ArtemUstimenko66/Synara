@@ -32,7 +32,7 @@ import { GatheringsModule } from './modules/gatherings/gatherings.module';
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) =>
-        configService.get('typeorm'),
+          configService.get('typeorm'),
     }),
     AuthModule,
     AuthGoogleModule,

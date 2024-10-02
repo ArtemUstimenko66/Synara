@@ -13,13 +13,13 @@ import {TypeEnding} from "./enums/TypeEnding";
 @Injectable()
 export class GatheringsService {
   constructor(
-    @InjectRepository(Gatherings)
-    private gatheringRepository: Repository<Gatherings>,
+      @InjectRepository(Gatherings)
+      private gatheringRepository: Repository<Gatherings>,
   ) {}
 
   async create(
-    createGatheringDto: CreateUpdateGatheringDto,
-    user: User,
+      createGatheringDto: CreateUpdateGatheringDto,
+      user: User,
   ): Promise<Gatherings> {
     if (+createGatheringDto.collected > +createGatheringDto.goal) {
       throw new BadRequestException('collected money must be less than goal');
