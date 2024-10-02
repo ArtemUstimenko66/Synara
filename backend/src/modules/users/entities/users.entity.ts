@@ -15,6 +15,7 @@ import { Announcement } from '../../announcement/announcement.entity';
 import { ChatMember } from '../../real-time-chat/chats/chat-member.entity';
 import { Message } from '../../real-time-chat/messages/message.entity';
 import { Gatherings } from "../../gatherings/entity/gatherings.entity";
+import {Petition} from "../../petition/petition.entity";
 //import { Petition  } from "../../petition/petition.entity";
 
 @Entity('users')
@@ -154,6 +155,6 @@ export class User {
   @OneToMany(() => Gatherings, (gatherings) => gatherings.user)
   gatherings?: Gatherings[];
 
-  // @OneToMany(() => Petition, (petitions) => petitions.author)
-  // petitions: User;
+  @OneToMany(() => Petition, (petitions) => petitions.author)
+  petitions: User;
 }

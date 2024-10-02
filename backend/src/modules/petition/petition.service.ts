@@ -7,18 +7,17 @@ import { Repository } from 'typeorm';
 import { User } from '../users/entities/users.entity';
 import { Petition } from "./petition.entity";
 import { CreatePetitionDto } from "./dtos/create-petition.dto";
-import {TypeHelp} from "../announcement/type-help.enum";
-import {Announcement} from "../announcement/announcement.entity";
+import { PetitionTopic } from "./enums/petition-topic.enum";
+import { Cron, CronExpression } from "@nestjs/schedule";
 
 export interface FindPetitionOptions {
     query: string;
-    types?: TypeHelp[];
+    topics?: PetitionTopic[];
+    title: string;
     sortOrder?: 'ASC' | 'DESC';
     limit: number;
     offset: number;
-    isUrgent?: boolean;
 }
-
 
 @Injectable()
 export class PetitionService {
@@ -53,37 +52,56 @@ export class PetitionService {
     ): Promise<Petition[]> {
         const qb = this.petitionRepository
             .createQueryBuilder('petition')
-            .leftJoinAndSelect('petition.user', 'user')
+            .leftJoinAndSelect('petition.author', 'author')
 
-        if (options.query && options.query.trim() !== '') {
-            qb.andWhere('announcement.description ILIKE :query', {
-                query: `%${options.query}%`,
+        if(options.title) {
+            qb.andWhere('petition.title ILIKE :title', {
+                title: `%{options.title}%`,
             });
         }
 
-        // filter by type help
-        if (options.types && options.types.length > 0) {
-            qb.andWhere('announcement.type_help IN (:...types)', {
-                types: options.types,
+        if (options.topics && options.topics.length > 0) {
+            qb.andWhere('petition.topic IN (:...topics)', {
+                topics: options.topics,
             });
         }
 
-        // filter by urgency
-        if (options.isUrgent !== undefined) {
-            qb.andWhere('announcement.is_urgent = :isUrgent', {
-                isUrgent: options.isUrgent,
-            });
-        }
-
-        const sortOrder =
-            options.sortOrder && ['ASC', 'DESC'].includes(options.sortOrder)
-                ? options.sortOrder
-                : 'DESC';
-
-        qb.orderBy('announcement.date_posted', sortOrder)
-            .take(options.limit)
-            .skip(options.offset);
+        // const sortOrder =
+        //     options.sortOrder && ['ASC', 'DESC'].includes(options.sortOrder)
+        //         ? options.sortOrder
+        //         : 'DESC';
+        //
+        // qb.orderBy('announcement.date_posted', sortOrder)
+        //     .take(options.limit)
+        //     .skip(options.offset);
 
         return qb.getMany();
+    }
+
+    @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
+    async updatePetitionStatuses() {
+        const petitions = await this.petitionRepository.find();
+
+        for(const petition of petitions) {
+            await this.updatePetitionStatus(petition.id);
+        }
+    }
+
+    async updatePetitionStatus(id: number) {
+        const petition = await this.petitionRepository.findOne({
+            where: { id },
+        });
+        if (!petition) {
+            return;
+        }
+
+        const createdAt = petition.creationDate;
+        const isCompletedDate = new Date(createdAt);
+        isCompletedDate.setMonth(isCompletedDate.getMonth() + 3);
+
+        if(new Date() >= isCompletedDate) {
+            petition.isCompleted = true;
+            await this.petitionRepository.save(petition);
+        }
     }
 }

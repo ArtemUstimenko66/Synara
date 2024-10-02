@@ -6,6 +6,7 @@ import {
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { User } from "../users/entities/users.entity";
+import { PetitionTopic } from "./enums/petition-topic.enum";
 
 @Entity('petition')
 export class Petition {
@@ -23,6 +24,13 @@ export class Petition {
     })
     @Column({ type: 'varchar', length: 225, nullable: false })
     title: string;
+
+    @Column({
+        type: 'enum',
+        enum: PetitionTopic,
+        default: PetitionTopic.NO_SUBJECT,
+    })
+    topic: PetitionTopic[];
 
     @ApiProperty({
         example: 'Save the Forests',
@@ -72,6 +80,14 @@ export class Petition {
     })
     @Column({ type: 'timestamp', nullable: true })
     responseDate?: Date;
+
+    @ApiProperty({
+        example: false,
+        description: 'Indicates whether the petition is completed',
+        type: Boolean,
+    })
+    @Column({ type: 'boolean', default: false })
+    isCompleted: boolean;
 
     @ManyToOne(() => User, (user) => user.petitions)
     author: User;

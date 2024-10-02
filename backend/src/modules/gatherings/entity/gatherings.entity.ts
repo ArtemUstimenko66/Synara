@@ -106,7 +106,6 @@ export class Gatherings {
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 
-
   @ManyToOne(() => User, (user) => user.gatherings)
   user?: User;
 

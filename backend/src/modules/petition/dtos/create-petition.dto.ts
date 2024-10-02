@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsBoolean, IsNotEmpty, IsOptional, IsString, IsUrl, MaxLength } from 'class-validator';
+import {PetitionTopic} from "../enums/petition-topic.enum";
 
 export class CreatePetitionDto {
     @ApiProperty({
@@ -11,6 +12,23 @@ export class CreatePetitionDto {
     @IsString()
     @MaxLength(225)
     title: string;
+
+    @ApiProperty({
+        example: 'NO_SUBJECT',
+        description: 'Topic of the petition',
+        type: String,
+    })
+    @IsOptional()
+    topic?: PetitionTopic[];
+
+    @ApiProperty({
+        example: '12345',
+        description: 'Petition number',
+        type: String,
+    })
+    @IsNotEmpty()
+    @IsString()
+    petitionNumber: string;
 
     @ApiProperty({
         example: 'We request the government to take immediate action to save the forests...',
@@ -48,4 +66,13 @@ export class CreatePetitionDto {
     })
     @IsOptional()
     responseDate?: Date;
+
+    @ApiProperty({
+        example: false,
+        description: 'Indicates whether the petition is completed',
+        type: Boolean,
+    })
+    @IsOptional()
+    @IsBoolean()
+    isCompleted?: boolean;
 }

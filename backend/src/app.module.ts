@@ -22,6 +22,7 @@ import { ChatsModule } from './modules/real-time-chat/chats/chats.module';
 import { MessagesModule } from './modules/real-time-chat/messages/messages.module';
 import { UnBrokennessModule } from './modules/unbrokenness/unbrokenness.module';
 import { GatheringsModule } from './modules/gatherings/gatherings.module';
+import {PetitionModule} from "./modules/petition/petition.module";
 
 @Module({
   imports: [
@@ -52,6 +53,7 @@ import { GatheringsModule } from './modules/gatherings/gatherings.module';
     MessagesModule,
     UnBrokennessModule,
     GatheringsModule,
+    PetitionModule
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -16,9 +16,11 @@ import { Request } from 'express';
 import { User } from '../users/entities/users.entity';
 import { Roles } from '../auth/roles.decorator';
 import { Role } from '../users/enums/role.enum';
-import { PetitionService } from './petition.service';
-import {CreatePetitionDto} from "./dtos/create-petition.dto";
-import {Petition} from "./petition.entity";
+import { FindPetitionOptions, PetitionService } from './petition.service';
+import { CreatePetitionDto } from "./dtos/create-petition.dto";
+import { Petition } from "./petition.entity";
+import { PetitionTopic } from "./enums/petition-topic.enum";
+import { EnumValidationPipe } from "../announcement/enum-validation.pipe";
 @ApiTags('Petition')
 @Controller('api/petitions')
 @UseGuards(JwtAuthGuard)
@@ -37,31 +39,30 @@ export class PetitionController {
         return this.petitionService.create(createPetitionDto, user);
     }
 
-    // @ApiOperation({
-    //     summary: 'Find announcements with filters, search and sorting',
-    // })
-    // @ApiResponse({ status: 200, type: [Announcement] })
-    // @Get('/')
-    // getAllAnnouncements(
-    //     @Query('query') query?: string,
-    //     @Query('type', new EnumValidationPipe(TypeHelp)) types?: TypeHelp[],
-    //     @Query('limit') limit = 12,
-    //     @Query('offset') offset = 0,
-    //     @Query('sortOrder') sortOrder: 'ASC' | 'DESC' = 'DESC',
-    //     @Query('isUrgent') isUrgent?: boolean,
-    //     // radius
-    // ) {
-    //     const options: FindAnnouncementsOptions = {
-    //         query,
-    //         types,
-    //         sortOrder,
-    //         limit,
-    //         offset,
-    //         isUrgent,
-    //     };
-    //     const announcements = this.announcementService.findAnnouncements(options);
-    //     return announcements;
-    // }
+    @ApiOperation({
+        summary: 'Find announcements with filters, search and sorting',
+    })
+    @ApiResponse({ status: 200, type: [Petition] })
+    @Get('/')
+    getAllAnnouncements(
+        @Query('query') query?: string,
+        @Query('topic', new EnumValidationPipe(PetitionTopic)) topics?: PetitionTopic[],
+        @Query('title') title?: string,
+        @Query('limit') limit = 12,
+        @Query('offset') offset = 0,
+        @Query('sortOrder') sortOrder: 'ASC' | 'DESC' = 'DESC',
+    ) {
+        const options: FindPetitionOptions = {
+            query,
+            topics,
+            title,
+            sortOrder,
+            limit,
+            offset,
+        };
+        const petitions = this.petitionService.findPetitions(options);
+        return petitions;
+    }
 
     @ApiOperation({ summary: 'Get an announcement by ID' })
     @ApiResponse({ status: 200, type: Petition })
