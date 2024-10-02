@@ -9,7 +9,7 @@ import Stepper from "../../ui/Stepper";
 import { User } from "../../modules/registration/interfaces/User";
 import BackArrowComponent from "../../modules/registration/components/ui/BackArrow.tsx";
 import CheckPhone from "../../modules/phone-verification/components/CheckPhone.tsx";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import LogoSynara from '../../assets/images/logoRegistration.svg?react';
 import LogoSynaraBlue from '../../assets/images/logoSynara.svg?react';
 import FirstShag from '../../assets/images/FirstShag.svg?react';
@@ -169,17 +169,21 @@ const Registration = () => {
     return (
         <div className="bg-dark-blue min-h-screen h-screen flex ">
             <div className="w-2/6 p-8 xl:flex md:hidden sm:hidden items-left flex flex-col justify-center mt-10 ">
-                <LogoSynara className="text-almost-white font-montserratRegular font-bold text-relative-h4"></LogoSynara>
+                <Link to="/home">
+                    <LogoSynara className="text-almost-white font-montserratRegular font-bold text-relative-h4"></LogoSynara>
+                </Link>
                 {renderStepImage()}
             </div>
             <div
                 className="xl:w-5/6 md:w-full sm:w-full bg-almost-white xl:rounded-l-3xl h-full xl:px-relative-md flex flex-col xl:items-start xl:justify-start sm:items-center sm:justify-center">
-                <div className="flex w-11/12 xl:hidden">
+                <div className="flex w-11/12 mt-[2.5vh] xl:hidden">
                     <div className="xl:mt-[20%]">
                         <BackArrowComponent onClick={handleBackArrowClick}/>
                     </div>
                     <div className="flex w-full justify-center ">
-                        <LogoSynaraBlue className="xl:hidden md:flex sm:flex  sm:w-24 sm:h-24"/>
+                        <Link to="/home">
+                            <LogoSynaraBlue className="xl:hidden md:flex sm:flex  sm:w-24 sm:h-24"/>
+                        </Link>
                     </div>
                 </div>
 
@@ -196,7 +200,7 @@ const Registration = () => {
                     <div className="xl:max-w-2xl xl:ml-24 sm:ml-5 mt-7 flex flex-col justify-start flex-grow">
                         {currentStep < 5 && (
                             <>
-                                <h1 className="font-kharkiv xl:text-relative-h2 sm:text-relative-h1 mb-relative-ssm mt-relative-ssm">
+                                <h1 className="font-kharkiv xl:text-relative-h3xl sm:text-relative-h2 mb-relative-ssm mt-relative-ssm">
                                     СТВОРЕННЯ АККАУНТУ
                                 </h1>
                                 <div className="mb-relative-sm flex justify-start">

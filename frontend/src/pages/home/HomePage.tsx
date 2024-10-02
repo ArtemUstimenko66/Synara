@@ -3,19 +3,19 @@ import { useSwipeable } from 'react-swipeable';
 import { useMediaQuery } from 'react-responsive';
 
 import CountUp from 'react-countup';
-
-
 import PlaceholderHorizontal from '../../assets/images/PlaceholderHorizontal.svg?react';
 import PlaceholderSquare from '../../assets/images/PlaceholderSquare.svg?react';
-import DonatNaZSU from '../../assets/images/DonatNaZSU.svg?react';
-import GetHelp from '../../assets/images/GetHelp.svg?react';
-import WhyUsImg from '../../assets/images/WhyUsImg.svg?react';
-import WhyMeMainDesktop from '../../assets/images/WhyMeMainDesktop.svg?react';
-import Section1 from '../../assets/images/section1.svg?react';
-import Section2 from '../../assets/images/section2.svg?react';
-import Section3 from '../../assets/images/section3.svg?react';
-import Section4 from '../../assets/images/section4.svg?react';
-import MobileLogo from '../../assets/images/mobileLogo.svg?react';
+
+
+import DonatNaZSU from '../../assets/images/DonatNaZSU.svg';
+import GetHelp from '../../assets/images/GetHelp.svg';
+import WhyUsImg from '../../assets/images/WhyUsImg.svg';
+import WhyMeMainDesktop from '../../assets/images/WhyMeMainDesktop.svg';
+import Section1 from '../../assets/images/section1.svg';
+import Section2 from '../../assets/images/section2.svg';
+import Section3 from '../../assets/images/section3.svg';
+import Section4 from '../../assets/images/section4.svg';
+import MobileLogo from '../../assets/images/mobileLogo.svg';
 
 import VECTOR_1_1 from '../../assets/images/vector_1_1.svg?react';
 import VECTOR_1_2 from '../../assets/images/vector_1_2.svg?react';
@@ -453,8 +453,11 @@ const HomePage: React.FC = () => {
                                 className="flex xl:flex-col md:flex-col sm:flex-row-reverse items-center max-w-xs md:max-w-sm xl:max-w-md select-none">
                                 <div className="sm:flex sm:justify-start">
                                     {/* Картинка справа на экранах sm */}
-                                    <GetHelp
-                                        className="sm:block sm:w-40 sm:h-40 sm:ml-8 sm:mr-8 w-24 h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"/>
+                                    <img
+                                        src={`${GetHelp}`}
+                                        className="w-24 sm:w-40 md:ml-8 sm:mr-8 xl:mr-0 sm:h-40 h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"
+                                        alt="SVG Image"
+                                    />
                                 </div>
                                 <div className="sm:flex sm:flex-col sm:justify-center">
                                     {/* Текст слева на экранах sm */}
@@ -470,9 +473,11 @@ const HomePage: React.FC = () => {
                             <div
                                 className="flex xl:flex-col md:flex-col sm:flex-row items-center max-w-xs md:max-w-sm xl:max-w-md select-none">
                                 <div className="">
-                                    <DonatNaZSU
-                                        className="w-24 sm:w-40 md:ml-8 sm:mr-8 xl:mr-0 sm:h-40 h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"/>
-                                </div>
+                                    <img
+                                        src={`${DonatNaZSU}`}
+                                        className="w-24 sm:w-40 md:ml-8 sm:mr-8 xl:mr-0 sm:h-40 h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"
+                                        alt="SVG Image"
+                                    /></div>
                                 <div className="sm:flex-row">
                                     <h3 className="xl:text-center sm:text-center xl:text-h3 md:text-relative-h3xl font-kharkiv mt-4 w-full max-w-xs md:max-w-sm xl:max-w-md">{t('donate_ZSU')}</h3>
                                     <p className="sm:text-xs xl:text-xs-pxl text-center font-montserratRegular mt-2 w-full max-w-xs md:max-w-sm xl:max-w-md">
@@ -507,12 +512,19 @@ const HomePage: React.FC = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <Section1
-                                    className="xl:ml-12  sm:w-[50%] md:ml-16 xl:mt-auto md:mt-10 xl:w-auto xl:h-auto md:w-relative-xlg md:h-auto"/>
+
+                                <img
+                                    src={`${Section1}`}
+                                    className="xl:mr-12 sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-auto xl:h-auto md:w-relative-xlg md:h-auto"
+                                    alt="SVG Image"
+                                />
 
                                 {/* Card 2 */}
-                                <Section2
-                                    className="xl:mr-12 sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-auto xl:h-auto md:w-relative-xlg md:h-auto"/>
+                                <img
+                                    src={`${Section2}`}
+                                    className="xl:mr-12 sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-auto xl:h-auto md:w-relative-xlg md:h-auto"
+                                    alt="SVG Image"
+                                />
                                 <div className="flex flex-col md:flex-row items-start ">
                                     <div className="flex flex-row items-start xl:mt-20 md:mt-12 xl:ml-auto md:-ml-6">
                                         <div
@@ -543,12 +555,20 @@ const HomePage: React.FC = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <Section3
-                                    className="xl:ml-12 sm:w-[50%] md:ml-16 xl:mt-auto md:mt-10 xl:w-auto xl:h-auto md:w-relative-xlg md:h-auto"/>
+                                <img
+                                    src={`${Section3}`}
+                                    className="xl:mr-12 sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-auto xl:h-auto md:w-relative-xlg md:h-auto"
+                                    alt="SVG Image"
+                                />
 
                                 {/* Card 4 */}
-                                <Section4
-                                    className="xl:mr-12 sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-auto xl:h-auto md:w-relative-xlg md:h-auto"/>
+
+                                <img
+                                    src={`${Section4}`}
+                                    className="xl:mr-12 sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-auto xl:h-auto md:w-relative-xlg md:h-auto"
+                                    alt="SVG Image"
+                                />
+
                                 <div className="flex flex-col md:flex-row items-start">
                                     <div className="flex flex-row items-start xl:mt-20 md:mt-12 xl:ml-auto md:-ml-6">
                                         <div
@@ -595,7 +615,11 @@ const HomePage: React.FC = () => {
                                     <div>{t('count_of_help')}</div>
                                 </div>
                                 <div>
-                                    <WhyUsImg className="md:hidden xl:hidden sm:block sm:w-[90%] sm:h-auto sm:mt-6"/>
+                                    <img
+                                        src={`${WhyUsImg}`}
+                                        className="md:hidden xl:hidden sm:block sm:w-[90%] sm:h-auto sm:mt-6"
+                                        alt="SVG Image"
+                                    />
                                 </div>
                                 <div
                                     className=" xl:mt-16 md:mt-8 sm:mt-6 space-y-8 md:space-y-4 sm:space-y-4 font-bold font-montserratRegular">
@@ -629,8 +653,12 @@ const HomePage: React.FC = () => {
 
                             {/* Правая сторона */}
                             <div className="">
-                                <WhyMeMainDesktop
-                                    className="sm:hidden md:block xl:block xl:ml-20 md:ml-12 xl:mt-2 md:mt-24 xl:w-full      xl:h-full md:w-96 md:h-72 "/>
+
+                                <img
+                                    src={`${WhyMeMainDesktop}`}
+                                    className="sm:hidden md:block xl:block xl:ml-20 md:ml-12 xl:mt-2 md:mt-24 xl:w-full xl:h-full md:w-96 md:h-72 "
+                                    alt="SVG Image"
+                                />
                             </div>
                         </div>
                     </section>
@@ -846,8 +874,11 @@ const HomePage: React.FC = () => {
 
                             {/* App Icon and Text */}
                             <div className="sm:mt-8 flex items-start xl:mb-4 md:mb-1 xl:mt-10 md:mt-4">
-                                <MobileLogo
-                                    className="xl:w-24 xl:h-24 md:w-[32%] md:h-[32%] sm:w-[32%] sm:h-[32%]  rounded-2xl mr-4 xl:mt-0 md:mt-2 "/>
+                                <img
+                                    src={`${MobileLogo}`}
+                                    className="w-24 sm:w-40 md:ml-8 sm:mr-8 xl:mr-0 sm:h-40 h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"
+                                    alt="SVG Image"
+                                />
                                 <div className="w-60">
                                     <h3 className="font-montserratMedium text-blue-500 text-p font-bold xl:mt-2 md:mt-0">Synara</h3>
                                     <p className="font-montserratMedium sm:text-xs-ps xl:text-sm md:text-ps leading-snug">Lorem

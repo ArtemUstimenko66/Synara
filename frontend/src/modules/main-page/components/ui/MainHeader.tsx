@@ -57,12 +57,15 @@ const MainHeader: React.FC = () => {
             ${isVisible ? 'header-slide-in' : 'header-slide-out'} `}
             >
                 <LanguageSelector/>
-                <div className="flex justify-between 0 pl-[5%] items-center px-8 py-8 md:ml-10 md:mr-4 xl:ml-20 xl:mr-36">
+                <div
+                    className="flex justify-between 0 pl-[5%] items-center px-8 py-8 md:ml-10 md:mr-4 xl:ml-20 xl:mr-36">
 
                     {/* Logo */}
-                    <Link to={`/${handleNavClick}`}>
-                        <LogoSynara className="text-xl font-bold xl:mr-[10%] md:mr-14"/>
-                    </Link>
+                    <button onClick={handleNavClick}>
+                        <Link to="#">
+                            <LogoSynara className="text-xl font-bold xl:mr-[10%] md:mr-14"/>
+                        </Link>
+                    </button>
 
                     {/* Nav items */}
                     <nav className="space-x-16 xl:flex sm:hidden md:hidden">
@@ -78,7 +81,7 @@ const MainHeader: React.FC = () => {
                     {/* Buttons */}
                     <div className="flex space-x-8 ">
                         <button>
-                        <NotificationIcon className="h-6 w-6"/>
+                            <NotificationIcon className="h-6 w-6"/>
                         </button>
                         <div className="flex ml-auto cursor-pointer"
                              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
@@ -92,7 +95,8 @@ const MainHeader: React.FC = () => {
                 isOpen={isMobileMenuOpen}
                 onClose={() => setIsMobileMenuOpen(false)}
                 isFilters={false}
-                onApplyFilters={() => {}}
+                onApplyFilters={() => {
+                }}
                 onOpenMap={() => {}}
             />
 
