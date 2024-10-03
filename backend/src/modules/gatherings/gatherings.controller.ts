@@ -16,8 +16,8 @@ import { Role } from '../users/enums/role.enum';
 import { Gatherings } from './entity/gatherings.entity';
 import { FindGatheringsOptions } from './interfaces/find-gathering-options.interface';
 import { Request } from 'express';
-import {User} from "../users/entities/users.entity";
-import {TypeEnding} from "./enums/TypeEnding";
+import { User } from "../users/entities/users.entity";
+import { TypeEnding } from "./enums/TypeEnding";
 
 @ApiTags('Gatherings')
 @Controller('api/gatherings')
@@ -92,5 +92,19 @@ export class GatheringsController {
   @Delete(':id')
   delete(@Param('id') id: string): Promise<void> {
     return this.gatheringService.delete(+id);
+  }
+
+  @Patch(':id/complete')
+  @ApiOperation({ summary: 'Mark gathering as completed' })
+  @ApiResponse({ status: 200, type: Gatherings })
+  markGatheringsAsCompleted(@Param('id') id: number) : Promise<Gatherings> {
+    return this.gatheringService.markGatheringsAsCompleted(id);
+  }
+
+  @Patch(':id/favorite')
+  @ApiOperation({ summary: 'Mark gathering as favorite' })
+  @ApiResponse({ status: 200, type: Gatherings })
+  markGatheringsAsFavorite(@Param('id') id: number) : Promise<Gatherings> {
+    return this.gatheringService.markGatheringsAsFavorite(id);
   }
 }

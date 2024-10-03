@@ -39,7 +39,7 @@ export class AuthGoogleController {
       //   maxAge: 604800000,
       // });
 
-      return res.redirect('http://localhost:5173/profile');
+      return res.redirect('https://synara.help/profile');
     } catch (error) {
       console.error('Error in Google callback:', error.stack);
       return res.status(HttpStatus.INTERNAL_SERVER_ERROR).send({

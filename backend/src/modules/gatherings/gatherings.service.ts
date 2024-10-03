@@ -10,6 +10,7 @@ import { CreateUpdateGatheringDto } from './dtos/create-update-gathering.dto';
 import { FindGatheringsOptions } from './interfaces/find-gathering-options.interface';
 import { User } from '../users/entities/users.entity';
 import {TypeEnding} from "./enums/TypeEnding";
+import {Announcement} from "../announcement/announcement.entity";
 @Injectable()
 export class GatheringsService {
   constructor(
@@ -167,5 +168,25 @@ export class GatheringsService {
     if (result.affected === 0) {
       throw new NotFoundException(`Gathering with id ${id} not found`);
     }
+  }
+
+  async updateGatheringStatus(id: number, updatedData: Partial<Gatherings>): Promise<Gatherings> {
+    const gatherings = await this.gatheringRepository.findOne({ where: { id }});
+
+    if (!gatherings) {
+      throw new NotFoundException(`Gathering with ID ${id} not found`);
+    }
+
+    Object.assign(gatherings, updatedData);
+
+    return this.gatheringRepository.save(gatherings);
+  }
+
+  async markGatheringsAsCompleted(id: number) : Promise<Gatherings> {
+    return this.updateGatheringStatus(id, { is_completed: true });
+  }
+
+  async markGatheringsAsFavorite(id: number): Promise<Gatherings> {
+    return this.updateGatheringStatus(id, { is_favorite: true });
   }
 }

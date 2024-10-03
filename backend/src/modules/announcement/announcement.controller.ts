@@ -91,4 +91,18 @@ export class AnnouncementController {
   remove(@Param('id') id: string): Promise<void> {
     return this.announcementService.remove(+id);
   }
+
+  @Patch(':id/complete')
+  @ApiOperation({ summary: 'Mark announcement as completed' })
+  @ApiResponse({ status: 200, type: Announcement })
+  markAnnouncementAsCompleted(@Param('id') id: number) : Promise<Announcement> {
+    return this.announcementService.markAnnouncementAsCompleted(id);
+  }
+
+  @Patch(':id/favorite')
+  @ApiOperation({ summary: 'Mark announcement as favorite' })
+  @ApiResponse({ status: 200, type: Announcement })
+  markAnnouncementAsFavorite(@Param('id') id: number) : Promise<Announcement> {
+    return this.announcementService.markAnnouncementAsFavorite(id);
+  }
 }

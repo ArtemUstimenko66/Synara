@@ -87,4 +87,18 @@ export class PetitionController {
     // remove(@Param('id') id: string): Promise<void> {
     //     return this.announcementService.remove(+id);
     // }
+
+    @Patch(':id/complete')
+    @ApiOperation({ summary: 'Mark petition as completed' })
+    @ApiResponse({ status: 200, type: Petition })
+    markPetitionAsCompleted(@Param('id') id: number) : Promise<Petition> {
+        return this.petitionService.markPetitionAsCompleted(id);
+    }
+
+    @Patch(':id/favorite')
+    @ApiOperation({ summary: 'Mark petition as favorite' })
+    @ApiResponse({ status: 200, type: Petition })
+    markPetitionAsFavorite(@Param('id') id: number) : Promise<Petition> {
+        return this.petitionService.markPetitionAsFavorite(id);
+    }
 }

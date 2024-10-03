@@ -151,6 +151,6 @@ export class AuthController {
       maxAge: 604800000,
       sameSite: 'none',
     });
-    res.redirect('synara.help/profile');
+    res.redirect('https://synara.help/profile');
   }
 }

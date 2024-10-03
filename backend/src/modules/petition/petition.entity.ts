@@ -87,7 +87,15 @@ export class Petition {
         type: Boolean,
     })
     @Column({ type: 'boolean', default: false })
-    isCompleted: boolean;
+    is_completed: boolean;
+
+    @ApiProperty({
+        example: false,
+        description: 'Indicates whether the petition is favorite',
+        type: Boolean,
+    })
+    @Column({ type: 'boolean', default: false })
+    is_favorite: boolean;
 
     @ManyToOne(() => User, (user) => user.petitions)
     author: User;

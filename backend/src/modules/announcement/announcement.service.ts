@@ -143,4 +143,26 @@ export class AnnouncementService {
       throw new NotFoundException(`Announcement with ID ${id} not found`);
     }
   }
+
+  async updateAnnouncementStatus(id: number, updatedData: Partial<Announcement>): Promise<Announcement> {
+    const announcement = await this.announcementRepository.findOne({ where: { id }});
+
+    if (!announcement) {
+      throw new NotFoundException(`Announcement with ID ${id} not found`);
+    }
+
+    Object.assign(announcement, updatedData);
+
+    return this.announcementRepository.save(announcement);
+  }
+
+  async markAnnouncementAsCompleted(id: number) : Promise<Announcement> {
+    return this.updateAnnouncementStatus(id, { is_completed: true });
+  }
+
+  async markAnnouncementAsFavorite(id: number): Promise<Announcement> {
+    return this.updateAnnouncementStatus(id, { is_favorite: true });
+  }
 }
+
+

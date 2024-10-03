@@ -1,6 +1,6 @@
 import {
     BadRequestException,
-    Injectable,
+    Injectable, NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -9,6 +9,7 @@ import { Petition } from "./petition.entity";
 import { CreatePetitionDto } from "./dtos/create-petition.dto";
 import { PetitionTopic } from "./enums/petition-topic.enum";
 import { Cron, CronExpression } from "@nestjs/schedule";
+import {Announcement} from "../announcement/announcement.entity";
 
 export interface FindPetitionOptions {
     query: string;
@@ -83,11 +84,11 @@ export class PetitionService {
         const petitions = await this.petitionRepository.find();
 
         for(const petition of petitions) {
-            await this.updatePetitionStatus(petition.id);
+            await this.updatePetitionAutomatically(petition.id);
         }
     }
 
-    async updatePetitionStatus(id: number) {
+    async updatePetitionAutomatically(id: number) {
         const petition = await this.petitionRepository.findOne({
             where: { id },
         });
@@ -100,8 +101,27 @@ export class PetitionService {
         isCompletedDate.setMonth(isCompletedDate.getMonth() + 3);
 
         if(new Date() >= isCompletedDate) {
-            petition.isCompleted = true;
+            petition.is_completed = true;
             await this.petitionRepository.save(petition);
         }
+    }
+
+
+    private async updatePetitionStatus(id: number, updateData: Partial<Petition>): Promise<Petition> {
+        const petition = await this.petitionRepository.findOne({ where: { id } });
+        if (!petition) {
+            throw new NotFoundException(`Petition with ID ${id} not found`);
+        }
+
+        Object.assign(petition, updateData);
+        return this.petitionRepository.save(petition);
+    }
+
+    async markPetitionAsCompleted(id: number): Promise<Petition> {
+        return this.updatePetitionStatus(id, { is_completed: true });
+    }
+
+    async markPetitionAsFavorite(id: number): Promise<Petition> {
+        return this.updatePetitionStatus(id, { is_favorite: true });
     }
 }

@@ -99,6 +99,22 @@ export class Gatherings {
   numberOfCard: string;
 
   @ApiProperty({
+    example: true,
+    description: 'Indicates if the gatherings is completed',
+    type: Boolean,
+  })
+  @Column( { default: false })
+  is_completed: boolean;
+
+  @ApiProperty({
+    example: true,
+    description: 'Indicates if the gatherings is favorite',
+    type: Boolean,
+  })
+  @Column( { default: false })
+  is_favorite: boolean;
+
+  @ApiProperty({
     example: '2024-09-23T18:30:00.000Z',
     description: 'Timestamp when the gathering was created',
     type: Date,

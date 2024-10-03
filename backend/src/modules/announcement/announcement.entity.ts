@@ -93,6 +93,22 @@ export class Announcement {
   is_urgent: boolean;
 
   @ApiProperty({
+    example: true,
+    description: 'Indicates if the announcement is completed',
+    type: Boolean,
+  })
+  @Column( { default: false })
+  is_completed: boolean;
+
+  @ApiProperty({
+    example: true,
+    description: 'Indicates if the announcement is favorite',
+    type: Boolean,
+  })
+  @Column( { default: false })
+  is_favorite: boolean;
+
+  @ApiProperty({
     example: '2024-08-25',
     description: 'Date when the announcement was created',
     type: Date,
