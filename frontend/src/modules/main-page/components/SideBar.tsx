@@ -16,7 +16,7 @@ interface SideBarProps {
     onClose: () => void;
     isFilters: boolean;
     onApplyFilters: (filteredAnnouncements: any[]) => void;
-    onOpenMap: () => void; // Add this prop
+    onOpenMap: () => void;
 }
 
 export const SideBar: React.FC<SideBarProps> = ({ isOpen, onClose, isFilters, onApplyFilters,onOpenMap }) => {

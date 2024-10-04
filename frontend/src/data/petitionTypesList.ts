@@ -1,20 +1,11 @@
-export enum PetitionTopic {
+export enum PetitionTypes{
     ALL_PETITIONS = 'c',
-    NO_SUBJECT = 'Без теми',
-    INDUSTRY_TRADE_BUSINESS = 'Промисловість і торгівля',
-    AGRARIAN_POLICY = 'Аграрна політика',
-    LAND_RELATIONS = 'Земельні відносини',
-    TRANSPORT = 'Транспорт',
-    COMMUNICATION = 'Зв’язок',
-    ECONOMIC_PRICE_INVESTMENT = 'Економічна та інвестиційна',
-    FINANCIAL_POLICY = 'Фінансова політика',
-    TAX_POLICY = 'Податкова політика',
-    CUSTOMS_POLICY = 'Митна політика',
-    SOCIAL_PROTECTION = 'Соціальний захист',
-    LABOR_SALARY = 'Праця і зарплата',
+    NO_TYPE = 'Без типу',
+    COMMUNITY_INITIATIVES = 'Громадські ініціативи',
+    ORGANIZATIONAL_INITIATIVES = 'Організаційні ініціативи',
+    OFFICIAL = 'Офіційні',
 }
 
-// Массив строк только на украинском языке (без 'ALL_PETITIONS')
-export const ukrainianPetitionTopics: string[] = Object.values(PetitionTopic).filter(topic => topic !== 'c');
+export const ukrainianPetitionTypes: string[] = Object.values(PetitionTypes).filter(topic => topic !== 'c');
 
-console.log(ukrainianPetitionTopics);
+console.log(ukrainianPetitionTypes);

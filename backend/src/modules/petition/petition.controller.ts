@@ -21,6 +21,7 @@ import { CreatePetitionDto } from "./dtos/create-petition.dto";
 import { Petition } from "./petition.entity";
 import { PetitionTopic } from "./enums/petition-topic.enum";
 import { EnumValidationPipe } from "../announcement/enum-validation.pipe";
+import {PetitionType} from "./enums/petition-type.enum";
 @ApiTags('Petition')
 @Controller('api/petitions')
 @UseGuards(JwtAuthGuard)
@@ -47,6 +48,7 @@ export class PetitionController {
     getAllAnnouncements(
         @Query('query') query?: string,
         @Query('topic', new EnumValidationPipe(PetitionTopic)) topics?: PetitionTopic[],
+        @Query('types', new EnumValidationPipe(PetitionType)) types?: PetitionType[],
         @Query('title') title?: string,
         @Query('limit') limit = 12,
         @Query('offset') offset = 0,
@@ -56,6 +58,7 @@ export class PetitionController {
         const options: FindPetitionOptions = {
             query,
             topics,
+            types,
             title,
             sortOrder,
             sortField,

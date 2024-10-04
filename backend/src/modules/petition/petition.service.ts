@@ -9,10 +9,12 @@ import { Petition } from "./petition.entity";
 import { CreatePetitionDto } from "./dtos/create-petition.dto";
 import { PetitionTopic } from "./enums/petition-topic.enum";
 import { Cron, CronExpression } from "@nestjs/schedule";
+import {PetitionType} from "./enums/petition-type.enum";
 
 export interface FindPetitionOptions {
     query: string;
     topics?: PetitionTopic[];
+    types?: PetitionType[];
     title: string;
     sortField?: 'creationDate' | 'deadline' | 'signatureCount';
     sortOrder?: 'ASC' | 'DESC';
@@ -41,7 +43,7 @@ export class PetitionService {
 
     async findOne(id: number): Promise<Petition> {
         const petition = await this.petitionRepository.findOne(
-            { where: { id },
+            { where: { id }, relations: ['author'],
             });
         if (!petition) {
             throw new BadRequestException(`Petition with id ${id} not found`);
@@ -68,10 +70,24 @@ export class PetitionService {
             });
         }
 
+        if (options.types && options.types.length > 0) {
+            qb.andWhere('petition.type IN (:...types)', {
+                types: options.types,
+            });
+        }
+
         const sortOrder =
             options.sortOrder && ['ASC', 'DESC'].includes(options.sortOrder)
                 ? options.sortOrder
                 : 'DESC';
+
+        if (options.query && options.query.trim() !== '') {
+            const lowerCaseQuery = options.query.toLowerCase();
+            qb.andWhere(
+                '(LOWER(petition.text) LIKE LOWER(:query) OR LOWER(petition.title) LIKE LOWER(:query))',
+                { query: `%${lowerCaseQuery}%` },
+            );
+        }
 
         const sortField = options.sortField || 'creationDate';
         qb.orderBy(`petition.${sortField}`, sortOrder)
@@ -114,7 +130,7 @@ export class PetitionService {
         }
     }
 
-     async updatePetitionStatus(id: number, updateData: Partial<Petition>): Promise<Petition> {
+    async updatePetitionStatus(id: number, updateData: Partial<Petition>): Promise<Petition> {
         const petition = await this.petitionRepository.findOne({ where: { id } });
         if (!petition) {
             throw new NotFoundException(`Petition with ID ${id} not found`);

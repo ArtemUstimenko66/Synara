@@ -54,7 +54,7 @@ const App: React.FC = () => {
             <Route path="/gathering/:id" element={<GatheringDetailsPage />} />
 
             {/* petitions */}
-            <Route path="/petitions" element={<PetitionPage />} />
+            <Route path="/petitions" element={<PrivateRoute element={<PetitionPage />} />} />
             <Route path="/add-petition" element={<PrivateRoute element={<CreatePetitionPage />} />} />
             <Route path="/petition/:id" element={<PrivateRoute element={<PetitionDetailsPage />} />} />
 

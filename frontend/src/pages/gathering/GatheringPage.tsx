@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link, useNavigate, useSearchParams} from 'react-router-dom';
 import MainHeader from '../../modules/main-page/components/ui/MainHeader.tsx';
 import Footer from '../../components/Footer.tsx';
@@ -8,11 +8,11 @@ import SearchGathering from '../../modules/gathering/ui/SearchGathering.tsx';
 import GatheringCard from '../../modules/gathering/ui/GatheringCard.tsx';
 import Wrapper from '../../ui/Wrapper.tsx';
 import {SideBarGatherings} from "../../modules/gathering/components/SideBarGatherings.tsx";
-import {fetchGatherings} from "../../modules/gathering/api/gatheringPageService.ts";
 import {useAuth} from "../../hooks/useAuth.ts";
 import ModalForbidden from "../../modules/gathering/components/ui/ModalForbidden.tsx";
-
-
+import {loadGatherings} from "../../redux/gatheringsSlice.ts";
+import {AppDispatch, RootState} from "../../redux/store.ts";
+import { useDispatch, useSelector } from 'react-redux';
 
 const calculatePercentage = (goal: number, raised: number) => {
 	return (raised / goal) * 100;
@@ -20,19 +20,15 @@ const calculatePercentage = (goal: number, raised: number) => {
 
 const GatheringPage: React.FC = () => {
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-	const [gatherings, setGatherings] = useState<any[]>([]);
 	const [offset, setOffset] = useState(0);
-	const [, setFilteredGatherings] = useState<any[]>([]);
+	const [filteredGatherings, setFilteredGatherings] = useState<any[]>([]);
 	const limit = 12;
 	const [searchParams, setSearchParams] = useSearchParams();
 	const [sortOrder, setSortOrder] = useState<'ASC' | 'DESC'>('ASC');
-	const [hasMore, setHasMore] = useState(true);
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-
-
-	const { unp, birthDate , isAuthenticated} = useAuth(); // получение данных из хука
-	const [showForbiddenModal, setShowForbiddenModal] = useState(false); // состояние для показа модального окна
+	const { unp, birthDate , isAuthenticated} = useAuth();
+	const [showForbiddenModal, setShowForbiddenModal] = useState(false);
 	const navigate = useNavigate(); // навигация
 
 
@@ -40,7 +36,7 @@ const GatheringPage: React.FC = () => {
 		if(isAuthenticated){
 			if (!birthDate) return false;
 			if (!unp || Number(birthDate) < 18) {
-				console.log("setShowForbiddenModal")
+				//console.log("setShowForbiddenModal")
 				setShowForbiddenModal(true);
 			} else {
 				navigate('/add-gathering');
@@ -51,13 +47,13 @@ const GatheringPage: React.FC = () => {
 
 	};
 
+	const dispatch = useDispatch<AppDispatch>();
 
-	const toggleDropdown = () => {
-		setIsDropdownOpen(!isDropdownOpen);
-	};
+	const { gatherings = [], hasMore = false } = useSelector(
+		(state: RootState) => state.gatherings || {}
+	);
 
-	const fetchFilteredGatherings = async () => {
-
+	useEffect(() => {
 		const query = searchParams.get('query') || '';
 		const types = searchParams.getAll('typeEnding');
 		const moneyTo = parseFloat(searchParams.get('moneyTo') || 'NaN');
@@ -65,23 +61,50 @@ const GatheringPage: React.FC = () => {
 		const urgencyParam = searchParams.get('isUrgent');
 		const urgency = urgencyParam === 'true' ? true : urgencyParam === 'false' ? false : undefined;
 
-		setOffset(0);
+		const params = {
+			query,
+			types,
+			limit,
+			offset,
+			moneyFrom,
+			moneyTo,
+			sortOrder,
+			urgency,
+		};
 
-		try {
-			const data = await fetchGatherings(query, types, limit, 0, moneyFrom, moneyTo, sortOrder, urgency);
-			setGatherings(data);
-			setOffset(limit);
+		dispatch(loadGatherings(params));
+	}, [dispatch, limit, offset, searchParams, sortOrder]);
 
-			setHasMore(data.length >= limit);
-		} catch (error) {
-			console.error('Error fetching gatherings:', error);
-		}
+
+
+	const loadMoreGatherings = () => {
+		// Убедитесь, что offset обновляется здесь
+		setOffset(prevOffset => prevOffset + limit);
+		const query = searchParams.get('query') || '';
+		const types = searchParams.getAll('typeEnding');
+		const moneyTo = parseFloat(searchParams.get('moneyTo') || 'NaN');
+		const moneyFrom = parseFloat(searchParams.get('moneyFrom') || 'NaN');
+		const urgencyParam = searchParams.get('isUrgent');
+		const urgency = urgencyParam === 'true' ? true : urgencyParam === 'false' ? false : undefined;
+
+		const params = {
+			query,
+			types,
+			limit,
+			offset: offset + limit,
+			moneyFrom,
+			moneyTo,
+			sortOrder,
+			urgency,
+		};
+
+		dispatch(loadGatherings(params));
 	};
 
 
-	useEffect(() => {
-		fetchFilteredGatherings();
-	}, [searchParams, sortOrder]);
+	const toggleDropdown = () => {
+		setIsDropdownOpen(!isDropdownOpen);
+	};
 
 
 	const handleSort = (order: 'ASC' | 'DESC') => {
@@ -94,7 +117,10 @@ const GatheringPage: React.FC = () => {
 		toggleDropdown();
 	};
 
-	const loadMoreGatherings = async () => {
+	const handleApplyFilters = (filtered: any[]) => {
+		setFilteredGatherings(filtered);
+		setOffset(0);
+
 		const query = searchParams.get('query') || '';
 		const types = searchParams.getAll('typeEnding');
 		const moneyTo = parseFloat(searchParams.get('moneyTo') || 'NaN');
@@ -102,20 +128,21 @@ const GatheringPage: React.FC = () => {
 		const urgencyParam = searchParams.get('isUrgent');
 		const urgency = urgencyParam === 'true' ? true : urgencyParam === 'false' ? false : undefined;
 
-		try {
-			const data = await fetchGatherings(query, types, limit, offset, moneyFrom, moneyTo, sortOrder, urgency);
-			setGatherings(prev => [...prev, ...data]);
-			setOffset(prev => prev + limit);
+		const params = {
+			query,
+			types,
+			limit,
+			offset: 0,
+			moneyFrom,
+			moneyTo,
+			sortOrder,
+			urgency,
+		};
 
-			setHasMore(data.length >= limit);
-		} catch (error) {
-			console.error('Error loading more gatherings:', error);
-		}
+		dispatch(loadGatherings(params));
 	};
 
-	const handleApplyFilters = (filtered: any[]) => {
-		setFilteredGatherings(filtered);
-	};
+	const gatheringsToDisplay = filteredGatherings.length > 0 ? filteredGatherings : gatherings;
 
 	return (
 		<>
@@ -191,8 +218,8 @@ const GatheringPage: React.FC = () => {
 					<div className="flex flex-col md:flex-row">
 						<div className="w-full flex justify-between">
 							<div className="w-full mt-4 ml-4 flex flex-wrap justify-start">
-								{gatherings.length > 0 ? (
-									gatherings.map((gathering, index) => (
+								{gatheringsToDisplay.length > 0 ? (
+									gatheringsToDisplay.map((gathering, index) => (
 										<Link to={`/gathering/${gathering.id}`} key={index}
 											  className="w-full md:w-[48%] xl:w-[32%] mr-[1vw] p-2 mt-4">
 											<GatheringCard

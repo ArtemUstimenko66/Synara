@@ -62,6 +62,7 @@ export class GatheringsService {
     const gathering = await this.gatheringRepository
         .createQueryBuilder('gathering')
         .leftJoinAndSelect('gathering.user', 'user')
+        .leftJoinAndSelect('gathering.files', 'files')
         .where('gathering.id = :id', { id })
         .getOne();
 

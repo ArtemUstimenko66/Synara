@@ -5,21 +5,30 @@ export const getFilteredPetitions = async (
     limit = 12,
     offset = 0,
     sortOrder: 'ASC' | 'DESC' = 'ASC',
-    urgency?: boolean
+    field: string,
+    topic: string,            // добавляем параметр topic
+    types: string[],          // добавляем параметр types
+    ukraine: boolean          // добавляем параметр ukraine
 ) => {
     const queryParams = new URLSearchParams();
 
     if (query) {
         queryParams.append('query', query);
     }
-
-    if (urgency !== undefined) {
-        queryParams.append('isUrgent', urgency.toString());
+    if (topic) {
+        queryParams.append('topic', topic); // добавляем topic в параметры
+    }
+    if (types.length) {
+        types.forEach(type => queryParams.append('types', type)); // добавляем все выбранные types
+    }
+    if (ukraine) {
+        queryParams.append('ukraine', 'true'); // добавляем ukraine в параметры
     }
 
     queryParams.append('limit', limit.toString());
     queryParams.append('offset', offset.toString());
     queryParams.append('sortOrder', sortOrder);
+    queryParams.append('sortField', field);
 
     const decodedQueryParams = decodeURIComponent(queryParams.toString());
 
@@ -36,6 +45,7 @@ export const getFilteredPetitions = async (
         throw error;
     }
 };
+
 
 
 export const createPetition = async (petitionData: any) => {
@@ -64,6 +74,25 @@ export const fetchPetitionDetails = async (id: number) => {
         return response.data;
     } catch (error) {
         console.error("Ошибка при получении деталей петиции:", error);
+        throw error;
+    }
+};
+
+export const addPetitionToFavorites = async (id: number) => {
+    try {
+        const response = await api.patch(`/petitions/${id}/favorite`, {}, {
+            withCredentials: true,
+        });
+
+        if (response.status === 200) {
+            console.log('Петиция успешно добавлена в избранное');
+            return true;
+        } else {
+            console.error("Не удалось добавить петицию в избранное");
+            return false;
+        }
+    } catch (error) {
+        console.error("Ошибка при добавлении в избранное:", error);
         throw error;
     }
 };
