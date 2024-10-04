@@ -30,7 +30,7 @@ export class Petition {
         description: 'Petition author name',
         type: String,
     })
-    @Column({ type: 'varchar', length: 225, nullable: true })
+    @Column({ type: 'varchar', length: 225, nullable: false })
     petitionAuthor: string;
 
     @Column({
@@ -104,17 +104,6 @@ export class Petition {
     })
     @Column({ type: 'boolean', default: false })
     is_favorite: boolean;
-
-    @Column( { type: 'timestamp', nullable: true })
-    deadline: Date;
-
-    @ApiProperty({
-        example: 0,
-        description: 'Number of signatures for the petition',
-        type: Number,
-    })
-    @Column({ type: 'int', default: 0})
-    signatureCount: number;
 
     @ManyToOne(() => User, (user) => user.petitions)
     author: User;
