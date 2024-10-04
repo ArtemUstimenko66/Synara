@@ -31,6 +31,15 @@ export class CreatePetitionDto {
     petitionNumber: string;
 
     @ApiProperty({
+        example: 'Alex',
+        description: 'Petition author',
+        type: String,
+    })
+    @IsNotEmpty()
+    @IsString()
+    petitionAuthor: string;
+
+    @ApiProperty({
         example: 'We request the government to take immediate action to save the forests...',
         description: 'Full text of the petition',
         type: String,

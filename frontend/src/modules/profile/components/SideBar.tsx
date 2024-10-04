@@ -127,7 +127,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                     {/* My Applications */}
                     <hr className="border-gray-300 mx-4 mb-4"/>
                     <li
-                        className={`cursor-pointer ml-8 flex items-center justify-between ${activeSection === 'requests' ? 'text-blue-600' : ''}`}
+                        className={`cursor-pointer ml-8 flex items-center justify-between`}
                         onClick={() => {
                             setActiveSection('declarations');
                             setIsDeclarationsOpen(!isDeclarationsOpen);
@@ -153,7 +153,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                     {/* Favorites */}
                     <hr className="border-gray-300 mx-4 mb-4"/>
                     <li
-                        className={`cursor-pointer flex ml-8 items-center justify-between ${activeSection === 'reviews' ? 'text-blue-600' : ''}`}
+                        className={`cursor-pointer flex ml-8 items-center justify-between ${activeSection === 'reviews' ? '' : ''}`}
                         onClick={() => setIsLikedOpen(!isLikedOpen)}
                     >
                         <div className="flex items-center">

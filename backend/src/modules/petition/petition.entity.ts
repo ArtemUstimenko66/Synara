@@ -25,6 +25,14 @@ export class Petition {
     @Column({ type: 'varchar', length: 225, nullable: false })
     title: string;
 
+    @ApiProperty({
+        example: 'Alex',
+        description: 'Petition author name',
+        type: String,
+    })
+    @Column({ type: 'varchar', length: 225, nullable: false })
+    petitionAuthor: string;
+
     @Column({
         type: 'enum',
         enum: PetitionTopic,
@@ -45,7 +53,7 @@ export class Petition {
         description: 'Date when the petition was created',
         type: Date,
     })
-    @CreateDateColumn({ type: 'timestamp' })
+    @Column({ type: 'timestamp', nullable: true })
     creationDate: Date;
 
     @ApiProperty({
