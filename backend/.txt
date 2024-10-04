@@ -1,3 +1,6 @@
 если проходит крайнее число то оно все равно пишет что обьявление срочно нужно сделать что бы было срочно исключительно до крайнего срока.
 когда тестируешь чат то приходит всегда почему то айди последнего залогигеного пользователя , а должно null.
 // в announcement service поменять в место query.
+
+1 - http://localhost:8080/api/announcements/5/increment-responses
+2 - http://localhost:8080/api/announcements/5/increment-views

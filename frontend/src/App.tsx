@@ -19,6 +19,10 @@ import TermsOfUsePage from "./pages/terms-of-use/TermsOfUsePage.tsx";
 import CreateGatheringPage from "./pages/gathering/CreateGatheringPage.tsx";
 import GatheringDetailsPage from "./pages/gathering/GatheringDetailsPage.tsx";
 import AnnouncementDetailsPage from "./pages/main-page/AnnouncementDetailsPage.tsx";
+import PetitionPage from "./pages/petitions/PetitionPage.tsx";
+import CreatePetitionPage from "./pages/petitions/CreatePetitionPage.tsx";
+import PetitionDetailsPage from "./pages/petitions/PetitionDetailsPage.tsx";
+import AboutPage from "./pages/about-us/AboutPage.tsx";
 
 const App: React.FC = () => {
     return (
@@ -49,8 +53,16 @@ const App: React.FC = () => {
             <Route path="/add-gathering" element={<PrivateRoute element={<CreateGatheringPage />} />} />
             <Route path="/gathering/:id" element={<GatheringDetailsPage />} />
 
+            {/* petitions */}
+            <Route path="/petitions" element={<PetitionPage />} />
+            <Route path="/add-petition" element={<PrivateRoute element={<CreatePetitionPage />} />} />
+            <Route path="/petition/:id" element={<PrivateRoute element={<PetitionDetailsPage />} />} />
+
             {/* question */}
             <Route path="/faq" element={<FAQPage />} />
+
+            {/* about */}
+            <Route path="/about" element={<AboutPage />} />
 
             {/* privacy policy */}
             <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />

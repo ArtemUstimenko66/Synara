@@ -1,21 +1,23 @@
 import { SetStateAction, useEffect, useState } from 'react';
 import MainHeader from "../../modules/main-page/components/ui/MainHeader.tsx";
-import { Footer } from "react-day-picker";
+
 import Wrapper from '../../ui/Wrapper.tsx';
 import Sidebar from "../../modules/profile/components/SideBar.tsx";
 import MainContent from "../../modules/profile/components/MainContent.tsx";
 import { useAuth } from "../../hooks/useAuth.ts";
 import { getUser } from "../../modules/profile/api/profileService.ts";
+import Footer from "../../components/Footer.tsx";
 
 
 const ProfilePage = () => {
-    const [activeSection, setActiveSection] = useState<string>('reviews'); // Specify the type for activeSection
+    const [activeSection, setActiveSection] = useState<string>('reviews');
     const [isHelpOpen, setIsHelpOpen] = useState(false);
     const [isAccountOpen, setIsAccountOpen] = useState(false);
-    const [selectedRequestSection, setSelectedRequestSection] = useState('All'); // State for request section
+    const [selectedRequestSection, setSelectedRequestSection] = useState('All');
     const [, setReviewsData] = useState([]);
     const [announcementsData, setAnnouncementsData] = useState([]);
     const [gatheringsData, setGatheringsData] = useState([]);
+    const [petitionsData, setPetitionsData] = useState([]);
     const [userData, setUserData] = useState({
         avatarUrl: '',
         firstName: '',
@@ -35,7 +37,7 @@ const ProfilePage = () => {
                     setReviewsData(reviews);
                     setAnnouncementsData(data.announcements);
                     setGatheringsData(data.gatherings);
-                    console.log(data.announcements);
+                    setPetitionsData(data.petitions);
                     setUserData({
                         avatarUrl: data.avatarUrl,
                         firstName: data.firstName,
@@ -130,6 +132,7 @@ const ProfilePage = () => {
                         reviews={reviews}
                         announcements={announcementsData}
                         gatherings={gatheringsData}
+                        petitions={petitionsData}
                         selectedRequestSection={selectedRequestSection}
                         handleRequestSectionClick={handleRequestSectionClick}
                     />

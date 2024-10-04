@@ -51,12 +51,14 @@ export class PetitionController {
         @Query('limit') limit = 12,
         @Query('offset') offset = 0,
         @Query('sortOrder') sortOrder: 'ASC' | 'DESC' = 'DESC',
+        @Query('sortField') sortField: 'creationDate' | 'deadline' = 'creationDate',
     ) {
         const options: FindPetitionOptions = {
             query,
             topics,
             title,
             sortOrder,
+            sortField,
             limit,
             offset,
         };

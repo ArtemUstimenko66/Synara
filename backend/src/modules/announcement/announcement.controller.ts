@@ -105,4 +105,18 @@ export class AnnouncementController {
   markAnnouncementAsFavorite(@Param('id') id: number) : Promise<Announcement> {
     return this.announcementService.markAnnouncementAsFavorite(id);
   }
+
+  @Patch(':id/increment-views')
+  @ApiOperation({ summary: 'Increment Views' })
+  @ApiResponse({ status: 200, type: Announcement })
+  incrementViews(@Param('id') id: number) : Promise<Announcement> {
+    return this.announcementService.incrementViewsCount(id);
+  }
+
+  @Patch(':id/increment-responses')
+  @ApiOperation({ summary: 'Increment Responses' })
+  @ApiResponse({ status: 200, type: Announcement })
+  incrementResponses(@Param('id') id: number) : Promise<Announcement> {
+    return this.announcementService.incrementResponsesCount(id);
+  }
 }

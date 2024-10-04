@@ -9,12 +9,12 @@ import { Petition } from "./petition.entity";
 import { CreatePetitionDto } from "./dtos/create-petition.dto";
 import { PetitionTopic } from "./enums/petition-topic.enum";
 import { Cron, CronExpression } from "@nestjs/schedule";
-import {Announcement} from "../announcement/announcement.entity";
 
 export interface FindPetitionOptions {
     query: string;
     topics?: PetitionTopic[];
     title: string;
+    sortField?: 'creationDate' | 'deadline' | 'signatureCount';
     sortOrder?: 'ASC' | 'DESC';
     limit: number;
     offset: number;
@@ -34,6 +34,7 @@ export class PetitionService {
         const petition = this.petitionRepository.create({
             ...createPetitionDto,
             author: user,
+            deadline: this.calculateDeadline(),
         });
         return this.petitionRepository.save(petition);
     }
@@ -67,16 +68,23 @@ export class PetitionService {
             });
         }
 
-        // const sortOrder =
-        //     options.sortOrder && ['ASC', 'DESC'].includes(options.sortOrder)
-        //         ? options.sortOrder
-        //         : 'DESC';
-        //
-        // qb.orderBy('announcement.date_posted', sortOrder)
-        //     .take(options.limit)
-        //     .skip(options.offset);
+        const sortOrder =
+            options.sortOrder && ['ASC', 'DESC'].includes(options.sortOrder)
+                ? options.sortOrder
+                : 'DESC';
+
+        const sortField = options.sortField || 'creationDate';
+        qb.orderBy(`petition.${sortField}`, sortOrder)
+            .take(options.limit)
+            .skip(options.offset);
 
         return qb.getMany();
+    }
+
+    private calculateDeadline() : Date {
+        const currentDate = new Date();
+        currentDate.setMonth(currentDate.getMonth() + 3);
+        return currentDate;
     }
 
     @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
@@ -106,8 +114,7 @@ export class PetitionService {
         }
     }
 
-
-    private async updatePetitionStatus(id: number, updateData: Partial<Petition>): Promise<Petition> {
+     async updatePetitionStatus(id: number, updateData: Partial<Petition>): Promise<Petition> {
         const petition = await this.petitionRepository.findOne({ where: { id } });
         if (!petition) {
             throw new NotFoundException(`Petition with ID ${id} not found`);

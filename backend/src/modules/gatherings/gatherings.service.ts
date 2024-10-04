@@ -10,7 +10,7 @@ import { CreateUpdateGatheringDto } from './dtos/create-update-gathering.dto';
 import { FindGatheringsOptions } from './interfaces/find-gathering-options.interface';
 import { User } from '../users/entities/users.entity';
 import {TypeEnding} from "./enums/TypeEnding";
-import {Announcement} from "../announcement/announcement.entity";
+
 @Injectable()
 export class GatheringsService {
   constructor(
@@ -68,7 +68,6 @@ export class GatheringsService {
     if (!gathering) {
       throw new BadRequestException(`Gathering with id ${id} not found`);
     }
-
     return gathering;
   }
 
@@ -77,7 +76,8 @@ export class GatheringsService {
       options: Partial<FindGatheringsOptions> = {},
   ): Promise<Gatherings[]> {
     const qb = this.gatheringRepository.createQueryBuilder('gathering')
-        .leftJoinAndSelect('gathering.user', 'user');
+        .leftJoinAndSelect('gathering.user', 'user')
+        .leftJoinAndSelect('gathering.files', 'files')
     if (options.query && options.query.trim() !== '') {
       const lowerCaseQuery = options.query.toLowerCase();
       qb.andWhere(

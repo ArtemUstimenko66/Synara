@@ -156,12 +156,31 @@ export class AnnouncementService {
     return this.announcementRepository.save(announcement);
   }
 
+  private async incrementCount(id: number, field: 'viewsCount' | 'responsesCount'): Promise<Announcement> {
+    const announcement = await this.findOne(id);
+    if (!announcement) {
+      throw new NotFoundException(`Announcement with ID ${id} not found`);
+    }
+
+    announcement[field] += 1;
+
+    return this.announcementRepository.save(announcement);
+  }
+
   async markAnnouncementAsCompleted(id: number) : Promise<Announcement> {
     return this.updateAnnouncementStatus(id, { is_completed: true });
   }
 
   async markAnnouncementAsFavorite(id: number): Promise<Announcement> {
     return this.updateAnnouncementStatus(id, { is_favorite: true });
+  }
+
+  async incrementViewsCount(id: number): Promise<Announcement> {
+    return this.incrementCount(id, 'viewsCount');
+  }
+
+  async incrementResponsesCount(id: number): Promise<Announcement> {
+    return this.incrementCount(id, 'responsesCount');
   }
 }
 

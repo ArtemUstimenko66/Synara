@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsBoolean, IsNotEmpty, IsOptional, IsString, IsUrl, MaxLength } from 'class-validator';
 import {PetitionTopic} from "../enums/petition-topic.enum";
+import {Column} from "typeorm";
 
 export class CreatePetitionDto {
     @ApiProperty({
@@ -29,6 +30,15 @@ export class CreatePetitionDto {
     @IsNotEmpty()
     @IsString()
     petitionNumber: string;
+
+    @ApiProperty({
+        example: 'Alex',
+        description: 'Petition author',
+        type: String,
+    })
+    @IsNotEmpty()
+    @IsString()
+    petitionAuthor: string;
 
     @ApiProperty({
         example: 'We request the government to take immediate action to save the forests...',
@@ -67,6 +77,14 @@ export class CreatePetitionDto {
     @IsOptional()
     responseDate?: Date;
 
+    // @ApiProperty({
+    //     example: '2024-09-23T18:30:00.000Z',
+    //     description: 'Date when the petition was created',
+    //     type: Date,
+    // })
+    // @IsOptional()
+    // creationDate: Date;
+
     @ApiProperty({
         example: false,
         description: 'Indicates whether the petition is completed',
@@ -75,4 +93,10 @@ export class CreatePetitionDto {
     @IsOptional()
     @IsBoolean()
     isCompleted?: boolean;
+
+    @ApiProperty({
+        example: 0,
+        description: 'Number of signatures for the petition',
+    })
+    signatureCount?: number;
 }
