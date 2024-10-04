@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsBoolean, IsNotEmpty, IsOptional, IsString, IsUrl, MaxLength } from 'class-validator';
-import {PetitionTopic} from "../enums/petition-topic.enum";
+import { PetitionTopic } from "../enums/petition-topic.enum";
 
 export class CreatePetitionDto {
     @ApiProperty({
@@ -69,6 +69,14 @@ export class CreatePetitionDto {
 
     @ApiProperty({
         example: '2024-10-15T12:00:00.000Z',
+        description: 'Deadline for the petition',
+        type: Date,
+    })
+    @IsOptional()
+    deadline?: Date; // Добавлено поле deadline
+
+    @ApiProperty({
+        example: '2024-10-15T12:00:00.000Z',
         description: 'Date when the petition was responded to, optional',
         type: Date,
         required: false,
@@ -84,4 +92,11 @@ export class CreatePetitionDto {
     @IsOptional()
     @IsBoolean()
     isCompleted?: boolean;
+
+    @ApiProperty({
+        example: 0,
+        description: 'Number of signatures for the petition',
+    })
+    @IsOptional()
+    signatureCount?: number;
 }
