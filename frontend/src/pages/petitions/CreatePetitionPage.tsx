@@ -7,6 +7,7 @@ import {createPetition} from "../../modules/petitions/api/petitionsService.ts";
 import {useNavigate} from "react-router-dom";
 import {ukrainianPetitionTypes} from "../../data/petitionTypesList.ts";
 
+
 const CreatePetitionPage: React.FC = () => {
 	const [selectedOptions, setSelectedOptions] = useState<{ [key: string]: boolean }>({
 		terms: false,

@@ -9,3 +9,6 @@ export enum PetitionTypes{
 export const ukrainianPetitionTypes: string[] = Object.values(PetitionTypes).filter(topic => topic !== 'c');
 
 console.log(ukrainianPetitionTypes);
+
+
+

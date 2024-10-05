@@ -49,6 +49,7 @@ export const fetchChats = async (filter: 'active' | 'archived' | 'blocked', user
                 isArchived: chat.isArchived,
                 isBlocked: chat.isBlocked,
                 unreadCount: chat.unreadCount || 0,
+                memberId: firstMember.id
             };
         });
     } catch (error) {
@@ -150,6 +151,18 @@ export const unarchiveChat = async (chatId: number) => {
         return response;
     } catch (error) {
         console.error("Failed to unarchive chat:", error);
+        throw error;
+    }
+};
+
+
+export const submitFeedback = async (feedbackData: any) => {
+    try {
+        const response = await api.post('http://localhost:8080/api/comments/', feedbackData, { withCredentials: true });
+        console.log('Feedback submitted:', feedbackData);
+        return response;
+    } catch (error) {
+        console.error('Failed to submit feedback:', error);
         throw error;
     }
 };

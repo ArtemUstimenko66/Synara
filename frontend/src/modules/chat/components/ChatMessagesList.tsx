@@ -23,10 +23,12 @@ import {Button} from "../../../ui/Button.tsx";
 import BellIcon from '../assets/Bell_Img.svg?react';
 import LockImg from '../assets/Lock_Img.svg?react';
 import ProfileImg from '../assets/ProfilePageImg.svg?react';
+import CommentImg from '../assets/commentImg.svg?react';
 import ComponentFullInput from "./ComponentFullInput.tsx";
 import {debounce} from "lodash";
 import {formatDate} from "../helpers/formatDate.ts";
 import Message from "../interfaces/Message.tsx";
+import {FeedbackModal} from "./ui/FeedbackModal.tsx";
 
 interface ChatMessagesListProps {
     isOpen: boolean;
@@ -52,7 +54,9 @@ export const ChatMessagesList: React.FC<ChatMessagesListProps> = ({ isOpen, onCl
     const take = 50;
 
     const socket = useWebSocket();
-    const { userId } = useAuth();
+    const { userId, role } = useAuth();
+
+    const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
 
     // Сброс skip при изменении чата
     useEffect(() => {
@@ -351,6 +355,24 @@ export const ChatMessagesList: React.FC<ChatMessagesListProps> = ({ isOpen, onCl
                                             <ProfileImg className="h-6 w-6 mr-3"/>
                                             <span>Подивитися профіль</span>
                                         </li>
+                                        {role == "victim" ?
+                                            <>
+                                                <li
+                                                    className="flex items-start justify-start px-4 py-4 cursor-pointer hover:bg-gray-100"
+                                                    onClick={() => setIsFeedbackOpen(true)}
+                                                >
+                                                    <CommentImg className="xl:h-5 xl:w-5 mt-1 mr-3"/>
+                                                    <span>Залишити відгук</span>
+                                                </li>
+
+                                                <FeedbackModal isOpen={isFeedbackOpen}
+                                                               name={chatChoose?.name}
+                                                               memberId={chatChoose?.memberId}
+                                                               onClose={() => setIsFeedbackOpen(false)}/>
+                                            </>
+                                            :
+                                            <></>
+                                        }
                                         <li className="flex items-start px-4 py-2 cursor-pointer hover:bg-gray-100 text-red-500">
                                             <Button
                                                 className="bg-transparent items-start justify-start flex xl:p-2 md:p-1 "

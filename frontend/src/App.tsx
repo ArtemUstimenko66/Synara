@@ -47,6 +47,8 @@ const App: React.FC = () => {
 
             {/* chat */}
             <Route path="/chat" element={<PrivateRoute element={<WebSocketProvider> <FullChat /> </WebSocketProvider>} />} />
+            <Route path="/chat/:chatId" element={<PrivateRoute element={<WebSocketProvider> <FullChat /> </WebSocketProvider>} />} />
+
 
             {/* gatherings */}
             <Route path="/gatherings" element={<GatheringPage />} />

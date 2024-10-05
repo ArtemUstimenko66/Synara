@@ -151,7 +151,24 @@ export const fetchAnnouncementDetails = async (id: number) => {
 };
 
 
+export const addAnnouncementToFavorites = async (id: number) => {
+    try {
+        const response = await api.patch(`/announcements/${id}/favorite`, {}, {
+            withCredentials: true,
+        });
 
+        if (response.status === 200) {
+            console.log('Объявление успешно добавлена в избранное');
+            return true;
+        } else {
+            console.error("Не удалось добавить объявление в избранное");
+            return false;
+        }
+    } catch (error) {
+        console.error("Ошибка при добавлении в избранное:", error);
+        throw error;
+    }
+};
 
 export const getFilteredVolunteers = async (
     query: string,
@@ -208,6 +225,52 @@ export const getFilteredVolunteers = async (
         return response.data;
     } catch (error) {
         console.error('Failed to fetch filtered volunteers:', error);
+        throw error;
+    }
+};
+
+
+export const incrementViews = async (id: number) => {
+    try {
+        console.log('Increment', `http://localhost:8080/api/announcements/${id}/increment-views`);
+        await api.patch(`/announcements/${id}/increment-views`,{},{
+            withCredentials: true,
+        });
+    } catch (error) {
+        console.error("Ошибка при увеличении количества просмотров:", error);
+        throw error;
+    }
+};
+
+
+export const incrementResponses = async (id: number) => {
+    try {
+        await api.patch(`/announcements/${id}/increment-responses`,{},{
+            withCredentials: true,
+        });
+    } catch (error) {
+        console.error("Ошибка при увеличении количества ответов:", error);
+        throw error;
+    }
+};
+
+export const respondAnnouncement = async (userId: number, announcementId: number) => {
+    try {
+        const response = await api.post(
+            '/chats',
+            {
+                name: 'chat',
+                isGroup: false,
+                userIds: [userId],
+            },
+            {
+                withCredentials: true,
+            }
+        );
+        await incrementResponses(announcementId);
+        return response.data.id;
+    } catch (error) {
+        console.error('Error creating chat:', error);
         throw error;
     }
 };

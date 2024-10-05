@@ -11,7 +11,6 @@ import { determineMessageType } from "../helpers/determineMessageType.ts";
 import Chat from "../interfaces/Chat.tsx";
 
 
-
 interface SideBarChatProps {
     isOpen: boolean;
     onClose: () => void;

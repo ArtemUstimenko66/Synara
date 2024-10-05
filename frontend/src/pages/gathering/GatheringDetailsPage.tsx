@@ -257,7 +257,7 @@ const GatheringDetailsPage = () => {
 
                                 {/* Donate and to favorite buttons */}
                                 <div className="flex flex-col px-[1vw] justify-between space-y-3 mt-4">
-                                    <Button hasBlue={true} className="py-2 px-4 uppercase bg-almost-white">
+                                    <Button hasBlue={true} className="py-2 px-4 uppercase">
                                         Задонатити зараз
                                     </Button>
                                     <div className="mt-8 w-full">

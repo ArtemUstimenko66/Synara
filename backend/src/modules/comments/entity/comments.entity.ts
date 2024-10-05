@@ -1,0 +1,45 @@
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { ApiProperty } from '@nestjs/swagger';
+import { User } from '../../users/entities/users.entity';
+
+@Entity('comment')
+export class Comment {
+  @ApiProperty({
+    example: 1,
+    description: 'Unique identifier of the comment',
+  })
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @ApiProperty({
+    example: '5',
+    description: 'Rating of volunteer',
+    type: Number,
+  })
+  @Column({ type: 'int', nullable: false })
+  rating: number;
+
+  @ApiProperty({
+    example: 'Very good volunteer',
+    description: 'Description of volunteer',
+    type: String,
+  })
+  @Column({ type: 'varchar', length: 225, nullable: false })
+  description: string;
+
+  @ManyToOne(() => User, (user) => user.comments_author, {
+    onDelete: 'CASCADE',
+  })
+  author: User;
+
+  @ManyToOne(() => User, (user) => user.comments_volunteer, {
+    onDelete: 'CASCADE',
+  })
+  volunteer: User;
+}

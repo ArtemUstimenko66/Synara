@@ -34,16 +34,22 @@ import UnreadVector from '../assets/UnRead.svg?react';
 import BellIcon from '../assets/Bell_Img.svg?react';
 import LockImg from '../assets/Lock_Img.svg?react';
 import ProfileImg from '../assets/ProfilePageImg.svg?react';
+import CommentImg from '../assets/commentImg.svg?react';
 import {handleChatClick} from "../handlers/handleChatClick.ts";
 import {handleBlockChat} from "../handlers/handleBlockChat.ts";
 import {handleScroll} from "../handlers/handleScroll.ts";
 import {handleArchiveChat} from "../handlers/handleArchiveChat.ts";
 import {useMediaQuery} from "react-responsive";
 import MainHeader from "../../main-page/components/ui/MainHeader.tsx";
+import {useParams} from "react-router-dom";
+import {FeedbackModal} from "./ui/FeedbackModal.tsx";
+
 
 
 const FullChat: React.FC = () => {
-    const [selectedChatId, setSelectedChatId] = useState<number | null>(null);
+    const { loadedChatId } = useParams<{ loadedChatId: string }>();
+
+    const [selectedChatId, setSelectedChatId] = useState<number | null>(loadedChatId ? Number(loadedChatId) : null);
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [filter, setFilter] = useState<'active' | 'archived' | 'blocked'>('active');
     const [chatList, setChatList] = useState<Chat[]>([]);
@@ -60,9 +66,9 @@ const FullChat: React.FC = () => {
     const take = 50;
 
     const socket = useWebSocket();
-    const { userId } = useAuth();
+    const { userId, role } = useAuth();
 
-
+    const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
 
     // debounced load chats function
     const loadChats = useCallback(debounce(async (filter: 'active' | 'archived' | 'blocked', username?: string) => {
@@ -82,6 +88,12 @@ const FullChat: React.FC = () => {
 
     // useEffect for loading chats on filter change
     useEffect(() => {
+        if (loadedChatId) {
+            // @ts-ignore
+            setSelectedChatId(loadedChatId);
+            localStorage.setItem('selectedChatId', loadedChatId.toString());
+        }
+
         const savedChatId = localStorage.getItem('selectedChatId');
         if (savedChatId) {
             setSelectedChatId(Number(savedChatId));
@@ -391,9 +403,8 @@ const FullChat: React.FC = () => {
 
     return (
         <Wrapper>
-            <MainHeader />
-            <div className="h-[85vh]  fixed xl:w-10/12 sm:w-full xl:h-screen bg-almost-white xl:ml-[2%] ml-0 flex ">
-
+            <div className="h-[85vh]  z-11 fixed xl:w-10/12 sm:w-full xl:h-screen bg-almost-white xl:ml-[2%] ml-0 flex ">
+                <MainHeader />
 
                 <div
                     className={`${isSmallScreen ? 'w-full' : 'xl:w-1/3'} ${isSmallScreen && isChatOpen ? 'hidden' : ''} mt-[10vh] bg-white relative`}>
@@ -513,6 +524,25 @@ const FullChat: React.FC = () => {
                                                         <ProfileImg className="xl:h-6 xl:w-6 mr-3"/>
                                                         <span>Подивитися профіль</span>
                                                     </li>
+                                                    {role == "victim" ?
+                                                        <>
+                                                            <li
+                                                                className="flex items-start justify-start px-4 py-4 cursor-pointer hover:bg-gray-100"
+                                                                onClick={() => setIsFeedbackOpen(true)}
+                                                            >
+                                                                <CommentImg className="xl:h-5 xl:w-5 mt-1 mr-3"/>
+                                                                <span>Залишити відгук</span>
+                                                            </li>
+
+                                                            <FeedbackModal isOpen={isFeedbackOpen}
+                                                                           name={selectedChat.name}
+                                                                           memberId={selectedChat.memberId}
+                                                                           onClose={() => setIsFeedbackOpen(false)}/>
+                                                        </>
+                                                        :
+                                                    <></>
+                                                    }
+
                                                     <li className="flex items-start px-4 py-2 cursor-pointer hover:bg-gray-100 text-red-500">
                                                         <Button
                                                             className="bg-transparent  justify-start flex xl:p-2 md:p-1 items-start"

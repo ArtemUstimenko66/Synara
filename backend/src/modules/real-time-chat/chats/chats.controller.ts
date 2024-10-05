@@ -29,7 +29,7 @@ interface CustomRequest extends Request {
 }
 
 @ApiTags('Chats')
-@Controller('chats')
+@Controller('api/chats')
 export class ChatsController {
   constructor(private readonly chatsService: ChatsService) {}
 
