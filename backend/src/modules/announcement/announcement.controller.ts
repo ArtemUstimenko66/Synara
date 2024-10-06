@@ -54,7 +54,7 @@ export class AnnouncementController {
     @Query('offset') offset = 0,
     @Query('sortOrder') sortOrder: 'ASC' | 'DESC' = 'DESC',
     @Query('isUrgent') isUrgent?: boolean,
-    // radius
+
   ) {
     const options: FindAnnouncementsOptions = {
       query,
@@ -62,10 +62,26 @@ export class AnnouncementController {
       sortOrder,
       limit,
       offset,
-      isUrgent,
+      isUrgent
     };
     const announcements = this.announcementService.findAnnouncements(options);
     return announcements;
+  }
+
+  @Get('/completed')
+  @ApiOperation({ summary: 'Get completed announcements for current user' })
+  @ApiResponse({ status: 200, type: [Announcement] })
+  getCompletedAnnouncements(@Req() req: Request): Promise<Announcement[]> {
+    const user = req.user as User;
+    return this.announcementService.findCompletedAnnouncementsForUser(user.id);
+  }
+
+  @Get('/favorite')
+  @ApiOperation({ summary: 'Get completed announcements for current user' })
+  @ApiResponse({ status: 200, type: [Announcement] })
+  getFavoriteAnnouncements(@Req() req: Request): Promise<Announcement[]> {
+    const user = req.user as User;
+    return this.announcementService.findFavoriteAnnouncementsForUser(user.id);
   }
 
   @ApiOperation({ summary: 'Get an announcement by ID' })

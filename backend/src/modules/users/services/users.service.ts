@@ -56,7 +56,7 @@ export class UsersService {
   async findById(id: number): Promise<User> {
     return this.userRepository.findOne({
       where: { id },
-      relations: ['volunteer', 'victim', 'announcements', 'gatherings', 'petitions'],
+      relations: ['volunteer', 'victim', 'announcements', 'gatherings', 'petitions', 'comments_author'],
     });
   }
 

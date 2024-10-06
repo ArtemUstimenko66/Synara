@@ -7,8 +7,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Chat } from './chat.entity';
 import { Repository } from 'typeorm';
 import { ChatMember } from './chat-member.entity';
-import { ConfigService } from '@nestjs/config';
-import { JwtService } from '@nestjs/jwt';
 import { Message } from '../messages/message.entity';
 
 @Injectable()
@@ -18,8 +16,6 @@ export class ChatsService {
       private chatsRepository: Repository<Chat>,
       @InjectRepository(ChatMember)
       private chatMembersRepository: Repository<ChatMember>,
-      private readonly configService: ConfigService,
-      private readonly jwtService: JwtService,
       @InjectRepository(Message)
       private messagesRepository: Repository<Message>,
   ) {}
@@ -93,12 +89,33 @@ export class ChatsService {
       userIds: number[],
       currentUserId: number,
   ): Promise<Chat> {
-    const chat = this.chatsRepository.create(chatData);
+
+    const isGroupChat = userIds.length > 1;
+
+    if(!isGroupChat) {
+      const existingChat = await this.chatsRepository
+          .createQueryBuilder('chat')
+          .innerJoin('chat.members', 'chatMember')
+          .where('chat.isGroup = false')
+          .andWhere('chatMember.userId IN (:currentUserId, :otherUserId)', {
+            currentUserId: currentUserId,
+            otherUserId: userIds[0]
+          })
+          .groupBy('chat.id')
+          .having('COUNT(chatMember.userId) = 2')
+          .getOne();
+
+      if (existingChat) {
+        throw new BadRequestException('A private chat with this user already exists');
+      }
+    }
+
+    const chat = this.chatsRepository.create({ ...chatData, isGroup: isGroupChat });
     const savedChat = await this.chatsRepository.save(chat);
 
     const chatMembers = [
       { chatId: savedChat.id, userId: currentUserId },
-      ...userIds.map((userId) => ({ chatId: savedChat.id, userId })),
+      ...userIds.map(userId => ({ chatId: savedChat.id, userId })),
     ];
 
     await this.chatMembersRepository.save(chatMembers);
@@ -142,5 +159,4 @@ export class ChatsService {
     chat.isBlocked = false;
     return this.chatsRepository.save(chat);
   }
-
 }

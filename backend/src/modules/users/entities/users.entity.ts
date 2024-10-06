@@ -153,7 +153,7 @@ export class User {
   messages: Message[];
 
   @OneToMany(() => Gatherings, (gatherings) => gatherings.user)
-  gatherings?: Gatherings[];
+  gatherings: Gatherings[];
 
   @OneToMany(() => Petition, (petitions) => petitions.author)
   petitions: User;
@@ -163,5 +163,4 @@ export class User {
 
   @OneToMany(() => Comment, (comment) => comment.volunteer)
   comments_volunteer?: Comment[];
-
 }

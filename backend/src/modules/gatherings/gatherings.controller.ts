@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller, Delete,
   Get,
@@ -66,6 +67,23 @@ export class GatheringsController {
       typeEnding,
     };
     return this.gatheringService.findGatherings(options);
+  }
+
+  @Get('/completed')
+  @ApiOperation({ summary: 'Get completed gatherings for current user' })
+  @ApiResponse({ status: 200, type: [Gatherings] })
+  getCompletedAnnouncements(@Req() req: Request): Promise<Gatherings[]> {
+    const user = req.user as User;
+    return this.gatheringService.findCompletedGatheringsForUser(user.id);
+  }
+
+  @Get('/favorites')
+  async getFavorite(@Req() req): Promise<Gatherings[]> {
+    const user = req.user;
+    if (!user || !user.id) {
+      throw new BadRequestException('User not found');
+    }
+    return this.gatheringService.findFavoriteGatheringsForUser(user.id);
   }
 
   @ApiOperation({ summary: 'Get an gathering by ID' })

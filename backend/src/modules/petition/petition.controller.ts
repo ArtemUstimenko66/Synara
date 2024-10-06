@@ -22,6 +22,7 @@ import { Petition } from "./petition.entity";
 import { PetitionTopic } from "./enums/petition-topic.enum";
 import { EnumValidationPipe } from "../announcement/enum-validation.pipe";
 import {PetitionType} from "./enums/petition-type.enum";
+import {Announcement} from "../announcement/announcement.entity";
 @ApiTags('Petition')
 @Controller('api/petitions')
 @UseGuards(JwtAuthGuard)
@@ -69,11 +70,27 @@ export class PetitionController {
         return petitions;
     }
 
-    @Get('favorites')
-    @ApiOperation({ summary: 'Get favorite petitions' })
+    // @Get('favorites')
+    // @ApiOperation({ summary: 'Get favorite petitions' })
+    // @ApiResponse({ status: 200, type: [Petition] })
+    // getFavoritePetitions() : Promise<Petition[]> {
+    //     return this.petitionService.findFavoritePetitions();
+    // }
+
+    @Get('/completed')
+    @ApiOperation({ summary: 'Get completed petitions for current user' })
     @ApiResponse({ status: 200, type: [Petition] })
-    getFavoritePetitions() : Promise<Petition[]> {
-        return this.petitionService.findFavoritePetitions();
+    getCompletedPetitions(@Req() req: Request): Promise<Petition[]> {
+        const user = req.user as User;
+        return this.petitionService.findCompletedPetitionsForUser(user.id);
+    }
+
+    @Get('/favorite')
+    @ApiOperation({ summary: 'Get completed petitions for current user' })
+    @ApiResponse({ status: 200, type: [Petition] })
+    getFavoritePetitions(@Req() req: Request): Promise<Petition[]> {
+        const user = req.user as User;
+        return this.petitionService.findFavoritePetitionsForUser(user.id);
     }
 
     @ApiOperation({ summary: 'Get an announcement by ID' })
@@ -82,6 +99,8 @@ export class PetitionController {
     findOne(@Param('id') id: string): Promise<Petition> {
         return this.petitionService.findOne(+id);
     }
+
+
 
     // @ApiOperation({ summary: 'Partially update an announcement' })
     // @ApiResponse({ status: 200, type: Announcement })

@@ -10,6 +10,7 @@ import { CreateUpdateGatheringDto } from './dtos/create-update-gathering.dto';
 import { FindGatheringsOptions } from './interfaces/find-gathering-options.interface';
 import { User } from '../users/entities/users.entity';
 import {TypeEnding} from "./enums/TypeEnding";
+import {Announcement} from "../announcement/announcement.entity";
 
 @Injectable()
 export class GatheringsService {
@@ -71,7 +72,6 @@ export class GatheringsService {
     }
     return gathering;
   }
-
 
   async findGatherings(
       options: Partial<FindGatheringsOptions> = {},
@@ -162,6 +162,24 @@ export class GatheringsService {
         .skip(options.offset);
 
     return qb.getMany();
+  }
+
+  async findCompletedGatheringsForUser(userId: number) : Promise<Gatherings[]> {
+    return this.gatheringRepository
+        .createQueryBuilder('gatherings')
+        .leftJoinAndSelect('gatherings.user', 'user')
+        .where('gatherings.is_completed = :isCompleted', { isCompleted: true })
+        .andWhere('user.id = :userId', { userId })
+        .getMany();
+  }
+
+  async findFavoriteGatheringsForUser(userId: number): Promise<Gatherings[]> {
+    return this.gatheringRepository
+        .createQueryBuilder('gatherings')
+        .leftJoinAndSelect('gatherings.user', 'user')
+        .where('gatherings.is_favorite = :isFavorite', { isFavorite: true })
+        .andWhere('user.id = :userId', { userId })
+        .getMany();
   }
 
   async delete(id: number): Promise<void> {

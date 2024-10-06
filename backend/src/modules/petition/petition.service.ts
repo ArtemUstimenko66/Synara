@@ -10,6 +10,7 @@ import { CreatePetitionDto } from "./dtos/create-petition.dto";
 import { PetitionTopic } from "./enums/petition-topic.enum";
 import { Cron, CronExpression } from "@nestjs/schedule";
 import {PetitionType} from "./enums/petition-type.enum";
+import {Announcement} from "../announcement/announcement.entity";
 
 export interface FindPetitionOptions {
     query: string;
@@ -28,9 +29,6 @@ export class PetitionService {
         @InjectRepository(Petition)
         private petitionRepository: Repository<Petition>,
     ) {}
-
-
-
 
     async create(
         createPetitionDto: CreatePetitionDto,
@@ -54,11 +52,29 @@ export class PetitionService {
         return petition;
     }
 
-    async findFavoritePetitions() : Promise<Petition[]> {
-        return this.petitionRepository.find({
-            where: { is_favorite: true },
-            //  relations: ['author'],
-        })
+    // async findFavoritePetitions() : Promise<Petition[]> {
+    //     return this.petitionRepository.find({
+    //         where: { is_favorite: true },
+    //         //  relations: ['author'],
+    //     })
+    // }
+
+    async findCompletedPetitionsForUser(userId: number) : Promise<Petition[]> {
+        return this.petitionRepository
+            .createQueryBuilder('petition')
+            .leftJoinAndSelect('petition.author', 'author')
+            .where('petition.is_completed = :isCompleted', { isCompleted: true })
+            .andWhere('author.id = :userId', { userId })
+            .getMany();
+    }
+
+    async findFavoritePetitionsForUser(userId: number): Promise<Petition[]> {
+        return this.petitionRepository
+            .createQueryBuilder('petition')
+            .leftJoinAndSelect('petition.author', 'author')
+            .where('petition.is_favorite = :isFavorite', { isFavorite: true })
+            .andWhere('author.id = :userId', { userId })
+            .getMany();
     }
 
     async findPetitions(
@@ -165,5 +181,4 @@ export class PetitionService {
 
         return this.petitionRepository.save(petition);
     }
-
 }

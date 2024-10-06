@@ -120,6 +120,24 @@ export class AnnouncementService {
     return qb.getMany();
   }
 
+  async findCompletedAnnouncementsForUser(userId: number) : Promise<Announcement[]> {
+    return this.announcementRepository
+        .createQueryBuilder('announcement')
+        .leftJoinAndSelect('announcement.user', 'user')
+        .where('announcement.is_completed = :isCompleted', { isCompleted: true })
+        .andWhere('user.id = :userId', { userId })
+        .getMany();
+  }
+
+  async findFavoriteAnnouncementsForUser(userId: number): Promise<Announcement[]> {
+    return this.announcementRepository
+        .createQueryBuilder('announcement')
+        .leftJoinAndSelect('announcement.user', 'user')
+        .where('announcement.is_favorite = :isFavorite', { isFavorite: true })
+        .andWhere('user.id = :userId', { userId })
+        .getMany();
+  }
+
   @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
   async handleUrgencyUpdate() {
     const today = new Date();
@@ -156,7 +174,7 @@ export class AnnouncementService {
     return this.announcementRepository.save(announcement);
   }
 
-  private async incrementCount(id: number, field: 'viewsCount' | 'responsesCount'): Promise<Announcement> {
+  async incrementCount(id: number, field: 'viewsCount' | 'responsesCount'): Promise<Announcement> {
     const announcement = await this.findOne(id);
     if (!announcement) {
       throw new NotFoundException(`Announcement with ID ${id} not found`);

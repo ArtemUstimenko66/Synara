@@ -123,7 +123,7 @@ export class Gatherings {
   createdAt: Date;
 
   @ManyToOne(() => User, (user) => user.gatherings)
-  user?: User;
+  user: User;
 
   @OneToMany(() => FileGathering, (file) => file.gathering)
   files: FileGathering[];
