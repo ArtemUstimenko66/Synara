@@ -98,3 +98,22 @@ export const createGathering = async (data: {
     }
 };
 
+
+export const addGatheringToFavorites = async (id: number) => {
+    try {
+        const response = await api.patch(`/gatherings/${id}/favorite`, {}, {
+            withCredentials: true,
+        });
+
+        if (response.status === 200) {
+            console.log('Петиция успешно добавлена в избранное');
+            return true;
+        } else {
+            console.error("Не удалось добавить петицию в избранное");
+            return false;
+        }
+    } catch (error) {
+        console.error("Ошибка при добавлении в избранное:", error);
+        throw error;
+    }
+};

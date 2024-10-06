@@ -11,6 +11,9 @@ import PetitionCard from "../../modules/petitions/components/PetitionCard.tsx";
 import {useAuth} from "../../hooks/useAuth.ts";
 import {getFilteredPetitions} from "../../modules/petitions/api/petitionsService.ts";
 import {useTranslation} from "react-i18next";
+import {SideBarPetitions} from "../../modules/petitions/components/SideBarPetitions.tsx";
+import {Map} from "../../modules/main-page/components/Map.tsx";
+
 
 const PetitionPage: React.FC = () => {
 
@@ -22,10 +25,10 @@ const PetitionPage: React.FC = () => {
 
 	const [sortOrder, setSortOrder] = useState<'ASC' | 'DESC' >('ASC');
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-	// const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
 	const [petitions, setPetitions] = useState<any[]>([]);
-	//const [filteredPetitions, setFilteredPetitions] = useState<any[] | null>(null);
+	const [filteredPetitions, setFilteredPetitions] = useState<any[] | null>(null);
 	const [searchParams, setSearchParams] = useSearchParams();
 
 	const limit = 12;
@@ -34,22 +37,25 @@ const PetitionPage: React.FC = () => {
 	const [hasMore, setHasMore] = useState(true);
 	const {t} = useTranslation();
 
-
+	const [isMapMenuOpen, setIsMapMenuOpen] = useState(false);
 
 	// get petitions by search/filters
 	useEffect(() => {
 		const fetchPetitions = async () => {
 			if (isLoading || !role) return;
+
 			const query = searchParams.get('query') || '';
 			const currentSortOrder = (searchParams.get('sortOrder') as 'ASC' | 'DESC') || 'ASC';
-			const urgencyParam = searchParams.get('isUrgent');
-			const urgency = urgencyParam === 'true' ? true : urgencyParam === 'false' ? false : undefined;
+			const field = searchParams.get('sortField') || 'deadline';
+			const topic = searchParams.get('topic') || '';
+			const types = searchParams.getAll('types');
+			const ukraine = searchParams.get('ukraine') === 'true';
 
 			setOffset(0);
 			setSortOrder(currentSortOrder);
 
 			try {
-				let data = await getFilteredPetitions(query, limit, 0, currentSortOrder, urgency);
+				let data = await getFilteredPetitions(query, limit, 0, currentSortOrder, field, topic, types, ukraine);
 				setPetitions(data);
 				setOffset(limit);
 
@@ -59,7 +65,7 @@ const PetitionPage: React.FC = () => {
 					setHasMore(true);
 				}
 			} catch (error) {
-				console.error('Error fetching announcements:', error);
+				console.error('Error fetching petitions:', error);
 			}
 		};
 
@@ -68,16 +74,13 @@ const PetitionPage: React.FC = () => {
 
 
 	// sort
-	const handleSort = (order: 'ASC' | 'DESC') => {
-		setSortOrder(order);
+	const handleSort = (field: 'signatureCount' | 'creationDate' | 'deadline') => {
 		setOffset(0);
 		toggleDropdown();
 		setSearchParams(prev => {
 			const newParams = new URLSearchParams(prev);
-			newParams.set('sortOrder', order);
-			if (prev.has('isUrgent')) {
-				newParams.set('isUrgent', prev.get('isUrgent')!);
-			}
+			newParams.set('sortField', field);
+			newParams.set('sortOrder', 'ASC');
 			return newParams;
 		});
 		window.location.reload();
@@ -86,10 +89,13 @@ const PetitionPage: React.FC = () => {
 	// pagination
 	const loadMorePetitions = async () => {
 		const query = searchParams.get('query') || '';
-		const urgencyParam = searchParams.get('isUrgent');
-		const urgency = urgencyParam === 'true' ? true : (urgencyParam === 'false' ? false : undefined);
+		const currentSortOrder = (searchParams.get('sortOrder') as 'ASC' | 'DESC') || 'ASC';
+		const field = searchParams.get('sortField') || 'deadline';
+		const topic = searchParams.get('topic') || '';
+		const types = searchParams.getAll('types');
+		const ukraine = searchParams.get('ukraine') === 'true';
 		try {
-			const data = await getFilteredPetitions(query, limit, offset, sortOrder, urgency);
+			const data = await getFilteredPetitions(query, limit, 0, currentSortOrder, field, topic, types, ukraine);
 			setPetitions(prev => [...prev, ...data]);
 			setOffset(offset + limit);
 			if (data.length < limit) {
@@ -101,15 +107,53 @@ const PetitionPage: React.FC = () => {
 	};
 
 	// apply filters
-	// const handleApplyFilters = (filtered: any[]) => {
-	// 	setFilteredAnnouncements(filtered);
-	// 	window.location.reload();
-	// };
+	const handleApplyFilters = (filtered: any[]) => {
+		setFilteredPetitions(filtered);
+
+		const topic = searchParams.get('topic') || '';
+		const types = searchParams.getAll('types');
+		const ukraine = searchParams.get('ukraine') === 'true';
+
+		setSearchParams(prev => {
+			const newParams = new URLSearchParams(prev);
+			if (topic) newParams.set('topic', topic);
+			if (types.length) {
+				newParams.delete('types');
+				types.forEach(type => newParams.append('types', type));
+			}
+			if (ukraine) {
+				newParams.set('ukraine', 'true');
+			} else {
+				newParams.delete('ukraine');
+			}
+
+			return newParams;
+		});
+
+		console.log(filtered);
+		window.location.reload();
+	};
 
 	const toggleDropdown = () => {
 		setIsDropdownOpen(!isDropdownOpen);
 	};
 
+	const handleOpenMap = () => {
+		setIsMapMenuOpen(true);
+		setIsMobileMenuOpen(false);
+	};
+
+	const backToFilters = () => {
+		setIsMapMenuOpen(false);
+		setIsMobileMenuOpen(true);
+	};
+
+	// filter by map
+	const handleUsersByRadiusFound = () => {
+		//setAnnouncements(users);
+		//  setIsMapMenuOpen(false);
+		setHasMore(false);
+	};
 
 	return (
 		<>
@@ -132,47 +176,19 @@ const PetitionPage: React.FC = () => {
 
 					<div className="flex w-full justify-between mb-8">
 						{/* Left Side - Filter Button */}
-						<Button hasBlue={true} className="px-4 -py-0.5 text-relative-h5">
-							Фільтрування
+						<Button hasBlue={true} className="px-4 -py-0.5 text-relative-h5"
+								onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+							<span className="text-montserratMedium text-relative-h5">Фільтрувати</span>
 						</Button>
 
 						{/* Right Side - Sort Button */}
-						{/*<div className="relative">*/}
-						{/*	<Button*/}
-						{/*		hasBlue={true}*/}
-						{/*		className={`px-4 -py-0.5 text-relative-h5 flex items-center justify-center transition-all duration-300 ${isDropdownOpen ? '' : ''}`}*/}
-						{/*		onClick={toggleDropdown}*/}
-						{/*	>*/}
-						{/*		Сортування за*/}
-						{/*		<DownArrowIcon*/}
-						{/*			className={`ml-2 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`}*/}
-						{/*		/>*/}
-						{/*	</Button>*/}
-
-						{/*	/!* Styled Dropdown Content *!/*/}
-						{/*	{isDropdownOpen && (*/}
-						{/*		<div*/}
-						{/*			className="absolute right-0 mt-2 w-[100%] bg-white border border-gray-300 rounded-lg ">*/}
-						{/*			<ul className="divide-y divide-gray-200">*/}
-						{/*				<li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">За датою створення*/}
-						{/*				</li>*/}
-						{/*				<li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">За кількість*/}
-						{/*					підписів*/}
-						{/*				</li>*/}
-						{/*				<li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">За дедлайном</li>*/}
-						{/*				<li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">За статусом</li>*/}
-						{/*			</ul>*/}
-						{/*		</div>*/}
-						{/*	)}*/}
-						{/*</div>*/}
 						<div className="relative w-full md:w-3/4 xl:w-auto">
 							<Button
 								hasBlue={true}
 								className={`px-2 z-11 w-full md:w-auto xl:w-auto text-relative-h5 flex items-center justify-center space-x-3 transition-all duration-0 ${isDropdownOpen ? 'rounded-b-none rounded-t-3xl' : 'rounded-3xl'}`}
 								onClick={toggleDropdown}
 							>
-                                            <span
-												className="text-montserratMedium text-relative-h5">{t('sort_by')}</span>
+								<span className="text-montserratMedium text-relative-h5">{t('sort_by')}</span>
 								<DownArrowIcon
 									className={`h-3 w-3 mt-1 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`}
 								/>
@@ -182,16 +198,22 @@ const PetitionPage: React.FC = () => {
 								<div
 									className="w-full bg-white border-2 border-blue-500 rounded-b-3xl absolute left-0 top-full z-10 -mt-1">
 									<div
-										className={`cursor-pointer py-2 px-4 border-b-2 border-blue-500 ${sortOrder === 'DESC' ? 'text-blue-500' : 'text-black'}`}
-										onClick={() => handleSort('DESC')}
+										className="cursor-pointer text-center py-2 px-2 border-b-2 border-blue-500 text-black"
+										onClick={() => handleSort('signatureCount')}
 									>
-										{t('firstly_new')}
+										За кількістю підписів
 									</div>
 									<div
-										className={`cursor-pointer py-2 px-4 ${sortOrder === 'ASC' ? 'text-blue-500' : 'text-black'}`}
-										onClick={() => handleSort('ASC')}
+										className="cursor-pointer text-center py-2 px-2 border-b-2 border-blue-500 text-black"
+										onClick={() => handleSort('creationDate')}
 									>
-										{t('old_for_first')}
+										За датою створення
+									</div>
+									<div
+										className="cursor-pointer text-center py-2 px-2 text-black"
+										onClick={() => handleSort('deadline')}
+									>
+										За дедлайном
 									</div>
 								</div>
 							)}
@@ -201,16 +223,26 @@ const PetitionPage: React.FC = () => {
 					{/* Petition List Grid */}
 					<div
 						className="grid xl:grid-cols-3 sm:grid-cols-1 xl:px-0 md:px-0 sm:px-4 md:grid-cols-2 gap-6 w-full">
-						{petitions.map((petition, index) => (
-							<PetitionCard
-								key={index}
-								id={petition.id}
-								petitionNumber={petition.petitionNumber}
-								topic={petition.topic}
-								creationDate={petition.creationDate}
-								text={petition.text}
-							/>
-						))}
+						{(filteredPetitions || petitions).length > 0 ? (
+							(filteredPetitions || petitions).map((petition, index) => (
+
+									<PetitionCard
+										key={index}
+										id={petition.id}
+										petitionNumber={petition.petitionNumber}
+										topic={petition.topic}
+										creationDate={petition.creationDate}
+										text={petition.text}
+									/>
+
+							))
+						) : (
+							<div className="flex items-center justify-center my-[20%] w-full text-gray-500">
+								<div className="text-center font-montserratMedium">
+									Немає петицій за обраними фільтрами
+								</div>
+							</div>
+						)}
 					</div>
 
 					{/* Load More Button */}
@@ -222,6 +254,18 @@ const PetitionPage: React.FC = () => {
 						</div>
 					)}
 				</div>
+				<SideBarPetitions
+					isOpen={isMobileMenuOpen}
+					onClose={() => setIsMobileMenuOpen(false)}
+					onApplyFilters={handleApplyFilters}
+					onOpenMap={handleOpenMap}
+				/>
+				<Map
+					isOpen={isMapMenuOpen}
+					onClose={() => setIsMapMenuOpen(false)}
+					onBackToFilters={backToFilters}
+					onUsersByRadiusFound={handleUsersByRadiusFound}
+				/>
 				<Footer/>
 			</Wrapper>
 

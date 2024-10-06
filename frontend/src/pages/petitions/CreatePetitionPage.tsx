@@ -2,19 +2,25 @@ import React, { ChangeEvent, useState } from 'react';
 import MainHeader from "../../modules/main-page/components/ui/MainHeader.tsx";
 import Footer from "../../components/Footer.tsx";
 import VectorWhite from '../../assets/images/VectorWhite.svg?react';
-import { ukrainianPetitionTopics } from "../../data/petitionTypesList.ts";
+import { ukrainianPetitionTopics } from "../../data/petitionTopicsList.ts";
 import {createPetition} from "../../modules/petitions/api/petitionsService.ts";
+import {useNavigate} from "react-router-dom";
+import {ukrainianPetitionTypes} from "../../data/petitionTypesList.ts";
+
 
 const CreatePetitionPage: React.FC = () => {
 	const [selectedOptions, setSelectedOptions] = useState<{ [key: string]: boolean }>({
 		terms: false,
 	});
 	const [inputValue, setInputValue] = useState<string>('');
+	const [inputValueType, setInputValueType] = useState<string>('');
 	const [isFocused, setIsFocused] = useState<boolean>(false);
+	const [isFocusedType, setIsFocusedType] = useState<boolean>(false);
 	const [formData, setFormData] = useState({
 		petitionNumber: '',
 		petitionTitle: '',
 		petitionAuthor: '',
+		petitionTopic: '',
 		petitionType: '',
 		petitionText: '',
 		petitionLink: '',
@@ -22,7 +28,7 @@ const CreatePetitionPage: React.FC = () => {
 		responseDate: '',
 	});
 	const [errors, setErrors] = useState<{ [key: string]: string }>({});
-
+	const navigate = useNavigate();
 	const validateForm = () => {
 		const newErrors: { [key: string]: string } = {};
 
@@ -35,9 +41,12 @@ const CreatePetitionPage: React.FC = () => {
 		if (!formData.petitionAuthor) {
 			newErrors.petitionAuthor = 'Автор петиції є обов\'язковим';
 		}
-		// if (!formData.petitionType) { // Validate petition type from formData
-		// 	newErrors.petitionType = 'Тип петиції є обов\'язковим';
-		// }
+		if (!formData.petitionTopic) {
+			newErrors.petitionTopic = 'Тема петиції є обов\'язковим';
+		}
+		if (!formData.petitionType) {
+			newErrors.petitionType = 'Тип петиції є обов\'язковим';
+		}
 		if (!formData.petitionDate) {
 			newErrors.petitionDate = 'Дата петиції є обов\'язковою';
 		}
@@ -72,7 +81,8 @@ const CreatePetitionPage: React.FC = () => {
 
 				const requestData = {
 					title: formData.petitionTitle,
-					topic: 'Митна політика',
+					topic: formData.petitionTopic,
+					type: formData.petitionType,
 					petitionNumber: formData.petitionNumber,
 					petitionAuthor: formData.petitionAuthor,
 					text: formData.petitionText,
@@ -82,9 +92,10 @@ const CreatePetitionPage: React.FC = () => {
 					responseDate: formattedResponseDate || null,
 					isCompleted: false,
 				};
+				console.log("requestData -> ", requestData);
+				await createPetition(requestData);
+				navigate("/petitions");
 
-				const result = await createPetition(requestData);
-				console.log('Петиция успешно отправлена:', result);
 			} catch (error) {
 				console.error('Ошибка при отправке петиции:', error);
 			}
@@ -126,6 +137,10 @@ const CreatePetitionPage: React.FC = () => {
 
 	const filteredTopics = ukrainianPetitionTopics.filter(topic =>
 		topic.toLowerCase().includes(inputValue.toLowerCase())
+	);
+
+	const filteredTypes = ukrainianPetitionTypes.filter(type =>
+		type.toLowerCase().includes(inputValue.toLowerCase())
 	);
 
 	const toggleOption = (option: string) => {
@@ -194,11 +209,48 @@ const CreatePetitionPage: React.FC = () => {
 							<div className="relative">
 								<input
 									type="text"
+									value={inputValueType}
+									onChange={(e) => setInputValueType(e.target.value)}
+									onFocus={() => setIsFocusedType(true)}
+									placeholder="Тип"
+									className="w-full p-3 border rounded-lg outline-none border-dark-blue focus:border-dark-blue"
+								/>
+								{isFocusedType && filteredTypes.length > 0 && (
+									<ul className="absolute w-full border border-dark-blue bg-white rounded-lg z-10 max-h-40 overflow-y-auto">
+										{filteredTypes.map((type) => (
+											<li
+												key={type}
+												onClick={() => {
+													setFormData((prevData) => ({
+														...prevData,
+														petitionType: type,
+													}));
+													setInputValueType(type);
+													setIsFocusedType(false);
+												}}
+
+												className="p-2 cursor-pointer hover:bg-gray-100"
+											>
+												{type}
+											</li>
+										))}
+									</ul>
+								)}
+							</div>
+							{errors.petitionType && <p className="text-red-500">{errors.petitionType}</p>}
+						</div>
+
+						<div className="mb-4">
+							<label className="block font-montserratMedium mb-2" htmlFor="petition-type">
+								Тема петиції*
+							</label>
+							<div className="relative">
+								<input
+									type="text"
 									value={inputValue}
 									onChange={(e) => setInputValue(e.target.value)}
 									onFocus={() => setIsFocused(true)}
-									onBlur={() => setIsFocused(false)}
-									placeholder="Тип"
+									placeholder="Тема"
 									className="w-full p-3 border rounded-lg outline-none border-dark-blue focus:border-dark-blue"
 								/>
 								{isFocused && filteredTopics.length > 0 && (
@@ -209,7 +261,7 @@ const CreatePetitionPage: React.FC = () => {
 												onClick={() => {
 													setFormData((prevData) => ({
 														...prevData,
-														petitionType: topic,
+														petitionTopic: topic,
 													}));
 													setInputValue(topic);
 													setIsFocused(false);
@@ -223,7 +275,7 @@ const CreatePetitionPage: React.FC = () => {
 									</ul>
 								)}
 							</div>
-							{errors.petitionType && <p className="text-red-500">{errors.petitionType}</p>}
+							{errors.petitionTopic && <p className="text-red-500">{errors.petitionTopic}</p>}
 						</div>
 
 						<div className="mb-4">

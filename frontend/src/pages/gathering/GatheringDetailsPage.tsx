@@ -1,6 +1,10 @@
 import { SetStateAction, useEffect, useState} from 'react';
 import {Link, useParams, useSearchParams} from 'react-router-dom';
-import {fetchGatheringDetails, fetchGatherings} from "../../modules/gathering/api/gatheringPageService.ts";
+import {
+    addGatheringToFavorites,
+    fetchGatheringDetails,
+    fetchGatherings
+} from "../../modules/gathering/api/gatheringPageService.ts";
 import Wrapper from "../../ui/Wrapper.tsx";
 import MainHeader from "../../modules/main-page/components/ui/MainHeader.tsx";
 import {Button} from "../../ui/Button.tsx";
@@ -8,6 +12,7 @@ import SearchGathering from "../../modules/gathering/ui/SearchGathering.tsx";
 import Footer from "../../components/Footer.tsx";
 import Calendar from '../../modules/main-page/assets/Calendar.svg?react';
 import Heart from '../../modules/gathering/assets/Heart.svg?react';
+import FullHeart from '../../modules/gathering/assets/FullHeart.svg?react';
 import LeftSlide from '../../modules/gathering/assets/LeftSlide.svg?react';
 import RightSlide from '../../modules/gathering/assets/RightSlide.svg?react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -21,6 +26,7 @@ interface GatheringDetails {
     description: string;
     collected: string;
     goal: string;
+    is_favorite: boolean;
     detail: string;
     startGathering: string;
     endGathering: string;
@@ -28,6 +34,7 @@ interface GatheringDetails {
     whereMoneyWillUsed: string;
     whoNeedHelp: string;
     user: { avatarUrl: string, firstName: string, lastName: string, phoneNumber: string, email: string };
+    files: Array<{ id: number, fileName: string, fileUrl: string, fileType: string }>;
 }
 
 // Функция для форматирования числа с пробелами
@@ -42,16 +49,8 @@ const formatDate = (dateString: string) => {
 
 
 const GatheringDetailsPage = () => {
-    const {id} = useParams(); // Получаем ID сбора из URL
+    const {id} = useParams();
     const [details, setDetails] = useState<GatheringDetails | null>(null);
-    const [images] = useState<string[]>([
-        'https://picsum.photos/id/10/200/300',
-        'https://picsum.photos/id/11/200/300',
-        'https://picsum.photos/id/12/200/300',
-        'https://picsum.photos/id/13/200/300',
-        'https://picsum.photos/id/14/200/300',
-        'https://picsum.photos/id/15/200/300',
-    ]);
     const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -61,6 +60,7 @@ const GatheringDetailsPage = () => {
                 const data = await fetchGatheringDetails(Number(id));
                 console.log(data);
                 setDetails(data);
+                setIsFavorite(data.is_favorite);
             }
         };
         loadDetails();
@@ -74,6 +74,7 @@ const GatheringDetailsPage = () => {
     const [searchParams] = useSearchParams();
     const [hasMore, setHasMore] = useState(true);
     const [hasShowMore, setShowHasMore] = useState(true);
+    const [isFavorite, setIsFavorite] = useState(false);
 
     const fetchFilteredGatherings = async () => {
 
@@ -139,7 +140,6 @@ const GatheringDetailsPage = () => {
         setSelectedImageIndex(index);
     };
 
-
     const openModal = (index: SetStateAction<number>) => {
         setSelectedImageIndex(index);
         setIsModalOpen(true);
@@ -150,7 +150,7 @@ const GatheringDetailsPage = () => {
     };
 
     const handleNextImage = () => {
-        if (selectedImageIndex < images.length - 1) {
+        if (selectedImageIndex < details.files.length - 1) {
             setSelectedImageIndex((prevIndex) => prevIndex + 1);
         }
     };
@@ -158,6 +158,13 @@ const GatheringDetailsPage = () => {
     const handlePrevImage = () => {
         if (selectedImageIndex > 0) {
             setSelectedImageIndex((prevIndex) => prevIndex - 1);
+        }
+    };
+
+    const handleAddToFavorites = async () => {
+        const isSuccess = await addGatheringToFavorites(details.id);
+        if (isSuccess) {
+            setIsFavorite(true);
         }
     };
 
@@ -250,15 +257,22 @@ const GatheringDetailsPage = () => {
 
                                 {/* Donate and to favorite buttons */}
                                 <div className="flex flex-col px-[1vw] justify-between space-y-3 mt-4">
-                                    <Button hasBlue={true} className="py-2 px-4 uppercase bg-almost-white">
+                                    <Button hasBlue={true} className="py-2 px-4 uppercase">
                                         Задонатити зараз
                                     </Button>
-                                    <Button isFilled={true} className="py-2 px-4 justify-between uppercase">
-                                        <div className="flex flex-row justify-center">
-                                            <Heart className="h-6 w-6 mx-3"/>
-                                            В обране
-                                        </div>
-                                    </Button>
+                                    <div className="mt-8 w-full">
+                                        <Button
+                                            onClick={handleAddToFavorites}
+                                            className="flex items-center justify-center text-center w-full bg-perfect-yellow rounded-3xl font-montserratRegular"
+                                        >
+                                            {isFavorite ? (
+                                                <FullHeart className="h-5 w-5 mr-2"/>
+                                            ) : (
+                                                <Heart className="h-6 w-6 mr-2"/>
+                                            )}
+                                            В ОБРАНЕ
+                                        </Button>
+                                    </div>
                                 </div>
 
                                 {/* Author */}
@@ -305,151 +319,163 @@ const GatheringDetailsPage = () => {
                         </div>
 
                         {/* Изображение с соседними картинками */}
-                        <div className="flex justify-center my-[4vh]">
-                            <div className="flex items-center">
-                                {selectedImageIndex > 0 && (
-                                    <div
-                                        className="justify-center flex w-[25vw] mx-[1vw] h-[28vh]"
-                                        onClick={() => openModal(selectedImageIndex - 1)}
-                                    >
-                                        <img
-                                            src={images[selectedImageIndex - 1]}
-                                            alt={`Image ${selectedImageIndex}`}
-                                            className="w-full h-auto rounded-lg cursor-pointer"
-                                        />
-                                    </div>
-                                )}
-                                <div
-                                    className="justify-center flex w-[25vw] mx-[1vw] h-[28vh]"
-                                    onClick={() => openModal(selectedImageIndex)}
-                                >
-                                    <img
-                                        src={images[selectedImageIndex]}
-                                        alt={`Image ${selectedImageIndex + 1}`}
-                                        className="w-full h-auto rounded-lg cursor-pointer"
-                                    />
-                                </div>
-                                {selectedImageIndex < images.length - 1 && (
-                                    <div
-                                        className="justify-center flex w-[25vw] mx-[1vw] h-[28vh]"
-                                        onClick={() => openModal(selectedImageIndex + 1)}
-                                    >
-                                        <img
-                                            src={images[selectedImageIndex + 1]}
-                                            alt={`Image ${selectedImageIndex + 2}`}
-                                            className="w-full h-auto rounded-lg cursor-pointer"
-                                        />
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-
-                        {/* Полоски выбора изображений */}
-                        <div className="flex justify-center mt-2 space-x-2">
-                            {images.length >= 3 ?
-                                (images.map((_, index) => (
-                                    <div
-                                        key={index}
-                                        onClick={() => handleImageSelect(index)}
-                                        className={`h-2 cursor-pointer rounded-full transition-all duration-500 ease-in-out
-                                                    ${selectedImageIndex === index ? 'bg-dark-blue w-12' : 'bg-baby-blue w-8'}`}
-                                    ></div>
-                                )))
-                                :
-                                <></>
-                            }
-                        </div>
-
-                        {/* Модальное окно для отображения выбранного изображения */}
-                        {isModalOpen && (
-                            <div
-                                className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50"
-                                onClick={closeModal}>
-                                <div className="relative">
-
-                                    <img
-                                        src={images[selectedImageIndex]}
-                                        alt={`Large Image ${selectedImageIndex + 1}`}
-                                        className="flex w-[65vw] mx-[1vw] h-[70vh] rounded-lg"
-                                    />
-
-                                </div>
-                                {/* Левая стрелка */}
-                                {selectedImageIndex > 0 && (
-                                    <div
-                                        className="absolute left-[4vw] top-1/2 ь transform -translate-y-1/2 cursor-pointer"
-                                        onClick={(e) => {
-                                            e.stopPropagation(); // Предотвращаем закрытие модального окна
-                                            handlePrevImage();
-                                        }}
-                                    >
-                                        <LeftSlide className="h-10 w-10 text-white"/>
-                                    </div>
-                                )}
-
-                                {/* Правая стрелка */}
-                                {selectedImageIndex < images.length - 1 && (
-                                    <div
-                                        className="absolute right-[4vw] top-1/2 transform -translate-y-1/2 cursor-pointer"
-                                        onClick={(e) => {
-                                            e.stopPropagation(); // Предотвращаем закрытие модального окна
-                                            handleNextImage();
-                                        }}
-                                    >
-                                        <RightSlide className="h-10 w-10 text-white"/>
-                                    </div>
-                                )}
-                            </div>
-                        )}
-                        {hasShowMore
+                        {details.files.length>0
                             ?
                             <>
-                        <h1 className="text-relative-h4 font-kharkiv uppercase mt-[10vh] text-center">
-                            Термінові збори
-                        </h1>
-
-                        <div className="flex flex-col">
-                            <div className="flex flex-col md:flex-row">
-                                <div className="w-full flex justify-between">
-                                    <div className="w-full mt-4 ml-4 flex flex-wrap justify-start">
-                                        {gatherings.length > 0 ? (
-                                            gatherings.map((gathering, index) => (
-                                                <Link to={`/gathering/${gathering.id}`} key={index}
-                                                      className="w-full md:w-[48%] xl:w-[32%] mr-[1vw] p-2 mt-4">
-                                                    <GatheringCard
-                                                        id={gathering.id}
-                                                        title={gathering.name}
-                                                        description={gathering.description}
-                                                        goal={parseFloat(gathering.goal)}
-                                                        raised={parseFloat(gathering.collected)}
-                                                        percentage={calculatePercentage(
-                                                            parseFloat(gathering.goal),
-                                                            parseFloat(gathering.collected)
-                                                        )}
-                                                    />
-                                                </Link>
-                                            ))
-                                        ) : (
-                                            <div className="flex items-center justify-center my-[20%] w-full text-gray-500">
-                                                <div className="text-center font-montserratMedium">
-                                                    Наразі немає зборів за обраними фільтрами
-                                                </div>
+                                <div className="flex justify-center my-[4vh]">
+                                    <div className="flex items-center">
+                                        {selectedImageIndex > 0 && (
+                                            <div
+                                                className="justify-center flex w-[25vw] mx-[1vw] h-[28vh]"
+                                                onClick={() => openModal(selectedImageIndex - 1)}
+                                            >
+                                                <img
+                                                    src={details.files[selectedImageIndex - 1].fileUrl}
+                                                    alt={details.files[selectedImageIndex].fileName}
+                                                    className="w-full h-auto rounded-lg cursor-pointer"
+                                                />
+                                            </div>
+                                        )}
+                                        <div
+                                            className="justify-center flex w-[25vw] mx-[1vw] h-[28vh]"
+                                            onClick={() => openModal(selectedImageIndex)}
+                                        >
+                                            <img
+                                                src={details.files[selectedImageIndex].fileUrl}
+                                                alt={details.files[selectedImageIndex].fileName}
+                                                className="w-full h-auto rounded-lg cursor-pointer"
+                                            />
+                                        </div>
+                                        {selectedImageIndex < details.files.length - 1 && (
+                                            <div
+                                                className="justify-center flex w-[25vw] mx-[1vw] h-[28vh]"
+                                                onClick={() => openModal(selectedImageIndex + 1)}
+                                            >
+                                                <img
+                                                    src={details.files[selectedImageIndex + 1].fileUrl}
+                                                    alt={details.files[selectedImageIndex].fileName}
+                                                    className="w-full h-auto rounded-lg cursor-pointer"
+                                                />
                                             </div>
                                         )}
                                     </div>
                                 </div>
-                            </div>
-                            {hasMore && (
-                                <div className="flex justify-center mt-6">
-                                    <button
-                                        onClick={loadMoreGatherings}
-                                        className="bg-perfect-yellow text-black hover:bg-yellow-600 px-6 py-2 font-montserratRegular rounded-3xl"
-                                    >
-                                        ПОКАЗАТИ ЩЕ
-                                    </button>
-                                </div>
-                            )}
+
+                                {/* Полоски выбора изображений */}
+                                <div className="flex justify-center mt-2 space-x-2">
+                                    {details.files.length >= 3 ?
+                                (details.files.map((_, index) => (
+                                <div
+                                key={index}
+                                onClick={() => handleImageSelect(index)}
+                                className={`h-2 cursor-pointer rounded-full transition-all duration-500 ease-in-out
+                                                        ${selectedImageIndex === index ? 'bg-dark-blue w-12' : 'bg-baby-blue w-8'}`}
+                            ></div>
+                            )))
+                        :
+                        <></>
+                        }
+                    </div>
+
+
+                    {isModalOpen && (
+                    <div
+                        className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50"
+                        onClick={closeModal}>
+                        <div className="relative">
+
+                            <img
+                                src={details.files[selectedImageIndex].fileUrl}
+                                alt={details.files[selectedImageIndex].fileName}
+                                className="flex w-[65vw] mx-[1vw] h-[70vh] rounded-lg"
+                            />
+
                         </div>
+
+
+                        {/* Левая стрелка */}
+                        {selectedImageIndex > 0 && (
+                            <div
+                                className="absolute left-[4vw] top-1/2 ь transform -translate-y-1/2 cursor-pointer"
+                                onClick={(e) => {
+                                    e.stopPropagation(); // Предотвращаем закрытие модального окна
+                                    handlePrevImage();
+                                }}
+                            >
+                                <LeftSlide className="h-10 w-10 text-white"/>
+                            </div>
+                        )}
+
+                        {/* Правая стрелка */}
+                        {selectedImageIndex < details.files.length - 1 && (
+                            <div
+                                className="absolute right-[4vw] top-1/2 transform -translate-y-1/2 cursor-pointer"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleNextImage();
+                                }}
+                            >
+                                <RightSlide className="h-10 w-10 text-white"/>
+                            </div>
+                        )}
+                    </div>
+                    )}
+                            </>
+                            :
+                            <></>
+                        }
+
+                        {hasShowMore
+                            ?
+                            <>
+                                <h1 className="text-relative-h4 font-kharkiv uppercase mt-[10vh] text-center">
+                                    Термінові збори
+                                </h1>
+
+                                <div className="flex flex-col">
+                                    <div className="flex flex-col md:flex-row">
+                                        <div className="w-full flex justify-between">
+                                            <div className="w-full mt-4 ml-4 flex flex-wrap justify-start">
+                                                {gatherings.length > 0 ? (
+                                                    gatherings.map((gathering, index) => (
+                                                        <Link to={`/gathering/${gathering.id}`} key={index}
+                                                              className="w-full md:w-[48%] xl:w-[32%] mr-[1vw] p-2 mt-4">
+                                                            <GatheringCard
+                                                                id={gathering.id}
+                                                                title={gathering.name}
+                                                                description={gathering.description}
+                                                                goal={parseFloat(gathering.goal)}
+                                                                raised={parseFloat(gathering.collected)}
+                                                                percentage={calculatePercentage(
+                                                                    parseFloat(gathering.goal),
+                                                                    parseFloat(gathering.collected)
+                                                                )}
+
+                                                            />
+                                                        </Link>
+                                                    ))
+                                                ) : (
+                                                    <div
+                                                        className="flex items-center justify-center my-[20%] w-full text-gray-500">
+                                                        <div className="text-center font-montserratMedium">
+                                                            Наразі немає зборів за обраними фільтрами
+                                                        </div>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {hasMore && (
+                                        <div className="flex justify-center mt-6">
+                                            <button
+                                                onClick={loadMoreGatherings}
+                                                className="bg-perfect-yellow text-black hover:bg-yellow-600 px-6 py-2 font-montserratRegular rounded-3xl"
+                                            >
+                                                ПОКАЗАТИ ЩЕ
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
                             </>
                             :
                             <></>

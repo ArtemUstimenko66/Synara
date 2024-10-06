@@ -1,10 +1,11 @@
 import { SetStateAction, useEffect, useState} from 'react';
-import { useParams, useSearchParams} from 'react-router-dom';
+import {useNavigate, useParams, useSearchParams} from 'react-router-dom';
 import Wrapper from "../../ui/Wrapper.tsx";
 import MainHeader from "../../modules/main-page/components/ui/MainHeader.tsx";
 import {Button} from "../../ui/Button.tsx";
 import Footer from "../../components/Footer.tsx";
 import Heart from '../../modules/gathering/assets/Heart.svg?react';
+import FullHeart from '../../modules/gathering/assets/FullHeart.svg?react';
 import LeftSlide from '../../modules/gathering/assets/LeftSlide.svg?react';
 import RightSlide from '../../modules/gathering/assets/RightSlide.svg?react';
 import Calendar from '../../modules/main-page/assets/Calendar.svg?react';
@@ -14,8 +15,9 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {useTranslation} from "react-i18next";
 import SearchComponent from "../../modules/main-page/components/ui/SearchComponent.tsx";
 import {
+    addAnnouncementToFavorites,
     fetchAnnouncementDetails,
-    getFilteredAnnouncements,
+    getFilteredAnnouncements, incrementViews, respondAnnouncement,
 } from "../../modules/main-page/api/mainPageService.ts";
 import {getHelpToKey} from "../../data/helpTypesMap.ts";
 
@@ -24,10 +26,13 @@ import loadingAnimation from '../../assets/animations/logoLoading.json';
 import Announcement from "../../modules/main-page/components/Announcement.tsx";
 import {urgencyTranslations} from "../../data/urgencyMap.ts";
 import {useAuth} from "../../hooks/useAuth.ts";
+import Cookies from "js-cookie";
+
+
 
 interface AnnouncementDetails {
     id: number;
-    user: { avatarUrl: string, firstName: string, lastName: string, phoneNumber: string };
+    user: { id: number; avatarUrl: string, firstName: string, lastName: string, phoneNumber: string };
     date_posted: Date;
     description: string;
     type_help: string;
@@ -58,6 +63,27 @@ const AnnouncementDetailsPage = () => {
     const [offset, setOffset] = useState(0);
     const [hasMore, setHasMore] = useState(true);
     const [hasShowMore, setShowHasMore] = useState(true);
+    const [isFavorite, setIsFavorite] = useState(false);
+
+    const navigate = useNavigate();
+
+    const hasViewedAnnouncement = (announcementId: number) => {
+        const viewedAnnouncements = Cookies.get('viewedAnnouncements');
+        if (viewedAnnouncements) {
+            const viewedArray = JSON.parse(viewedAnnouncements);
+            return viewedArray.includes(announcementId);
+        }
+        return false;
+    };
+
+    const markAsViewed = (announcementId: number) => {
+        const viewedAnnouncements = Cookies.get('viewedAnnouncements');
+        let viewedArray = viewedAnnouncements ? JSON.parse(viewedAnnouncements) : [];
+        if (!viewedArray.includes(announcementId)) {
+            viewedArray.push(announcementId);
+            Cookies.set('viewedAnnouncements', JSON.stringify(viewedArray), { expires: 7 });
+        }
+    };
 
     // get announcements by search/filters
     useEffect(() => {
@@ -124,10 +150,17 @@ const AnnouncementDetailsPage = () => {
                 const data = await fetchAnnouncementDetails(Number(id));
                 console.log(data);
                 setDetails(data);
+                setIsFavorite(data.is_favorite);
+
+                if (!hasViewedAnnouncement(Number(id))) {
+                    await incrementViews(Number(id));
+                    markAsViewed(Number(id));
+                }
             }
         };
         loadDetails();
     }, [id]);
+
 
 
     if (!details) {
@@ -185,6 +218,28 @@ const AnnouncementDetailsPage = () => {
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
     const isDateInFuture = diffTime > 0;
+
+
+    const handleAddToFavorites = async () => {
+        const isSuccess = await addAnnouncementToFavorites(details.id);
+        if (isSuccess) {
+            setIsFavorite(true);
+        }
+    };
+
+    const handleRespond = async () => {
+        if (!details || !details.user) return;
+
+        try {
+            const chatId = await respondAnnouncement(details.user.id, details.id);
+            console.log('Chat created successfully:', chatId);
+            navigate(`/chat/${chatId}`);
+        } catch (error) {
+            console.error('Failed to create chat:', error);
+        }
+    };
+
+
 
     return (
         <>
@@ -307,14 +362,22 @@ const AnnouncementDetailsPage = () => {
 
                                 {/* Donate and to favorite buttons */}
                                 <div className="flex flex-col pl-[2vw] justify-between space-y-3 mt-4">
-                                    <Button hasBlue={true} className="py-3 px-4 uppercase bg-almost-white">
-                                        Задонатити зараз
-                                    </Button>
-                                    <Button isFilled={true} className="py-3 px-4 justify-between uppercase">
-                                        <div className="flex flex-row justify-center">
-                                            <Heart className="h-6 w-6 mx-3"/>
-                                            В обране
-                                        </div>
+                                    <div className="mt-8 w-full">
+                                        <Button
+                                            onClick={handleAddToFavorites}
+                                            className="flex items-center justify-center text-center w-full bg-perfect-yellow rounded-3xl font-montserratRegular"
+                                        >
+                                            {isFavorite ? (
+                                                <FullHeart className="h-5 w-5 mr-2"/>
+                                            ) : (
+                                                <Heart className="h-6 w-6 mr-2"/>
+                                            )}
+                                            В ОБРАНЕ
+                                        </Button>
+                                    </div>
+                                    <Button hasBlue={true} className="py-1 px-4 uppercase"
+                                            onClick={handleRespond}>
+                                        Відгукнутись
                                     </Button>
                                 </div>
                             </div>

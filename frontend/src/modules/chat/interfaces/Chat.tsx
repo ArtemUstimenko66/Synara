@@ -7,4 +7,5 @@ export default interface Chat {
     isArchived: boolean;
     isBlocked: boolean;
     unreadCount: number;
+    memberId: number;
 }

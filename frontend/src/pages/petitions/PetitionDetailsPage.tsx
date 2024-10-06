@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import Wrapper from "../../ui/Wrapper.tsx";
 import MainHeader from "../../modules/main-page/components/ui/MainHeader.tsx";
 import { Button } from "../../ui/Button.tsx";
@@ -8,9 +8,10 @@ import Calendar from '../../modules/main-page/assets/Calendar.svg?react';
 import AvtorPetitions from '../../modules/petitions/assets/AvtorPetitions.svg?react';
 import SMS from '../../modules/petitions/assets/SMS.svg?react';
 import Heart from '../../modules/gathering/assets/Heart.svg?react';
+import FullHeart from '../../modules/gathering/assets/FullHeart.svg?react';
 import { format } from 'date-fns';
 import { uk } from 'date-fns/locale';
-import { fetchPetitionDetails } from "../../modules/petitions/api/petitionsService.ts";
+import {addPetitionToFavorites, fetchPetitionDetails} from "../../modules/petitions/api/petitionsService.ts";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SearchPetitions from "../../modules/petitions/components/SearchPetitions.tsx";
 
@@ -38,6 +39,7 @@ const GatheringDetailsPage = () => {
     const { id } = useParams();
     const [details, setDetails] = useState<GatheringDetails | null>(null);
     const navigate = useNavigate();
+    const [isFavorite, setIsFavorite] = useState(false);
 
     useEffect(() => {
         const loadDetails = async () => {
@@ -45,6 +47,7 @@ const GatheringDetailsPage = () => {
                 const data = await fetchPetitionDetails(Number(id));
                 console.log(data);
                 setDetails(data);
+                setIsFavorite(data.is_favorite);
             }
         };
         loadDetails();
@@ -57,6 +60,14 @@ const GatheringDetailsPage = () => {
     const handleGoCreatePetions = () => {
         navigate('/add-petition');
     };
+
+    const handleAddToFavorites = async () => {
+        const isSuccess = await addPetitionToFavorites(details.id);
+        if (isSuccess) {
+            setIsFavorite(true);
+        }
+    };
+
 
     return (
         <>
@@ -122,38 +133,49 @@ const GatheringDetailsPage = () => {
                                         ЗБІР ПІДПИСІВ ЗАВЕРШЕНО
                                     </Button>
                                     :
-                                    <Button
-                                        className="w-full py-1 border-2 uppercase border-dark-blue text-dark-blue font-semibold rounded-3xl cursor-default">
-                                        Підписати
-                                    </Button>
+                                    <a href={details.link} target="_blank"
+                                       rel="noopener noreferrer">
+                                        <Button
+                                            className="w-full py-1 border-2 uppercase border-dark-blue text-dark-blue font-semibold rounded-3xl cursor-default">
+                                            Підписати
+                                        </Button>
+                                    </a>
+
                                 }
                             </div>
 
                             <h3 className="text-lg font-montserratRegular mb-4 uppercase">Поділіться петицією:</h3>
                             <div className="mt-2 flex justify-center space-x-6">
                                 <a href="#" aria-label="Facebook">
-                                    <FontAwesomeIcon icon={['fab', 'facebook-f']} className="h-6 w-6" />
+                                    <FontAwesomeIcon icon={['fab', 'facebook-f']} className="h-6 w-6"/>
                                 </a>
                                 <a href="#" aria-label="Instagram">
-                                    <FontAwesomeIcon icon={['fab', 'instagram']} className="h-7 w-7" />
+                                    <FontAwesomeIcon icon={['fab', 'instagram']} className="h-7 w-7"/>
                                 </a>
                                 <a href="#" aria-label="Twitter">
-                                    <FontAwesomeIcon icon={['fab', 'twitter']} className="h-6 w-6" />
+                                    <FontAwesomeIcon icon={['fab', 'twitter']} className="h-6 w-6"/>
                                 </a>
                                 <a href="#" aria-label="Telegram">
-                                    <FontAwesomeIcon icon={['fab', 'telegram-plane']} className="h-6 w-6" />
+                                    <FontAwesomeIcon icon={['fab', 'telegram-plane']} className="h-6 w-6"/>
                                 </a>
                             </div>
                             <div className="mt-8 w-full">
                                 <Button
-                                    className="flex items-center justify-center text-center w-full bg-perfect-yellow rounded-3xl font-montserratRegular">
-                                    <Heart className="h-6 w-6 mr-2" />В ОБРАНЕ
+                                    onClick={handleAddToFavorites}
+                                    className="flex items-center justify-center text-center w-full bg-perfect-yellow rounded-3xl font-montserratRegular"
+                                >
+                                    {isFavorite ? (
+                                        <FullHeart className="h-5 w-5 mr-2"/>
+                                    ) : (
+                                        <Heart className="h-6 w-6 mr-2"/>
+                                    )}
+                                    В ОБРАНЕ
                                 </Button>
                             </div>
                         </div>
                     </div>
                 </div>
-                <Footer />
+                <Footer/>
             </Wrapper>
         </>
     );

@@ -8,7 +8,6 @@ import {useTranslation} from "react-i18next";
 import PlaceholderSquare from '../../assets/images/PlaceholderSquare.svg?react';
 import DonatNaZSU from '../../assets/images/DonatNaZSU.svg?react';
 import GetHelp from '../../assets/images/GetHelp.svg?react';
-import Header from "../../components/Header.tsx";
 import Meta from '../../assets/images/meta.svg?react';
 import Facebook from '../../assets/images/Facebook.svg?react';
 import Instagram from '../../assets/images/Instagram.svg?react';
@@ -17,6 +16,7 @@ import Telegram from '../../assets/images/Telegram.svg?react';
 import HelpIcon from '../../assets/images/HelpIcon.svg?react';
 import ComunityIcon from '../../assets/images/ComunityIcon.svg?react';
 import SupportIcon from '../../assets/images/SupportIcon.svg?react';
+import MainHeader from "../../modules/main-page/components/ui/MainHeader.tsx";
 
 
 
@@ -25,7 +25,7 @@ const AboutPage = () => {
 
     return (
         <Wrapper>
-            <Header />
+            <MainHeader />
             <div className="min-h-screen mt-24 ml-[3%] mr-[3%] font-montserratRegular">
                 <section className="w-full h-auto flex flex-col items-center px-4 md:px-8 mt-24">
                     <h2 className="text-h2 font-montserratMedium uppercase text-center">{t('about_us')}</h2>

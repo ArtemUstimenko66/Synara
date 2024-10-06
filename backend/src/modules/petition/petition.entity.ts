@@ -7,6 +7,7 @@ import {
 import { ApiProperty } from '@nestjs/swagger';
 import { User } from "../users/entities/users.entity";
 import { PetitionTopic } from "./enums/petition-topic.enum";
+import {PetitionType} from "./enums/petition-type.enum";
 
 @Entity('petition')
 export class Petition {
@@ -40,6 +41,14 @@ export class Petition {
         default: PetitionTopic.NO_SUBJECT,
     })
     topic: PetitionTopic[];
+
+    @Column({
+        type: 'enum',
+        enum: PetitionType,
+        default: PetitionType.NO_TYPE,
+    })
+    type: PetitionType[];
+
 
     @ApiProperty({
         example: 'Save the Forests',

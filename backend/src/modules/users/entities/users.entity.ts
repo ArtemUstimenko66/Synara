@@ -16,7 +16,7 @@ import { ChatMember } from '../../real-time-chat/chats/chat-member.entity';
 import { Message } from '../../real-time-chat/messages/message.entity';
 import { Gatherings } from "../../gatherings/entity/gatherings.entity";
 import {Petition} from "../../petition/petition.entity";
-//import { Petition  } from "../../petition/petition.entity";
+import {Comment} from "../../comments/entity/comments.entity";
 
 @Entity('users')
 export class User {
@@ -157,4 +157,11 @@ export class User {
 
   @OneToMany(() => Petition, (petitions) => petitions.author)
   petitions: User;
+
+  @OneToMany(() => Comment, (comment) => comment.author)
+  comments_author?: Comment[];
+
+  @OneToMany(() => Comment, (comment) => comment.volunteer)
+  comments_volunteer?: Comment[];
+
 }
