@@ -27,6 +27,9 @@ export class PetitionService {
         private petitionRepository: Repository<Petition>,
     ) {}
 
+
+
+
     async create(
         createPetitionDto: CreatePetitionDto,
         user: User,
@@ -47,6 +50,13 @@ export class PetitionService {
             throw new BadRequestException(`Petition with id ${id} not found`);
         }
         return petition;
+    }
+
+    async findFavoritePetitions() : Promise<Petition[]> {
+        return this.petitionRepository.find({
+            where: { is_favorite: true },
+            //  relations: ['author'],
+        })
     }
 
     async findPetitions(
@@ -114,7 +124,7 @@ export class PetitionService {
         }
     }
 
-     async updatePetitionStatus(id: number, updateData: Partial<Petition>): Promise<Petition> {
+    async updatePetitionStatus(id: number, updateData: Partial<Petition>): Promise<Petition> {
         const petition = await this.petitionRepository.findOne({ where: { id } });
         if (!petition) {
             throw new NotFoundException(`Petition with ID ${id} not found`);
@@ -129,6 +139,15 @@ export class PetitionService {
     }
 
     async markPetitionAsFavorite(id: number): Promise<Petition> {
-        return this.updatePetitionStatus(id, { is_favorite: true });
+        const petition = await this.petitionRepository.findOne({ where: { id }});
+
+        if (!petition) {
+            throw new NotFoundException(`Petition with ID ${id} not found`);
+        }
+
+        petition.is_favorite = !petition.is_favorite;
+
+        return this.petitionRepository.save(petition);
     }
+
 }

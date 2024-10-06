@@ -66,6 +66,13 @@ export class PetitionController {
         return petitions;
     }
 
+    @Get('favorites')
+    @ApiOperation({ summary: 'Get favorite petitions' })
+    @ApiResponse({ status: 200, type: [Petition] })
+    getFavoritePetitions() : Promise<Petition[]> {
+        return this.petitionService.findFavoritePetitions();
+    }
+
     @ApiOperation({ summary: 'Get an announcement by ID' })
     @ApiResponse({ status: 200, type: Petition })
     @Get(':id')
