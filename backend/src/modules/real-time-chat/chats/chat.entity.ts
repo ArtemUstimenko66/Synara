@@ -1,6 +1,7 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {Column, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn} from 'typeorm';
 import { ChatMember } from './chat-member.entity';
 import { Message } from '../messages/message.entity';
+import {CurrentPhones} from "../../current-phones/entity/current-phones.entity";
 
 @Entity()
 export class Chat {
@@ -24,4 +25,7 @@ export class Chat {
 
   @OneToMany(() => Message, (message) => message.chat)
   messages: Message[];
+
+  @OneToOne(() => CurrentPhones, (currentPhones) => currentPhones.chat)
+  current_phones?: CurrentPhones;
 }

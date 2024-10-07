@@ -10,6 +10,8 @@ interface Message {
     type: 'text' | 'image';
 }
 
+const baseUrlCurrentPhones = "current-phones"
+
 export const fetchChats = async (filter: 'active' | 'archived' | 'blocked', username?: string) => {
     try {
         let params: any = { archived: false, blocked: false };
@@ -166,3 +168,37 @@ export const submitFeedback = async (feedbackData: any) => {
         throw error;
     }
 };
+
+
+export const addLinkToChat = async (chatId:number|null, link:string) => {
+    try {
+        const reponse = await api.post(`${baseUrlCurrentPhones}/addLink`, {
+            chatId, link
+        }, { withCredentials: true });
+        return reponse.data;
+    }
+    catch(error){
+        throw error;
+    }
+}
+
+export const getLink = async (chatID: number | null) => {
+    try{
+        const reponse = await api.get(`${baseUrlCurrentPhones}/link/${chatID}`, { withCredentials: true });
+        console.log(reponse.data.link);
+        return reponse.data.link;
+    }
+    catch(error){
+        return null;
+    }
+}
+
+export const deleteLink = async (chatID: number | null)=> {
+    try {
+        const reponse = await api.delete(`${baseUrlCurrentPhones}/delete/${chatID}`, { withCredentials: true });
+        return reponse;
+    }
+    catch(error){
+        throw error;
+    }
+}

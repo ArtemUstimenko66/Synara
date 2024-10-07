@@ -56,14 +56,13 @@ const VolunteerCard: React.FC<VolunteerCardProps> = ({ id, name, rating, support
                 <div className="flex items-center">
                     <HelpingHand className="h-8 w-8"/>
                     <p className="text-pl font-montserratMedium ml-2">
-                        {supports
+                        {supports ? supports
                             .map((typeSupport, index) => {
                                 const translatedType = getHelpTypeInUkrainianEngToUkr(typeSupport);
                                 return index === 0 ? translatedType : translatedType.toLowerCase();
                             })
-                            .join(', ')}
+                            .join(', ') : null}
                     </p>
-
                 </div>
             </div>
 
