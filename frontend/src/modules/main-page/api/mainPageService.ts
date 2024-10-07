@@ -254,6 +254,42 @@ export const incrementResponses = async (id: number) => {
     }
 };
 
+export const doneAnnouncement = async (id: number) => {
+    try {
+        const response = await api.patch(`/announcements/${id}/complete`, {}, {
+            withCredentials: true,
+        });
+
+        if (response.status === 200) {
+            console.log('Объявление завершенно');
+            return true;
+        } else {
+            console.error("Не удалось добавить объявление в завершенные");
+            return false;
+        }
+    } catch (error) {
+        console.error("Ошибка при добавлении в завершенные:", error);
+        throw error;
+    }
+};
+
+export const cancelAnnouncement = async (id: number) => {
+    try {
+        const response = await api.delete(`/announcements/${id}`);
+
+        if (response.status === 200) {
+            console.log('Объявление завершенно');
+            return true;
+        } else {
+            console.error("Не удалось добавить объявление в завершенные");
+            return false;
+        }
+    } catch (error) {
+        console.error("Ошибка при добавлении в завершенные:", error);
+        throw error;
+    }
+};
+
 export const respondAnnouncement = async (userId: number, announcementId: number) => {
     try {
         const response = await api.post(

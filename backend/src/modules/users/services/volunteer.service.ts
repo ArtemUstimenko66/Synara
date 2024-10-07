@@ -57,6 +57,22 @@ export class VolunteersService {
     return qb.getMany();
   }
 
+
+  async findVolunteerById(id: number): Promise<VolunteersEntity> {
+    const volunteer = await this.volunteersRepository
+        .createQueryBuilder('volunteer')
+        .leftJoinAndSelect('volunteer.user', 'user')
+        .where('volunteer.id = :id', { id })
+        .getOne();
+
+    if (!volunteer) {
+      throw new Error(`Volunteer with ID ${id} not found`);
+    }
+
+    return volunteer;
+  }
+
+
   private applyNameFilter(qb: SelectQueryBuilder<VolunteersEntity>, name?: string) {
     if (name?.trim()) {
       qb.andWhere('user.firstName ILIKE :name OR user.lastName ILIKE :name', {

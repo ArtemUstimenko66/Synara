@@ -1,23 +1,33 @@
-import { SetStateAction, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import MainHeader from "../../modules/main-page/components/ui/MainHeader.tsx";
-
 import Wrapper from '../../ui/Wrapper.tsx';
 import Sidebar from "../../modules/profile/components/SideBar.tsx";
 import MainContent from "../../modules/profile/components/MainContent.tsx";
 import { useAuth } from "../../hooks/useAuth.ts";
-import { getUser } from "../../modules/profile/api/profileService.ts";
+import {
+    getDoneAnnouncements,
+    getFavoriteAnnouncements,
+    getFavoriteGatherings,
+    getFavoritePetitions,
+    getUser
+} from "../../modules/profile/api/profileService.ts";
 import Footer from "../../components/Footer.tsx";
-
 
 const ProfilePage = () => {
     const [activeSection, setActiveSection] = useState<string>('reviews');
     const [isHelpOpen, setIsHelpOpen] = useState(false);
     const [isAccountOpen, setIsAccountOpen] = useState(false);
-    const [selectedRequestSection, setSelectedRequestSection] = useState('All');
     const [, setReviewsData] = useState([]);
     const [announcementsData, setAnnouncementsData] = useState([]);
     const [gatheringsData, setGatheringsData] = useState([]);
     const [petitionsData, setPetitionsData] = useState([]);
+
+    // Новые состояния для избранных данных
+    const [favoriteAnnouncementsData, setFavoriteAnnouncementsData] = useState([]);
+    const [favoriteGatheringsData, setFavoriteGatheringsData] = useState([]);
+    const [favoritePetitionsData, setFavoritePetitionsData] = useState([]);
+    const [completedAnnouncementsData, setCompletedAnnouncementsData] = useState([]);
+
     const [userData, setUserData] = useState({
         avatarUrl: '',
         firstName: '',
@@ -50,12 +60,30 @@ const ProfilePage = () => {
             }
         };
 
-        fetchData();
-    }, [isAuthenticated, userId]);
+        const fetchFavorites = async () => {
+            try {
+                // Запрос для получения избранных объявлений
+                const favoriteAnnouncementsData = await getFavoriteAnnouncements();
+                setFavoriteAnnouncementsData(favoriteAnnouncementsData);
 
-    const handleRequestSectionClick = (section: SetStateAction<string>) => {
-        setSelectedRequestSection(section);
-    };
+                const favoriteCopmletedData = await getDoneAnnouncements();
+                setCompletedAnnouncementsData(favoriteCopmletedData);
+                // Запрос для получения избранных сборов
+                const favoriteGatheringsData = await getFavoriteGatherings();
+                setFavoriteGatheringsData(favoriteGatheringsData);
+
+                // Запрос для получения избранных петиций
+                const favoritePetitionsData = await getFavoritePetitions();
+                setFavoritePetitionsData(favoritePetitionsData);
+
+            } catch (error) {
+                console.log('Error fetching favorite data:', error);
+            }
+        };
+
+        fetchData();
+        fetchFavorites();
+    }, [isAuthenticated, userId]);
 
     if (isLoading) {
         return <div>Loading...</div>;
@@ -113,18 +141,18 @@ const ProfilePage = () => {
                 <div className="flex flex-1">
                     {/* Sidebar */}
                     <div className="w-[20%]">
-                    <Sidebar
-                        activeSection={activeSection}
-                        setActiveSection={setActiveSection}
-                        isHelpOpen={isHelpOpen}
-                        setIsHelpOpen={setIsHelpOpen}
-                        isAccountOpen={isAccountOpen}
-                        setIsAccountOpen={setIsAccountOpen}
-                        avatarUrl={userData.avatarUrl}
-                        firstName={userData.firstName}
-                        lastName={userData.lastName}
-                        birthDate={userData.birthDate}
-                    />
+                        <Sidebar
+                            activeSection={activeSection}
+                            setActiveSection={setActiveSection}
+                            isHelpOpen={isHelpOpen}
+                            setIsHelpOpen={setIsHelpOpen}
+                            isAccountOpen={isAccountOpen}
+                            setIsAccountOpen={setIsAccountOpen}
+                            avatarUrl={userData.avatarUrl}
+                            firstName={userData.firstName}
+                            lastName={userData.lastName}
+                            birthDate={userData.birthDate}
+                        />
                     </div>
                     {/* Main Content */}
                     <MainContent
@@ -133,8 +161,10 @@ const ProfilePage = () => {
                         announcements={announcementsData}
                         gatherings={gatheringsData}
                         petitions={petitionsData}
-                        selectedRequestSection={selectedRequestSection}
-                        handleRequestSectionClick={handleRequestSectionClick}
+                        likedAnnouncements={favoriteAnnouncementsData}
+                        completedAnnouncements={completedAnnouncementsData}
+                        likedGatherings={favoriteGatheringsData}
+                        likedPetitions={favoritePetitionsData}
                     />
                 </div>
             </div>

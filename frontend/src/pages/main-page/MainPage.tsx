@@ -163,7 +163,7 @@ const MainPage: React.FC = () => {
                         <div className="w-full md:w-1/2 xl:w-1/4 flex flex-col items-start justify-start">
                             {/* Help Map Button */}
                             <Button hasBlue={true}
-                                    className="uppercase text-relative-h5 px-8 py-3 my-5 w-full xl:w-full">
+                                    className="uppercase text-relative-h5 px-8 py-3 mt-8 my-5 w-full xl:w-full">
                                 {t('map_of_help')}
                             </Button>
 
@@ -181,7 +181,7 @@ const MainPage: React.FC = () => {
 
                         <div className="w-full  md:w-1/2 xl:w-3/4 flex flex-col items-end justify-end">
                             {/* Search Component */}
-                            <div className="w-full mt-4  mb-3 md:mt-0">
+                            <div className="w-full mb-3 md:mt-0">
                                 <SearchComponent/>
                             </div>
 
@@ -287,6 +287,7 @@ const MainPage: React.FC = () => {
                                         >
                                             <VolunteerCard
                                                 key={index}
+                                                id={volunteer.id}
                                                 name={`${volunteer.user.firstName} ${volunteer.user.lastName}`}
                                                 rating={volunteer.rating}
                                                 supports={volunteer.supports}

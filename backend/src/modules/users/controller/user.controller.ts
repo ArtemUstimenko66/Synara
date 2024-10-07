@@ -59,6 +59,7 @@ export class UserController {
     return this.userService.findAll();
   }
 
+
   @ApiResponse({ status: 200, type: [VolunteersEntity] })
   @Get('/volunteer')
   getAllVolunteers(
@@ -83,6 +84,13 @@ export class UserController {
     }
     const volunteers = this.volunteerService.findVolunteers(options);
     return volunteers;
+  }
+
+  @ApiResponse({ status: 200, type: VolunteersEntity })
+  @ApiOperation({ summary: 'Get volunteer by ID' })
+  @Get('volunteer/:id')
+  async getVolunteerById(@Param('id') id: number): Promise<VolunteersEntity> {
+    return this.volunteerService.findVolunteerById(id);
   }
 
 

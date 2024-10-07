@@ -3,11 +3,12 @@ import { useSwipeable } from 'react-swipeable';
 import { useMediaQuery } from 'react-responsive';
 
 import CountUp from 'react-countup';
-import PlaceholderHorizontal from '../../assets/images/PlaceholderHorizontal.svg?react';
+
 import PlaceholderSquare from '../../assets/images/PlaceholderSquare.svg?react';
 
 
 import DonatNaZSU from '../../assets/images/DonatNaZSU.svg';
+import WhoAreWe from '../../assets/images/WhoAreWe.png';
 import GetHelp from '../../assets/images/GetHelp.svg';
 import WhyUsImg from '../../assets/images/WhyUsImg.svg';
 import WhyMeMainDesktop from '../../assets/images/WhyMeMainDesktop.svg';
@@ -273,8 +274,11 @@ const HomePage: React.FC = () => {
                         className='w-full flex justify-center select-none sm:mt-[70vh] md:mt-[20vh] bg-transparent  flex-col xl:flex-row md:flex-row xl:mt-[20vw]  '>
                         <div
                             className="hidden xl:flex xl:order-1 md:flex md:order-1 xl:w-1/2 md:w-relative-1/2">
-                            <PlaceholderHorizontal
-                                className="xl:w-96 xl:h-auto md:w-relative-elg md:h-auto md:ml-[5vw] xl:mr-0 md:mr-relative-md"/>
+                            <img
+                                src={`${WhoAreWe}`}
+                                className="xl:w-full xl:mt-[10.8vh] xl:h-auto md:w-relative-elg md:h-auto md:ml-[5vw] xl:mr-0 md:mr-relative-md"
+                                alt="SVG Image"
+                            />
                         </div>
                         <div
                             className="relative text-center order-2 xl:order-2 md:order-2 xl:text-left md:text-left xl:ml-24 xl:w-11/12">
@@ -284,8 +288,13 @@ const HomePage: React.FC = () => {
                             <p className='text-almost-white sm:text-left sm:m-4 md:m-0 xl:m-0 sm:text-xs-ps font-montserratRegular xl:text-pl md:text-relative-pxl xl:mt-1 xl:mb-4 md:mb-relative-sm whitespace-pre-line md:whitespace-pre-line'>
                                 {t('description_synara')}
                             </p>
-                            <PlaceholderHorizontal className="xl:hidden md:hidden sm:w-[80%] sm:mx-auto"/>
-                            <Button className="sm:hidden xl:flex md:flex" hasBorder={true}>{t('read_moreUPPER')}</Button>
+                            <img
+                                src={`${WhoAreWe}`}
+                                className="xl:hidden md:hidden sm:w-[50%] sm:mx-auto"
+                                alt="SVG Image"
+                            />
+                            <Button className="sm:hidden xl:flex md:flex"
+                                    hasBorder={true}>{t('read_moreUPPER')}</Button>
                         </div>
                     </section>
 
