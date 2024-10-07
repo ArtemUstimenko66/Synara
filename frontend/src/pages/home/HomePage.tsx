@@ -4,10 +4,9 @@ import { useMediaQuery } from 'react-responsive';
 
 import CountUp from 'react-countup';
 
-import PlaceholderSquare from '../../assets/images/PlaceholderSquare.svg?react';
-
 
 import DonatNaZSU from '../../assets/images/DonatNaZSU.svg';
+import BecomeVolunteer from '../../assets/images/BecomeVolunteer.svg';
 import WhoAreWe from '../../assets/images/WhoAreWe.png';
 import GetHelp from '../../assets/images/GetHelp.svg';
 import WhyUsImg from '../../assets/images/WhyUsImg.svg';
@@ -445,15 +444,17 @@ const HomePage: React.FC = () => {
                             <div
                                 className="flex xl:flex-col md:flex-col sm:flex-row  xl:items-center max-w-xs md:max-w-sm xl:max-w-md">
                                 <div className="">
-                                    <PlaceholderSquare
-                                        className="w-24 sm:w-40 md:ml-8 sm:mr-8 xl:mr-0 sm:h-40 h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"/>
+                                    <img
+                                        src={`${BecomeVolunteer}`}
+                                        className="w-24 sm:w-40 md:ml-8 sm:mr-8 xl:mr-0 sm:h-40 h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"
+                                        alt="SVG Image"
+                                    />
                                 </div>
                                 <div className="sm:flex-row">
                                     <h3 className="xl:text-center sm:text-center xl:text-h3 md:text-relative-h3xl font-kharkiv mt-4 w-full max-w-xs md:max-w-sm xl:max-w-md">{t('Become_a_volunteer')}</h3>
                                     <p className="sm:text-xs xl:text-xs-pxl text-center font-montserratRegular mt-2 w-full max-w-xs md:max-w-sm xl:max-w-md">
                                         {t('Under_Become_a_volunteer')}
                                     </p>
-
                                 </div>
                             </div>
 
