@@ -10,6 +10,9 @@ import {useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 import MainHeader from "../../modules/main-page/components/ui/MainHeader.tsx";
 import {createGathering, uploadDocumentGathering} from "../../modules/gathering/api/gatheringPageService.ts";
+import { Player } from '@lottiefiles/react-lottie-player';
+import loadingAnimation from '../../assets/animations/logoLoading.json';
+
 
 const CreateGatheringPage: React.FC = () => {
     const [photoFiles, setPhotoFiles] = useState<File[]>([]);
@@ -30,6 +33,7 @@ const CreateGatheringPage: React.FC = () => {
     });
 
     const { t } = useTranslation();
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -116,6 +120,8 @@ const CreateGatheringPage: React.FC = () => {
     const handleSubmit = async () => {
         if (!validateFields()) return;
 
+        setIsLoading(true);
+
         const dataToSend = {
             ...localData,
             collected: 0,
@@ -123,18 +129,36 @@ const CreateGatheringPage: React.FC = () => {
             numberOfCard: localData.numberOfCard.replace(/\s/g, '')
         };
 
-        // Используем функцию для создания сбора
-        const createdGathering = await createGathering(dataToSend);
-        if (!createdGathering) return;
+        try {
+            const createdGathering = await createGathering(dataToSend);
+            if (!createdGathering) return;
 
-        const gatheringId = createdGathering.id;
+            const gatheringId = createdGathering.id;
 
-        if (localData.documents && localData.documents.length > 0) {
-            await uploadAllDocuments(localData.documents, gatheringId);
+            if (localData.documents && localData.documents.length > 0) {
+                await uploadAllDocuments(localData.documents, gatheringId);
+            }
+
+            navigate('/gatherings');
+        } catch (error) {
+            console.error("Error creating gathering:", error);
+        } finally {
+            setIsLoading(false);
         }
-
-        navigate('/gatherings');
     };
+
+    if (isLoading) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <Player
+                    autoplay
+                    loop
+                    src={loadingAnimation}
+                    style={{ height: '200px', width: '200px' }}
+                />
+            </div>
+        );
+    }
 
     const handleDocumentUpload = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.files) {

@@ -125,8 +125,18 @@ const VolunteerProfilePage: React.FC = () => {
 			</div>
 		);
 	}
+
 	if (isLoading) {
-		return <div>Loading...</div>;
+		return (
+			<div className="flex items-center justify-center h-screen">
+				<Player
+					autoplay
+					loop
+					src={loadingAnimation}
+					style={{ height: '200px', width: '200px' }}
+				/>
+			</div>
+		);
 	}
 
 	const reviews = [

@@ -16,6 +16,9 @@ import {SideBarChat} from "../../modules/chat/components/SideBarChat.tsx";
 import {useTranslation} from "react-i18next";
 import {useAuth} from "../../hooks/useAuth.ts";
 import VolunteerCard from "../../modules/main-page/components/VolunteerCard.tsx";
+import { Player } from '@lottiefiles/react-lottie-player';
+import loadingAnimation from '../../assets/animations/logoLoading.json';
+
 
 const MainPage: React.FC = () => {
     const [sortOrder, setSortOrder] = useState<'ASC' | 'DESC' >('ASC');
@@ -32,7 +35,7 @@ const MainPage: React.FC = () => {
     const { role, isLoading } = useAuth();
     const [offset, setOffset] = useState(0);
     const [hasMore, setHasMore] = useState(true);
-
+    const [isLoadingData, setIsLoadingData] = useState(true);
 
     const [isChatSidebarOpen, setIsChatSidebarOpen] = useState(false);
 
@@ -60,6 +63,7 @@ const MainPage: React.FC = () => {
             setSortOrder(currentSortOrder);
 
             try {
+                setIsLoadingData(true);
                 let data;
                 if (role === 'volunteer') {
                     data = await getFilteredAnnouncements(query, types, limit, 0, currentSortOrder, urgency);
@@ -78,16 +82,26 @@ const MainPage: React.FC = () => {
                 }
             } catch (error) {
                 console.error('Error fetching announcements:', error);
+            } finally {
+                setIsLoadingData(false);
             }
         };
 
         fetchAnnouncements();
     }, [role, searchParams, sortOrder, isLoading]);
 
-
-
-
-
+    if (isLoadingData) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <Player
+                    autoplay
+                    loop
+                    src={loadingAnimation}
+                    style={{ height: '200px', width: '200px' }}
+                />
+            </div>
+        );
+    }
 
     // sort
     const handleSort = (order: 'ASC' | 'DESC') => {

@@ -13,6 +13,9 @@ import ModalForbidden from "../../modules/gathering/components/ui/ModalForbidden
 import {loadGatherings} from "../../redux/gatheringsSlice.ts";
 import {AppDispatch, RootState} from "../../redux/store.ts";
 import { useDispatch, useSelector } from 'react-redux';
+import {Player} from "@lottiefiles/react-lottie-player";
+import loadingAnimation from "../../assets/animations/logoLoading.json";
+
 
 const calculatePercentage = (goal: number, raised: number) => {
 	return (raised / goal) * 100;
@@ -75,10 +78,20 @@ const GatheringPage: React.FC = () => {
 		dispatch(loadGatherings(params));
 	}, [dispatch, limit, offset, searchParams, sortOrder]);
 
-
+	if (status === 'loading') {
+		return (
+			<div className="flex items-center justify-center h-screen">
+				<Player
+					autoplay
+					loop
+					src={loadingAnimation}
+					style={{ height: '200px', width: '200px' }}
+				/>
+			</div>
+		);
+	}
 
 	const loadMoreGatherings = () => {
-		// Убедитесь, что offset обновляется здесь
 		setOffset(prevOffset => prevOffset + limit);
 		const query = searchParams.get('query') || '';
 		const types = searchParams.getAll('typeEnding');

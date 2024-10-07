@@ -13,7 +13,8 @@ import {getFilteredPetitions} from "../../modules/petitions/api/petitionsService
 import {useTranslation} from "react-i18next";
 import {SideBarPetitions} from "../../modules/petitions/components/SideBarPetitions.tsx";
 import {Map} from "../../modules/main-page/components/Map.tsx";
-
+import {Player} from "@lottiefiles/react-lottie-player";
+import loadingAnimation from "../../assets/animations/logoLoading.json";
 
 const PetitionPage: React.FC = () => {
 
@@ -40,9 +41,11 @@ const PetitionPage: React.FC = () => {
 	const [isMapMenuOpen, setIsMapMenuOpen] = useState(false);
 
 	// get petitions by search/filters
+
+	// Получение петиций при изменении параметров поиска
 	useEffect(() => {
 		const fetchPetitions = async () => {
-			if (isLoading || !role) return;
+			if (isLoading || !role) return; // Проверка на загрузку
 
 			const query = searchParams.get('query') || '';
 			const currentSortOrder = (searchParams.get('sortOrder') as 'ASC' | 'DESC') || 'ASC';
@@ -72,6 +75,19 @@ const PetitionPage: React.FC = () => {
 		fetchPetitions();
 	}, [role, searchParams, sortOrder, isLoading]);
 
+	// Показ анимации загрузки, если данные все еще загружаются
+	if (isLoading) {
+		return (
+			<div className="flex items-center justify-center h-screen">
+				<Player
+					autoplay
+					loop
+					src={loadingAnimation}
+					style={{ height: '200px', width: '200px' }}
+				/>
+			</div>
+		);
+	}
 
 	// sort
 	const handleSort = (field: 'signatureCount' | 'creationDate' | 'deadline') => {

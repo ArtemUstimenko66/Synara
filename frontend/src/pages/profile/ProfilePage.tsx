@@ -12,6 +12,8 @@ import {
     getUser
 } from "../../modules/profile/api/profileService.ts";
 import Footer from "../../components/Footer.tsx";
+import {Player} from "@lottiefiles/react-lottie-player";
+import loadingAnimation from "../../assets/animations/logoLoading.json";
 
 const ProfilePage = () => {
     const [activeSection, setActiveSection] = useState<string>('reviews');
@@ -22,7 +24,6 @@ const ProfilePage = () => {
     const [gatheringsData, setGatheringsData] = useState([]);
     const [petitionsData, setPetitionsData] = useState([]);
 
-    // Новые состояния для избранных данных
     const [favoriteAnnouncementsData, setFavoriteAnnouncementsData] = useState([]);
     const [favoriteGatheringsData, setFavoriteGatheringsData] = useState([]);
     const [favoritePetitionsData, setFavoritePetitionsData] = useState([]);
@@ -62,17 +63,15 @@ const ProfilePage = () => {
 
         const fetchFavorites = async () => {
             try {
-                // Запрос для получения избранных объявлений
                 const favoriteAnnouncementsData = await getFavoriteAnnouncements();
                 setFavoriteAnnouncementsData(favoriteAnnouncementsData);
 
                 const favoriteCopmletedData = await getDoneAnnouncements();
                 setCompletedAnnouncementsData(favoriteCopmletedData);
-                // Запрос для получения избранных сборов
+
                 const favoriteGatheringsData = await getFavoriteGatherings();
                 setFavoriteGatheringsData(favoriteGatheringsData);
 
-                // Запрос для получения избранных петиций
                 const favoritePetitionsData = await getFavoritePetitions();
                 setFavoritePetitionsData(favoritePetitionsData);
 
@@ -86,7 +85,16 @@ const ProfilePage = () => {
     }, [isAuthenticated, userId]);
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return (
+            <div className="flex items-center justify-center h-screen">
+                <Player
+                    autoplay
+                    loop
+                    src={loadingAnimation}
+                    style={{ height: '200px', width: '200px' }}
+                />
+            </div>
+        );
     }
 
     const reviews = [

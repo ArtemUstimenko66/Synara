@@ -19,7 +19,6 @@ import SupportIcon from '../../assets/images/SupportIcon.svg?react';
 import MainHeader from "../../modules/main-page/components/ui/MainHeader.tsx";
 
 
-
 const AboutPage = () => {
     const { t } = useTranslation();
 
