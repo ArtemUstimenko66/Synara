@@ -4,12 +4,13 @@ import {submitFeedback} from "../../api/chatService.ts";
 
 interface FeedbackModalProps {
     isOpen: boolean;
+    className?: string;
     name: string | undefined;
     memberId: number | undefined;
     onClose: () => void;
 }
 
-export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, name, memberId, onClose }) => {
+export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, className, name, memberId, onClose }) => {
     const [rating, setRating] = useState(0);
     const [comment, setComment] = useState("");
     const maxCommentLength = 250;
@@ -55,7 +56,7 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, name, memb
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-100">
-            <div className="relative bg-white sm:rounded-none md:rounded-3xl xl:rounded-3xl border-dark-blue border-2 p-6 w-full md:h-auto xl:h-auto sm:h-full md:max-w-[60vw] xl:max-w-[32vw]">
+            <div className={`${className || 'h-auto rounded-3xl'} relative bg-white border-dark-blue border-2 p-6 w-full md:max-w-[60vw] xl:max-w-[32vw]`}>
                 <button onClick={onClose} className="absolute top-0 right-4 text-h3 hover:text-gray-800">
                     ×
                 </button>

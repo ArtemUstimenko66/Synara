@@ -176,10 +176,13 @@ const MainPage: React.FC = () => {
                     <div className="flex flex-col md:flex-row md:space-x-4">
                         <div className="w-full md:w-1/2 xl:w-1/4 flex flex-col items-start justify-start">
                             {/* Help Map Button */}
-                            <Button hasBlue={true}
-                                    className="uppercase text-relative-h5 px-8 py-3 mt-8 my-5 w-full xl:w-full">
-                                {t('map_of_help')}
-                            </Button>
+                            <Link to="/map-help" className="w-full">
+                                <Button hasBlue={true}
+                                        className="uppercase text-relative-h5 px-8 py-3 mt-8 my-5 w-full xl:w-full">
+                                    {t('map_of_help')}
+                                </Button>
+                            </Link>
+
 
                             {/* Filters Button */}
                             <div className="w-full flex items-start justify-start md:mt-0">
@@ -301,7 +304,7 @@ const MainPage: React.FC = () => {
                                         >
                                             <VolunteerCard
                                                 key={index}
-                                                id={volunteer.id}
+                                                id={volunteer.user.id}
                                                 name={`${volunteer.user.firstName} ${volunteer.user.lastName}`}
                                                 rating={volunteer.rating}
                                                 supports={volunteer.supports}

@@ -57,16 +57,15 @@ export class VolunteersService {
     return qb.getMany();
   }
 
-
-  async findVolunteerById(id: number): Promise<VolunteersEntity> {
+  async findVolunteerById(userId: number): Promise<VolunteersEntity> {
     const volunteer = await this.volunteersRepository
         .createQueryBuilder('volunteer')
         .leftJoinAndSelect('volunteer.user', 'user')
-        .where('volunteer.id = :id', { id })
+        .where('user.id = :userId', { userId })
         .getOne();
 
     if (!volunteer) {
-      throw new Error(`Volunteer with ID ${id} not found`);
+      throw new Error(`Volunteer with user ID ${userId} not found`);
     }
 
     return volunteer;

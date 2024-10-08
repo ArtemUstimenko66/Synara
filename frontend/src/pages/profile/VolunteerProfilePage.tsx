@@ -9,10 +9,10 @@ import Wrapper from "../../ui/Wrapper.tsx";
 import MainHeader from "../../modules/main-page/components/ui/MainHeader.tsx";
 import {Button} from "../../ui/Button.tsx";
 import Footer from "../../components/Footer.tsx";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {
 	fetchVolunteerDetails,
-	getUser
+	getUser, respondVolunteer
 } from "../../modules/profile/api/profileService.ts";
 import {Player} from "@lottiefiles/react-lottie-player";
 import loadingAnimation from "../../assets/animations/logoLoading.json";
@@ -76,9 +76,10 @@ const VolunteerProfilePage: React.FC = () => {
 	const [announcementsData, setAnnouncementsData] = useState([]);
 	const [gatheringsData, setGatheringsData] = useState([]);
 	const [petitionsData, setPetitionsData] = useState([]);
+	const navigate = useNavigate();
 
 
-	const { userId, isAuthenticated, isLoading } = useAuth();
+	const { userId, isAuthenticated } = useAuth();
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -126,18 +127,18 @@ const VolunteerProfilePage: React.FC = () => {
 		);
 	}
 
-	if (isLoading) {
-		return (
-			<div className="flex items-center justify-center h-screen">
-				<Player
-					autoplay
-					loop
-					src={loadingAnimation}
-					style={{ height: '200px', width: '200px' }}
-				/>
-			</div>
-		);
-	}
+	const handleRespond = async () => {
+		if (!details || !details.user) return;
+
+		try {
+			const chatId = await respondVolunteer(details.user.id);
+			console.log('Chat created successfully:', chatId);
+			navigate(`/chat/${chatId}`);
+		} catch (error) {
+			console.error('Failed to create chat:', error);
+			navigate(`/chat`);
+		}
+	};
 
 	const reviews = [
 		{
@@ -213,7 +214,7 @@ const VolunteerProfilePage: React.FC = () => {
 						</div>
 
 						{/* Action Button */}
-						<Button className="bg-perfect-yellow  px-6 py-2 rounded-3xl">
+						<Button className="bg-perfect-yellow  px-6 py-2 rounded-3xl" onClick={handleRespond}>
 							ЗВЕРНУТИСЬ
 						</Button>
 					</div>

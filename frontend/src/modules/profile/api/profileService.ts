@@ -1,4 +1,5 @@
 import api from "../../main-api/api.ts";
+
 export const getProfile = async () => {
     try {
         const response = await api.get('/auth/profile', {
@@ -103,6 +104,26 @@ export const fetchVolunteerDetails = async (id: number) => {
         return response.data;
     } catch (error) {
         console.error("Ошибка при получении деталей обьявления:", error);
+        throw error;
+    }
+};
+
+export const respondVolunteer = async (userId: number) => {
+    try {
+        const response = await api.post(
+            '/chats',
+            {
+                name: 'chat',
+                isGroup: false,
+                userIds: [userId],
+            },
+            {
+                withCredentials: true,
+            }
+        );
+        return response.data.id;
+    } catch (error) {
+        console.error('Error creating chat:', error);
         throw error;
     }
 };

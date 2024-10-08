@@ -49,7 +49,7 @@ import {handleScroll} from "../handlers/handleScroll.ts";
 import {handleArchiveChat} from "../handlers/handleArchiveChat.ts";
 import {useMediaQuery} from "react-responsive";
 import MainHeader from "../../main-page/components/ui/MainHeader.tsx";
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {FeedbackModal} from "./ui/FeedbackModal.tsx";
 import CallVolunteer from "./CallVolunteer.tsx";
 import CallVictim from "./CallVictim.tsx";
@@ -582,10 +582,12 @@ const FullChat: React.FC = () => {
                                             <div
                                                 className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg z-10">
                                                 <ul className="py-2">
-                                                    <li className="flex items-start justify-start px-4 py-4 cursor-pointer hover:bg-gray-100">
-                                                        <ProfileImg className="xl:h-6 xl:w-6 mr-3"/>
-                                                        <span>Подивитися профіль</span>
-                                                    </li>
+                                                    <Link to={`/profile-volunteer/${selectedChat.memberId}`}>
+                                                        <li className="flex items-start justify-start px-4 py-4 cursor-pointer hover:bg-gray-100">
+                                                            <ProfileImg className="xl:h-6 xl:w-6 mr-3"/>
+                                                            <span>Подивитися профіль</span>
+                                                        </li>
+                                                    </Link>
                                                     {role == "victim" ?
                                                         <>
                                                             <li

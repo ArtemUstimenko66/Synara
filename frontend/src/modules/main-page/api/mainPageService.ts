@@ -310,3 +310,15 @@ export const respondAnnouncement = async (userId: number, announcementId: number
         throw error;
     }
 };
+
+
+export const submitSynaraFeedback = async (feedbackData: any) => {
+    try {
+        const response = await api.post('http://localhost:8080/api/synara-comments', feedbackData, { withCredentials: true });
+        console.log('Feedback Synara submitted:', feedbackData);
+        return response;
+    } catch (error) {
+        console.error('Failed to submit Synara feedback:', error);
+        throw error;
+    }
+};

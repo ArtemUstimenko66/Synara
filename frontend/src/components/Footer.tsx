@@ -57,7 +57,7 @@ const Footer: React.FC = () => {
                                 <li><a href="/main" className="hover:underline">{t('main')}</a></li>
                                 <li><a href="/about" className="hover:underline">{t('about_us')}</a></li>
                                 <li><a href="/gatherings" className="hover:underline">{t('collection')}</a></li>
-                                <li><a href="/maps" className="hover:underline">{t('maps')}</a></li>
+                                <li><a href="/map-help" className="hover:underline">{t('maps')}</a></li>
                                 <li><a href="/how-it-works" className="hover:underline">{t('how_it_worksLOWER')}</a>
                                 </li>
                             </ul>
@@ -74,12 +74,14 @@ const Footer: React.FC = () => {
                     </AccordionSection>
                     <div className="border border-gray-200 mb-4 w-full"></div>
                     <AccordionSection title={t('communicationUPPER')}>
-                        <p className="mt-2">0-800-501-701</p>
-                        <p className="mb-2">{t('all_ukrainian_hotline')}</p>
-                        <p className="my-2">synara.support@email.com</p>
+                        <a href="tel:+380123456789" className="hover:underline">0-800-501-701</a>
+                        <p className="mb-4">{t('all_ukrainian_hotline')}</p>
+                        <a href="mailto:synara.support@email.com" className="hover:underline">
+                            synara.support@email.com
+                        </a>
                         <div className="mt-2 flex space-x-4">
                             <a href="#" aria-label="Facebook">
-                            <FontAwesomeIcon icon={['fab', 'facebook-f']}/>
+                                <FontAwesomeIcon icon={['fab', 'facebook-f']}/>
                             </a>
                             <a href="#" aria-label="Instagram">
                                 <FontAwesomeIcon icon={['fab', 'instagram']}/>
@@ -97,7 +99,6 @@ const Footer: React.FC = () => {
                         <Link to=".">
                             <LogoFooter className="text-xl font-bold w-[45%] xl:mr-32 md:mr-14"/>
                         </Link>
-
                     </div>
                     <div className="text-center text-pl text-almost-black">
                         ©2024 SYNARA. All rights reserved
@@ -133,7 +134,7 @@ const Footer: React.FC = () => {
                                     <li><a href="/main" className="hover:underline">{t('main')}</a></li>
                                     <li><a href="/about" className="hover:underline">{t('about_us')}</a></li>
                                     <li><a href="/gatherings" className="hover:underline">{t('collection')}</a></li>
-                                    <li><a href="/maps" className="hover:underline">{t('maps')}</a></li>
+                                    <li><a href="/map-help" className="hover:underline">{t('maps')}</a></li>
                                     <li><a href="/how-it-works" className="hover:underline">{t('how_it_worksLOWER')}</a></li>
                                 </ul>
                             </div>

@@ -48,7 +48,7 @@ const Header: React.FC = () => {
                     <NavItem text={t('mainUPPER')} to="/home" />
                     <NavItem text={t('about_usUPPER')} to="/about" />
                     <NavItem text={t('collectionsUPPER')} to="/gatherings" />
-                    <NavItem text={t('mapUPPER')} to="/maps" />
+                    <NavItem text={t('mapUPPER')} to="/map-help" />
                     <NavItem text={t('how_it_worksUPPER')} to="/how-it-works" />
                 </nav>
 

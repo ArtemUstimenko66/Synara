@@ -17,18 +17,15 @@ const MainHeader: React.FC = () => {
     const [, setIsAtTop] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
 
-    // Получаем данные из хука useAuth
     const { isAuthenticated, isLoading } = useAuth();
     const navigate = useNavigate();
 
-    // Логика для редиректа
-    // Логика для перенаправления по клику на первый NavItem
     const handleNavClick = () => {
         if (!isLoading) {
             if (isAuthenticated) {
-                navigate('/main'); // Перенаправляем на /main, если пользователь залогинен
+                navigate('/main'); // на /main, если пользователь залогинен
             } else {
-                navigate('/home'); // Перенаправляем на /home, если пользователь не залогинен
+                navigate('/home'); // на /home, если пользователь не залогинен
             }
         }
     };
@@ -74,7 +71,7 @@ const MainHeader: React.FC = () => {
                         </button>
                         <NavItem text={t('about_usUPPER')} to="/about"/>
                         <NavItem text={t('collectionsUPPER')} to="/gatherings"/>
-                        <NavItem text={t('mapUPPER')} to="/maps"/>
+                        <NavItem text={t('mapUPPER')} to="/map-help"/>
                         <NavItem text={t('how_it_worksUPPER')} to="/how-it-works"/>
                     </nav>
 

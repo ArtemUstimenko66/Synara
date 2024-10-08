@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import NavItem from "../../../ui/NavItem.tsx";
 import LogoSynara from '../../../assets/images/logoSynara.svg?react';
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button } from "../../../ui/Button.tsx";
 import { logout } from "../../profile/api/profileService.ts";
 import Filters from "./Filters.tsx";
@@ -10,6 +10,7 @@ import { navItems } from "../../../data/navItemsSideBar.ts";
 import MenuCloseIcon from '../../../assets/images/icon-close-menu.svg?react';
 import {useTranslation} from "react-i18next";
 import {useMediaQuery} from "react-responsive";
+import {FeedbackSynaraModal} from "./ui/FeedbackSynaraModal.tsx";
 
 interface SideBarProps {
     isOpen: boolean;
@@ -23,6 +24,7 @@ export const SideBar: React.FC<SideBarProps> = ({ isOpen, onClose, isFilters, on
     const navigate = useNavigate();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const {t}= useTranslation();
+    const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
 
     // logout
     const handleLogout = async () => {
@@ -81,24 +83,28 @@ export const SideBar: React.FC<SideBarProps> = ({ isOpen, onClose, isFilters, on
                                     )}
                                 </div>
                             ))}
-
-
-
                         </nav>
 
                         {/* Buttons */}
                         <div className="flex flex-col xl:space-y-5 sm:space-y-2 mx-5 mb-6">
                             <Button hasBlue={true} onClick={() => setIsModalOpen(true)}
                                     className="w-full xl:py-3 sm:py-2 md:text-pxl">{t('logoutUPPER')}</Button>
-                            <Link to="/comments" className="w-full">
-                                <Button isFilled={true} className="w-full text-black xl:py-3 sm:py-2 md:text-pxl">{t('leave_feedback')}</Button>
-                            </Link>
+
+                            <Button isFilled={true} onClick={() => setIsFeedbackOpen(true)} className="w-full text-black xl:py-3 sm:py-2 md:text-pxl">{t('leave_feedback')}</Button>
+
                         </div>
+
                     </div>
+
                 )}
             </div>
 
-            {/* Modal for logout confirmation */}
+            <FeedbackSynaraModal isOpen={isFeedbackOpen}
+                                 onClose={() => {
+                                     setIsFeedbackOpen(false);
+                                 }}/>
+
+
             <ModalLogout
                 isOpen={isModalOpen}
                 onClose={() => {
