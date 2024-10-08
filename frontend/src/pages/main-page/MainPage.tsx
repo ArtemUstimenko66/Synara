@@ -4,6 +4,7 @@ import SearchComponent from "../../modules/main-page/components/ui/SearchCompone
 import Announcement from "../../modules/main-page/components/Announcement.tsx";
 import DownArrowIcon from '../../modules/main-page/assets/Down_Arrow_Main.svg?react';
 import Wrapper from "../../ui/Wrapper.tsx";
+import NothingFound from "../../assets/images/NothingFound.png"
 import { Button } from "../../ui/Button.tsx";
 import Footer from "../../components/Footer.tsx";
 import { SideBar } from "../../modules/main-page/components/SideBar.tsx";
@@ -284,7 +285,8 @@ const MainPage: React.FC = () => {
                                             </div>
                                         ))
                                     ) : (
-                                        <div className="flex items-center justify-center my-[20%] w-full text-gray-500">
+                                        <div className="flex items-center justify-center my-[10%] w-full text-gray-500">
+                                            <img src={NothingFound} className="w-[20vw] h-auto"/>
                                             <div className="text-center font-montserratMedium">
                                                 {t('no_announcements_by_this_filters')}
                                             </div>
@@ -318,8 +320,9 @@ const MainPage: React.FC = () => {
                                         </div>
                                     ))
                                 ) : (
-                                    <div className="flex items-center justify-center my-[20%] w-full text-gray-500">
+                                    <div className="flex items-center justify-center my-[10%] w-full text-gray-500">
                                         <div className="text-center font-montserratMedium">
+                                            <img src={NothingFound} className="w-[20vw] h-auto"/>
                                             {t('no_announcements_by_this_filters')}
                                         </div>
                                     </div>

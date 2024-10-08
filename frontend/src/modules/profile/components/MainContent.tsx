@@ -4,6 +4,7 @@ import AnnouncementsPart from './AnnouncementsPart.tsx';
 import GatheringCard from '../../gathering/ui/GatheringCard';
 import { Link } from 'react-router-dom';
 import PetitionCard from "../../petitions/components/PetitionCard.tsx";
+import NothingFound from "../../../assets/images/NothingFound.png";
 
 interface MainContentProps {
 	activeSection: string;
@@ -45,8 +46,9 @@ const MainContent: React.FC<MainContentProps> = ({
 							requests={announcements}
 						/>
 						:
-						<div className="flex items-center justify-center my-[20%] w-full text-gray-500">
+						<div className="flex items-center justify-center my-[10%] w-full text-gray-500">
 							<div className="text-center font-montserratMedium">
+								<img src={NothingFound} className="w-[20vw] h-auto"/>
 								Ви ще не створили жодного оголошення
 							</div>
 						</div>
@@ -76,8 +78,9 @@ const MainContent: React.FC<MainContentProps> = ({
 								))
 							)
 							:
-							<div className="flex items-center justify-center my-[20%] w-full text-gray-500">
+							<div className="flex items-center justify-center my-[10%] xl:ml-[27vw] w-full text-gray-500">
 								<div className="text-center font-montserratMedium">
+									<img src={NothingFound} className="w-[20vw] h-auto"/>
 									Ви ще не створили жодного збору
 								</div>
 							</div>
@@ -104,8 +107,9 @@ const MainContent: React.FC<MainContentProps> = ({
 								))
 							)
 							:
-							<div className="flex items-center justify-center my-[20%] w-full text-gray-500">
+							<div className="flex items-center justify-center my-[10%] xl:ml-[27vw] w-full text-gray-500">
 								<div className="text-center font-montserratMedium">
+									<img src={NothingFound} className="w-[20vw] h-auto"/>
 									Ви ще не створили жодної петиції
 								</div>
 							</div>
@@ -133,8 +137,9 @@ const MainContent: React.FC<MainContentProps> = ({
 								))
 							)
 							:
-							<div className="flex items-center justify-center my-[20%] w-full text-gray-500">
+							<div className="flex items-center justify-center my-[10%] xl:ml-[27vw] w-full text-gray-500">
 								<div className="text-center font-montserratMedium">
+									<img src={NothingFound} className="w-[20vw] h-auto"/>
 									Ви ще не зберегли жодної петиції
 								</div>
 							</div>
@@ -166,8 +171,10 @@ const MainContent: React.FC<MainContentProps> = ({
 								))
 							)
 							:
-							<div className="flex items-center justify-center my-[20%] w-full text-gray-500">
-								<div className="text-center font-montserratMedium">
+							<div className="flex items-center justify-center my-[10%] w-full  xl:ml-[27vw] text-gray-500">
+								<div
+									className="text-center font-montserratMedium flex flex-col items-center justify-center">
+									<img src={NothingFound} className="w-[20vw] h-auto mb-4"/>
 									Ви ще не зберегли жодного збору
 								</div>
 							</div>
@@ -185,8 +192,9 @@ const MainContent: React.FC<MainContentProps> = ({
 							requests={likedAnnouncements}
 						/>
 						:
-						<div className="flex items-center justify-center my-[20%] w-full text-gray-500">
+						<div className="flex items-center justify-center my-[10%] w-full text-gray-500">
 							<div className="text-center font-montserratMedium">
+								<img src={NothingFound} className="w-[20vw] h-auto"/>
 								Ви ще не зберегли жодного оголошення
 							</div>
 						</div>
@@ -203,8 +211,9 @@ const MainContent: React.FC<MainContentProps> = ({
 							requests={completedAnnouncements}
 						/>
 						:
-						<div className="flex items-center justify-center my-[20%] w-full text-gray-500">
+						<div className="flex items-center justify-center my-[10%] w-full text-gray-500">
 							<div className="text-center font-montserratMedium">
+								<img src={NothingFound} className="w-[20vw] h-auto"/>
 								Ви ще не допомогли нікому за оголошенням
 							</div>
 						</div>

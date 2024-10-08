@@ -5,7 +5,6 @@ import WhyMeMainDesktop from '../../assets/images/WhyMeMainDesktop.png';
 import CountUp from "react-countup";
 import VectorBlue from '../../assets/images/VectorBlue.svg?react';
 import {useTranslation} from "react-i18next";
-import PlaceholderSquare from '../../assets/images/PlaceholderSquare.svg?react';
 import DonatNaZSU from '../../assets/images/DonatNaZSU.png';
 import GetHelp from '../../assets/images/GetHelp.png';
 import BecomeVolunteer from '../../assets/images/BecomeVolunteer.png';
@@ -18,6 +17,8 @@ import HelpIcon from '../../assets/images/HelpIcon.svg?react';
 import ComunityIcon from '../../assets/images/ComunityIcon.svg?react';
 import SupportIcon from '../../assets/images/SupportIcon.svg?react';
 import MainHeader from "../../modules/main-page/components/ui/MainHeader.tsx";
+import WhoAreWe from "../../assets/images/WhoAreWe.png";
+
 
 
 const AboutPage = () => {
@@ -31,7 +32,14 @@ const AboutPage = () => {
                     <h2 className="text-h2 font-montserratMedium uppercase text-center">{t('about_us')}</h2>
                     <div className="flex flex-col md:flex-row items-center mt-12 space-y-6 md:space-y-0">
                         <div className="w-full">
-                            <PlaceholderSquare className="w-full h-52"/>
+                            <div
+                                className="hidden xl:flex xl:order-1 md:flex md:order-1 xl:w-2/3 md:w-relative-1/2">
+                                <img
+                                    src={`${WhoAreWe}`}
+                                    className="xl:w-full  xl:h-auto md:w-relative-elg md:h-auto md:ml-[5vw] xl:mr-0 md:mr-relative-md"
+                                    alt="SVG Image"
+                                />
+                            </div>
                         </div>
                         <div className="text-md_body text-gray-700 font-montserratRegular md:ml-8">
                             <p>

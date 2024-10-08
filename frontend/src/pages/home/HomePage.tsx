@@ -46,6 +46,8 @@ import GatheringCard from "../../modules/gathering/ui/GatheringCard.tsx";
 import {loadGatherings} from "../../redux/gatheringsSlice.ts";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "../../redux/store.ts";
+import {Player} from "@lottiefiles/react-lottie-player";
+import loadingAnimation from "../../assets/animations/logoLoading.json";
 
 
 const calculatePercentage = (goal: number, raised: number) => {
@@ -66,6 +68,7 @@ const HomePage: React.FC = () => {
     const sortOrder = 'ASC';
     const { t } = useTranslation();
     const [reviews, setReviews] = useState<any[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     const dispatch = useDispatch<AppDispatch>();
 
@@ -75,32 +78,43 @@ const HomePage: React.FC = () => {
 
     // get 3 gatherings
     useEffect(() => {
-        const query = searchParams.get('query') || '';
-        const types = searchParams.getAll('typeEnding');
-        const moneyTo = parseFloat(searchParams.get('moneyTo') || 'NaN');
-        const moneyFrom = parseFloat(searchParams.get('moneyFrom') || 'NaN');
-        const urgencyParam = searchParams.get('isUrgent');
-        const urgency = urgencyParam === 'true' ? true : urgencyParam === 'false' ? false : undefined;
+        const loadData = async () => {
+            try {
+                const query = searchParams.get("query") || "";
+                const types = searchParams.getAll("typeEnding");
+                const moneyTo = parseFloat(searchParams.get("moneyTo") || "NaN");
+                const moneyFrom = parseFloat(searchParams.get("moneyFrom") || "NaN");
+                const urgencyParam = searchParams.get("isUrgent");
+                const urgency = urgencyParam === "true" ? true : urgencyParam === "false" ? false : undefined;
 
-        const params = {
-            query,
-            types,
-            limit,
-            offset,
-            moneyFrom,
-            moneyTo,
-            sortOrder,
-            urgency,
+                const params = {
+                    query,
+                    types,
+                    limit,
+                    offset,
+                    moneyFrom,
+                    moneyTo,
+                    sortOrder,
+                    urgency,
+                };
+
+                await dispatch(loadGatherings(params));
+                setIsLoading(false);
+            } catch (error) {
+                console.error("Error loading data:", error);
+                setIsLoading(false);
+            }
         };
 
-        dispatch(loadGatherings(params));
-    }, [dispatch, limit, offset, searchParams, sortOrder]);
+        loadData();
+    }, [dispatch, searchParams, limit, offset, sortOrder]);
 
 
     const fetchComments = async () => {
         try {
             const response = await api.get('/synara-comments');
-            setReviews(response.data); // Сохраняем комментарии в reviews
+            setReviews(response.data);
+            setIsLoading(false);
         } catch (error) {
             console.error('Error fetching comments:', error);
         }
@@ -108,6 +122,7 @@ const HomePage: React.FC = () => {
 
     useEffect(() => {
         fetchComments();
+        setIsLoading(false);
     }, []);
 
     const handleMouseEnter = (index: number) => {
@@ -198,6 +213,19 @@ const HomePage: React.FC = () => {
     }, [isPaused]);
 
     const isSmallScreen = useMediaQuery({ query: '(max-width: 1025px)' });
+
+    if (isLoading) {
+        return (
+            <div className="flex items-center justify-center h-screen">
+                <Player
+                    autoplay
+                    loop
+                    src={loadingAnimation}
+                    style={{ height: '200px', width: '200px' }}
+                />
+            </div>
+        );
+    }
 
     return (
         <div className="w-full relative">

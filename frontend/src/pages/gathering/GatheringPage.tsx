@@ -15,6 +15,7 @@ import {AppDispatch, RootState} from "../../redux/store.ts";
 import { useDispatch, useSelector } from 'react-redux';
 import {Player} from "@lottiefiles/react-lottie-player";
 import loadingAnimation from "../../assets/animations/logoLoading.json";
+import NothingFound from "../../assets/images/NothingFound.png";
 
 
 const calculatePercentage = (goal: number, raised: number) => {
@@ -171,11 +172,12 @@ const GatheringPage: React.FC = () => {
 							{/* Кнопка "Створити збір" (1/3 ширины) */}
 							<div className="w-3/12">
 
-									<Button hasBlue={true} className="px-4 text-relative-h5 w-full" onClick={handleCreateGathering}>
+								<Button hasBlue={true} className="px-4 text-relative-h5 w-full"
+										onClick={handleCreateGathering}>
                                     <span className="text-montserratMedium uppercase text-relative-h5">
                                         Створити збір
                                     </span>
-									</Button>
+								</Button>
 
 							</div>
 
@@ -249,15 +251,16 @@ const GatheringPage: React.FC = () => {
 										</Link>
 									))
 								) : (
-									<div className="flex items-center justify-center my-[20%] w-full text-gray-500">
-										<div className="text-center font-montserratMedium">
+									<div className="flex items-center justify-center my-[10%] w-full text-gray-500">
+										<div
+											className="text-center font-montserratMedium flex flex-col items-center justify-center">
+											<img src={NothingFound} className="w-[20vw] h-auto mb-4"/>
 											Наразі немає зборів за обраними фільтрами
 										</div>
 									</div>
 								)}
 							</div>
 						</div>
-
 					</div>
 
 
@@ -279,7 +282,7 @@ const GatheringPage: React.FC = () => {
 				/>
 				<Footer/>
 			</Wrapper>
-			{showForbiddenModal && <ModalForbidden onClose={() => setShowForbiddenModal(false)} />}
+			{showForbiddenModal && <ModalForbidden onClose={() => setShowForbiddenModal(false)}/>}
 		</>
 	);
 };
