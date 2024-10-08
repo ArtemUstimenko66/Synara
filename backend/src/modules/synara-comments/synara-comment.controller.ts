@@ -21,13 +21,13 @@ import { Request } from 'express';
 import { SynaraCommentUpdateDto } from './dto/synara-comment-update.dto';
 
 @Controller('api/synara-comments')
-@UseGuards(JwtAuthGuard)
 export class SynaraCommentController {
   constructor(private readonly serviceSynaraComment: SynaraCommentService) {}
 
   @ApiOperation({ summary: 'Create a new comment of Synara' })
   @ApiResponse({ status: 201, type: SynaraComment })
   @Post()
+  @UseGuards(JwtAuthGuard)
   @Roles(Role.Volunteer, Role.Victim, Role.Guest)
   create(
     @Body() createcommentDto: SynaraCommentCreateDto,
@@ -46,6 +46,7 @@ export class SynaraCommentController {
 
   @ApiOperation({ summary: 'Update comment of Synara' })
   @ApiResponse({ status: 200, type: SynaraComment })
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   update(
     @Param('id') id: number,
@@ -56,6 +57,7 @@ export class SynaraCommentController {
 
   @ApiOperation({ summary: 'Delete comment of Synara' })
   @ApiResponse({ status: 204 })
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   deleteComment(@Param('id') id: number): Promise<void> {
     return this.serviceSynaraComment.delete(id);

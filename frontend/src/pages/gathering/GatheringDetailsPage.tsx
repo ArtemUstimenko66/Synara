@@ -55,31 +55,7 @@ const GatheringDetailsPage = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const loadDetails = async () => {
-            if (id) {
-                const data = await fetchGatheringDetails(Number(id));
-                console.log(data);
-                setDetails(data);
-                setIsFavorite(data.is_favorite);
-                setLoading(false);
-            }
-        };
-        loadDetails();
-    }, [id]);
 
-    if (loading) {
-        return (
-            <div className="flex items-center justify-center h-screen">
-                <Player
-                    autoplay
-                    loop
-                    src={loadingAnimation}
-                    style={{ height: '200px', width: '200px' }}
-                />
-            </div>
-        );
-    }
 
     const [gatherings, setGatherings] = useState<any[]>([]);
     const [offset, setOffset] = useState(0);
@@ -122,6 +98,33 @@ const GatheringDetailsPage = () => {
     useEffect(() => {
         fetchFilteredGatherings();
     }, [searchParams]);
+
+
+    useEffect(() => {
+        const loadDetails = async () => {
+            if (id) {
+                const data = await fetchGatheringDetails(Number(id));
+                console.log(data);
+                setDetails(data);
+                setIsFavorite(data.is_favorite);
+                setLoading(false);
+            }
+        };
+        loadDetails();
+    }, [id]);
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center h-screen">
+                <Player
+                    autoplay
+                    loop
+                    src={loadingAnimation}
+                    style={{ height: '200px', width: '200px' }}
+                />
+            </div>
+        );
+    }
 
 
     const loadMoreGatherings = async () => {

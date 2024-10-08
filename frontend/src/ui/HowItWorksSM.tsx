@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Button } from "./Button.tsx";
 import {useTranslation} from "react-i18next";
-import Section1  from '../assets/images/section1.svg?react';
-import Section2  from '../assets/images/section2.svg?react';
-import Section3  from '../assets/images/section3.svg?react';
-import Section4  from '../assets/images/section4.svg?react';
+import Section1  from '../assets/images/section1.png';
+import Section2  from '../assets/images/section2.png';
+import Section3  from '../assets/images/section3.png';
+import Section4  from '../assets/images/section4.png';
 
 const HowItWorksSM = () => {
     const [activeStep, setActiveStep] = useState(0);
@@ -54,7 +54,7 @@ const HowItWorksSM = () => {
 
             {/* Рендеринг SVG компонента напрямую */}
             <div className="h-52 w-64 mb-10 max-w-sm">
-                {React.createElement(steps[activeStep].image, { className: 'h-full w-full' })}
+                <img src={steps[activeStep].image} alt="image" className='h-full w-full'/>
             </div>
 
             <h3 className="text-center text-blue-600 text-h5 font-kharkiv">{steps[activeStep].title}</h3>

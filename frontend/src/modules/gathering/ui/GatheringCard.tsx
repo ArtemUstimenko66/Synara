@@ -14,7 +14,7 @@ const GatheringCard: React.FC<DonationCardProps> = ({ title, description, goal, 
 	const { t } = useTranslation();
 
 	return (
-		<div className={`w-full h-[55vh] border-4 border-dark-blue rounded-3xl p-8 flex flex-col justify-between`}>
+		<div className={`w-full xl:h-[55vh] sm:h-[75vh] border-4 border-dark-blue rounded-3xl p-8 flex flex-col justify-between`}>
 			<div className="xl:mt-0 md:mt-4 sm:mt-0">
 				<h3 className={`xl:text-h4 md:text-relative-h3xl sm:text-relative-h1 font-kharkiv`}>{title}</h3>
 				<p className="xl:text-xs-ps md:text-relative-pxl sm:text-relative-h2 font-montserratRegular text-almost-black mt-4">
