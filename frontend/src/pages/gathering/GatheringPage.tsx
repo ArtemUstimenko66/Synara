@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {Player} from "@lottiefiles/react-lottie-player";
 import loadingAnimation from "../../assets/animations/logoLoading.json";
 import NothingFound from "../../assets/images/NothingFound.png";
+import {useTranslation} from "react-i18next";
 
 
 const calculatePercentage = (goal: number, raised: number) => {
@@ -33,7 +34,8 @@ const GatheringPage: React.FC = () => {
 
 	const { unp, birthDate , isAuthenticated} = useAuth();
 	const [showForbiddenModal, setShowForbiddenModal] = useState(false);
-	const navigate = useNavigate(); // навигация
+	const navigate = useNavigate();
+	const {t} = useTranslation();
 
 
 	const handleCreateGathering = () => {
@@ -193,7 +195,7 @@ const GatheringPage: React.FC = () => {
 							<div className="w-2/12">
 								<Button hasBlue={true} className="px-4 text-relative-h5 w-full"
 										onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-									<span className="text-montserratMedium text-relative-h5">Фільтрувати</span>
+									<span className="text-montserratMedium text-relative-h5">{t('filter')}</span>
 								</Button>
 							</div>
 
@@ -205,7 +207,7 @@ const GatheringPage: React.FC = () => {
 										className={` z-11 px-4 w-full text-relative-h5 flex items-center justify-center space-x-3 transition-all duration-0 ${isDropdownOpen ? 'rounded-b-none rounded-t-3xl' : 'rounded-3xl'}`}
 										onClick={toggleDropdown}
 									>
-										<span className="text-montserratMedium text-relative-h5">Сортувати за</span>
+										<span className="text-montserratMedium text-relative-h5">{t('sort_by')}</span>
 										<DownArrowIcon
 											className={`h-3 w-3 mt-1 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`}
 										/>
@@ -216,7 +218,7 @@ const GatheringPage: React.FC = () => {
 											className="w-full bg-white border-2 border-blue-500 rounded-b-3xl absolute left-0 top-full z-10 -mt-1">
 											<Button onClick={() => handleSort('ASC')}
 													className={`cursor-pointer py-2 px-2 border-b-2 border-blue-500 ${sortOrder === 'DESC' ? 'text-blue-500' : 'text-black'}`}>
-												Сортувати за зростанням
+												{t('sort_by_increasing')}
 											</Button>
 											<Button onClick={() => handleSort('DESC')}
 													className={`cursor-pointer py-2 px-10 ${sortOrder === 'ASC' ? 'text-blue-500' : 'text-black'}`}>

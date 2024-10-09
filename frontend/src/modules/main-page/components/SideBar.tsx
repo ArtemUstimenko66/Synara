@@ -11,6 +11,7 @@ import MenuCloseIcon from '../../../assets/images/icon-close-menu.svg?react';
 import {useTranslation} from "react-i18next";
 import {useMediaQuery} from "react-responsive";
 import {FeedbackSynaraModal} from "./ui/FeedbackSynaraModal.tsx";
+import {useAuth} from "../../../hooks/useAuth.ts";
 
 interface SideBarProps {
     isOpen: boolean;
@@ -25,7 +26,7 @@ export const SideBar: React.FC<SideBarProps> = ({ isOpen, onClose, isFilters, on
     const [isModalOpen, setIsModalOpen] = useState(false);
     const {t}= useTranslation();
     const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
-
+    const {role}=useAuth();
     // logout
     const handleLogout = async () => {
         try {
@@ -75,10 +76,21 @@ export const SideBar: React.FC<SideBarProps> = ({ isOpen, onClose, isFilters, on
 
                         {/* Nav items */}
                         <nav className="flex flex-col w-[90%] mx-5 space-y-3 text-lg flex-grow">
+                            {role === 'волонтер' ? (
+                                    <>
+                                <NavItem text="Оголошення" to="/main"/>
+                                <div className="xl:border-b xl:border-gray-300 xl:mt-[5vh] sm:mt-0"></div>
+                                    </>
+                                ) : (
+                                    <>
+                                <NavItem text="Пошук волонтера" to="/main"/>
+                                <div className="xl:border-b xl:border-gray-300 xl:mt-5 sm:mt-0"></div>
+                                    </>
+                                )}
                             {navItems.slice(0, isSmallScreen ? navItems.length : 7).map((item, index) => (
                                 <div key={`${item.to}-${index}`} className="flex flex-col">
-                                    <NavItem text={item.text} to={item.to} />
-                                    {index < navItems.length - 1  && (
+                                    <NavItem text={item.text} to={item.to}/>
+                                    {index < navItems.length - 1 && (
                                         <div className="xl:border-b xl:border-gray-300 xl:mt-5 sm:mt-0"></div>
                                     )}
                                 </div>
@@ -90,7 +102,8 @@ export const SideBar: React.FC<SideBarProps> = ({ isOpen, onClose, isFilters, on
                             <Button hasBlue={true} onClick={() => setIsModalOpen(true)}
                                     className="w-full xl:py-3 sm:py-2 md:text-pxl">{t('logoutUPPER')}</Button>
 
-                            <Button isFilled={true} onClick={() => setIsFeedbackOpen(true)} className="w-full text-black xl:py-3 sm:py-2 md:text-pxl">{t('leave_feedback')}</Button>
+                            <Button isFilled={true} onClick={() => setIsFeedbackOpen(true)}
+                                    className="w-full text-black xl:py-3 sm:py-2 md:text-pxl">{t('leave_feedback')}</Button>
 
                         </div>
 

@@ -268,5 +268,26 @@
   "cookie_policy": "Cookie policy",
   "priority": "Priority:",
   "gathered_money": "The amount of collected funds:",
-  "ending_date": "End date:"
+  "ending_date": "End date:",
+  "chatBtn": "CHAT",
+
+
+
+
+  "profile": "Profile",
+  "chat": "Chat",
+  "announcements": "Announcements",
+  "petitions": "Petitions",
+  "statistics": "Statistics",
+  "settings": "Settings",
+  "find_volunteer": "Find Volunteer",
+  "home": "Home",
+  "about_us": "About Us",
+  "gatherings": "Gatherings",
+  "maps": "Maps",
+  "how_it_works": "How it works",
+
+
+  "sort_by_increasing": "Sort by increasing"
+
 }

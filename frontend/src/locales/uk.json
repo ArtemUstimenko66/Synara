@@ -262,5 +262,23 @@
   "cookie_policy": "Політика використання cookies",
   "priority": "Пріоритетність:",
   "gathered_money": "Сума зібраних коштів:",
-  "ending_date": "Термін завершення:"
+  "ending_date": "Термін завершення:",
+  "chatBtn": "ЧАТ",
+
+
+  "profile": "Профіль",
+  "chat": "Чат",
+  "announcements": "Оголошення",
+  "petitions": "Петиції",
+  "statistics": "Статистика",
+  "settings": "Налаштування",
+  "find_volunteer": "Пошук волонтера",
+  "home": "Головна",
+  "about_us": "Про нас",
+  "gatherings": "Збори",
+  "maps": "Карти",
+  "how_it_works": "Як це працює",
+
+
+  "sort_by_increasing": "Сортувати за зростанням"
 }
