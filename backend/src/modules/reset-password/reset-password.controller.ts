@@ -3,7 +3,7 @@ import { ResetPasswordService } from './reset-password.service';
 import { ResetPasswordDto } from './dtos/reset-password.dto';
 import { Response } from 'express';
 
-@Controller('reset')
+@Controller('api/reset')
 export class ResetPasswordController {
   constructor(private readonly profileService: ResetPasswordService) {}
 

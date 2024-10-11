@@ -4,7 +4,7 @@ import { ConfirmIpnService } from './confirm-ipn.service';
 import { ConfirmIpnDto } from './dtos/confirm-ipn.dto';
 
 @ApiTags('Confirmation of ipn')
-@Controller('confirm-ipn')
+@Controller('api/confirm-ipn')
 export class ConfirmIpnController {
   constructor(private readonly ipnService: ConfirmIpnService) {}
 

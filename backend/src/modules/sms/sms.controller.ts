@@ -13,7 +13,7 @@ import { Response } from 'express';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Sms')
-@Controller('sms')
+@Controller('api/sms')
 export class SmsController {
   constructor(
     private smsService: SmsService,
