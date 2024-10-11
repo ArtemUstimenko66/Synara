@@ -7,7 +7,8 @@ import api from "../../modules/main-api/api.ts";
 
 import DonatNaZSU from '../../assets/images/DonatNaZSU.png';
 import BecomeVolunteer from '../../assets/images/BecomeVolunteer.png';
-import WhoAreWe from '../../assets/images/WhoAreWe.png';
+//import WhoAreWe from '../../assets/images/WhoAreWe.png';
+//import WhoAreWe from '../../assets/animations/WhoAreWe.gif';
 import GetHelp from '../../assets/images/GetHelp.png';
 import WhyUsImg from '../../assets/images/WhyUsImg.png';
 import WhyMeMainDesktop from '../../assets/images/WhyMeMainDesktop.png';
@@ -49,6 +50,7 @@ import {AppDispatch, RootState} from "../../redux/store.ts";
 import {Player} from "@lottiefiles/react-lottie-player";
 import loadingAnimation from "../../assets/animations/logoLoading.json";
 
+import { motion } from "framer-motion";
 
 const calculatePercentage = (goal: number, raised: number) => {
     return (raised / goal) * 100;
@@ -227,6 +229,18 @@ const HomePage: React.FC = () => {
         );
     }
 
+    const fadeInLeft = {
+        hidden: { opacity: 0, x: -100 },
+        visible: { opacity: 1, x: 0, transition: { duration: 0.6 } },
+        exit: { opacity: 0, x: -100, transition: { duration: 0.6 } },
+    };
+
+    const fadeInRight = {
+        hidden: { opacity: 0, x: 100 },
+        visible: { opacity: 1, x: 0, transition: { duration: 0.6 } },
+        exit: { opacity: 0, x: 100, transition: { duration: 0.6 } },
+    };
+
     return (
         <div className="w-full relative">
             <Wrapper>
@@ -260,8 +274,8 @@ const HomePage: React.FC = () => {
                         <div
                             className="hidden xl:flex xl:order-1 md:flex md:order-1 xl:w-1/2 md:w-relative-1/2">
                             <img
-                                src={`${WhoAreWe}`}
-                                className="xl:w-full xl:mt-[10.8vh] xl:h-auto md:w-relative-elg md:h-auto md:ml-[5vw] xl:mr-0 md:mr-relative-md"
+                                src="../../../public/gifs/WhoAreWe.gif"
+                                className="xl:w-full xl:mt-[10vh] xl:h-auto md:w-relative-elg md:h-auto md:ml-[5vw] xl:mr-0 md:mr-relative-md"
                                 alt="SVG Image"
                             />
                         </div>
@@ -274,7 +288,7 @@ const HomePage: React.FC = () => {
                                 {t('description_synara')}
                             </p>
                             <img
-                                src={`${WhoAreWe}`}
+                                src="../../../public/gifs/WhoAreWe.gif"
                                 className="xl:hidden md:hidden sm:w-[50%] sm:mx-auto"
                                 alt="SVG Image"
                             />
@@ -511,7 +525,13 @@ const HomePage: React.FC = () => {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 xl:ml-3 md:ml-6">
 
                                 {/* Card 1 */}
-                                <div className="flex flex-col md:flex-row items-start">
+                                <motion.div
+                                    className="flex flex-col md:flex-row items-start"
+                                    initial="hidden"
+                                    whileInView="visible"
+                                    variants={fadeInLeft}
+                                    viewport={{once: true}}
+                                >
                                     <div className="flex flex-row items-start xl:mt-20 md:mt-12">
                                         <div
                                             className="xl:text-h_num md:text-h_s_num text-center text-perfect-yellow font-bold font-montserratMedium xl:mr-8 md:mr-12">
@@ -524,7 +544,7 @@ const HomePage: React.FC = () => {
                                             </p>
                                         </div>
                                     </div>
-                                </div>
+                                </motion.div>
 
                                 <img
                                     src={`${Section1}`}
@@ -538,7 +558,13 @@ const HomePage: React.FC = () => {
                                     className="xl:mr-12 sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-auto xl:h-auto md:w-relative-xlg md:h-auto"
                                     alt="SVG Image"
                                 />
-                                <div className="flex flex-col md:flex-row items-start ">
+                                <motion.div
+                                    className="flex flex-col md:flex-row items-start"
+                                    initial="hidden"
+                                    whileInView="visible"
+                                    variants={fadeInRight}
+                                    viewport={{once: true}}
+                                >
                                     <div className="flex flex-row items-start xl:mt-20 md:mt-12 xl:ml-auto md:-ml-6">
                                         <div
                                             className="xl:text-h_num md:text-h_s_num text-center text-perfect-yellow font-bold font-montserratMedium mr-6">
@@ -551,10 +577,16 @@ const HomePage: React.FC = () => {
                                             </p>
                                         </div>
                                     </div>
-                                </div>
+                                </motion.div>
 
                                 {/* Card 3 */}
-                                <div className="flex flex-col md:flex-row items-start">
+                                <motion.div
+                                    className="flex flex-col md:flex-row items-start"
+                                    initial="hidden"
+                                    whileInView="visible"
+                                    variants={fadeInLeft}
+                                    viewport={{once: true}}
+                                >
                                     <div className="flex flex-row items-start xl:mt-20 md:mt-12">
                                         <div
                                             className="xl:text-h_num md:text-h_s_num text-center text-perfect-yellow font-bold font-montserratMedium mr-8 md:mr-12">
@@ -567,7 +599,8 @@ const HomePage: React.FC = () => {
                                             </p>
                                         </div>
                                     </div>
-                                </div>
+                                </motion.div>
+
                                 <img
                                     src={`${Section3}`}
                                     className="xl:mr-12 sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-auto xl:h-auto md:w-relative-xlg md:h-auto"
@@ -575,14 +608,18 @@ const HomePage: React.FC = () => {
                                 />
 
                                 {/* Card 4 */}
-
                                 <img
                                     src={`${Section4}`}
                                     className="xl:mr-12 sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-auto xl:h-auto md:w-relative-xlg md:h-auto"
                                     alt="SVG Image"
                                 />
-
-                                <div className="flex flex-col md:flex-row items-start">
+                                <motion.div
+                                    className="flex flex-col md:flex-row items-start"
+                                    initial="hidden"
+                                    whileInView="visible"
+                                    variants={fadeInRight}
+                                    viewport={{once: true}}
+                                >
                                     <div className="flex flex-row items-start xl:mt-20 md:mt-12 xl:ml-auto md:-ml-6">
                                         <div
                                             className="xl:text-h_num md:text-h_s_num text-center text-perfect-yellow font-bold font-montserratMedium mr-6">
@@ -595,7 +632,7 @@ const HomePage: React.FC = () => {
                                             </p>
                                         </div>
                                     </div>
-                                </div>
+                                </motion.div>
 
                             </div>
                             <Link to='/how-it-works'>
@@ -614,13 +651,16 @@ const HomePage: React.FC = () => {
                             <div className="flex-1 flex flex-col xl:ml-6 md:ml-6">
                                 <div className="flex flex-row sm:space-x-16 xl:space-x-12 md:space-x-6">
                                     <div
-                                        className="xl:text-h1 sm:text-h3 md:text-relative-h1 text-md_h1 font-bold font-montserratMedium"> <CountUp end={10} />k<span
+                                        className="xl:text-h1 sm:text-h3 md:text-relative-h1 text-md_h1 font-bold font-montserratMedium">
+                                        <CountUp end={10}/>k<span
                                         className="text-dark-blue font-bold">+</span></div>
                                     <div
-                                        className="xl:text-h1 sm:text-h3 md:text-relative-h1 text-md_h1 font-bold font-montserratMedium"><CountUp end={4} />k<span
+                                        className="xl:text-h1 sm:text-h3 md:text-relative-h1 text-md_h1 font-bold font-montserratMedium">
+                                        <CountUp end={4}/>k<span
                                         className="text-dark-blue font-bold">+</span></div>
                                     <div
-                                        className="xl:text-h1 sm:text-h3 md:text-relative-h1 text-md_h1 font-bold font-montserratMedium"><CountUp end={20} />k<span
+                                        className="xl:text-h1 sm:text-h3 md:text-relative-h1 text-md_h1 font-bold font-montserratMedium">
+                                        <CountUp end={20}/>k<span
                                         className="text-dark-blue font-bold">+</span></div>
                                 </div>
                                 <div
