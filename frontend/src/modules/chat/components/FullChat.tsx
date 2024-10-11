@@ -14,7 +14,15 @@ import {
     fetchChats,
     fetchMessages,
     handleSendFile,
+    addLinkToChat,
+    getLink,
+    deleteLink
 } from "../api/chatService.ts";
+
+import { createRoot } from "react-dom/client";
+
+
+import Swal from 'sweetalert2'
 
 import {debounce} from "lodash";
 
@@ -41,8 +49,10 @@ import {handleScroll} from "../handlers/handleScroll.ts";
 import {handleArchiveChat} from "../handlers/handleArchiveChat.ts";
 import {useMediaQuery} from "react-responsive";
 import MainHeader from "../../main-page/components/ui/MainHeader.tsx";
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {FeedbackModal} from "./ui/FeedbackModal.tsx";
+import CallVolunteer from "./CallVolunteer.tsx";
+import CallVictim from "./CallVictim.tsx";
 
 
 
@@ -66,9 +76,60 @@ const FullChat: React.FC = () => {
     const take = 50;
 
     const socket = useWebSocket();
-    const { userId, role } = useAuth();
+    const { userId, role, email } = useAuth();
+
 
     const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
+
+    const generateRoomName = () => `volunteer-${email?.split('@')[0]}-${Math.random() * 100}-${Date.now()}`;
+
+    const handleClickPhone = () => {
+        const container = document.createElement('div');
+        // container.id = `volunteer-${email?.split('@')[0]}`;
+        const root = createRoot(container);
+
+        Swal.fire({
+            html: container,
+            showConfirmButton: true,
+            allowOutsideClick: true,
+            allowEscapeKey: true,
+            willOpen: async() => {
+                console.log(role);
+                if (role == 'volunteer') {
+                    const roomName = generateRoomName();
+                    await addLinkToChat(selectedChatId, roomName);
+                    root.render(
+                        <CallVolunteer roomName={roomName} email={email}/>
+                    )
+                }
+                else {
+                    const roomName = await getLink(selectedChatId);
+                    console.log("roomName:", roomName);
+                    if(!roomName){
+                        root.render(
+                            "Волонтер ще не готовий до дзвінка"
+                        )
+                    }
+                    else{
+                        root.render(
+                            <CallVictim roomName={roomName} email={email || ''}/>
+                        )
+                    }
+                }
+                // @ts-ignore
+                Swal.getConfirmButton().addEventListener('click', async() => {
+                    await deleteLink(selectedChatId);
+                    root.unmount()
+                });
+            },
+            willClose: async() => {
+                // const root = createRoot(container);
+                await deleteLink(selectedChatId);
+                root.unmount();
+            }
+        });
+    };
+
 
     // debounced load chats function
     const loadChats = useCallback(debounce(async (filter: 'active' | 'archived' | 'blocked', username?: string) => {
@@ -506,7 +567,8 @@ const FullChat: React.FC = () => {
                                      className="xl:w-12 xl:h-12 md:w-20 md:h-20 rounded-full mr-4 font-montserratRegular hidden xl:flex"/>
                                 <h3 className=" font-montserratMedium font-medium xl:text-xs-pxl ">{selectedChat.name}</h3>
                                 <div className="ml-auto flex xl:space-x-2 space-x-1">
-                                    <Button className="bg-transparent xl:p-2 px-0"><PhoneIcon
+                                    <Button onClick={handleClickPhone}
+                                            className="bg-transparent xl:p-2 px-0"><PhoneIcon
                                         className="h-6 w-6 sm:h-7 sm:w-7 pl-2"/></Button>
                                     <Button className="bg-transparent xl:p-2 px-0"><CameraIcon
                                         className="h-6 w-6  sm:h-7 sm:w-7 pl-2"/></Button>
@@ -520,10 +582,12 @@ const FullChat: React.FC = () => {
                                             <div
                                                 className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg z-10">
                                                 <ul className="py-2">
-                                                    <li className="flex items-start justify-start px-4 py-4 cursor-pointer hover:bg-gray-100">
-                                                        <ProfileImg className="xl:h-6 xl:w-6 mr-3"/>
-                                                        <span>Подивитися профіль</span>
-                                                    </li>
+                                                    <Link to={`/profile-volunteer/${selectedChat.memberId}`}>
+                                                        <li className="flex items-start justify-start px-4 py-4 cursor-pointer hover:bg-gray-100">
+                                                            <ProfileImg className="xl:h-6 xl:w-6 mr-3"/>
+                                                            <span>Подивитися профіль</span>
+                                                        </li>
+                                                    </Link>
                                                     {role == "victim" ?
                                                         <>
                                                             <li

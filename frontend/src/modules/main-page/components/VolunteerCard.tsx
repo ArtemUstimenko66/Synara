@@ -6,6 +6,7 @@ import Star from '../assets/Star.svg?react';
 import {Button} from "../../../ui/Button.tsx";
 import {getHelpTypeInUkrainianEngToUkr} from "../../../data/helpTypesMap.ts";
 import {getDayOfWeekInUkrainian} from "../../../data/dayOfWeekMap.ts";
+import {useNavigate} from "react-router-dom";
 
 const formatTime = (time: string): string => {
     return time.length <= 2 ? `${time}:00` : time;
@@ -13,6 +14,7 @@ const formatTime = (time: string): string => {
 
 type VolunteerCardProps = {
     key: number;
+    id: number;
     name: string;
     rating: number;
     supports: string[];
@@ -24,7 +26,12 @@ type VolunteerCardProps = {
     avatar: string;
 };
 
-const VolunteerCard: React.FC<VolunteerCardProps> = ({ name, rating, supports, description, startWorkingDay, endWorkingDay, startTime, endTime, avatar }) => {
+const VolunteerCard: React.FC<VolunteerCardProps> = ({ id, name, rating, supports, description, startWorkingDay, endWorkingDay, startTime, endTime, avatar }) => {
+
+    const navigate = useNavigate();
+    const handleNavigateToProfile = ()=> {
+        navigate(`/profile-volunteer/${id}`)
+    }
     return (
         <div className="bg-perfect-gray w-full rounded-3xl flex flex-col h-full">
             <div className="flex items-center justify-between xl:px-10 sm:px-5 py-4 mb-2 mt-4">
@@ -49,14 +56,13 @@ const VolunteerCard: React.FC<VolunteerCardProps> = ({ name, rating, supports, d
                 <div className="flex items-center">
                     <HelpingHand className="h-8 w-8"/>
                     <p className="text-pl font-montserratMedium ml-2">
-                        {supports
+                        {supports ? supports
                             .map((typeSupport, index) => {
                                 const translatedType = getHelpTypeInUkrainianEngToUkr(typeSupport);
                                 return index === 0 ? translatedType : translatedType.toLowerCase();
                             })
-                            .join(', ')}
+                            .join(', ') : null}
                     </p>
-
                 </div>
             </div>
 
@@ -84,6 +90,7 @@ const VolunteerCard: React.FC<VolunteerCardProps> = ({ name, rating, supports, d
                 <Button
                     isFilled={true}
                     className="uppercase px-4 py-2 rounded-full xl:text-relative-p sm:text-relative-pxl bg-perfect-yellow"
+                    onClick={handleNavigateToProfile}
                 >
                     ПЕРЕГЛЯНУТИ ПРОФІЛЬ
                 </Button>

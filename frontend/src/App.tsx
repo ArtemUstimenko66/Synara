@@ -23,6 +23,11 @@ import PetitionPage from "./pages/petitions/PetitionPage.tsx";
 import CreatePetitionPage from "./pages/petitions/CreatePetitionPage.tsx";
 import PetitionDetailsPage from "./pages/petitions/PetitionDetailsPage.tsx";
 import AboutPage from "./pages/about-us/AboutPage.tsx";
+import VolunteerProfilePage from "./pages/profile/VolunteerProfilePage.tsx";
+import HowItWorksPage from "./pages/how-it-works/HowItWorksPage.tsx";
+import CookiePolicyPage from "./pages/cookie-policy/CookiePolicyPage.tsx";
+import MapsAlarm from "./pages/maps/MapsAlarm.tsx";
+import Maps from "./pages/maps/Maps.tsx";
 
 const App: React.FC = () => {
     return (
@@ -39,6 +44,7 @@ const App: React.FC = () => {
 
             {/* profile */}
             <Route path="/profile" element={<PrivateRoute element={<ProfilePage />} />} />
+            <Route path="/profile-volunteer/:id" element={<PrivateRoute element={<VolunteerProfilePage />} />} />
 
             {/* main */}
             <Route path="/main" element={<PrivateRoute element={<WebSocketProvider><MainPage /></WebSocketProvider>} />} />
@@ -49,6 +55,9 @@ const App: React.FC = () => {
             <Route path="/chat" element={<PrivateRoute element={<WebSocketProvider> <FullChat /> </WebSocketProvider>} />} />
             <Route path="/chat/:chatId" element={<PrivateRoute element={<WebSocketProvider> <FullChat /> </WebSocketProvider>} />} />
 
+            {/* maps */}
+            <Route path="/map-alert" element={<MapsAlarm />} />
+            <Route path="/map-help" element={<Maps />} />
 
             {/* gatherings */}
             <Route path="/gatherings" element={<GatheringPage />} />
@@ -62,6 +71,12 @@ const App: React.FC = () => {
 
             {/* question */}
             <Route path="/faq" element={<FAQPage />} />
+
+            {/* how it works */}
+            <Route path="/how-it-works" element={<HowItWorksPage />} />
+
+            {/* cookie policy */}
+            <Route path="/cookie-policy" element={<CookiePolicyPage />} />
 
             {/* about */}
             <Route path="/about" element={<AboutPage />} />

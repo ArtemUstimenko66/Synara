@@ -3,18 +3,20 @@ import { useSwipeable } from 'react-swipeable';
 import { useMediaQuery } from 'react-responsive';
 
 import CountUp from 'react-countup';
-import PlaceholderHorizontal from '../../assets/images/PlaceholderHorizontal.svg?react';
-import PlaceholderSquare from '../../assets/images/PlaceholderSquare.svg?react';
+import api from "../../modules/main-api/api.ts";
+
+import DonatNaZSU from '../../assets/images/DonatNaZSU.png';
+import BecomeVolunteer from '../../assets/images/BecomeVolunteer.png';
+import WhoAreWe from '../../assets/images/WhoAreWe.png';
+import GetHelp from '../../assets/images/GetHelp.png';
+import WhyUsImg from '../../assets/images/WhyUsImg.png';
+import WhyMeMainDesktop from '../../assets/images/WhyMeMainDesktop.png';
+import Section1 from '../../assets/images/section1.png';
+import Section2 from '../../assets/images/section2.png';
+import Section3 from '../../assets/images/section3.png';
+import Section4 from '../../assets/images/section4.png';
 
 
-import DonatNaZSU from '../../assets/images/DonatNaZSU.svg';
-import GetHelp from '../../assets/images/GetHelp.svg';
-import WhyUsImg from '../../assets/images/WhyUsImg.svg';
-import WhyMeMainDesktop from '../../assets/images/WhyMeMainDesktop.svg';
-import Section1 from '../../assets/images/section1.svg';
-import Section2 from '../../assets/images/section2.svg';
-import Section3 from '../../assets/images/section3.svg';
-import Section4 from '../../assets/images/section4.svg';
 import MobileLogo from '../../assets/images/mobileLogo.svg';
 
 import VECTOR_1_1 from '../../assets/images/vector_1_1.svg?react';
@@ -31,115 +33,26 @@ import FrameYouTube from '../../assets/images/FrameYouTube.svg?react';
 import GooglePlayImg from '../../assets/images/GooglePlayImg.svg?react';
 import AppStoreImg from '../../assets/images/AppStoreImg.svg?react';
 
-
 import Header from '../../components/Header.tsx';
 import {Button} from "../../ui/Button.tsx";
 import Footer from "../../components/Footer.tsx";
-import DonationCard from "../../components/DonationCard.tsx";
 import DateRangeCalendarWithButton from "../../ui/Calendar.tsx";
 import Review from "../../components/Review.tsx";
 import Wrapper from "../../ui/Wrapper.tsx";
 import HowItWorksSM from "../../ui/HowItWorksSM.tsx";
 import {useTranslation} from "react-i18next";
+import {Link, useSearchParams} from "react-router-dom";
+import GatheringCard from "../../modules/gathering/ui/GatheringCard.tsx";
+import {loadGatherings} from "../../redux/gatheringsSlice.ts";
+import {useDispatch, useSelector} from "react-redux";
+import {AppDispatch, RootState} from "../../redux/store.ts";
+import {Player} from "@lottiefiles/react-lottie-player";
+import loadingAnimation from "../../assets/animations/logoLoading.json";
 
-
-const reviews = [
-    {
-        comment: 'Я отримала неймовірну психічну підтримку завдяки цій організації! Вони допомогли мені подолати найважчі моменти в моєму житті. Фахівці дуже уважні, і я відчувала себе дійсно почутою. Дуже рекомендую всім, хто потребує допомоги!',
-        name: 'Оксана Коваленко',
-        date: '02.03.2024',
-        avatar: 'https://randomuser.me/api/portraits/women/1.jpg'
-    },
-    {
-        comment: 'Ця організація надала мені гуманітарну допомогу в той момент, коли я цього найбільше потребував. Завдяки їхній підтримці моя родина змогла пережити важкі часи. Дуже вдячний за їхню роботу!',
-        name: 'Михайло Бойко',
-        date: '15.02.2024',
-        avatar: 'https://randomuser.me/api/portraits/men/2.jpg'
-    },
-    {
-        comment: 'Матеріальна допомога, яку я отримала, була життєво необхідною для мене та моїх дітей. Ця організація дійсно дбає про людей і робить все можливе, щоб підтримати тих, хто цього потребує. Дуже рекомендую!',
-        name: 'Софія Левченко',
-        date: '28.01.2024',
-        avatar: 'https://randomuser.me/api/portraits/women/3.jpg'
-    },
-    {
-        comment: 'Інформаційна підтримка, яку надає ця організація, допомогла мені зрозуміти, як отримати допомогу, на яку я маю право. Завдяки їхнім консультаціям я змогла отримати необхідні послуги.',
-        name: 'Володимир Кравченко',
-        date: '05.02.2024',
-        avatar: 'https://randomuser.me/api/portraits/men/4.jpg'
-    },
-    {
-        comment: 'Ця організація зробила більше, ніж я міг очікувати. Вони надали нам їжу, одяг і найнеобхідніше, коли ми опинилися в скрутному становищі. Вдячний за їхню доброту і підтримку!',
-        name: 'Олександр Тарасенко',
-        date: '12.02.2024',
-        avatar: 'https://randomuser.me/api/portraits/men/5.jpg'
-    },
-    {
-        comment: 'Надзвичайно вдячна за психологічну допомогу, яку я отримала тут. Фахівці допомогли мені знайти внутрішні сили, щоб продовжувати боротися. Це змінило моє життя на краще!',
-        name: 'Олена Шевченко',
-        date: '20.02.2024',
-        avatar: 'https://randomuser.me/api/portraits/women/6.jpg'
-    },
-    {
-        comment: 'Отримав матеріальну допомогу для моєї родини, коли ми залишилися без засобів до існування. Ця допомога була дуже своєчасною і значною. Велике спасибі за вашу підтримку!',
-        name: 'Ігор Паламар',
-        date: '25.02.2024',
-        avatar: 'https://randomuser.me/api/portraits/men/7.jpg'
-    },
-    {
-        comment: 'Організація надає безцінну інформаційну підтримку. Завдяки їхнім порадникам, я зміг знайти потрібні контакти та ресурси для моєї ситуації. Дуже задоволений їхньою роботою!',
-        name: 'Людмила Сорока',
-        date: '05.03.2024',
-        avatar: 'https://randomuser.me/api/portraits/women/8.jpg'
-    },
-];
 
 const calculatePercentage = (goal: number, raised: number) => {
     return (raised / goal) * 100;
 };
-
-const goal1 = 100000;
-const raised1 = 65000;
-const percentage1 = calculatePercentage(goal1, raised1);
-
-const goal2 = 72000;
-const raised2 = 21600;
-const percentage2 = calculatePercentage(goal2, raised2);
-
-const goal3 = 378000;
-const raised3 = 181440;
-const percentage3 = calculatePercentage(goal3, raised3);
-
-const donationCard=[
-    {
-        title:"Збір на авто для 36 бригади",
-        description:"Допоможіть забезпечити 36 бригаду надійним транспортом для швидкого пересування, евакуації поранених та доставки боєприпасів.",
-        goal: goal1,
-        raised:raised1,
-        percentage:percentage1
-    },
-    {
-        title:"Зимовий одяг для ВПО",
-        description:"Допоможіть внутрішньо переміщеним особам пережити зиму в теплі.Кожна ваша пожертва - це крок до комфорту та гідності.",
-        goal: goal2,
-        raised:raised2,
-        percentage:percentage2
-    },
-    {
-        title:"Протези для поранених",
-        description:"Наші захисники заслуговують на найкраще. Допоможіть їм отримати сучасні протези та повернутися до активного життя.",
-        goal: goal3,
-        raised:raised3,
-        percentage:percentage3
-    },
-    {
-        title:"Транспорт для медичної допомоги",
-        description:"Ваша допомога потрібна для забезпечення медичної бригади новим транспортом для швидкої евакуації поранених і доставки медичних засобів.",
-        goal: goal3,
-        raised:raised3,
-        percentage:percentage3
-    }
-];
 
 
 const HomePage: React.FC = () => {
@@ -149,37 +62,95 @@ const HomePage: React.FC = () => {
     const [hoveredIndexDonation, setHoveredIndexDonation] = useState<number | null>(null);
     const scrollingContainerRef = useRef<HTMLDivElement>(null);
     const scrollingContainerRefDonation = useRef<HTMLDivElement>(null);
-
-
+    const [searchParams, ] = useSearchParams();
+    const limit = 3;
+    const offset = 0;
+    const sortOrder = 'ASC';
     const { t } = useTranslation();
+    const [reviews, setReviews] = useState<any[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
 
+    const dispatch = useDispatch<AppDispatch>();
+
+    const { gatherings = [] } = useSelector(
+        (state: RootState) => state.gatherings || {}
+    );
+
+    // get 3 gatherings
+    useEffect(() => {
+        const loadData = async () => {
+            try {
+                const query = searchParams.get("query") || "";
+                const types = searchParams.getAll("typeEnding");
+                const moneyTo = parseFloat(searchParams.get("moneyTo") || "NaN");
+                const moneyFrom = parseFloat(searchParams.get("moneyFrom") || "NaN");
+                const urgencyParam = searchParams.get("isUrgent");
+                const urgency = urgencyParam === "true" ? true : urgencyParam === "false" ? false : undefined;
+
+                const params = {
+                    query,
+                    types,
+                    limit,
+                    offset,
+                    moneyFrom,
+                    moneyTo,
+                    sortOrder,
+                    urgency,
+                };
+
+                await dispatch(loadGatherings(params));
+                setIsLoading(false);
+            } catch (error) {
+                console.error("Error loading data:", error);
+                setIsLoading(false);
+            }
+        };
+
+        loadData();
+    }, [dispatch, searchParams, limit, offset, sortOrder]);
+
+
+    const fetchComments = async () => {
+        try {
+            const response = await api.get('/synara-comments');
+            setReviews(response.data);
+            setIsLoading(false);
+        } catch (error) {
+            console.error('Error fetching comments:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchComments();
+        setIsLoading(false);
+    }, []);
 
     const handleMouseEnter = (index: number) => {
         setIsPaused(true);
         setHoveredIndex(index);
-        console.log(`Mouse entered index ${index}`);
+        //console.log(`Mouse entered index ${index}`);
     };
 
     const handleMouseEnterDonation = (index: number) => {
         setIsPausedDonation(true);
         setHoveredIndexDonation(index);
-        console.log(`Mouse entered index ${index}`);
+        //console.log(`Mouse entered index ${index}`);
     };
 
     const handleMouseLeave = () => {
         setIsPaused(false);
         setHoveredIndex(null);
-        console.log('Mouse left');
+        //console.log('Mouse left');
     };
 
     const handleMouseLeaveDonation = () => {
         setIsPausedDonation(false);
         setHoveredIndexDonation(null);
-        console.log('Mouse left');
+        //console.log('Mouse left');
     };
 
     const handleSwipe = (direction: 'left' | 'right') => {
-        console.log(`Swiped ${direction}`);
+        //console.log(`Swiped ${direction}`);
         if (scrollingContainerRef.current && isSmallScreen) {
             const scrollAmount = scrollingContainerRef.current.clientWidth;
             if (direction === 'left') {
@@ -198,7 +169,7 @@ const HomePage: React.FC = () => {
     };
 
     const handleSwipeDonation = (direction: 'left' | 'right') => {
-        console.log(`Swiped ${direction}`);
+        //console.log(`Swiped ${direction}`);
         if (scrollingContainerRefDonation.current) {
             const scrollAmount = scrollingContainerRefDonation.current.clientWidth;
             if (direction === 'left') {
@@ -243,6 +214,19 @@ const HomePage: React.FC = () => {
 
     const isSmallScreen = useMediaQuery({ query: '(max-width: 1025px)' });
 
+    if (isLoading) {
+        return (
+            <div className="flex items-center justify-center h-screen">
+                <Player
+                    autoplay
+                    loop
+                    src={loadingAnimation}
+                    style={{ height: '200px', width: '200px' }}
+                />
+            </div>
+        );
+    }
+
     return (
         <div className="w-full relative">
             <Wrapper>
@@ -263,8 +247,10 @@ const HomePage: React.FC = () => {
                                 {t('under_hope_on_wings_returns')}
 
                             </p>
-                            <Button className="sm:ml-8 xl:ml-0 md:ml-0 md:mt-0 select-none sm:mt-6 xl:mt-0"
-                                    isFilled={true}>{t('joinUPPER')}</Button>
+                            <Link to='/login'>
+                                <Button className="sm:ml-8 xl:ml-0 md:ml-0 md:mt-0 select-none sm:mt-6 xl:mt-0"
+                                        isFilled={true}>{t('joinUPPER')}</Button>
+                            </Link>
                         </div>
                     </section>
 
@@ -273,8 +259,11 @@ const HomePage: React.FC = () => {
                         className='w-full flex justify-center select-none sm:mt-[70vh] md:mt-[20vh] bg-transparent  flex-col xl:flex-row md:flex-row xl:mt-[20vw]  '>
                         <div
                             className="hidden xl:flex xl:order-1 md:flex md:order-1 xl:w-1/2 md:w-relative-1/2">
-                            <PlaceholderHorizontal
-                                className="xl:w-96 xl:h-auto md:w-relative-elg md:h-auto md:ml-[5vw] xl:mr-0 md:mr-relative-md"/>
+                            <img
+                                src={`${WhoAreWe}`}
+                                className="xl:w-full xl:mt-[10.8vh] xl:h-auto md:w-relative-elg md:h-auto md:ml-[5vw] xl:mr-0 md:mr-relative-md"
+                                alt="SVG Image"
+                            />
                         </div>
                         <div
                             className="relative text-center order-2 xl:order-2 md:order-2 xl:text-left md:text-left xl:ml-24 xl:w-11/12">
@@ -284,8 +273,15 @@ const HomePage: React.FC = () => {
                             <p className='text-almost-white sm:text-left sm:m-4 md:m-0 xl:m-0 sm:text-xs-ps font-montserratRegular xl:text-pl md:text-relative-pxl xl:mt-1 xl:mb-4 md:mb-relative-sm whitespace-pre-line md:whitespace-pre-line'>
                                 {t('description_synara')}
                             </p>
-                            <PlaceholderHorizontal className="xl:hidden md:hidden sm:w-[80%] sm:mx-auto"/>
-                            <Button className="sm:hidden xl:flex md:flex" hasBorder={true}>{t('read_moreUPPER')}</Button>
+                            <img
+                                src={`${WhoAreWe}`}
+                                className="xl:hidden md:hidden sm:w-[50%] sm:mx-auto"
+                                alt="SVG Image"
+                            />
+                            <Link to='/about'>
+                                <Button className="sm:hidden xl:flex md:flex"
+                                    hasBorder={true}>{t('read_moreUPPER')}</Button>
+                            </Link>
                         </div>
                     </section>
 
@@ -295,35 +291,38 @@ const HomePage: React.FC = () => {
                         <div
                             className="sm:hidden md:block xl:block sm:space-y-[2vh] xl:space-y-0 md:justify-center xl:ml-0 md:ml-[23vw] grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-6 xl:flex xl:flex-row xl:gap-16 justify-center items-center">
 
-                            {/* Card 1 */}
-                            <DonationCard
-                                title="Збір на авто для 36 бригади"
-                                description="Допоможіть забезпечити 36 бригаду надійним транспортом для швидкого пересування, евакуації поранених та доставки боєприпасів."
-                                goal={goal1}
-                                raised={raised1}
-                                percentage={percentage1}
-                                className="w-fixed-width"
-                            />
+                            <div className="flex flex-col md:flex-row">
+                                <div className="w-full flex justify-between">
+                                    <div className="w-full mt-4 ml-4 flex flex-wrap justify-start">
+                                        {gatherings.length > 0 ? (
+                                            gatherings.map((gathering, index) => (
+                                                <Link to={`/gathering/${gathering.id}`} key={index}
+                                                        className="w-full md:w-[48%] xl:w-[32%] mr-[1vw] p-2 mt-4">
+                                                    <GatheringCard
+                                                        id={gathering.id}
+                                                        title={gathering.name}
+                                                        description={gathering.description}
+                                                        goal={parseFloat(gathering.goal)}
+                                                        raised={parseFloat(gathering.collected)}
+                                                        percentage={calculatePercentage(
+                                                            parseFloat(gathering.goal),
+                                                            parseFloat(gathering.collected)
+                                                        )}
+                                                    />
+                                                </Link>
+                                            ))
+                                        ) : (
+                                            <div
+                                                className="flex items-center justify-center my-[20%] w-full text-gray-500">
+                                                <div className="text-center font-montserratMedium">
+                                                    Наразі немає зборів за обраними фільтрами
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
 
-                            {/* Card 2 */}
-                            <DonationCard
-                                title={`Зимовий одяг для ВПО`}
-                                description="Допоможіть внутрішньо переміщеним особам пережити зиму в теплі.Кожна ваша пожертва - це крок до комфорту та гідності."
-                                goal={goal2}
-                                raised={raised2}
-                                percentage={percentage2}
-                                className="w-fixed-width"
-                            />
-
-                            {/* Card 3 */}
-                            <DonationCard
-                                title="Протези для поранених"
-                                description="Наші захисники заслуговують на найкраще. Допоможіть їм отримати сучасні протези та повернутися до активного життя."
-                                goal={goal3}
-                                raised={raised3}
-                                percentage={percentage3}
-                                className="w-fixed-width"
-                            />
+                            </div>
 
                         </div>
                         <div
@@ -397,34 +396,46 @@ const HomePage: React.FC = () => {
                             </style>
                             <div className="scrolling-wrapper">
                                 <div className="scrolling-container py-10" ref={scrollingContainerRefDonation}>
-                                    {donationCard.map((donation, index) => (
+                                    {gatherings.length > 0 ? (
+                                        gatherings.map((gathering, index) => (
+                                            <div
+                                                key={index}
+                                                className={`review-item fixed-height ${hoveredIndexDonation === index ? 'hovered' : ''}`}
+                                                onMouseEnter={() => handleMouseEnterDonation(index)}
+                                                onMouseLeave={() => handleMouseLeaveDonation()}
+                                            >
+                                                <div className="mx-auto max-w-md">
+                                                    <GatheringCard
+                                                        id={gathering.id}
+                                                        title={gathering.name}
+                                                        description={gathering.description}
+                                                        goal={parseFloat(gathering.goal)}
+                                                        raised={parseFloat(gathering.collected)}
+                                                        percentage={calculatePercentage(
+                                                            parseFloat(gathering.goal),
+                                                            parseFloat(gathering.collected)
+                                                        )}
+                                                    />
+                                                </div>
+                                            </div>
+                                        ))
+                                    ) : (
                                         <div
-                                            key={index}
-                                            className={`review-item fixed-height ${hoveredIndexDonation === index ? 'hovered' : ''}`}
-                                            onMouseEnter={() => handleMouseEnterDonation(index)}
-                                            onMouseLeave={() => handleMouseLeaveDonation()}
-                                        >
-                                            <div className="mx-auto max-w-md">
-                                                <DonationCard
-                                                    title={donation.title}
-                                                    description={donation.description}
-                                                    goal={donation.goal}
-                                                    raised={donation.raised}
-                                                    percentage={donation.percentage}
-                                                    className="w-fixed-width"
-                                                />
+                                            className="flex items-center justify-center my-[20%] w-full text-gray-500">
+                                            <div className="text-center font-montserratMedium">
+                                                Наразі немає зборів за обраними фільтрами
                                             </div>
                                         </div>
-                                    ))}
+                                    )}
                                 </div>
                             </div>
                         </div>
-
-                        <div className="xl:mt-16 md:mt-16 sm:mt-4">
-                            <Button isFilled={true}>{t('VIEW_OTHERS_UPPER')}</Button>
-                        </div>
+                        <Link to='/gatherings'>
+                            <div className="xl:mt-16 md:mt-16 sm:mt-4">
+                                <Button isFilled={true}>{t('VIEW_OTHERS_UPPER')}</Button>
+                            </div>
+                        </Link>
                     </section>
-
 
                     {/* Fourth section - join us */}
                     <section className="w-full h-auto flex flex-col items-center mt-32 px-4 md:px-8 select-none">
@@ -436,15 +447,17 @@ const HomePage: React.FC = () => {
                             <div
                                 className="flex xl:flex-col md:flex-col sm:flex-row  xl:items-center max-w-xs md:max-w-sm xl:max-w-md">
                                 <div className="">
-                                    <PlaceholderSquare
-                                        className="w-24 sm:w-40 md:ml-8 sm:mr-8 xl:mr-0 sm:h-40 h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"/>
+                                    <img
+                                        src={`${BecomeVolunteer}`}
+                                        className="w-24 sm:w-auto md:ml-8 sm:mr-8 xl:mr-0 sm:h-auto h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"
+                                        alt="SVG Image"
+                                    />
                                 </div>
                                 <div className="sm:flex-row">
                                     <h3 className="xl:text-center sm:text-center xl:text-h3 md:text-relative-h3xl font-kharkiv mt-4 w-full max-w-xs md:max-w-sm xl:max-w-md">{t('Become_a_volunteer')}</h3>
                                     <p className="sm:text-xs xl:text-xs-pxl text-center font-montserratRegular mt-2 w-full max-w-xs md:max-w-sm xl:max-w-md">
                                         {t('Under_Become_a_volunteer')}
                                     </p>
-
                                 </div>
                             </div>
 
@@ -455,7 +468,7 @@ const HomePage: React.FC = () => {
                                     {/* Картинка справа на экранах sm */}
                                     <img
                                         src={`${GetHelp}`}
-                                        className="w-24 sm:w-40 md:ml-8 sm:mr-8 xl:mr-0 sm:h-40 h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"
+                                        className="w-24 sm:w-auto md:ml-8 sm:mr-8 xl:mr-0 sm:h-auto h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"
                                         alt="SVG Image"
                                     />
                                 </div>
@@ -475,7 +488,7 @@ const HomePage: React.FC = () => {
                                 <div className="">
                                     <img
                                         src={`${DonatNaZSU}`}
-                                        className="w-24 sm:w-40 md:ml-8 sm:mr-8 xl:mr-0 sm:h-40 h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"
+                                        className="w-24 sm:w-auto md:ml-8 sm:mr-8 xl:mr-0 sm:h-auto h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"
                                         alt="SVG Image"
                                     /></div>
                                 <div className="sm:flex-row">
@@ -585,9 +598,11 @@ const HomePage: React.FC = () => {
                                 </div>
 
                             </div>
-                            <div className="mt-12 md:mt-16">
-                                <Button isFilled={true}>{t('more_detailsUPPER')}</Button>
-                            </div>
+                            <Link to='/how-it-works'>
+                                <div className="mt-12 md:mt-16">
+                                    <Button isFilled={true}>{t('more_detailsUPPER')}</Button>
+                                </div>
+                            </Link>
                         </section>
                     )}
 
@@ -849,8 +864,8 @@ const HomePage: React.FC = () => {
                                             onMouseLeave={() => handleMouseLeave}
                                         >
                                             <div className="mx-auto max-w-md">
-                                                <Review avatar={review.avatar} comment={review.comment}
-                                                        name={review.name} date={review.date}/>
+                                                <Review avatar={review.author.avatarUrl} comment={review.text}
+                                                        name={`${review.author.firstName} ${review.author.lastName}`} rating={review.rating} date={review.dateCreated}/>
                                             </div>
                                         </div>
                                     ))}

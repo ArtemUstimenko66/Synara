@@ -1,45 +1,34 @@
 import React, { useState } from 'react';
 import { Button } from "./Button.tsx";
 import {useTranslation} from "react-i18next";
-
-// const steps = [
-//     {
-//         title: "Зареєструйтесь:",
-//         description: "Створіть обліковий запис та оберіть свою роль: 'Потерпілий' або 'Волонтер'.",
-//     },
-//     {
-//         title: "Допомога поруч:",
-//         description: "Створіть оголошення або знайдіть допомогу.",
-//     },
-//     {
-//         title: "Зв'яжіться та допоможіть:",
-//         description: "Спілкуйтеся з іншими користувачами через чат або відеозв'язок та організуйте допомогу.",
-//     },
-//     {
-//         title: "Залиште відгук:",
-//         description: "Поділіться своїм досвідом та допоможіть іншим користувачам зробити правильний вибір.",
-//     },
-// ];
+import Section1  from '../assets/images/section1.png';
+import Section2  from '../assets/images/section2.png';
+import Section3  from '../assets/images/section3.png';
+import Section4  from '../assets/images/section4.png';
 
 const HowItWorksSM = () => {
     const [activeStep, setActiveStep] = useState(0);
-    const {t}=useTranslation();
+    const { t } = useTranslation();
 
     const steps = [
         {
             title: `${t('registration')}:`,
-            description:t('under_register'),
+            image: Section1,
+            description: t('under_register'),
         },
         {
             title: t('help_is_nearby'),
+            image: Section2,
             description: t('under_help_is_nearby'),
         },
         {
             title: t('get_in_touch_and_help'),
+            image: Section3,
             description: t('under_get_in_touch_and_help'),
         },
         {
             title: t('leave_a_review'),
+            image: Section4,
             description: t('under_leave_a_review'),
         },
     ];
@@ -62,7 +51,12 @@ const HowItWorksSM = () => {
                     </React.Fragment>
                 ))}
             </div>
-            <div className="border-4 border-blue-600 p-4 rounded-3xl h-52 w-64 mb-10 max-w-sm"/>
+
+            {/* Рендеринг SVG компонента напрямую */}
+            <div className="h-52 w-64 mb-10 max-w-sm">
+                <img src={steps[activeStep].image} alt="image" className='h-full w-full'/>
+            </div>
+
             <h3 className="text-center text-blue-600 text-h5 font-kharkiv">{steps[activeStep].title}</h3>
             <p className="text-center font-montserratMedium mt-2 max-w-xs">
                 {steps[activeStep].description}

@@ -14,6 +14,8 @@ import { uk } from 'date-fns/locale';
 import {addPetitionToFavorites, fetchPetitionDetails} from "../../modules/petitions/api/petitionsService.ts";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SearchPetitions from "../../modules/petitions/components/SearchPetitions.tsx";
+import {Player} from "@lottiefiles/react-lottie-player";
+import loadingAnimation from "../../assets/animations/logoLoading.json";
 
 interface GatheringDetails {
     id: number;
@@ -54,7 +56,16 @@ const GatheringDetailsPage = () => {
     }, [id]);
 
     if (!details) {
-        return <div>Loading...</div>;
+        return (
+            <div className="flex items-center justify-center h-screen">
+                <Player
+                    autoplay
+                    loop
+                    src={loadingAnimation}
+                    style={{ height: '200px', width: '200px' }}
+                />
+            </div>
+        );
     }
 
     const handleGoCreatePetions = () => {
@@ -96,13 +107,10 @@ const GatheringDetailsPage = () => {
                         {/* Левая часть с основным контентом */}
                         <div className="w-2/3 ">
                             <div className="mb-6 ml-12">
-                                {/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! author */}
                                 <p className="mb-2 flex items-center font-montserratRegular">
                                     <AvtorPetitions className="h-5 w-5  mr-6"/>
                                     АВТОР (ІНІЦІАТОР): {details.petitionAuthor}
                                 </p>
-                                {/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! author */}
-
                                 <p className="mb-2 font-montserratRegular flex items-center">
                                     <Calendar className="h-5 w-5 mr-6" />
                                     ДАТА ОПРИЛЮДНЕННЯ: {formatDate(details.creationDate)}

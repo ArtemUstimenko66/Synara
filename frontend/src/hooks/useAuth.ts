@@ -9,13 +9,15 @@ export const useAuth = () => {
     const [unp, setUnp] = useState<string | null>(null);
     const [birthDate, setBirthDate] = useState<string | null>(null);
 
+    const [email, setEmail] = useState<string | null>(null);
+
     useEffect(() => {
         const fetchProfile = async () => {
             try {
                 const profile = await getProfile();
                 //console.log(profile);
                 setUserId(profile.id);
-
+                setEmail(profile.email);
                 const data = await getUser(profile.id);
 
                 //console.log(" user -> ", data);
@@ -40,5 +42,5 @@ export const useAuth = () => {
         fetchProfile();
     }, []);
 
-    return { isAuthenticated, isLoading, userId, role, unp, birthDate };
+    return { isAuthenticated, isLoading, userId, role, unp, birthDate, email };
 };

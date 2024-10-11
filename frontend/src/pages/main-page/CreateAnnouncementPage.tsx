@@ -14,6 +14,9 @@ import {uploadAllDocuments} from "../../modules/main-page/helpers/uploadAllDocum
 import {validateFields} from "../../modules/main-page/validation/validateFields.ts";
 import {useTranslation} from "react-i18next";
 import MainHeader from "../../modules/main-page/components/ui/MainHeader.tsx";
+import { Player } from '@lottiefiles/react-lottie-player';
+import loadingAnimation from '../../assets/animations/logoLoading.json';
+
 
 const CreateAnnouncementPage: React.FC = () => {
     const [datePosted, setDatePosted] = useState<string>('');
@@ -27,6 +30,7 @@ const CreateAnnouncementPage: React.FC = () => {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
     const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleDateChange = (e: ChangeEvent<HTMLInputElement>) => {
         let value = e.target.value.replace(/\D/g, '');
@@ -65,11 +69,12 @@ const CreateAnnouncementPage: React.FC = () => {
     };
 
     const handleSubmit = async () => {
+        setIsLoading(true);
         const newErrors = validateFields({ datePosted, description: localData.description || '' });
         setErrors(newErrors);
 
         if (Object.keys(newErrors).length === 0) {
-            const  formattedDate= convertDateToDBFormat(datePosted);
+            const formattedDate = convertDateToDBFormat(datePosted);
             try {
                 const announcementData = {
                     description: localData.description || '',
@@ -88,11 +93,28 @@ const CreateAnnouncementPage: React.FC = () => {
                 navigate('/main');
             } catch (error) {
                 console.error('Error uploading announcement:', error);
+            } finally {
+                setIsLoading(false);
             }
+        } else {
+            setIsLoading(false);
         }
     };
 
-    const {t} = useTranslation();
+    const { t } = useTranslation();
+
+    if (isLoading) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <Player
+                    autoplay
+                    loop
+                    src={loadingAnimation}
+                    style={{ height: '200px', width: '200px' }}
+                />
+            </div>
+        );
+    }
 
     return (
         <Wrapper>

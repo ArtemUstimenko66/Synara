@@ -88,6 +88,8 @@ export class AnnouncementService {
         .leftJoinAndSelect('user.volunteer', 'volunteer')
         .leftJoinAndSelect('announcement.files', 'files');
 
+    qb.andWhere('announcement.is_completed = false');
+
     if (options.query && options.query.trim() !== '') {
       qb.andWhere('announcement.description ILIKE :query', {
         query: `%${options.query}%`,

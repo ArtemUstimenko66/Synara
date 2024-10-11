@@ -13,7 +13,9 @@ import {getFilteredPetitions} from "../../modules/petitions/api/petitionsService
 import {useTranslation} from "react-i18next";
 import {SideBarPetitions} from "../../modules/petitions/components/SideBarPetitions.tsx";
 import {Map} from "../../modules/main-page/components/Map.tsx";
-
+import {Player} from "@lottiefiles/react-lottie-player";
+import loadingAnimation from "../../assets/animations/logoLoading.json";
+import NothingFound from "../../assets/images/NothingFound.png";
 
 const PetitionPage: React.FC = () => {
 
@@ -40,9 +42,11 @@ const PetitionPage: React.FC = () => {
 	const [isMapMenuOpen, setIsMapMenuOpen] = useState(false);
 
 	// get petitions by search/filters
+
+	// Получение петиций при изменении параметров поиска
 	useEffect(() => {
 		const fetchPetitions = async () => {
-			if (isLoading || !role) return;
+			if (isLoading || !role) return; // Проверка на загрузку
 
 			const query = searchParams.get('query') || '';
 			const currentSortOrder = (searchParams.get('sortOrder') as 'ASC' | 'DESC') || 'ASC';
@@ -72,6 +76,19 @@ const PetitionPage: React.FC = () => {
 		fetchPetitions();
 	}, [role, searchParams, sortOrder, isLoading]);
 
+	// Показ анимации загрузки, если данные все еще загружаются
+	if (isLoading) {
+		return (
+			<div className="flex items-center justify-center h-screen">
+				<Player
+					autoplay
+					loop
+					src={loadingAnimation}
+					style={{ height: '200px', width: '200px' }}
+				/>
+			</div>
+		);
+	}
 
 	// sort
 	const handleSort = (field: 'signatureCount' | 'creationDate' | 'deadline') => {
@@ -164,13 +181,14 @@ const PetitionPage: React.FC = () => {
 					{/* Top Section: Create Petition, Search, Filter, and Sort */}
 					<div className="flex w-full items-center mb-8">
 						{/* Left Side - Create Petition Button */}
-						<Button onClick={handleGoCreatePetions} hasBlue={true} className="h-12 sm:w-[27%] md:w-[25%] xl:w-[25%] font-montserratMedium sm:text-xs md:text-xs xl:text-relative-h5">
+						<Button onClick={handleGoCreatePetions} hasBlue={true}
+								className="h-12 sm:w-[27%] md:w-[25%] xl:w-[25%] font-montserratMedium sm:text-xs md:text-xs xl:text-relative-h5">
 							СТВОРИТИ ПЕТИЦІЮ
 						</Button>
 
 						{/* Center - Search Component */}
 						<div className="ml-4 w-full h-14">
-							<SearchPetitions />
+							<SearchPetitions/>
 						</div>
 					</div>
 
@@ -225,25 +243,26 @@ const PetitionPage: React.FC = () => {
 						className="grid xl:grid-cols-3 sm:grid-cols-1 xl:px-0 md:px-0 sm:px-4 md:grid-cols-2 gap-6 w-full">
 						{(filteredPetitions || petitions).length > 0 ? (
 							(filteredPetitions || petitions).map((petition, index) => (
-
-									<PetitionCard
-										key={index}
-										id={petition.id}
-										petitionNumber={petition.petitionNumber}
-										topic={petition.topic}
-										creationDate={petition.creationDate}
-										text={petition.text}
-									/>
-
+								<PetitionCard
+									key={index}
+									id={petition.id}
+									petitionNumber={petition.petitionNumber}
+									topic={petition.topic}
+									creationDate={petition.creationDate}
+									text={petition.text}
+								/>
 							))
 						) : (
-							<div className="flex items-center justify-center my-[20%] w-full text-gray-500">
-								<div className="text-center font-montserratMedium">
-									Немає петицій за обраними фільтрами
+							<div className="flex items-center justify-center my-[10%] xl:ml-[30vw] w-full text-gray-500">
+								<div
+									className="text-center font-montserratMedium flex flex-col items-center justify-center">
+									<img src={NothingFound} className="w-[20vw] h-auto mb-4"/>
+									Наразі немає зборів за обраними фільтрами
 								</div>
 							</div>
 						)}
 					</div>
+
 
 					{/* Load More Button */}
 					{hasMore && (

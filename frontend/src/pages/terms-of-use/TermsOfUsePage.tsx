@@ -3,19 +3,17 @@ import Footer from "../../components/Footer.tsx";
 import Wrapper from "../../ui/Wrapper.tsx";
 import {Link} from "react-router-dom";
 
-const animationFadeIn = "animate-fadeIn";
-const animationSlideIn = "animate-slideIn";
 
 const TermsOfUsePage = () => {
 	return (
 		<Wrapper>
 			<MainHeader />
 			<div className="min-h-screen mt-24 ml-[3%] mr-[3%] font-montserratRegular text-black">
-				<h1 className={`text-h2 font-kharkiv mb-8 ${animationFadeIn}`}>Умови використання</h1>
+				<h1 className={`text-h2 font-kharkiv mb-8`}>Умови використання</h1>
 
 				{/* Контент с анимациями */}
 				<div className="space-y-10 text-lg leading-relaxed">
-					<section className={`${animationSlideIn} delay-100`}>
+					<section >
 						<h2 className="text-h3 font-semibold mb-4">1. Вступ</h2>
 						<p>
 							Ці умови використання визначають правила користування сайтом для
@@ -25,7 +23,7 @@ const TermsOfUsePage = () => {
 						</p>
 					</section>
 
-					<section className={`${animationSlideIn} delay-200`}>
+					<section >
 						<h2 className="text-h3 font-semibold mb-4">2. Використання контенту</h2>
 						<p>
 							Весь контент, опублікований на нашому сайті, включаючи тексти,
@@ -34,7 +32,7 @@ const TermsOfUsePage = () => {
 						</p>
 					</section>
 
-					<section className={`${animationSlideIn} delay-300`}>
+					<section >
 						<h2 className="text-h3 font-semibold mb-4">3. Відповідальність користувачів</h2>
 						<p>
 							Користуючись сайтом, ви зобов'язуєтесь надавати правдиву інформацію
@@ -43,7 +41,7 @@ const TermsOfUsePage = () => {
 						</p>
 					</section>
 
-					<section className={`${animationSlideIn} delay-400`}>
+					<section>
 						<h2 className="text-h3 font-semibold mb-4">4. Відмова від відповідальності</h2>
 						<p>
 							Наша організація не несе відповідальності за можливі технічні
@@ -52,7 +50,7 @@ const TermsOfUsePage = () => {
 						</p>
 					</section>
 
-					<section className={`${animationSlideIn} delay-500`}>
+					<section >
 						<h2 className="text-h3 font-semibold mb-4">5. Конфіденційність</h2>
 						<p>
 							Ваші дані захищені відповідно до нашої <Link to="/privacy-policy" className="text-blue-700 hover:underline">Політики конфіденційності</Link>.
@@ -60,7 +58,7 @@ const TermsOfUsePage = () => {
 						</p>
 					</section>
 
-					<section className={`${animationSlideIn} delay-600`}>
+					<section>
 						<h2 className="text-h3 font-semibold mb-4">6. Зміни до умов використання</h2>
 						<p>
 							Ми залишаємо за собою право змінювати ці умови в будь-який час.
@@ -69,12 +67,12 @@ const TermsOfUsePage = () => {
 						</p>
 					</section>
 
-					<section className={`${animationSlideIn} delay-700`}>
+					<section>
 						<h2 className="text-h3 font-semibold mb-4">7. Контакти</h2>
 						<p>
 							Якщо у вас є питання щодо цих умов використання, будь ласка, зв'яжіться з нами за адресою:
 							<a href="mailto:synara.support@email.com" className="text-blue-700 hover:underline ml-2">
-								support@example.com
+								synara.support@email.com
 							</a>.
 						</p>
 					</section>

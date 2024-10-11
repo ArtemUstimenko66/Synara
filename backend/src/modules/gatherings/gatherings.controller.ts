@@ -78,8 +78,9 @@ export class GatheringsController {
   }
 
   @Get('/favorites')
+  @UseGuards(JwtAuthGuard)
   async getFavorite(@Req() req): Promise<Gatherings[]> {
-    const user = req.user;
+    const user = req.user as User;
     if (!user || !user.id) {
       throw new BadRequestException('User not found');
     }

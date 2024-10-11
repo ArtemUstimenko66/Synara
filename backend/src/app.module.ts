@@ -24,6 +24,9 @@ import { UnBrokennessModule } from './modules/unbrokenness/unbrokenness.module';
 import { GatheringsModule } from './modules/gatherings/gatherings.module';
 import {PetitionModule} from "./modules/petition/petition.module";
 import {CommentsModule} from "./modules/comments/comments.module";
+import {CurrentPhonesModule} from "./modules/current-phones/current-phones.module";
+import {SynaraCommentModule} from "./modules/synara-comments/synara-comment.module";
+import {MapModule} from "./modules/maps-alarm/app.module";
 
 @Module({
   imports: [
@@ -56,6 +59,9 @@ import {CommentsModule} from "./modules/comments/comments.module";
     GatheringsModule,
     PetitionModule,
     CommentsModule,
+    CurrentPhonesModule,
+    SynaraCommentModule,
+    MapModule
   ],
   controllers: [AppController],
   providers: [AppService],

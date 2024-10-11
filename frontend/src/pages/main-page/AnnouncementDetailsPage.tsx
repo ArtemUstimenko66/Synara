@@ -15,7 +15,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {useTranslation} from "react-i18next";
 import SearchComponent from "../../modules/main-page/components/ui/SearchComponent.tsx";
 import {
-    addAnnouncementToFavorites,
+    addAnnouncementToFavorites, cancelAnnouncement, doneAnnouncement,
     fetchAnnouncementDetails,
     getFilteredAnnouncements, incrementViews, respondAnnouncement,
 } from "../../modules/main-page/api/mainPageService.ts";
@@ -27,6 +27,7 @@ import Announcement from "../../modules/main-page/components/Announcement.tsx";
 import {urgencyTranslations} from "../../data/urgencyMap.ts";
 import {useAuth} from "../../hooks/useAuth.ts";
 import Cookies from "js-cookie";
+import ModalAsk from "../../modules/profile/components/ui/ModalAsk.tsx";
 
 
 
@@ -64,8 +65,14 @@ const AnnouncementDetailsPage = () => {
     const [hasMore, setHasMore] = useState(true);
     const [hasShowMore, setShowHasMore] = useState(true);
     const [isFavorite, setIsFavorite] = useState(false);
-
+    const [isDone, setIsDone] = useState(false);
+    const [isCanceled, setIsCancel] = useState(false);
+    const [modalOpen, setModalOpen] = useState(false);
+    const [modalContent, setModalContent] = useState({ title: '', message: '', action: () => {} });
     const navigate = useNavigate();
+
+    const {userId}=useAuth();
+
 
     const hasViewedAnnouncement = (announcementId: number) => {
         const viewedAnnouncements = Cookies.get('viewedAnnouncements');
@@ -151,7 +158,7 @@ const AnnouncementDetailsPage = () => {
                 console.log(data);
                 setDetails(data);
                 setIsFavorite(data.is_favorite);
-
+                setIsDone(data.is_completed);
                 if (!hasViewedAnnouncement(Number(id))) {
                     await incrementViews(Number(id));
                     markAsViewed(Number(id));
@@ -236,10 +243,44 @@ const AnnouncementDetailsPage = () => {
             navigate(`/chat/${chatId}`);
         } catch (error) {
             console.error('Failed to create chat:', error);
+            navigate(`/chat`);
         }
     };
 
+    let isMyAnnouncement = userId == details.user.id;
 
+    const handleDoneAnnouncement = async () => {
+        const isSuccess = await doneAnnouncement(details.id);
+        if (isSuccess) {
+            setIsDone(true);
+        }
+    };
+
+    const handleCancelAnnouncement = async () => {
+        const isSuccess = await cancelAnnouncement(details.id);
+        if (isSuccess) {
+            setIsCancel(true);
+            navigate('/profile');
+        }
+    };
+
+    const openModalForDone = () => {
+        setModalContent({
+            title: 'Завершити оголошення',
+            message: 'Вам надали потрібну допомогу і ви хочете закрити це оголошення?',
+            action: handleDoneAnnouncement
+        });
+        setModalOpen(true);
+    };
+
+    const openModalForCancel = () => {
+        setModalContent({
+            title: 'Скасувати оголошення',
+            message: 'Ви впевнені, що хочете скасувати це оголошення?',
+            action: handleCancelAnnouncement
+        });
+        setModalOpen(true);
+    };
 
     return (
         <>
@@ -362,127 +403,169 @@ const AnnouncementDetailsPage = () => {
 
                                 {/* Donate and to favorite buttons */}
                                 <div className="flex flex-col pl-[2vw] justify-between space-y-3 mt-4">
-                                    <div className="mt-8 w-full">
-                                        <Button
-                                            onClick={handleAddToFavorites}
-                                            className="flex items-center justify-center text-center w-full bg-perfect-yellow rounded-3xl font-montserratRegular"
-                                        >
-                                            {isFavorite ? (
-                                                <FullHeart className="h-5 w-5 mr-2"/>
+                                    { isMyAnnouncement ?
+
+                                        <>
+                                            {isDone ? (
+                                                <h1 className="text-relative-h4 mt-[1vh] font-kharkiv uppercase text-center">Виконано</h1>
+                                            ) : isCanceled ? (
+                                                <h1 className="text-relative-h4 mt-[1vh] font-kharkiv uppercase text-center">Скасовано</h1>
                                             ) : (
-                                                <Heart className="h-6 w-6 mr-2"/>
+                                                <>
+                                                    <div className="mt-8 w-full">
+                                                        <Button
+                                                            onClick={openModalForDone}
+                                                            className="flex items-center uppercase justify-center text-center w-full bg-perfect-yellow rounded-3xl font-montserratRegular"
+                                                        >
+                                                            Виконано
+                                                        </Button>
+                                                    </div>
+                                                    <Button hasBlue={true} className="py-1 px-4 uppercase" onClick={openModalForCancel}>
+                                                        Скасувати
+                                                    </Button>
+                                                </>
                                             )}
-                                            В ОБРАНЕ
-                                        </Button>
-                                    </div>
-                                    <Button hasBlue={true} className="py-1 px-4 uppercase"
-                                            onClick={handleRespond}>
-                                        Відгукнутись
-                                    </Button>
+                                            <ModalAsk
+                                                isOpen={modalOpen}
+                                                onClose={() => setModalOpen(false)}
+                                                onConfirm={() => {
+                                                    modalContent.action();
+                                                    setModalOpen(false);
+                                                }}
+                                                title={modalContent.title}
+                                                message={modalContent.message}
+                                            />
+                                        </>
+
+                                        :
+                                        <>
+                                            <div className="mt-8 w-full">
+                                                <Button
+                                                    onClick={handleAddToFavorites}
+                                                    className="flex items-center justify-center text-center w-full bg-perfect-yellow rounded-3xl font-montserratRegular"
+                                                >
+                                                    {isFavorite ? (
+                                                        <FullHeart className="h-5 w-5 mr-2"/>
+                                                    ) : (
+                                                        <Heart className="h-6 w-6 mr-2"/>
+                                                    )}
+                                                    В ОБРАНЕ
+                                                </Button>
+                                            </div>
+                                            <Button hasBlue={true} className="py-1 px-4 uppercase"
+                                                    onClick={handleRespond}>
+                                                Відгукнутись
+                                            </Button>
+                                        </>
+                                    }
                                 </div>
                             </div>
                         </div>
 
                         {/* Изображение с соседними картинками */}
-
-                        <div className="flex justify-center my-[4vh]">
-                            <div className="flex items-center">
-                                {selectedImageIndex > 0 && (
-                                    <div
-                                        className="justify-center flex w-[25vw] mx-[1vw] h-[28vh]"
-                                        onClick={() => openModal(selectedImageIndex - 1)}
-                                    >
-                                        <img
-                                            src={details.files[selectedImageIndex - 1].fileUrl}
-                                            alt={details.files[selectedImageIndex].fileName}
-                                            className="w-full h-auto rounded-lg cursor-pointer"
-                                        />
+                        {details.files.length > 0 ?
+                            <>
+                                <div className="flex justify-center my-[4vh]">
+                                    <div className="flex items-center">
+                                        {selectedImageIndex > 0 && (
+                                            <div
+                                                className="justify-center flex w-[25vw] mx-[1vw] h-[28vh]"
+                                                onClick={() => openModal(selectedImageIndex - 1)}
+                                            >
+                                                <img
+                                                    src={details.files[selectedImageIndex - 1].fileUrl}
+                                                    alt={details.files[selectedImageIndex].fileName}
+                                                    className="w-full h-auto rounded-lg cursor-pointer"
+                                                />
+                                            </div>
+                                        )}
+                                        <div
+                                            className="justify-center flex w-[25vw] mx-[1vw] h-[28vh]"
+                                            onClick={() => openModal(selectedImageIndex)}
+                                        >
+                                            <img
+                                                src={details.files[selectedImageIndex].fileUrl}
+                                                alt={details.files[selectedImageIndex].fileName}
+                                                className="w-full h-auto rounded-lg cursor-pointer"
+                                            />
+                                        </div>
+                                        {selectedImageIndex < details.files.length - 1 && (
+                                            <div
+                                                className="justify-center flex w-[25vw] mx-[1vw] h-[28vh]"
+                                                onClick={() => openModal(selectedImageIndex + 1)}
+                                            >
+                                                <img
+                                                    src={details.files[selectedImageIndex + 1].fileUrl}
+                                                    alt={details.files[selectedImageIndex].fileName}
+                                                    className="w-full h-auto rounded-lg cursor-pointer"
+                                                />
+                                            </div>
+                                        )}
                                     </div>
-                                )}
-                                <div
-                                    className="justify-center flex w-[25vw] mx-[1vw] h-[28vh]"
-                                    onClick={() => openModal(selectedImageIndex)}
-                                >
-                                    <img
-                                        src={details.files[selectedImageIndex].fileUrl}
-                                        alt={details.files[selectedImageIndex].fileName}
-                                        className="w-full h-auto rounded-lg cursor-pointer"
-                                    />
                                 </div>
-                                {selectedImageIndex < details.files.length - 1 && (
-                                    <div
-                                        className="justify-center flex w-[25vw] mx-[1vw] h-[28vh]"
-                                        onClick={() => openModal(selectedImageIndex + 1)}
-                                    >
-                                        <img
-                                            src={details.files[selectedImageIndex + 1].fileUrl}
-                                            alt={details.files[selectedImageIndex].fileName}
-                                            className="w-full h-auto rounded-lg cursor-pointer"
-                                        />
-                                    </div>
-                                )}
-                            </div>
-                        </div>
 
-                        {/* Полоски выбора изображений */}
-                        <div className="flex justify-center mt-2 space-x-2">
-                            {details.files.length >= 3 ?
-                                (details.files.map((_, index) => (
-                                    <div
-                                        key={index}
-                                        onClick={() => handleImageSelect(index)}
-                                        className={`h-2 cursor-pointer rounded-full transition-all duration-500 ease-in-out
+                                {/* Полоски выбора изображений */}
+                                <div className="flex justify-center mt-2 space-x-2">
+                                    {details.files.length >= 3 ?
+                                        (details.files.map((_, index) => (
+                                            <div
+                                                key={index}
+                                                onClick={() => handleImageSelect(index)}
+                                                className={`h-2 cursor-pointer rounded-full transition-all duration-500 ease-in-out
                                                     ${selectedImageIndex === index ? 'bg-dark-blue w-12' : 'bg-baby-blue w-8'}`}
-                                    ></div>
-                                )))
-                                :
-                                <></>
-                            }
-                        </div>
-
-                        {/* Модальное окно для отображения выбранного изображения */}
-                        {isModalOpen && (
-                            <div
-                                className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50"
-                                onClick={closeModal}>
-                                <div className="relative">
-
-                                    <img
-                                        src={details.files[selectedImageIndex].fileUrl}
-                                        alt={details.files[selectedImageIndex].fileName}
-                                        className="flex w-[65vw] mx-[1vw] h-[70vh] rounded-lg"
-                                    />
-
+                                            ></div>
+                                        )))
+                                        :
+                                        <></>
+                                    }
                                 </div>
 
-
-                                {/* Левая стрелка */}
-                                {selectedImageIndex > 0 && (
+                                {/* Модальное окно для отображения выбранного изображения */}
+                                {isModalOpen && (
                                     <div
-                                        className="absolute left-[4vw] top-1/2 ь transform -translate-y-1/2 cursor-pointer"
-                                        onClick={(e) => {
-                                            e.stopPropagation(); // Предотвращаем закрытие модального окна
-                                            handlePrevImage();
-                                        }}
-                                    >
-                                        <LeftSlide className="h-10 w-10 text-white"/>
-                                    </div>
-                                )}
+                                        className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50"
+                                        onClick={closeModal}>
+                                        <div className="relative">
 
-                                {/* Правая стрелка */}
-                                {selectedImageIndex < details.files.length - 1 && (
-                                    <div
-                                        className="absolute right-[4vw] top-1/2 transform -translate-y-1/2 cursor-pointer"
-                                        onClick={(e) => {
-                                            e.stopPropagation(); // Предотвращаем закрытие модального окна
-                                            handleNextImage();
-                                        }}
-                                    >
-                                        <RightSlide className="h-10 w-10 text-white"/>
+                                            <img
+                                                src={details.files[selectedImageIndex].fileUrl}
+                                                alt={details.files[selectedImageIndex].fileName}
+                                                className="flex w-[65vw] mx-[1vw] h-[70vh] rounded-lg"
+                                            />
+
+                                        </div>
+
+
+                                        {/* Левая стрелка */}
+                                        {selectedImageIndex > 0 && (
+                                            <div
+                                                className="absolute left-[4vw] top-1/2 ь transform -translate-y-1/2 cursor-pointer"
+                                                onClick={(e) => {
+                                                    e.stopPropagation(); // Предотвращаем закрытие модального окна
+                                                    handlePrevImage();
+                                                }}
+                                            >
+                                                <LeftSlide className="h-10 w-10 text-white"/>
+                                            </div>
+                                        )}
+
+                                        {/* Правая стрелка */}
+                                        {selectedImageIndex < details.files.length - 1 && (
+                                            <div
+                                                className="absolute right-[4vw] top-1/2 transform -translate-y-1/2 cursor-pointer"
+                                                onClick={(e) => {
+                                                    e.stopPropagation(); // Предотвращаем закрытие модального окна
+                                                    handleNextImage();
+                                                }}
+                                            >
+                                                <RightSlide className="h-10 w-10 text-white"/>
+                                            </div>
+                                        )}
                                     </div>
-                                )}
-                            </div>
-                        )}
+                                )}</>
+                            :
+                            <></>
+                        }
                     </div>
                     {hasShowMore
                         ?
@@ -529,7 +612,6 @@ const AnnouncementDetailsPage = () => {
                         :
                         <></>
                     }
-
 
                 </div>
             <Footer/>

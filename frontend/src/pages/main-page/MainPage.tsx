@@ -4,6 +4,7 @@ import SearchComponent from "../../modules/main-page/components/ui/SearchCompone
 import Announcement from "../../modules/main-page/components/Announcement.tsx";
 import DownArrowIcon from '../../modules/main-page/assets/Down_Arrow_Main.svg?react';
 import Wrapper from "../../ui/Wrapper.tsx";
+import NothingFound from "../../assets/images/NothingFound.png"
 import { Button } from "../../ui/Button.tsx";
 import Footer from "../../components/Footer.tsx";
 import { SideBar } from "../../modules/main-page/components/SideBar.tsx";
@@ -16,6 +17,9 @@ import {SideBarChat} from "../../modules/chat/components/SideBarChat.tsx";
 import {useTranslation} from "react-i18next";
 import {useAuth} from "../../hooks/useAuth.ts";
 import VolunteerCard from "../../modules/main-page/components/VolunteerCard.tsx";
+import { Player } from '@lottiefiles/react-lottie-player';
+import loadingAnimation from '../../assets/animations/logoLoading.json';
+
 
 const MainPage: React.FC = () => {
     const [sortOrder, setSortOrder] = useState<'ASC' | 'DESC' >('ASC');
@@ -32,7 +36,7 @@ const MainPage: React.FC = () => {
     const { role, isLoading } = useAuth();
     const [offset, setOffset] = useState(0);
     const [hasMore, setHasMore] = useState(true);
-
+    const [isLoadingData, setIsLoadingData] = useState(true);
 
     const [isChatSidebarOpen, setIsChatSidebarOpen] = useState(false);
 
@@ -60,6 +64,7 @@ const MainPage: React.FC = () => {
             setSortOrder(currentSortOrder);
 
             try {
+                setIsLoadingData(true);
                 let data;
                 if (role === 'volunteer') {
                     data = await getFilteredAnnouncements(query, types, limit, 0, currentSortOrder, urgency);
@@ -78,16 +83,26 @@ const MainPage: React.FC = () => {
                 }
             } catch (error) {
                 console.error('Error fetching announcements:', error);
+            } finally {
+                setIsLoadingData(false);
             }
         };
 
         fetchAnnouncements();
     }, [role, searchParams, sortOrder, isLoading]);
 
-
-
-
-
+    if (isLoadingData) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <Player
+                    autoplay
+                    loop
+                    src={loadingAnimation}
+                    style={{ height: '200px', width: '200px' }}
+                />
+            </div>
+        );
+    }
 
     // sort
     const handleSort = (order: 'ASC' | 'DESC') => {
@@ -162,10 +177,13 @@ const MainPage: React.FC = () => {
                     <div className="flex flex-col md:flex-row md:space-x-4">
                         <div className="w-full md:w-1/2 xl:w-1/4 flex flex-col items-start justify-start">
                             {/* Help Map Button */}
-                            <Button hasBlue={true}
-                                    className="uppercase text-relative-h5 px-8 py-3 my-5 w-full xl:w-full">
-                                {t('map_of_help')}
-                            </Button>
+                            <Link to="/map-help" className="w-full">
+                                <Button hasBlue={true}
+                                        className="uppercase text-relative-h5 px-8 py-3 mt-8 my-5 w-full xl:w-full">
+                                    {t('map_of_help')}
+                                </Button>
+                            </Link>
+
 
                             {/* Filters Button */}
                             <div className="w-full flex items-start justify-start md:mt-0">
@@ -181,7 +199,7 @@ const MainPage: React.FC = () => {
 
                         <div className="w-full  md:w-1/2 xl:w-3/4 flex flex-col items-end justify-end">
                             {/* Search Component */}
-                            <div className="w-full mt-4  mb-3 md:mt-0">
+                            <div className="w-full mb-3 md:mt-0">
                                 <SearchComponent/>
                             </div>
 
@@ -267,7 +285,8 @@ const MainPage: React.FC = () => {
                                             </div>
                                         ))
                                     ) : (
-                                        <div className="flex items-center justify-center my-[20%] w-full text-gray-500">
+                                        <div className="flex items-center justify-center my-[10%] w-full text-gray-500">
+                                            <img src={NothingFound} className="w-[20vw] h-auto"/>
                                             <div className="text-center font-montserratMedium">
                                                 {t('no_announcements_by_this_filters')}
                                             </div>
@@ -287,6 +306,7 @@ const MainPage: React.FC = () => {
                                         >
                                             <VolunteerCard
                                                 key={index}
+                                                id={volunteer.user.id}
                                                 name={`${volunteer.user.firstName} ${volunteer.user.lastName}`}
                                                 rating={volunteer.rating}
                                                 supports={volunteer.supports}
@@ -300,8 +320,9 @@ const MainPage: React.FC = () => {
                                         </div>
                                     ))
                                 ) : (
-                                    <div className="flex items-center justify-center my-[20%] w-full text-gray-500">
+                                    <div className="flex items-center justify-center my-[10%] w-full text-gray-500">
                                         <div className="text-center font-montserratMedium">
+                                            <img src={NothingFound} className="w-[20vw] h-auto"/>
                                             {t('no_announcements_by_this_filters')}
                                         </div>
                                     </div>

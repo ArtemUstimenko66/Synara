@@ -19,6 +19,8 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {format} from 'date-fns';
 import {uk} from 'date-fns/locale';
 import GatheringCard from "../../modules/gathering/ui/GatheringCard.tsx";
+import { Player } from '@lottiefiles/react-lottie-player';
+import loadingAnimation from '../../assets/animations/logoLoading.json';
 
 interface GatheringDetails {
     id: number;
@@ -37,12 +39,10 @@ interface GatheringDetails {
     files: Array<{ id: number, fileName: string, fileUrl: string, fileType: string }>;
 }
 
-// Функция для форматирования числа с пробелами
 const formatNumber = (number: string) => {
     return new Intl.NumberFormat('uk-UA').format(Number(number));
 };
 
-// Функция для форматирования даты
 const formatDate = (dateString: string) => {
     return format(new Date(dateString), 'd MMMM', {locale: uk});
 };
@@ -53,18 +53,7 @@ const GatheringDetailsPage = () => {
     const [details, setDetails] = useState<GatheringDetails | null>(null);
     const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0);
     const [isModalOpen, setIsModalOpen] = useState(false);
-
-    useEffect(() => {
-        const loadDetails = async () => {
-            if (id) {
-                const data = await fetchGatheringDetails(Number(id));
-                console.log(data);
-                setDetails(data);
-                setIsFavorite(data.is_favorite);
-            }
-        };
-        loadDetails();
-    }, [id]);
+    const [loading, setLoading] = useState(true);
 
 
 
@@ -109,6 +98,33 @@ const GatheringDetailsPage = () => {
     useEffect(() => {
         fetchFilteredGatherings();
     }, [searchParams]);
+
+
+    useEffect(() => {
+        const loadDetails = async () => {
+            if (id) {
+                const data = await fetchGatheringDetails(Number(id));
+                console.log(data);
+                setDetails(data);
+                setIsFavorite(data.is_favorite);
+                setLoading(false);
+            }
+        };
+        loadDetails();
+    }, [id]);
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center h-screen">
+                <Player
+                    autoplay
+                    loop
+                    src={loadingAnimation}
+                    style={{ height: '200px', width: '200px' }}
+                />
+            </div>
+        );
+    }
 
 
     const loadMoreGatherings = async () => {

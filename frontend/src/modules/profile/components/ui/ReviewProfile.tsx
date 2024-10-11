@@ -9,10 +9,6 @@ interface ReviewProps {
 }
 
 const ReviewProfile: React.FC<ReviewProps> = ({ comment, name, date, avatar }) => {
-	// Функция-обработчик изменения рейтинга
-	const handleRatingChange = (newRating: number) => {
-		console.log(`Новый рейтинг: ${newRating}`);
-	};
 
 	return (
 		<div className="mb-12 relative p-12 rounded-3xl bg-gray-100">
@@ -24,12 +20,15 @@ const ReviewProfile: React.FC<ReviewProps> = ({ comment, name, date, avatar }) =
 			</p>
 			<div className="text-perfect-yellow mb-4 select-none">
 				<ReactStars
-					count={5} // количество звезд
-					value={5} // текущее значение рейтинга
-					size={30} // размер звезд
-					edit={true} // можно ли редактировать
-					isHalf={false} // половинные звезды отключены
-					onChange={handleRatingChange} // обработчик изменения рейтинга
+					count={5}
+					value={4}
+					size={24}
+					isHalf={true}
+					edit={false}
+					emptyIcon={<i className="far fa-star"></i>}
+					halfIcon={<i className="fa fa-star-half-alt"></i>}
+					fullIcon={<i className="fa fa-star"></i>}
+					activeColor="#ffd700"
 				/>
 			</div>
 			<div className="flex justify-between w-full">

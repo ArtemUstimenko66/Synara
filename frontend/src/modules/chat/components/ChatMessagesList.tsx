@@ -29,6 +29,7 @@ import {debounce} from "lodash";
 import {formatDate} from "../helpers/formatDate.ts";
 import Message from "../interfaces/Message.tsx";
 import {FeedbackModal} from "./ui/FeedbackModal.tsx";
+import {Link} from "react-router-dom";
 
 interface ChatMessagesListProps {
     isOpen: boolean;
@@ -351,10 +352,12 @@ export const ChatMessagesList: React.FC<ChatMessagesListProps> = ({ isOpen, onCl
                                 <div
                                     className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg z-10">
                                     <ul className="py-2">
-                                        <li className="flex items-start justify-start px-4 py-4 cursor-pointer hover:bg-gray-100">
-                                            <ProfileImg className="h-6 w-6 mr-3"/>
-                                            <span>Подивитися профіль</span>
-                                        </li>
+                                        <Link to={`/profile-volunteer/${chatChoose?.memberId}`}>
+                                            <li className="flex items-start justify-start px-4 py-4 cursor-pointer hover:bg-gray-100">
+                                                <ProfileImg className="h-6 w-6 mr-3"/>
+                                                <span>Подивитися профіль</span>
+                                            </li>
+                                        </Link>
                                         {role == "victim" ?
                                             <>
                                                 <li
@@ -366,6 +369,7 @@ export const ChatMessagesList: React.FC<ChatMessagesListProps> = ({ isOpen, onCl
                                                 </li>
 
                                                 <FeedbackModal isOpen={isFeedbackOpen}
+                                                               className="h-full rounded-xl"
                                                                name={chatChoose?.name}
                                                                memberId={chatChoose?.memberId}
                                                                onClose={() => setIsFeedbackOpen(false)}/>

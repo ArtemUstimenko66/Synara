@@ -1,13 +1,13 @@
 import Footer from "../../components/Footer.tsx";
 import Wrapper from "../../ui/Wrapper.tsx";
-import WhyUsImg from '../../assets/images/WhyUsImg.svg?react';
-import WhyMeMainDesktop from '../../assets/images/WhyMeMainDesktop.svg?react';
+import WhyUsImg from '../../assets/images/WhyUsImg.png';
+import WhyMeMainDesktop from '../../assets/images/WhyMeMainDesktop.png';
 import CountUp from "react-countup";
 import VectorBlue from '../../assets/images/VectorBlue.svg?react';
 import {useTranslation} from "react-i18next";
-import PlaceholderSquare from '../../assets/images/PlaceholderSquare.svg?react';
-import DonatNaZSU from '../../assets/images/DonatNaZSU.svg?react';
-import GetHelp from '../../assets/images/GetHelp.svg?react';
+import DonatNaZSU from '../../assets/images/DonatNaZSU.png';
+import GetHelp from '../../assets/images/GetHelp.png';
+import BecomeVolunteer from '../../assets/images/BecomeVolunteer.png';
 import Meta from '../../assets/images/meta.svg?react';
 import Facebook from '../../assets/images/Facebook.svg?react';
 import Instagram from '../../assets/images/Instagram.svg?react';
@@ -17,6 +17,7 @@ import HelpIcon from '../../assets/images/HelpIcon.svg?react';
 import ComunityIcon from '../../assets/images/ComunityIcon.svg?react';
 import SupportIcon from '../../assets/images/SupportIcon.svg?react';
 import MainHeader from "../../modules/main-page/components/ui/MainHeader.tsx";
+import WhoAreWe from "../../assets/images/WhoAreWe.png";
 
 
 
@@ -31,7 +32,14 @@ const AboutPage = () => {
                     <h2 className="text-h2 font-montserratMedium uppercase text-center">{t('about_us')}</h2>
                     <div className="flex flex-col md:flex-row items-center mt-12 space-y-6 md:space-y-0">
                         <div className="w-full">
-                            <PlaceholderSquare className="w-full h-52"/>
+                            <div
+                                className="hidden xl:flex xl:order-1 md:flex md:order-1 xl:w-2/3 md:w-relative-1/2">
+                                <img
+                                    src={`${WhoAreWe}`}
+                                    className="xl:w-full  xl:h-auto md:w-relative-elg md:h-auto md:ml-[5vw] xl:mr-0 md:mr-relative-md"
+                                    alt="SVG Image"
+                                />
+                            </div>
                         </div>
                         <div className="text-md_body text-gray-700 font-montserratRegular md:ml-8">
                             <p>
@@ -131,7 +139,7 @@ const AboutPage = () => {
                                 <div>{t('count_of_help')}</div>
                             </div>
                             <div>
-                                <WhyUsImg className="md:hidden xl:hidden sm:block sm:w-[90%] sm:h-auto sm:mt-6"/>
+                                <img src={WhyUsImg} className="md:hidden xl:hidden sm:block sm:w-[90%] sm:h-auto sm:mt-6"/>
                             </div>
                             <div
                                 className=" xl:mt-16 md:mt-8 sm:mt-6 space-y-8 md:space-y-4 sm:space-y-4 font-bold font-montserratRegular">
@@ -165,7 +173,7 @@ const AboutPage = () => {
 
                         {/* Правая сторона */}
                         <div className="">
-                            <WhyMeMainDesktop
+                            <img src={WhyMeMainDesktop}
                                 className="sm:hidden md:block xl:block xl:ml-20 md:ml-12 xl:mt-2 md:mt-24 xl:w-full      xl:h-full md:w-96 md:h-72 "/>
                         </div>
                     </div>
@@ -179,7 +187,7 @@ const AboutPage = () => {
                         <div
                             className="flex xl:flex-col md:flex-col sm:flex-row  xl:items-center max-w-xs md:max-w-sm xl:max-w-md">
                             <div className="">
-                                <PlaceholderSquare
+                                <img src={BecomeVolunteer}
                                     className="w-24 sm:w-40 md:ml-8 sm:mr-8 xl:mr-0 sm:h-40 h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"/>
                             </div>
                             <div className="sm:flex-row">
@@ -196,7 +204,7 @@ const AboutPage = () => {
                             className="flex xl:flex-col md:flex-col sm:flex-row-reverse items-center max-w-xs md:max-w-sm xl:max-w-md select-none">
                             <div className="sm:flex sm:justify-start">
                                 {/* Картинка справа на экранах sm */}
-                                <GetHelp
+                                <img src={GetHelp}
                                     className="sm:block sm:w-40 sm:h-40 sm:ml-8 sm:mr-8 w-24 h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"/>
                             </div>
                             <div className="sm:flex sm:flex-col sm:justify-center">
@@ -213,7 +221,7 @@ const AboutPage = () => {
                         <div
                             className="flex xl:flex-col md:flex-col sm:flex-row items-center max-w-xs md:max-w-sm xl:max-w-md select-none">
                             <div className="">
-                                <DonatNaZSU
+                                <img src={DonatNaZSU}
                                     className="w-24 sm:w-40 md:ml-8 sm:mr-8 xl:mr-0 sm:h-40 h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"/>
                             </div>
                             <div className="sm:flex-row">

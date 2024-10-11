@@ -6,7 +6,8 @@ import { ukrainianPetitionTopics } from "../../data/petitionTopicsList.ts";
 import {createPetition} from "../../modules/petitions/api/petitionsService.ts";
 import {useNavigate} from "react-router-dom";
 import {ukrainianPetitionTypes} from "../../data/petitionTypesList.ts";
-
+import {Player} from "@lottiefiles/react-lottie-player";
+import loadingAnimation from "../../assets/animations/logoLoading.json";
 
 const CreatePetitionPage: React.FC = () => {
 	const [selectedOptions, setSelectedOptions] = useState<{ [key: string]: boolean }>({
@@ -29,6 +30,8 @@ const CreatePetitionPage: React.FC = () => {
 	});
 	const [errors, setErrors] = useState<{ [key: string]: string }>({});
 	const navigate = useNavigate();
+	const [loading, setLoading] = useState<boolean>(false);
+
 	const validateForm = () => {
 		const newErrors: { [key: string]: string } = {};
 
@@ -67,8 +70,9 @@ const CreatePetitionPage: React.FC = () => {
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-
 		if (validateForm()) {
+			setLoading(true);
+
 			try {
 				const [day, month, year] = formData.petitionDate.split('/');
 				const formattedPetitionDate = new Date(Date.UTC(+year, +month - 1, +day, 12)).toISOString();
@@ -92,15 +96,30 @@ const CreatePetitionPage: React.FC = () => {
 					responseDate: formattedResponseDate || null,
 					isCompleted: false,
 				};
+
 				console.log("requestData -> ", requestData);
 				await createPetition(requestData);
 				navigate("/petitions");
-
 			} catch (error) {
 				console.error('Ошибка при отправке петиции:', error);
+			} finally {
+				setLoading(false);
 			}
 		}
 	};
+
+	if (loading) {
+		return (
+			<div className="flex items-center justify-center h-screen">
+				<Player
+					autoplay
+					loop
+					src={loadingAnimation}
+					style={{ height: '200px', width: '200px' }}
+				/>
+			</div>
+		);
+	}
 
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
