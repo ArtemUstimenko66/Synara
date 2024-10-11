@@ -11,7 +11,7 @@ import { JwtService } from '@nestjs/jwt';
 
 @WebSocketGateway({
   cors: {
-    origin: 'http://localhost:5173',
+    origin: 'https://synara.help',
     credentials: true,
   },
 })
@@ -102,5 +102,4 @@ export class MessagesGateway {
 
     this.server.to(`chat_${updatedMessage.chat.id}`).emit('messageRead', updatedMessage);
   }
-
 }

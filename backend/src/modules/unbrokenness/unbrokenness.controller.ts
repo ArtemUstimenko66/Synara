@@ -1,7 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { UnbrokennessService } from './unbrokenness.service';
 
-@Controller('unbrokenness')
+@Controller('api/unbrokenness')
 export class UnbrokennessController {
   constructor(private readonly unbrokennessService: UnbrokennessService) {}
 
