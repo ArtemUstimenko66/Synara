@@ -160,7 +160,4 @@ export class User {
 
   @OneToMany(() => Comment, (comment) => comment.author)
   comments_author?: Comment[];
-
-  @OneToMany(() => Comment, (comment) => comment.volunteer)
-  comments_volunteer?: Comment[];
 }

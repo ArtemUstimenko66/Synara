@@ -7,6 +7,7 @@ import {
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { User } from '../../users/entities/users.entity';
+import {VolunteersEntity} from "../../users/entities/volunteers.entity";
 
 @Entity('comment')
 export class Comment {
@@ -18,11 +19,11 @@ export class Comment {
   id: number;
 
   @ApiProperty({
-    example: '5',
+    example: 4.5,
     description: 'Rating of volunteer',
     type: Number,
   })
-  @Column({ type: 'int', nullable: false })
+  @Column({ type: 'decimal', precision: 3, scale: 2, nullable: false })
   rating: number;
 
   @ApiProperty({
@@ -38,8 +39,8 @@ export class Comment {
   })
   author: User;
 
-  @ManyToOne(() => User, (user) => user.comments_volunteer, {
+  @ManyToOne(() => VolunteersEntity, (volunteer) => volunteer.comments_volunteer, {
     onDelete: 'CASCADE',
   })
-  volunteer: User;
+  volunteer: VolunteersEntity;
 }

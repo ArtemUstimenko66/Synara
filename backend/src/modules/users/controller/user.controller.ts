@@ -85,7 +85,6 @@ export class UserController {
     return volunteers;
   }
 
-
   @UseGuards(JwtAuthGuard)
   @Post(':id/avatar')
   @UseInterceptors(FileInterceptor('file'))
@@ -105,5 +104,11 @@ export class UserController {
       @Body() updateUserDto: UpdateUserDto,
   ) {
     return this.userService.updateUser(userId, updateUserDto);
+  }
+
+  @Get(':id/rating')
+  async calculateVolunteerRating(@Param('id') id: number) : Promise<{ rating: number }> {
+    const rating = await this.volunteerService.calculateVolunteerRating(id);
+    return { rating };
   }
 }

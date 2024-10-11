@@ -1,11 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import {Injectable, NotFoundException} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, SelectQueryBuilder } from 'typeorm';
 import { VolunteersEntity } from '../entities/volunteers.entity';
 import { CreateVolunteerDto } from '../dtos/create-volunteer.dto';
 import { SupportType } from "../enums/support-type.enum";
 import { GenderType } from "../enums/gender.enum";
-
+import { Comment } from "../../comments/entity/comments.entity";
 
 export interface FindVolunteersOptions {
   name?: string;
@@ -23,6 +23,8 @@ export class VolunteersService {
   constructor(
     @InjectRepository(VolunteersEntity)
     private volunteersRepository: Repository<VolunteersEntity>,
+    @InjectRepository(Comment)
+    private commentRepository: Repository<Comment>,
   ) {}
 
   async create(
@@ -95,5 +97,32 @@ export class VolunteersService {
       const maxBirthDate = new Date(today.getFullYear() - maxAge, today.getMonth(), today.getDate());
       qb.andWhere('user.birthDate >= :maxBirthDate', { maxBirthDate });
     }
+  }
+
+  async calculateVolunteerRating(userId: number): Promise<number> {
+    const volunteer = await this.volunteersRepository.findOne({
+      where: { id: userId },
+    });
+
+    if (!volunteer) {
+      throw new NotFoundException(`Volunteer with ID ${userId} not found`);
+    }
+
+    const comments = await this.commentRepository.find({
+      where: { volunteer: { id: userId } },
+    });
+
+    if (comments.length === 0) {
+      volunteer.rating = 0;
+    } else {
+      const totalRating = comments.reduce((sum, comment) => sum + parseFloat(comment.rating.toString()), 0);
+      const averageRating = totalRating / comments.length;
+
+      volunteer.rating = parseFloat(averageRating.toFixed(2)); // Используя toFixed
+      // volunteer.rating = Math.round((averageRating + Number.EPSILON) * 100) / 100; // Используя Math.round
+    }
+
+    await this.volunteersRepository.save(volunteer);
+    return volunteer.rating;
   }
 }

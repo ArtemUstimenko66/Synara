@@ -206,6 +206,12 @@ export class GatheringsService {
   }
 
   async markGatheringsAsFavorite(id: number): Promise<Gatherings> {
-    return this.updateGatheringStatus(id, { is_favorite: true });
-  }
+    const gatherings = await this.findOne(id);
+    if (!gatherings) {
+      throw new NotFoundException(`Gatherings with ID ${id} not found`);
+    }
+
+    gatherings.is_favorite = !gatherings.is_favorite;
+
+    return this.gatheringRepository.save(gatherings);  }
 }

@@ -1,8 +1,9 @@
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn, JoinColumn } from 'typeorm';
+import {Column, Entity, OneToOne, PrimaryGeneratedColumn, JoinColumn, OneToMany} from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { SupportType } from '../enums/support-type.enum';
 import { User } from './users.entity';
 import { WorkingDays } from "../enums/working-days.enum";
+import {Comment} from "../../comments/entity/comments.entity";
 
 @Entity('volunteers')
 export class VolunteersEntity {
@@ -60,7 +61,7 @@ export class VolunteersEntity {
     description: 'Rating of the volunteer (from 0 to 5 stars)',
     required: false,
   })
-  @Column({ type: 'decimal', precision: 2, scale: 1, nullable: true })
+  @Column({ type: 'decimal', precision: 3, scale: 2, nullable: true })
   rating?: number;
 
   @ApiProperty({
@@ -101,4 +102,7 @@ export class VolunteersEntity {
   @OneToOne(() => User, (user) => user.volunteer, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'userId' })
   user: User;
+
+  @OneToMany(() => Comment, (comment) => comment.volunteer)
+  comments_volunteer?: Comment[];
 }
