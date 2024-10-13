@@ -3,7 +3,7 @@ import TwitterImg from '../../../../assets/images/twitter_x.svg?react';
 
 const TwitterLoginButton: React.FC = () => {
     const handleLogin = () => {
-        window.location.href = 'http://localhost:8080/auth/twitter';
+        window.location.href = 'https://synara.help/auth/twitter';
     };
 
     return (
