@@ -15,6 +15,9 @@ export default defineConfig({
         quality: 50
       }
     })
-  ]
+  ],
+  optimizeDeps: {
+    exclude: ['chunk-NNRYVFNL.js']
+  }
 });
 

@@ -35,8 +35,8 @@ const Filters: React.FC<FiltersProps> = ({ onCloseSidebar, onOpenMap }) => {
         const urgency = searchParams.get('isUrgent');
         const gender = searchParams.get('gender');
         const ukraine = searchParams.get('ukraine');
-        const ageTo = searchParams.get('ageTo');
-        const ageFrom = searchParams.get('ageFrom');
+        const ageTo = searchParams.get('maxAge');
+        const ageFrom = searchParams.get('minAge');
 
         if (types.length) {
             const selectedCategoriesFromUrl = types
@@ -128,15 +128,15 @@ const Filters: React.FC<FiltersProps> = ({ onCloseSidebar, onOpenMap }) => {
         }
 
         if (ageTo) {
-            newSearchParams.set('ageTo', ageTo);
+            newSearchParams.set('maxAge', ageTo);
         } else {
-            newSearchParams.delete('ageTo');
+            newSearchParams.delete('maxAge');
         }
 
         if (ageFrom) {
-            newSearchParams.set('ageFrom', ageFrom);
+            newSearchParams.set('minAge', ageFrom);
         } else {
-            newSearchParams.delete('ageFrom');
+            newSearchParams.delete('minAge');
         }
 
         // Добавляем фильтр по всей Украине

@@ -179,24 +179,24 @@ const PetitionPage: React.FC = () => {
 
 				<div className="flex flex-col w-full items-center mt-20">
 					{/* Top Section: Create Petition, Search, Filter, and Sort */}
-					<div className="flex w-full items-center mb-8">
+					<div className="flex sm:flex-col md:flex-row xl:flex-row w-full items-center md:mb-0 sm:mb-0 xl:mb-2">
 						{/* Left Side - Create Petition Button */}
 						<Button onClick={handleGoCreatePetions} hasBlue={true}
-								className="h-12 sm:w-[27%] md:w-[25%] xl:w-[25%] font-montserratMedium sm:text-xs md:text-xs xl:text-relative-h5">
+								className="h-12 sm:w-full md:w-[25%] xl:w-[25%] font-montserratMedium sm:text-xs md:text-xs xl:text-relative-h5">
 							СТВОРИТИ ПЕТИЦІЮ
 						</Button>
 
 						{/* Center - Search Component */}
-						<div className="ml-4 w-full h-14">
+						<div className="xl:ml-4 md:ml-4 sm:ml-0 xl:mt-0 md:mt-0 sm:mt-2 w-full h-14">
 							<SearchPetitions/>
 						</div>
 					</div>
 
-					<div className="flex w-full justify-between mb-8">
+					<div className="flex md:flex-row xl:flex-row sm:flex-col w-full justify-between mb-8">
 						{/* Left Side - Filter Button */}
-						<Button hasBlue={true} className="px-4 -py-0.5 text-relative-h5"
+						<Button hasBlue={true} className="px-4 -py-0.5 text-relative-h5 sm:mb-2 xl:mb-0 md:mb-0"
 								onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-							<span className="text-montserratMedium text-relative-h5">Фільтрувати</span>
+							<span className="text-montserratMedium text-relative-h5 ">Фільтрувати</span>
 						</Button>
 
 						{/* Right Side - Sort Button */}
@@ -256,7 +256,7 @@ const PetitionPage: React.FC = () => {
 							<div className="flex items-center justify-center my-[10%] xl:ml-[30vw] w-full text-gray-500">
 								<div
 									className="text-center font-montserratMedium flex flex-col items-center justify-center">
-									<img src={NothingFound} className="w-[20vw] h-auto mb-4"/>
+									<img src={NothingFound} className="xl:w-[20vw] xl:h-auto sm:w-[50vw] md:w-[20vw] md:h-auto mb-4"/>
 									Наразі немає зборів за обраними фільтрами
 								</div>
 							</div>

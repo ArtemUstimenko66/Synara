@@ -23,7 +23,7 @@ const Announcement: React.FC<AnnouncementProps> = ({
                                                        typeHelp,
                                                        is_urgent,
                                                    }) => {
-    const formattedDate = typeof datePosted === 'string' ? new Date(datePosted) : datePosted;
+    const formattedDate = datePosted instanceof Date && !isNaN(datePosted.getTime()) ? datePosted : new Date(datePosted);
 
     const currentDate = new Date();
     const postedDate = new Date(datePosted);
@@ -37,6 +37,7 @@ const Announcement: React.FC<AnnouncementProps> = ({
     const handleDetailsClick = () => {
         navigate(`/main/announcement/${id}`);
     };
+
 
     return (
         <div className="bg-perfect-gray w-full rounded-3xl flex flex-col h-full">

@@ -55,7 +55,7 @@ export const createAnnouncement = async (data: AnnouncementData) => {
             viewsCount: 0,
             responsesCount: 0
         }, { withCredentials: true });
-        console.log('Announcement created successfully:', response.data);
+       // console.log('Announcement created successfully:', response.data);
         return response.data;
     } catch (error: any) {
         console.error('Error creating announcement:', error);
@@ -76,7 +76,7 @@ export const uploadDocument = async (file: File, announcementId: string) => {
                 'Content-Type': 'multipart/form-data',
             },
         });
-        console.log('Document uploaded successfully:', response.data);
+        //console.log('Document uploaded successfully:', response.data);
         return response.data;
     } catch (error) {
         console.error("Failed to upload document:", error);
@@ -220,8 +220,8 @@ export const getFilteredVolunteers = async (
             withCredentials: true,
         });
 
-        console.log('query->:', `/users/volunteer/?${decodedQueryParams}`);
-        console.log('Filtered and searched volunteers fetched successfully:', response.data);
+        //console.log('query->:', `/users/volunteer/?${decodedQueryParams}`);
+       // console.log('Filtered and searched volunteers fetched successfully:', response.data);
         return response.data;
     } catch (error) {
         console.error('Failed to fetch filtered volunteers:', error);
@@ -232,7 +232,7 @@ export const getFilteredVolunteers = async (
 
 export const incrementViews = async (id: number) => {
     try {
-        console.log('Increment', `http://localhost:8080/api/announcements/${id}/increment-views`);
+       // console.log('Increment', `http://localhost:8080/api/announcements/${id}/increment-views`);
         await api.patch(`/announcements/${id}/increment-views`,{},{
             withCredentials: true,
         });
@@ -315,7 +315,7 @@ export const respondAnnouncement = async (userId: number, announcementId: number
 export const submitSynaraFeedback = async (feedbackData: any) => {
     try {
         const response = await api.post('http://localhost:8080/api/synara-comments', feedbackData, { withCredentials: true });
-        console.log('Feedback Synara submitted:', feedbackData);
+        //console.log('Feedback Synara submitted:', feedbackData);
         return response;
     } catch (error) {
         console.error('Failed to submit Synara feedback:', error);

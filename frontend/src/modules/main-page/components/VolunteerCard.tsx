@@ -9,6 +9,7 @@ import {getDayOfWeekInUkrainian} from "../../../data/dayOfWeekMap.ts";
 import {useNavigate} from "react-router-dom";
 
 const formatTime = (time: string): string => {
+    if (!time) return '00:00';
     return time.length <= 2 ? `${time}:00` : time;
 };
 

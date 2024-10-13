@@ -54,7 +54,6 @@ const gatheringsSlice = createSlice({
                 }
                 state.hasMore = action.payload.length > 12;
             })
-
             .addCase(loadGatherings.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.error.message || 'Failed to load gatherings';

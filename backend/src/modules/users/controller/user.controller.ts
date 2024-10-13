@@ -85,6 +85,13 @@ export class UserController {
     return volunteers;
   }
 
+  @ApiResponse({ status: 200, type: VolunteersEntity })
+  @Get('/volunteer/:id')
+  async findVolunteerById(@Param('id') id: number): Promise<VolunteersEntity> {
+    return this.volunteerService.findVolunteerById(id);
+  }
+
+
   @UseGuards(JwtAuthGuard)
   @Post(':id/avatar')
   @UseInterceptors(FileInterceptor('file'))

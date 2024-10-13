@@ -12,7 +12,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
 
 @ApiTags('Files')
-@Controller('api/files')
+@Controller('files')
 export class FileController {
   private readonly bucket: string;
 
