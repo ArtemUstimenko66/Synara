@@ -12,7 +12,7 @@ import { GoogleOauthGuard } from './guards/google-oauth.guard';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Authorization google')
-@Controller('api/auth-google')
+@Controller('auth-google')
 export class AuthGoogleController {
   constructor(private authService: AuthGoogleService) {}
 
@@ -28,8 +28,8 @@ export class AuthGoogleController {
 
       res.cookie('accessToken', token, {
         maxAge: 2592000000,
-        //sameSite: 'none', // ???
-        secure: false,
+        sameSite: 'none',
+        secure: true,
         httpOnly: true,
       });
 

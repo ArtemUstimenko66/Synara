@@ -10,7 +10,7 @@ export class TwitterStrategy extends PassportStrategy(Strategy, 'twitter') {
     super({
       consumerKey: 'c2G4RI18Ir4jHGXc9pwqBl6tK',
       consumerSecret: 'e5k5FLrF2YDJCKGKfkE18meJ3J0QYg1cqjvZ13ai3p9fxwB77G',
-      callbackURL: 'https://synara.help/auth/twitter/callback',
+      callbackURL: 'https://synara.help/api/auth/twitter/callback',
       includeEmail: true,
     });
   }
