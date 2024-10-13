@@ -9,6 +9,7 @@ import VectorWhite from '../../../assets/images/VectorWhite.svg?react';
 import Cookies from 'js-cookie';
 import {login} from "../api/loginService.ts";
 import {useTranslation} from "react-i18next";
+import {useAuthContext} from "../../../hooks/AuthContext.tsx";
 
 const LoginMain: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -21,7 +22,7 @@ const LoginMain: React.FC = () => {
     const [generalError, setGeneralError] = useState<string>('');
 
     const navigate = useNavigate();
-
+    const { loginContext } = useAuthContext();
     useEffect(() => {
         const savedEmail = Cookies.get('email');
         if (savedEmail) {
@@ -54,7 +55,7 @@ const LoginMain: React.FC = () => {
             try {
                 await login(email, password);
                 //const { accessToken } = response;
-
+                await loginContext();
                 if (selectedOptions.terms) {
                     Cookies.set('email', email, { expires: 7 });
                 } else {

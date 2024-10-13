@@ -3,7 +3,7 @@ import GoogleImg from '../../../../assets/images/google.svg?react'; // Ensure th
 
 const GoogleLoginButton: React.FC = () => {
     const handleGoogleLogin = () => {
-        window.location.href = 'http://localhost:8080/auth-google/google';
+        window.location.href = 'http://localhost:8080/api/auth-google/google';
     };
 
     return (

@@ -5,6 +5,7 @@ export const getProfile = async () => {
         const response = await api.get('/auth/profile', {
             withCredentials: true
         });
+        console.log("/auth/profile");
         return response.data;
     } catch (error) {
         console.log('Failed to fetch profile', error);
@@ -17,6 +18,7 @@ export const getUser = async ( id: number ) => {
         const response = await api.get(`/auth/user/${id}`, {
             withCredentials: true
         });
+        console.log("/auth/user/${id}");
         return response.data;
     } catch (error) {
         console.log('Failed to fetch profile', error);

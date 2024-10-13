@@ -28,6 +28,7 @@ import HowItWorksPage from "./pages/how-it-works/HowItWorksPage.tsx";
 import CookiePolicyPage from "./pages/cookie-policy/CookiePolicyPage.tsx";
 import MapsAlarm from "./pages/maps/MapsAlarm.tsx";
 import Maps from "./pages/maps/Maps.tsx";
+import {AuthProvider} from "./hooks/AuthContext.tsx";
 
 const App: React.FC = () => {
     return (
@@ -93,10 +94,14 @@ const App: React.FC = () => {
     );
 };
 
+
 const AppWrapper: React.FC = () => (
     <Router>
-        <App />
+            <AuthProvider>
+                    <App />
+            </AuthProvider>
     </Router>
 );
+
 
 export default AppWrapper;

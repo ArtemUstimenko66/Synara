@@ -50,7 +50,7 @@ const MainHeader: React.FC = () => {
     return (
         <>
             <header
-                className={`w-full fixed bg-almost-white top-0 left-0  transition-transform duration-300 ease-in-out 
+                className={`w-full fixed bg-almost-white top-0 left-0 z-30 transition-transform duration-300 ease-in-out 
             ${isVisible ? 'header-slide-in' : 'header-slide-out'} `}
             >
                 <LanguageSelector/>

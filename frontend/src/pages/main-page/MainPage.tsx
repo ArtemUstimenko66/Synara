@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useLayoutEffect, useState} from 'react';
 import MainHeader from "../../modules/main-page/components/ui/MainHeader.tsx";
 import SearchComponent from "../../modules/main-page/components/ui/SearchComponent.tsx";
 import Announcement from "../../modules/main-page/components/Announcement.tsx";
@@ -8,7 +8,6 @@ import NothingFound from "../../assets/images/NothingFound.png"
 import { Button } from "../../ui/Button.tsx";
 import Footer from "../../components/Footer.tsx";
 import { SideBar } from "../../modules/main-page/components/SideBar.tsx";
-import {getFilteredAnnouncements, getFilteredVolunteers} from "../../modules/main-page/api/mainPageService.ts";
 import { Link, useSearchParams } from "react-router-dom";
 import { urgencyTranslations } from "../../data/urgencyMap.ts";
 import { Map } from "../../modules/main-page/components/Map.tsx";
@@ -19,68 +18,115 @@ import {useAuth} from "../../hooks/useAuth.ts";
 import VolunteerCard from "../../modules/main-page/components/VolunteerCard.tsx";
 import { Player } from '@lottiefiles/react-lottie-player';
 import loadingAnimation from '../../assets/animations/logoLoading.json';
+import {
+    fetchAnnouncements
+} from "../../redux/announcementsSlice.ts";
+import {useDispatch, useSelector} from "react-redux";
+import {AppDispatch, RootState} from "../../redux/store.ts";
+
+interface User {
+    id: string;
+    firstName: string;
+    lastName: string;
+    avatarUrl?: string;
+}
+
+interface Announcement {
+    id: string;
+    user: User;
+    userName: string;
+    avatar: string;
+    date_posted: Date;
+    description: string;
+    type_help: string;
+    is_urgent: string;
+}
+
+interface Volunteer {
+    user: User;
+    name: string;
+    rating: number;
+    supports: string[];
+    description: string;
+    startWorkingDay: string;
+    endWorkingDay: string;
+    startTime: string;
+    endTime: string;
+    avatar: string;
+}
 
 
 const MainPage: React.FC = () => {
-    const [sortOrder, setSortOrder] = useState<'ASC' | 'DESC' >('ASC');
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isMapMenuOpen, setIsMapMenuOpen] = useState(false);
-
-    const [announcements, setAnnouncements] = useState<any[]>([]);
-    const [filteredAnnouncements, setFilteredAnnouncements] = useState<any[] | null>(null);
-    const [searchParams, setSearchParams] = useSearchParams();
-
-    const limit = 12;
+    const [searchParams] = useSearchParams();
     const {t} = useTranslation();
-    const { role, isLoading } = useAuth();
-    const [offset, setOffset] = useState(0);
-    const [hasMore, setHasMore] = useState(true);
-    const [isLoadingData, setIsLoadingData] = useState(true);
 
     const [isChatSidebarOpen, setIsChatSidebarOpen] = useState(false);
+    const [isLoadingData, setIsLoadingData] = useState(true);
 
+    const dispatch = useDispatch<AppDispatch>();
+    const { isLoading, limit } = useSelector((state: any) => state.announcements);
+    const { role, isLoading: isAuthLoading } = useAuth();
     //console.log("role ->", role);
+
+    const { announcements = [], hasMore = false } = useSelector(
+        (state: RootState) => state.announcements || {}
+    );
+
+    const [, setAnnouncements] = useState<any[]>([]);
+    const [filteredAnnouncements, setFilteredAnnouncements] = useState<any[] | null>(null);
+    const [sortOrder, setSortOrder] = useState<'ASC' | 'DESC'>('ASC');
+    const [offset, setOffset] = useState(0);
+
+    const [, setHasMore] = useState(true);
+
 
     const toggleChatSidebar = () => {
         setIsChatSidebarOpen(!isChatSidebarOpen);
     };
+    const [scrollPosition, setScrollPosition] = useState(0);
 
-    // get announcements by search/filters
+
+    const saveScrollPosition = () => {
+        setScrollPosition(window.scrollY);
+    };
+
+    useLayoutEffect(() => {
+        window.scrollTo(0, scrollPosition);
+    }, [filteredAnnouncements]);
+
+    // get data from store
     useEffect(() => {
-        const fetchAnnouncements = async () => {
-            if (isLoading || !role) return;
-
+        const fetchAndSetAnnouncements = async () => {
+            setIsLoadingData(true);
             const query = searchParams.get('query') || '';
             const types = searchParams.getAll('type');
-            const currentSortOrder = (searchParams.get('sortOrder') as 'ASC' | 'DESC') || 'ASC';
             const urgencyParam = searchParams.get('isUrgent');
-            const genderParam = searchParams.get('gender');
-            const ageTo = searchParams.get('ageTo');
-            const ageFrom = searchParams.get('ageFrom');
+            const maxAge = Number(searchParams.get('maxAge'));
+            const minAge = Number(searchParams.get('minAge'));
+            const gender = searchParams.get('gender') || '';
             const urgency = urgencyParam === 'true' ? true : urgencyParam === 'false' ? false : undefined;
 
-            setOffset(0);
-            setSortOrder(currentSortOrder);
-
             try {
-                setIsLoadingData(true);
-                let data;
-                if (role === 'volunteer') {
-                    data = await getFilteredAnnouncements(query, types, limit, 0, currentSortOrder, urgency);
-                } else {
-                    // @ts-ignore
-                    data = await getFilteredVolunteers(query, types, limit, 0, currentSortOrder, genderParam, ageFrom, ageTo);
-                }
+                const data = await dispatch(fetchAnnouncements({
+                    query,
+                    types,
+                    urgency,
+                    sortOrder,
+                    role,
+                    offset: 0,
+                    limit,
+                    genderParam: gender,
+                    ageFrom: minAge,
+                    ageTo: maxAge
+                })).unwrap();
 
-                setAnnouncements(data);
-                setOffset(limit);
+                setFilteredAnnouncements(data);
+                setOffset(0);
+                setHasMore(data.length === limit);
 
-                if (data.length < limit) {
-                    setHasMore(false);
-                } else {
-                    setHasMore(true);
-                }
             } catch (error) {
                 console.error('Error fetching announcements:', error);
             } finally {
@@ -88,8 +134,9 @@ const MainPage: React.FC = () => {
             }
         };
 
-        fetchAnnouncements();
-    }, [role, searchParams, sortOrder, isLoading]);
+        fetchAndSetAnnouncements();
+    }, [dispatch, searchParams, sortOrder, role, isAuthLoading, limit]);
+
 
     if (isLoadingData) {
         return (
@@ -104,44 +151,63 @@ const MainPage: React.FC = () => {
         );
     }
 
+
     // sort
     const handleSort = (order: 'ASC' | 'DESC') => {
         setSortOrder(order);
         setOffset(0);
+        setHasMore(true);
+        saveScrollPosition();
+        const query = searchParams.get('query') || '';
+        const types = searchParams.getAll('type');
+        const urgencyParam = searchParams.get('isUrgent');
+        const maxAge = Number(searchParams.get('maxAge'));
+        const minAge = Number(searchParams.get('minAge'));
+        const gender = searchParams.get('gender')|| '';
+        const urgency = urgencyParam === 'true' ? true : urgencyParam === 'false' ? false : undefined;
+
+        dispatch(fetchAnnouncements({ query, types, urgency, sortOrder: order, role, offset: 0, limit, gender, minAge, maxAge }))
+            .then((result) => {
+                setFilteredAnnouncements(result.payload);
+                if (result.payload.length < limit) {
+                    setHasMore(false);
+                }
+                window.scrollTo(0, scrollPosition);
+            });
+
         toggleDropdown();
-        setSearchParams(prev => {
-            const newParams = new URLSearchParams(prev);
-            newParams.set('sortOrder', order);
-            if (prev.has('isUrgent')) {
-                newParams.set('isUrgent', prev.get('isUrgent')!);
-            }
-            return newParams;
-        });
-        window.location.reload();
     };
 
     // pagination
-    const loadMoreAnnouncements = async () => {
-        const types = searchParams.getAll('type');
+    const loadMoreAnnouncements = () => {
+        saveScrollPosition();
+        const newOffset = offset + limit;
+        setOffset(newOffset);
         const query = searchParams.get('query') || '';
+        const types = searchParams.getAll('type');
         const urgencyParam = searchParams.get('isUrgent');
-        const urgency = urgencyParam === 'true' ? true : (urgencyParam === 'false' ? false : undefined);
-        try {
-            const data = await getFilteredAnnouncements(query, types, limit, offset, sortOrder, urgency);
-            setAnnouncements(prev => [...prev, ...data]);
-            setOffset(offset + limit);
-            if (data.length < limit) {
-                setHasMore(false);
-            }
-        } catch (error) {
-            console.error('Error loading more announcements:', error);
-        }
+        const maxAge = searchParams.get('maxAge');
+        const minAge = searchParams.get('minAge');
+        const gender = searchParams.get('gender');
+        const urgency = urgencyParam === 'true' ? true : urgencyParam === 'false' ? false : undefined;
+
+        dispatch(fetchAnnouncements({ query, types, urgency, sortOrder, role, offset: newOffset, limit, gender, minAge, maxAge }))
+            .then((result) => {
+                if (result.payload.length < limit) {
+                    setHasMore(false);
+                }
+                // @ts-ignore
+                setFilteredAnnouncements(prev => [...prev, ...result.payload]);
+                window.scrollTo(0, scrollPosition);
+            });
     };
 
-    // apply filters
+
     const handleApplyFilters = (filtered: any[]) => {
         setFilteredAnnouncements(filtered);
-        window.location.reload();
+        setOffset(0);
+        setHasMore(filtered.length > 0);
+        window.scrollTo(0, scrollPosition);
     };
 
     const toggleDropdown = () => {
@@ -158,11 +224,18 @@ const MainPage: React.FC = () => {
         setIsMobileMenuOpen(true);
     };
 
+    if (isAuthLoading || isLoading) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <Player autoplay loop src={loadingAnimation} style={{ height: '200px', width: '200px' }} />
+            </div>
+        );
+    }
+
     // filter by map
     const handleUsersByRadiusFound = (users: any[]) => {
         setAnnouncements(users);
-      //  setIsMapMenuOpen(false);
-        setHasMore(false);
+        setIsMapMenuOpen(false);
     };
 
 
@@ -189,7 +262,7 @@ const MainPage: React.FC = () => {
                             <div className="w-full flex items-start justify-start md:mt-0">
                                 <Button
                                     hasBlue={true}
-                                    className="px-4 text-relative-h5 w-full md:w-1/2 xl:w-3/6"
+                                    className="px-4 text-relative-h5 w-full md:w-1/2 xl:w-3/6 xl:mb-0 md:mb-0 sm:mb-2"
                                     onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                                 >
                                     <span className="text-montserratMedium text-relative-h5">{t('filter')}</span>
@@ -271,7 +344,7 @@ const MainPage: React.FC = () => {
                             <div className="w-full flex justify-between">
                                 <div className="w-full mt-4 ml-4 flex flex-wrap justify-start">
                                     {(filteredAnnouncements || announcements).length > 0 ? (
-                                        (filteredAnnouncements || announcements).map((announcement, index) => (
+                                        (filteredAnnouncements || announcements).map((announcement: Announcement, index: number) => (
                                             <div key={index} className="w-full md:w-[48%] xl:w-[32%] mr-[1vw] p-2 mt-4">
                                                 <Announcement
                                                     id={`${announcement.id}`}
@@ -285,9 +358,9 @@ const MainPage: React.FC = () => {
                                             </div>
                                         ))
                                     ) : (
-                                        <div className="flex items-center justify-center my-[10%] w-full text-gray-500">
-                                            <img src={NothingFound} className="w-[20vw] h-auto"/>
-                                            <div className="text-center font-montserratMedium">
+                                        <div className="flex flex-col items-center justify-center  my-[10%] w-full text-gray-500">
+                                            <img src={NothingFound} className="xl:w-[20vw] xl:h-auto sm:w-[50vw] md:w-[20vw] md:h-auto mb-4"/>
+                                            <div className="text-center font-montserratMedium flex flex-col items-center justify-center">
                                                 {t('no_announcements_by_this_filters')}
                                             </div>
                                         </div>
@@ -299,14 +372,14 @@ const MainPage: React.FC = () => {
                         <div className="w-full flex justify-between">
                             <div className="w-full mt-4 ml-4 flex flex-wrap justify-start">
                                 {(filteredAnnouncements || announcements).length > 0 ? (
-                                    (filteredAnnouncements || announcements).map((volunteer, index) => (
+                                    (filteredAnnouncements || announcements).map((volunteer: Volunteer, index: number) => (
                                         <div
                                             key={index}
                                             className="w-full sm:w-full md:w-[48%] xl:w-[32%] mr-[1vw] p-2 mt-4"
                                         >
                                             <VolunteerCard
                                                 key={index}
-                                                id={volunteer.user.id}
+                                                id={Number(volunteer.user.id)}
                                                 name={`${volunteer.user.firstName} ${volunteer.user.lastName}`}
                                                 rating={volunteer.rating}
                                                 supports={volunteer.supports}

@@ -275,7 +275,7 @@ const HomePage: React.FC = () => {
                             className="hidden xl:flex xl:order-1 md:flex md:order-1 xl:w-1/2 md:w-relative-1/2">
                             <img
                                 src="../../../public/gifs/WhoAreWe.gif"
-                                className="xl:w-full xl:mt-[10vh] xl:h-auto md:w-relative-elg md:h-auto md:ml-[5vw] xl:mr-0 md:mr-relative-md"
+                                className="xl:w-full xl:mt-[10vh] xl:h-auto md:w-relative-elg md:h-[50%] md:ml-[5vw] xl:mr-0 md:mr-relative-md"
                                 alt="SVG Image"
                             />
                         </div>

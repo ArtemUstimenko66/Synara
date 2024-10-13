@@ -172,9 +172,8 @@ const GatheringPage: React.FC = () => {
 						<div
 							className="w-full flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
 							{/* Кнопка "Створити збір" (1/3 ширины) */}
-							<div className="w-3/12">
-
-								<Button hasBlue={true} className="px-4 text-relative-h5 w-full"
+							<div className="sm:w-full md:w-3/12 xl:w-3/12">
+								<Button hasBlue={true} className="px-4 text-relative-h5 md:w-full sm:w-full xl:w-full"
 										onClick={handleCreateGathering}>
                                     <span className="text-montserratMedium uppercase text-relative-h5">
                                         Створити збір
@@ -184,15 +183,15 @@ const GatheringPage: React.FC = () => {
 							</div>
 
 							{/* Поле поиска (2/3 ширины) */}
-							<div className="w-9/12 h-[50px] ml-[1vw] flex justify-center">
+							<div className="sm:w-full md:w-9/12 xl:w-9/12 h-[50px] ml-[1vw] flex justify-center">
 								<SearchGathering/>
 							</div>
 						</div>
 
 						{/* Нижняя строка с фильтрами и сортировкой */}
-						<div className="w-full flex justify-between items-center">
+						<div className="w-full md:flex-row xl:flex sm:flex-col justify-between items-center">
 							{/* Кнопка "Фільтрувати" (прижата к левой части) */}
-							<div className="w-2/12">
+							<div className="sm:w-full md:w-2/12 xl:w-2/12 xl:mb-0 md:mb-0 sm:mb-2">
 								<Button hasBlue={true} className="px-4 text-relative-h5 w-full"
 										onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
 									<span className="text-montserratMedium text-relative-h5">{t('filter')}</span>
@@ -200,7 +199,7 @@ const GatheringPage: React.FC = () => {
 							</div>
 
 							{/* Кнопка сортировки (прижата к правой части) */}
-							<div className="w-2/12 flex justify-end">
+							<div className="xl:w-2/12 sm:w-full md:w-2/12 flex justify-end">
 								<div className="relative w-full">
 									<Button
 										hasBlue={true}
@@ -256,7 +255,7 @@ const GatheringPage: React.FC = () => {
 									<div className="flex items-center justify-center my-[10%] w-full text-gray-500">
 										<div
 											className="text-center font-montserratMedium flex flex-col items-center justify-center">
-											<img src={NothingFound} className="w-[20vw] h-auto mb-4"/>
+											<img src={NothingFound} className="xl:w-[20vw] xl:h-auto sm:w-[50vw] md:w-[20vw] md:h-auto mb-4"/>
 											Наразі немає зборів за обраними фільтрами
 										</div>
 									</div>

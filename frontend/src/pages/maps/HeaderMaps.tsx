@@ -51,7 +51,7 @@ const HeaderMaps: React.FC = () => {
 						<NavItem text={t('mainUPPER')} to="/main"/>
 						<NavItem text={t('about_usUPPER')} to="/about"/>
 						<NavItem text={t('collectionsUPPER')} to="/collections"/>
-						<NavItem text={t('mapUPPER')} to="/maps"/>
+
 						<NavItem text={t('how_it_worksUPPER')} to="/how-it-works"/>
 						<div className="text-dark-blue font-montserratMedium">
 							<NavItem text="КАРТА ТРИВОГ" to="/map-alert"/>
