@@ -26,6 +26,9 @@ export class Comment {
   @Column({ type: 'decimal', precision: 3, scale: 2, nullable: false })
   rating: number;
 
+  @Column({ type: 'timestamp', default: new Date(), nullable: false })
+  dateCreated: Date;
+
   @ApiProperty({
     example: 'Very good volunteer',
     description: 'Description of volunteer',

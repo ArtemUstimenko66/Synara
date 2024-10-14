@@ -76,6 +76,13 @@ export class AnnouncementController {
     return this.announcementService.findCompletedAnnouncementsForUser(user.id);
   }
 
+  @Get("/completed/:idVolunteer")
+  @ApiOperation({ summary: 'Get completed announcements by the volunteer, who completed them' })
+  @ApiResponse({ status: 200, type: [Announcement] })
+  getCompletedAnnouncementsByVolunteer(@Param('idVolunteer') id: number): Promise<Announcement[]> {
+    return this.announcementService.getCompletedAnnouncementsByVolunteer(id);
+  }
+
   @Get('/favorite')
   @ApiOperation({ summary: 'Get completed announcements for current user' })
   @ApiResponse({ status: 200, type: [Announcement] })
@@ -111,9 +118,10 @@ export class AnnouncementController {
   @Patch(':id/complete')
   @ApiOperation({ summary: 'Mark announcement as completed' })
   @ApiResponse({ status: 200, type: Announcement })
-  markAnnouncementAsCompleted(@Param('id') id: number) : Promise<Announcement> {
-    return this.announcementService.markAnnouncementAsCompleted(id);
+  markAnnouncementAsCompleted(@Param('id') id: number, @Body("volunteerWhoComplete") volunteerWhoCompleted: User) : Promise<Announcement> {
+    return this.announcementService.markAnnouncementAsCompleted(id, volunteerWhoCompleted);
   }
+
 
   @Patch(':id/favorite')
   @ApiOperation({ summary: 'Mark announcement as favorite' })
@@ -135,4 +143,6 @@ export class AnnouncementController {
   incrementResponses(@Param('id') id: number) : Promise<Announcement> {
     return this.announcementService.incrementResponsesCount(id);
   }
+
+
 }

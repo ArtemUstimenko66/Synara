@@ -77,6 +77,14 @@ export class PetitionController {
     //     return this.petitionService.findFavoritePetitions();
     // }
 
+    @ApiOperation({ summary: 'Get an announcement by ID' })
+    @ApiResponse({ status: 200, type: [Petition] })
+    @Get('/user/:id')
+    findPetitionsByUserId(@Param('id') id: number): Promise<Petition[]> {
+        return this.petitionService.findPetitionsByUserId(id);
+    }
+pe
+
     @Get('/completed')
     @ApiOperation({ summary: 'Get completed petitions for current user' })
     @ApiResponse({ status: 200, type: [Petition] })

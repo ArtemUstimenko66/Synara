@@ -1,14 +1,24 @@
-import React from "react";
+
 import ReactStars from "react-rating-stars-component";
+import React from "react";
 
 interface ReviewProps {
 	comment: string;
 	name: string;
 	date: string;
 	avatar: string;
+	rating: number;
 }
 
-const ReviewProfile: React.FC<ReviewProps> = ({ comment, name, date, avatar }) => {
+const formatDate = (dateString: string) => {
+	const date = new Date(dateString);
+	const day = String(date.getDate()).padStart(2, '0');
+	const month = String(date.getMonth() + 1).padStart(2, '0');
+	const year = date.getFullYear();
+	return `${day}.${month}.${year}`;
+};
+
+const ReviewProfile: React.FC<ReviewProps> = ({ comment, name, date, avatar, rating }) => {
 
 	return (
 		<div className="mb-12 relative p-12 rounded-3xl bg-gray-100">
@@ -21,7 +31,7 @@ const ReviewProfile: React.FC<ReviewProps> = ({ comment, name, date, avatar }) =
 			<div className="text-perfect-yellow mb-4 select-none">
 				<ReactStars
 					count={5}
-					value={4}
+					value={rating}
 					size={24}
 					isHalf={true}
 					edit={false}
@@ -33,7 +43,7 @@ const ReviewProfile: React.FC<ReviewProps> = ({ comment, name, date, avatar }) =
 			</div>
 			<div className="flex justify-between w-full">
 				<p className="font-montserratRegular select-none">{name}</p>
-				<p className="font-montserratRegular text-sm select-none">{date}</p>
+				<p className="font-montserratRegular text-sm select-none">{formatDate(date)}</p>
 			</div>
 		</div>
 	);

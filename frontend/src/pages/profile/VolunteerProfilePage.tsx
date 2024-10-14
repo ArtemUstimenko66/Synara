@@ -11,8 +11,8 @@ import {Button} from "../../ui/Button.tsx";
 import Footer from "../../components/Footer.tsx";
 import {useNavigate, useParams} from "react-router-dom";
 import {
-	fetchVolunteerDetails,
-	getUser, respondVolunteer
+	fetchVolunteerDetails, getCommentsAboutUser,
+	getUser, getUserCompletedAnnouncements, getUserGatherings, getUserPetitions, respondVolunteer
 } from "../../modules/profile/api/profileService.ts";
 import {Player} from "@lottiefiles/react-lottie-player";
 import loadingAnimation from "../../assets/animations/logoLoading.json";
@@ -39,6 +39,7 @@ interface VolunteerDetails {
 	startTime: string;
 	endTime: string;
 	description: string;
+	support_description: string;
 	user: {
 		id: number;
 		firstName: string;
@@ -72,10 +73,10 @@ const VolunteerProfilePage: React.FC = () => {
 	const {id} = useParams();
 
 	const [activeSection, setActiveSection] = useState<string>('reviews');
-	const [, setReviewsData] = useState([]);
 	const [announcementsData, setAnnouncementsData] = useState([]);
 	const [gatheringsData, setGatheringsData] = useState([]);
 	const [petitionsData, setPetitionsData] = useState([]);
+	const [commentsData, setCommentsData] = useState([]);
 	const navigate = useNavigate();
 
 
@@ -87,11 +88,6 @@ const VolunteerProfilePage: React.FC = () => {
 				try {
 					const data = await getUser(userId);
 					console.log('getUser(userId): ', data);
-					// @ts-ignore
-					setReviewsData(reviews);
-					setAnnouncementsData(data.announcements);
-					setGatheringsData(data.gatherings);
-					setPetitionsData(data.petitions);
 				} catch (error) {
 					console.log('Error fetching user data:', error);
 				}
@@ -104,15 +100,30 @@ const VolunteerProfilePage: React.FC = () => {
 	const [details, setDetails] = useState<VolunteerDetails | null>(null);
 
 	useEffect(() => {
-		const loadDetails = async () => {
+		const fetchVolunteerData = async () => {
+			const data = await fetchVolunteerDetails(Number(id));
+			setDetails(data);
 			if (id) {
-				const data = await fetchVolunteerDetails(Number(id));
-				console.log(data);
-				setDetails(data);
+				try {
+					const announcements = await getUserCompletedAnnouncements(Number(data.id));
+					setAnnouncementsData(announcements);
+
+					const petitions = await getUserPetitions(Number(id));
+					setPetitionsData(petitions);
+
+					const gatherings = await getUserGatherings(Number(id));
+					setGatheringsData(gatherings);
+
+					const comments = await getCommentsAboutUser(Number(data.id));
+					setCommentsData(comments);
+				} catch (error) {
+					console.error('Failed to fetch announcements or petitions:', error);
+				}
 			}
 		};
-		loadDetails();
+		fetchVolunteerData();
 	}, [id]);
+
 
 	if (!details) {
 		return (
@@ -140,50 +151,7 @@ const VolunteerProfilePage: React.FC = () => {
 		}
 	};
 
-	const reviews = [
-		{
-			name: 'Ірина Шевченко',
-			date: '20.06.2023',
-			rating: 5,
-			comment: 'Як волонтер, я знайшов тут багато можливостей допомогти людям, які цього потребують. Це чудова платформа для об\'єднання зусиль.Як волонтер, я знайшов тут багато можливостей допомогти людям, які цього потребують. Це чудова платформа для об\'єднання зусиль',
-			avatar: 'https://randomuser.me/api/portraits/women/1.jpg',
-		},
-		{
-			name: 'Олександр Петренко',
-			date: '15.07.2023',
-			rating: 4,
-			comment: 'Платформа дуже зручна у використанні! Знайшов багато корисної інформації, та зміг допомогти багатьом людям.',
-			avatar: 'https://randomuser.me/api/portraits/men/2.jpg',
-		},
-		{
-			name: 'Марія Іваненко',
-			date: '02.08.2023',
-			rating: 5,
-			comment: 'Неймовірна спільнота волонтерів! Відчуваю себе частиною чогось великого та важливого.',
-			avatar: 'https://randomuser.me/api/portraits/women/3.jpg',
-		},
-		{
-			name: 'Дмитро Ковальчук',
-			date: '10.09.2023',
-			rating: 3,
-			comment: 'Платформа гарна, але іноді є проблеми з функціоналом. Сподіваюсь на покращення в майбутньому.',
-			avatar: 'https://randomuser.me/api/portraits/men/4.jpg',
-		},
-		{
-			name: 'Наталія Бойко',
-			date: '22.07.2023',
-			rating: 4,
-			comment: 'Багато можливостей для допомоги іншим, але хотілось би більше ресурсів для новачків.',
-			avatar: 'https://randomuser.me/api/portraits/women/5.jpg',
-		},
-		{
-			name: 'Андрій Мельник',
-			date: '05.08.2023',
-			rating: 5,
-			comment: 'Ця платформа зробила волонтерську діяльність доступною для всіх, хто бажає допомогти.',
-			avatar: 'https://randomuser.me/api/portraits/men/6.jpg',
-		},
-	];
+
 	return (
 		<Wrapper>
 			<MainHeader />
@@ -241,13 +209,8 @@ const VolunteerProfilePage: React.FC = () => {
 										</span>
 									))
 								}
-								<div className="text-sm flex mb-2 mt-2">
-									<div className=" font-montserratMedium flex">Психологічна допомога:</div>
-									Індивідуальні консультації
-								</div>
-								<div className="text-sm flex">
-									<div className=" font-montserratMedium flex">Інформаційна допомога:</div>
-									Пошук і надання інформації про доступні ресурси
+								<div className="text-sm flex mb-2 mt-[3vh]">
+									<div className=" font-montserratMedium flex">{details.support_description}</div>
 								</div>
 							</div>
 						</div>
@@ -278,7 +241,8 @@ const VolunteerProfilePage: React.FC = () => {
 
 					<MainContent
 						activeSection={activeSection}
-						reviews={reviews}
+						reviews={commentsData}
+						rating={`${details.rating}`}
 						announcements={announcementsData}
 						gatherings={gatheringsData}
 						petitions={petitionsData}

@@ -187,9 +187,10 @@ export class AnnouncementService {
     return this.announcementRepository.save(announcement);
   }
 
-  async markAnnouncementAsCompleted(id: number) : Promise<Announcement> {
-    return this.updateAnnouncementStatus(id, { is_completed: true });
+  async markAnnouncementAsCompleted(id: number, volunteer_who_complete: User) : Promise<Announcement> {
+    return this.updateAnnouncementStatus(id, { is_completed: true, volunteer_who_complete });
   }
+
 
   async markAnnouncementAsFavorite(id: number): Promise<Announcement> {
     const announcement = await this.findOne(id);
@@ -209,6 +210,14 @@ export class AnnouncementService {
   async incrementResponsesCount(id: number): Promise<Announcement> {
     return this.incrementCount(id, 'responsesCount');
   }
+
+  async getCompletedAnnouncementsByVolunteer(idVolunteer:number){
+    return await this.announcementRepository.find({
+      where: { volunteer_who_complete : {id: idVolunteer} },
+      relations: ['volunteer_who_complete', 'user']
+    })
+  }
+
 }
 
 

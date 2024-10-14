@@ -121,4 +121,8 @@ export class Announcement {
 
   @OneToMany(() => File, (file) => file.announcement)
   files: File[];
+
+  @ManyToOne(() => User, (user) => user.complete_announcements)
+  volunteer_who_complete: User;
+
 }

@@ -167,4 +167,8 @@ export class User {
 
   @OneToMany(() => SynaraComment, (synaraComment) => synaraComment.author)
   synaraComment?: SynaraComment[];
+
+  @OneToMany(() => Announcement, (announcement) => announcement.volunteer_who_complete)
+  complete_announcements?: Announcement[];
+
 }

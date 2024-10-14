@@ -67,4 +67,12 @@ export class CommentsController {
   getComment(@Param('id') id: number) {
     return this.commentsService.getComment(id);
   }
+
+  @ApiOperation({ summary: 'Get comments by volunteer ID' })
+  @ApiResponse({ status: 200, type: [Comment] })
+  @Get('/user/:userId')
+  async getCommentsByVolunteerId(@Param('userId') userId: number) {
+    return this.commentsService.getCommentsByVolunteerId(userId);
+  }
+
 }

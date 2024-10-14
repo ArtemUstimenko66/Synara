@@ -73,6 +73,13 @@ export class GatheringsService {
     return gathering;
   }
 
+  async getGatheringsByVolunteerId(id: number): Promise<Gatherings[]> {
+    return await this.gatheringRepository.find({
+      where: {user : {id}},
+      relations: ['user', 'files']
+    })
+  }
+
   async findGatherings(
       options: Partial<FindGatheringsOptions> = {},
   ): Promise<Gatherings[]> {
