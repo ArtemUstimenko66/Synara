@@ -1,27 +1,27 @@
 import React from 'react';
 import MainHeader from "../../modules/main-page/components/ui/MainHeader.tsx";
 import Wrapper from "../../ui/Wrapper.tsx";
-import Section1 from "../../assets/images/section1.png";
-import Section2 from "../../assets/images/section2.png";
-import Section3 from "../../assets/images/section3.png";
-import Section4 from "../../assets/images/section4.png";
-import {Button} from "../../ui/Button.tsx";
-import {useTranslation} from "react-i18next";
+import Section1 from "../../assets/images/SearchVolunteer1.png";
+import Section2 from "../../assets/images/SearchVolunteer2.png";
+import Section3 from "../../assets/images/SearchVolunteer3.png";
+import Section4 from "../../assets/images/SearchVolunteer4.png";
+import GatheringImg from "../../assets/images/GatheringsImg.png";
+import PropositionImg from "../../assets/images/PropositionsImg.png";
 import Request from "../../assets/images/request.svg";
 import Map from "../../assets/images/Map.svg";
 import Message from "../../assets/images/Message.svg";
-import Blue from "../../assets/images/Blue_cube.svg";
 import Footer from '../../components/Footer.tsx';
+import SearchVolunteerSM from "../../ui/SearchVolunteerSM.tsx";
+import {useMediaQuery} from "react-responsive";
 
 const HowItWorksPage: React.FC = () => {
-    const { t } = useTranslation();
-
+    const isSmallScreen = useMediaQuery({ query: '(max-width: 1025px)' });
     // @ts-ignore
     return (
         <Wrapper>
             <MainHeader/>
             <div>
-                {/* Новая секция с информацией на основе изображения */}
+                {/* ОГОЛОШЕННЯ */}
                 <section className="w-full h-auto flex flex-col items-center mt-32 select-none">
                     <h2 className="xl:text-h2 md:text-relative-h3xl sm:text-h5 font-kharkiv mb-20 text-center">ОГОЛОШЕННЯ</h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 xl:ml-3 md:ml-6">
@@ -47,14 +47,16 @@ const HowItWorksPage: React.FC = () => {
                         </div>
                     </div>
                 </section>
+
+                {/* ПРОПОЗИЦІЇ */}
                 <section className="w-full h-auto flex flex-col md:flex-row items-center mt-32 select-none">
                     <div className="md:w-1/2 w-full flex flex-col justify-center items-start">
                         <h2 className="xl:text-h2 md:text-relative-h3xl sm:text-h5 font-kharkiv ml-[20%] mb-8">ПРОПОЗИЦІЇ</h2>
-                        <p className="text-pd font-montserratRegular mb-4">
+                        <p className="text-pd font-montserratRegular mx-[5vw] mb-4">
                             Що таке пропозиції? Це як оголошення, тільки для багатьох людей. Вони можуть бути як для тих
                             хто хоче надавати допомогу, так і для тих хто потребує її.
                         </p>
-                        <p className="text-pd font-montserratRegular mb-4">
+                        <p className="text-pd font-montserratRegular mx-[5vw] mb-4">
                             Створи свою пропозицію, якщо ти хочеш запропонувати допомогу, просто заповни спеціальну
                             форму. Опиши допомогу, вкажи всі деталі та для кого розрахована ця пропозиція.
                             Приєднуйся до ініціатив, якщо ти бачиш цікаву пропозицію, до якої хочеш долучитись, просто
@@ -63,12 +65,17 @@ const HowItWorksPage: React.FC = () => {
                         </p>
                     </div>
                     <div className="w-1/2 flex justify-center items-center mt-12 md:mt-0">
-                        <img src={`${Blue}`} alt="Blue Cube" className="w-full h-[200px] rounded-lg"/>
+                        <img src={`${PropositionImg}`} alt="Blue Cube" className="xl:w-[22vw] sm:w-[100vw] h-auto rounded-lg"/>
                     </div>
                 </section>
+
+                {/* ПОШУК ВОЛОНТЕРА */}
                 <section className="w-full h-auto flex flex-col items-center mt-32 select-none">
                     <h2 className="xl:text-h2 md:text-relative-h3xl sm:text-h5  font-kharkiv mb-20 text-center">ПОШУК
                         ВОЛОНТЕРА</h2>
+                    {isSmallScreen ? (
+                        <SearchVolunteerSM/>
+                    ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 xl:ml-3 md:ml-6">
 
                         {/* Card 1 */}
@@ -79,11 +86,9 @@ const HowItWorksPage: React.FC = () => {
                                     1
                                 </div>
                                 <div className="ml-2 md:ml-4">
-                                    <h3 className="text-left xl:text-h3 md:text-relative-h3xl font-kharkiv text-dark-blue">Переглянь
-                                        профілі:</h3>
+                                    <h3 className="text-left xl:text-h3 md:text-relative-h3xl font-kharkiv text-dark-blue">Переглянь профілі:</h3>
                                     <p className="text-left xl:text-h4 md:text-relative-md font-montserratMedium mt-2 w-full">
-                                        Спочатку ти можеш переглянути короткі описи різних волонтерів. Це як заглянути в
-                                        їхні візитки.
+                                        Спочатку ти можеш переглянути короткі описи різних волонтерів. Це як заглянути в їхні візитки.
                                     </p>
                                 </div>
                             </div>
@@ -91,14 +96,14 @@ const HowItWorksPage: React.FC = () => {
 
                         <img
                             src={`${Section1}`}
-                            className="xl:mr-12 sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-auto xl:h-auto md:w-relative-xlg md:h-auto"
+                            className="xl:ml-[8vw] sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-[65%] xl:h-auto md:w-relative-xlg md:h-auto"
                             alt="SVG Image"
                         />
 
                         {/* Card 2 */}
                         <img
                             src={`${Section2}`}
-                            className="xl:mr-12 sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-auto xl:h-auto md:w-relative-xlg md:h-auto"
+                            className="xl:ml-[4vw] sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-[65%] xl:h-auto md:w-relative-xlg md:h-auto"
                             alt="SVG Image"
                         />
                         <div className="flex flex-col md:flex-row items-start ">
@@ -108,8 +113,7 @@ const HowItWorksPage: React.FC = () => {
                                     2
                                 </div>
                                 <div className="ml-2">
-                                    <h3 className="text-left xl:text-h3 md:text-relative-h3xl font-kharkiv text-dark-blue">Оберіть
-                                        свій вибір:</h3>
+                                    <h3 className="text-left xl:text-h3 md:text-relative-h3xl font-kharkiv text-dark-blue">Оберіть свій вибір:</h3>
                                     <p className="text-left xl:text-h4 md:text-relative-md font-montserratMedium mt-2 w-full">
                                         Якщо якийсь волонтер тобі сподобався, ти можеш зайти на його сторінку, щоб
                                         дізнатися про нього більше.
@@ -137,7 +141,7 @@ const HowItWorksPage: React.FC = () => {
                         </div>
                         <img
                             src={`${Section3}`}
-                            className="xl:mr-12 sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-auto xl:h-auto md:w-relative-xlg md:h-auto"
+                            className="xl:ml-[10vw] sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-[65%] xl:h-auto md:w-relative-xlg md:h-auto"
                             alt="SVG Image"
                         />
 
@@ -145,7 +149,7 @@ const HowItWorksPage: React.FC = () => {
 
                         <img
                             src={`${Section4}`}
-                            className="xl:mr-12 sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-auto xl:h-auto md:w-relative-xlg md:h-auto"
+                            className="xl:ml-[2vw] sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-[55%] xl:h-auto md:w-relative-xlg md:h-auto"
                             alt="SVG Image"
                         />
 
@@ -167,22 +171,22 @@ const HowItWorksPage: React.FC = () => {
                         </div>
 
                     </div>
-                    <div className="mt-12 md:mt-16">
-                        <Button isFilled={true}>{t('more_detailsUPPER')}</Button>
-                    </div>
+                    )}
                 </section>
+
+                {/* ЗБОРИ */}
                 <section className="w-full h-auto flex flex-col md:flex-row items-center mt-32 select-none">
                     <div className="w-1/2 flex justify-center items-center mt-12 md:mt-0">
-                        <img src={`${Blue}`} alt="Blue Cube" className="w-full h-[200px] rounded-lg"/>
+                        <img src={`${GatheringImg}`} alt="Blue Cube" className="xl:w-[50%] mt-[5vh] xl:h-auto rounded-lg"/>
                     </div>
                     <div className="md:w-1/2 w-full flex flex-col justify-center items-start">
-                        <h2 className="xl:text-h2 md:text-relative-h3xl sm:text-h5 font-kharkiv ml-[20%] mb-8">ЗБОРИ</h2>
-                        <p className="text-pd font-montserratRegular mb-4">
+                        <h2 className="xl:text-h2 md:text-relative-h3xl sm:text-h5 font-kharkiv xl:ml-[20%] sm:ml-[40%] my-[10vh] mb-8">ЗБОРИ</h2>
+                        <p className="text-pd font-montserratRegular mx-[5vw] mb-4">
                             Хочеш зробити світ кращим? На нашому сайті ти можеш знайти безліч цікавих проектів і
                             підтримати ті, які тобі близькі. Маєш ідею, як зробити життя кращим?
 
                         </p>
-                        <p className="text-pd font-montserratRegular mb-4">
+                        <p className="text-pd font-montserratRegular mx-[5vw] mb-4">
                             Створи свій збір і об'єднай людей навколо неї! Як це працює? Все дуже просто. Ти можеш
                             переглядати різні проекти, дізнаватися про них більше і підтримати ті, які тобі подобаються.
                             Або ж створи свій власний збір, розказавши про свою ідею іншим. Це як онлайн-скарбничка,
@@ -192,9 +196,11 @@ const HowItWorksPage: React.FC = () => {
                     </div>
 
                 </section>
+
+                {/* ПЕТИЦІЇ */}
                 <section className="w-full h-auto flex flex-col items-center mt-32 select-none">
                     <h2 className="xl:text-h2 md:text-relative-h3xl sm:text-h5 font-kharkiv mb-1 text-center">ПЕТИЦІЇ</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-48 relative">
+                    <div className="grid grid-cols-1 md:grid-cols-3 xl:gap-48 sm:gap-0 relative">
                         {/* First Column */}
                         <div className="flex flex-col items-center relative">
                             <div className="text-[250px] text-dark-blue  relative">

@@ -6,6 +6,7 @@ import LogoSynara from '../../assets/images/logoRegistration.svg?react';
 import LogoSynaraBlue from '../../assets/images/logoSynara.svg?react';
 import LoginMainPicture from '../../assets/images/LoginMain.svg?react';
 import LoginMainSMMD from '../../assets/images/LoginMainSMMD.svg?react';
+import {Link} from "react-router-dom";
 
 const LoginPage = () => {
     const [currentStep, setCurrentStep] = useState(1);
@@ -32,8 +33,10 @@ const LoginPage = () => {
     return (
         <div className="bg-dark-blue min-h-screen h-screen flex ">
             <div className="w-2/6 p-8 xl:flex md:hidden sm:hidden items-left flex flex-col justify-center mt-10 ">
-                <LogoSynara
-                    className="text-almost-white font-montserratRegular font-bold text-relative-h4"></LogoSynara>
+                <Link to="/home">
+                    <LogoSynara
+                        className="text-almost-white font-montserratRegular font-bold text-relative-h4"></LogoSynara>
+                </Link>
                 <LoginMainPicture className="pr-[37%]"/>
             </div>
 

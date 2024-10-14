@@ -18,19 +18,20 @@ import ComunityIcon from '../../assets/images/ComunityIcon.svg?react';
 import SupportIcon from '../../assets/images/SupportIcon.svg?react';
 import MainHeader from "../../modules/main-page/components/ui/MainHeader.tsx";
 import WhoAreWe from "../../assets/images/WhoAreWe.png";
+import {useMediaQuery} from "react-responsive";
 
 
 
 const AboutPage = () => {
     const { t } = useTranslation();
-
+    const isSmallScreen = useMediaQuery({ query: '(max-width: 1025px)' });
     return (
         <Wrapper>
             <MainHeader />
             <div className="min-h-screen mt-24 ml-[3%] mr-[3%] font-montserratRegular">
                 <section className="w-full h-auto flex flex-col items-center px-4 md:px-8 mt-24">
-                    <h2 className="text-h2 font-montserratMedium uppercase text-center">{t('about_us')}</h2>
-                    <div className="flex flex-col md:flex-row items-center mt-12 space-y-6 md:space-y-0">
+                    <h2 className="xl:text-h2 sm:text-h4 font-montserratMedium uppercase text-center">{t('about_us')}</h2>
+                    <div className="flex flex-col md:flex-row items-center xl:mt-12 sm:mt-0 space-y-6 md:space-y-0">
                         <div className="w-full">
                             <div
                                 className="hidden xl:flex xl:order-1 md:flex md:order-1 xl:w-2/3 md:w-relative-1/2">
@@ -59,61 +60,124 @@ const AboutPage = () => {
 
 
                 {/* Section 2: "Наші цінності" */}
-                <section
-                    className="w-[99.8vw] mt-24 relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-blue-600 text-white py-16">
-                    <div className="container mx-auto flex flex-row items-center justify-between">
-                        {/* Левая колонка: текст */}
-                        <div className="flex flex-col w-[35%]">
-                            <h2 className="text-h2 font-kharkiv mb-4">НАШІ ЦІННОСТІ</h2>
-                            <p className="text-xs-pl font-montserratRegular">
-                                Ми об'єднуємо людей, щоб вони могли підтримувати один одного. Разом ми можемо досягти
-                                всього, що захочемо!
-                            </p>
-                        </div>
+                {!isSmallScreen ? (
+                    <section
+                        className="w-[99.8vw] mt-24 relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-blue-600 text-white py-16">
+                        <div className="container mx-auto flex flex-row items-center justify-between">
+                            {/* Левая колонка: текст */}
+                            <div className="flex flex-col w-[35%]">
+                                <h2 className="text-h2 font-kharkiv mb-4">НАШІ ЦІННОСТІ</h2>
+                                <p className="text-xs-pl font-montserratRegular">
+                                    Ми об'єднуємо людей, щоб вони могли підтримувати один одного. Разом ми можемо
+                                    досягти
+                                    всього, що захочемо!
+                                </p>
+                            </div>
 
-                        {/* Правая колонка: иконки */}
-                        <div className="flex flex-row w-1/2 justify-around  font-kharkiv mt-12 lg:mt-0">
-                            <div className="flex flex-col items-center">
-                                <SupportIcon className="w-32 h-32"/>
-                                <h3 className="text-xl mt-4">Підтримка</h3>
-                            </div>
-                            <div className="flex flex-col items-center">
-                                <ComunityIcon className="w-32 h-32"/>
-                                <h3 className="text-xl mt-4">Спільнота</h3>
-                            </div>
-                            <div className="flex flex-col items-center">
-                                <HelpIcon className="w-32 h-32"/>
-                                <h3 className="text-xl mt-4">Допомога</h3>
+                            {/* Правая колонка: иконки */}
+                            <div className="flex flex-row w-1/2 justify-around  font-kharkiv mt-12 lg:mt-0">
+                                <div className="flex flex-col items-center">
+                                    <SupportIcon className="w-32 h-32"/>
+                                    <h3 className="text-xl mt-4">Підтримка</h3>
+                                </div>
+                                <div className="flex flex-col items-center">
+                                    <ComunityIcon className="w-32 h-32"/>
+                                    <h3 className="text-xl mt-4">Спільнота</h3>
+                                </div>
+                                <div className="flex flex-col items-center">
+                                    <HelpIcon className="w-32 h-32"/>
+                                    <h3 className="text-xl mt-4">Допомога</h3>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </section>
+                    </section>
+
+                ) : (
+                    <section
+                        className="w-[99.8vw] mt-24 relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-blue-600 text-white py-16">
+                        <div className="container mx-auto flex flex-col lg:flex-row items-center justify-between">
+                            {/* Левая колонка: текст */}
+                            <div className="flex flex-col w-full lg:w-[35%] text-center lg:text-left">
+                                <h2 className="text-h4 font-kharkiv mb-4">НАШІ ЦІННОСТІ</h2>
+                                <p className="text-xs-pl font-montserratRegular">
+                                    Ми об'єднуємо людей, щоб вони могли підтримувати один одного. Разом ми можемо
+                                    досягти
+                                    всього, що захочемо!
+                                </p>
+                            </div>
+
+                            {/* Правая колонка: иконки */}
+                            <div
+                                className="flex flex-wrap w-full lg:w-1/2 justify-center lg:justify-around font-kharkiv mt-12 lg:mt-0 gap-8">
+                                <div className="flex flex-col items-center w-1/2 sm:w-1/3">
+                                    <SupportIcon className="w-24 h-24 sm:w-32 sm:h-32"/>
+                                    <h3 className="text-lg sm:text-xl mt-4">Підтримка</h3>
+                                </div>
+                                <div className="flex flex-col items-center w-1/2 sm:w-1/3">
+                                    <ComunityIcon className="w-24 h-24 sm:w-32 sm:h-32"/>
+                                    <h3 className="text-lg sm:text-xl mt-4">Спільнота</h3>
+                                </div>
+                                <div className="flex flex-col items-center w-1/2 sm:w-1/3">
+                                    <HelpIcon className="w-24 h-24 sm:w-32 sm:h-32"/>
+                                    <h3 className="text-lg sm:text-xl mt-4">Допомога</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                )}
 
                 {/* Section 3: "Наша мета" */}
-                <section className="w-full h-auto flex flex-col items-center px-4 md:px-8 mt-32">
+                {!isSmallScreen ? (
+                    <section className="w-full h-auto flex flex-col items-center px-4 md:px-8 mt-32">
 
-                    <div className="flex flex-row justify-between items-center w-full mt-12">
-                        <Meta className="w-[70%] h-96"/>
-                        <div className="flex flex-col items-start w-full">
-                            <h2 className="text-h2 font-montserratMedium items-center ml-[25%] mb-8">НАША МЕТА</h2>
-                            <p className="flex-1 text-md_body text-gray-700 font-montserratRegular ml-8">
-                                Наша мета – об’єднати небайдужих людей, щоб разом ми могли зробити світ кращим. Ми
-                                створили
-                                платформу, де кожен може знайти допомогу або надати її іншим. Незалежно від того, чи ти
-                                хочеш поділитися речами, які тобі більше не потрібні, запропонувати свої знання та
-                                вміння,
-                                або просто підтримати когось емоційно – на нашій платформі ти знайдеш однодумців.
-                            </p>
-                            <br/>
-                            <p className="flex-1 text-md_body text-gray-700 font-montserratRegular ml-8">
-                                Адже кожен з нас може зробити щось добре. Неважливо, чи це буде маленька допомога
-                                сусіду, чи велика
-                                акція для всієї спільноти. Головне – це наше бажання зробити світ кращим.
-                            </p>
+                        <div className="flex flex-row justify-between items-center w-full mt-12">
+                            <Meta className="w-[70%] h-96"/>
+                            <div className="flex flex-col items-start w-full">
+                                <h2 className="text-h2 font-montserratMedium items-center ml-[25%] mb-8">НАША МЕТА</h2>
+                                <p className="flex-1 text-md_body text-gray-700 font-montserratRegular ml-8">
+                                    Наша мета – об’єднати небайдужих людей, щоб разом ми могли зробити світ кращим. Ми
+                                    створили
+                                    платформу, де кожен може знайти допомогу або надати її іншим. Незалежно від того, чи
+                                    ти
+                                    хочеш поділитися речами, які тобі більше не потрібні, запропонувати свої знання та
+                                    вміння,
+                                    або просто підтримати когось емоційно – на нашій платформі ти знайдеш однодумців.
+                                </p>
+                                <br/>
+                                <p className="flex-1 text-md_body text-gray-700 font-montserratRegular ml-8">
+                                    Адже кожен з нас може зробити щось добре. Неважливо, чи це буде маленька допомога
+                                    сусіду, чи велика
+                                    акція для всієї спільноти. Головне – це наше бажання зробити світ кращим.
+                                </p>
+                            </div>
+
                         </div>
+                    </section>
+                ) : (
+                    <section className="w-full h-auto flex flex-col items-center px-4 md:px-8 mt-32">
+                        <div className="flex flex-col md:flex-row justify-between items-center w-full ">
+                            <h2 className="text-h4 font-montserratMedium text-center mb-8 md:ml-[25%]">НАША МЕТА</h2>
+                            <Meta className="w-full md:w-[70%] h-64 md:h-96 mb-8"/>
+                            <div className="flex flex-col items-start w-full">
+                                <p className="text-md_body text-gray-700 font-montserratRegular mb-4 px-4">
+                                    Наша мета – об’єднати небайдужих людей, щоб разом ми могли зробити світ кращим. Ми
+                                    створили
+                                    платформу, де кожен може знайти допомогу або надати її іншим. Незалежно від того, чи
+                                    ти
+                                    хочеш поділитися речами, які тобі більше не потрібні, запропонувати свої знання та
+                                    вміння,
+                                    або просто підтримати когось емоційно – на нашій платформі ти знайдеш однодумців.
+                                </p>
+                                <p className="text-md_body text-gray-700 font-montserratRegular px-4">
+                                    Адже кожен з нас може зробити щось добре. Неважливо, чи це буде маленька допомога
+                                    сусіду, чи велика
+                                    акція для всієї спільноти. Головне – це наше бажання зробити світ кращим.
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+                )}
 
-                    </div>
-                </section>
                 <section className="w-full h-auto flex flex-col items-center select-none mt-32">
                     <h2 className="xl:text-h2 md:text-relative-h3xl sm:text-h4 sm:text-h5  font-kharkiv sm:mb-8 md:mb-20 xl:mb-20 text-center">{t('why_usUPPER')}</h2>
                     <div className="flex xl:gap-12 md:gap-6 sm:ml-8 md:ml-0 xl:ml-0">
@@ -139,7 +203,11 @@ const AboutPage = () => {
                                 <div>{t('count_of_help')}</div>
                             </div>
                             <div>
-                                <img src={WhyUsImg} className="md:hidden xl:hidden sm:block sm:w-[90%] sm:h-auto sm:mt-6"/>
+                                <img
+                                    src={`${WhyUsImg}`}
+                                    className="md:hidden xl:hidden sm:block sm:w-[90%] sm:h-auto sm:mt-6"
+                                    alt="SVG Image"
+                                />
                             </div>
                             <div
                                 className=" xl:mt-16 md:mt-8 sm:mt-6 space-y-8 md:space-y-4 sm:space-y-4 font-bold font-montserratRegular">
@@ -172,9 +240,13 @@ const AboutPage = () => {
                         </div>
 
                         {/* Правая сторона */}
-                        <div className="">
-                            <img src={WhyMeMainDesktop}
-                                className="sm:hidden md:block xl:block xl:ml-20 md:ml-12 xl:mt-2 md:mt-24 xl:w-full      xl:h-full md:w-96 md:h-72 "/>
+                        <div className="w-auto">
+
+                            <img
+                                src={`${WhyMeMainDesktop}`}
+                                className="sm:hidden md:block xl:block xl:ml-20 md:ml-12 xl:mt-2 md:mt-24 xl:w-[75%] xl:h-auto md:w-96 md:h-72 "
+                                alt="SVG Image"
+                            />
                         </div>
                     </div>
                 </section>
@@ -187,15 +259,17 @@ const AboutPage = () => {
                         <div
                             className="flex xl:flex-col md:flex-col sm:flex-row  xl:items-center max-w-xs md:max-w-sm xl:max-w-md">
                             <div className="">
-                                <img src={BecomeVolunteer}
-                                    className="w-24 sm:w-40 md:ml-8 sm:mr-8 xl:mr-0 sm:h-40 h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"/>
+                                <img
+                                    src={`${BecomeVolunteer}`}
+                                    className="w-24 sm:w-auto md:ml-8 sm:mr-8 xl:mr-0 sm:h-auto h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"
+                                    alt="SVG Image"
+                                />
                             </div>
                             <div className="sm:flex-row">
                                 <h3 className="xl:text-center sm:text-center xl:text-h3 md:text-relative-h3xl font-kharkiv mt-4 w-full max-w-xs md:max-w-sm xl:max-w-md">{t('Become_a_volunteer')}</h3>
                                 <p className="sm:text-xs xl:text-xs-pxl text-center font-montserratRegular mt-2 w-full max-w-xs md:max-w-sm xl:max-w-md">
                                     {t('Under_Become_a_volunteer')}
                                 </p>
-
                             </div>
                         </div>
 
@@ -204,8 +278,11 @@ const AboutPage = () => {
                             className="flex xl:flex-col md:flex-col sm:flex-row-reverse items-center max-w-xs md:max-w-sm xl:max-w-md select-none">
                             <div className="sm:flex sm:justify-start">
                                 {/* Картинка справа на экранах sm */}
-                                <img src={GetHelp}
-                                    className="sm:block sm:w-40 sm:h-40 sm:ml-8 sm:mr-8 w-24 h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"/>
+                                <img
+                                    src={`${GetHelp}`}
+                                    className="w-24 sm:w-auto md:ml-8 sm:mr-8 xl:mr-0 sm:h-auto h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"
+                                    alt="SVG Image"
+                                />
                             </div>
                             <div className="sm:flex sm:flex-col sm:justify-center">
                                 {/* Текст слева на экранах sm */}
@@ -221,9 +298,11 @@ const AboutPage = () => {
                         <div
                             className="flex xl:flex-col md:flex-col sm:flex-row items-center max-w-xs md:max-w-sm xl:max-w-md select-none">
                             <div className="">
-                                <img src={DonatNaZSU}
-                                    className="w-24 sm:w-40 md:ml-8 sm:mr-8 xl:mr-0 sm:h-40 h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"/>
-                            </div>
+                                <img
+                                    src={`${DonatNaZSU}`}
+                                    className="w-24 sm:w-auto md:ml-8 sm:mr-8 xl:mr-0 sm:h-auto h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"
+                                    alt="SVG Image"
+                                /></div>
                             <div className="sm:flex-row">
                                 <h3 className="xl:text-center sm:text-center xl:text-h3 md:text-relative-h3xl font-kharkiv mt-4 w-full max-w-xs md:max-w-sm xl:max-w-md">{t('donate_ZSU')}</h3>
                                 <p className="sm:text-xs xl:text-xs-pxl text-center font-montserratRegular mt-2 w-full max-w-xs md:max-w-sm xl:max-w-md">
@@ -234,23 +313,27 @@ const AboutPage = () => {
                     </div>
                 </section>
                 <section className="w-full flex flex-col items-center mt-32 mb-8">
-                    <h2 className=" text-h2 font-kharkiv mb-12">НАШІ СОЦМЕРЕЖІ</h2>
-                    <div className="flex space-x-36">
+                    <h2 className="xl:text-h2 sm:text-h4 font-kharkiv mb-12">НАШІ СОЦМЕРЕЖІ</h2>
+                    <div className="flex xl:space-x-44 sm:space-x-4">
                         {/* Facebook */}
-                        <div className="bg-blue-500 rounded-2xl w-20 h-20 flex items-center justify-center">
-                            <Facebook className="text-white w-10 h-10"/>
+                        <div
+                            className="bg-blue-500 rounded-2xl xl:w-36 xl:h-36 w-20 h-20 flex items-center justify-center">
+                            <Facebook className="text-white xl:w-20 xl:h-20 w-10 h-10"/>
                         </div>
                         {/* Instagram */}
-                        <div className="bg-blue-500 rounded-2xl w-20 h-20 flex items-center justify-center">
-                            <Instagram className="text-white w-10 h-10"/>
+                        <div
+                            className="bg-blue-500 rounded-2xl xl:w-36 xl:h-36 w-20 h-20 flex items-center justify-center">
+                            <Instagram className="text-white xl:w-20 xl:h-20 w-10 h-10"/>
                         </div>
                         {/* Twitter */}
-                        <div className="bg-blue-500 rounded-2xl w-20 h-20 flex items-center justify-center">
-                            <Twitter className="text-white w-10 h-10"/>
+                        <div
+                            className="bg-blue-500 rounded-2xl xl:w-36 xl:h-36 w-20 h-20 flex items-center justify-center">
+                            <Twitter className="text-white xl:w-20 xl:h-20 w-10 h-10"/>
                         </div>
                         {/* Telegram */}
-                        <div className="bg-blue-500 rounded-2xl w-20 h-20 flex items-center justify-center">
-                            <Telegram className="text-white w-10 h-10"/>
+                        <div
+                            className="bg-blue-500 rounded-2xl xl:w-36 xl:h-36 w-20 h-20 flex items-center justify-center">
+                            <Telegram className="text-white xl:w-20 xl:h-20 w-10 h-10"/>
                         </div>
                     </div>
                 </section>
