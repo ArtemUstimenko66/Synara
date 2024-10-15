@@ -55,14 +55,23 @@ export class CommentService {
 
   async getAllComments() {
     return await this.commentRepository.find({
-      relations: ['author', 'volunteer'],
+      relations: ['author', 'volunteer', 'volunteer.user'],
     });
   }
+
 
   async getComment(id: number) {
     return await this.commentRepository.findOne({
       where: { id },
+      relations: ['author', 'volunteer', 'volunteer.user'],
+    });
+  }
+
+  async getCommentsByVolunteerId(userId: number): Promise<Comment[]> {
+    return await this.commentRepository.find({
+      where: { volunteer: { id: userId } },
       relations: ['author', 'volunteer'],
     });
   }
+
 }

@@ -9,6 +9,7 @@ import NothingFound from "../../../assets/images/NothingFound.png";
 interface MainContentProps {
 	activeSection: string;
 	reviews: any[];
+	rating: string;
 	announcements: any[];
 	gatherings: any[];
 	petitions: any[];
@@ -21,6 +22,7 @@ interface MainContentProps {
 const MainContent: React.FC<MainContentProps> = ({
 													 activeSection,
 													 reviews,
+													 rating,
 													 announcements,
 													 gatherings,
 													 petitions,
@@ -35,7 +37,7 @@ const MainContent: React.FC<MainContentProps> = ({
 
 	return (
 		<main className="w-full bg-almost-white p-8">
-			{activeSection === 'reviews' && <Reviews reviews={reviews}/>}
+			{activeSection === 'reviews' && <Reviews reviews={reviews} rating={rating}/>}
 
 			{activeSection === 'announcements' && (
 				<>

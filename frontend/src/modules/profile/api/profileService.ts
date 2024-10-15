@@ -110,6 +110,48 @@ export const fetchVolunteerDetails = async (id: number) => {
     }
 };
 
+export const getUserCompletedAnnouncements = async (volunteerId: number) => {
+    try {
+        const response = await api.get(`/announcements/completed/${volunteerId}`, { withCredentials: true });
+        console.log(`!!!!!!-> /announcements/completed/${volunteerId}`,response.data);
+        return response.data;
+    } catch (error) {
+        console.error("Ошибка при получении выполненных пользователем обьявлений:", error);
+        throw error;
+    }
+};
+
+export const getUserPetitions = async (volunteerId: number) => {
+    try {
+        const response = await api.get(`/petitions/user/${volunteerId}`, { withCredentials: true });
+        return response.data;
+    } catch (error) {
+        console.error("Ошибка при получении петиций созданных пользователем:", error);
+        throw error;
+    }
+};
+
+export const getUserGatherings = async (volunteerId: number) => {
+    try {
+        const response = await api.get(`/gatherings/user/${volunteerId}`, { withCredentials: true });
+        return response.data;
+    } catch (error) {
+        console.error("Ошибка при получении зборов созданных пользователем:", error);
+        throw error;
+    }
+};
+
+export const getCommentsAboutUser = async (volunteerId: number) => {
+    try {
+        const response = await api.get(`/comments/user/${volunteerId}`, { withCredentials: true });
+        return response.data;
+    } catch (error) {
+        console.error("Ошибка при получении коментариев про пользователя:", error);
+        throw error;
+    }
+};
+
+
 export const respondVolunteer = async (userId: number) => {
     try {
         const response = await api.post(

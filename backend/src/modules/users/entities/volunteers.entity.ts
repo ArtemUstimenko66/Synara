@@ -42,6 +42,13 @@ export class VolunteersEntity {
   supports: SupportType;
 
   @ApiProperty({
+    example: 'Individual consultations',
+    description: 'Short description of each type of support',
+  })
+  @Column({ nullable: true })
+  support_description: string;
+
+  @ApiProperty({
     example: 1,
     description: 'Unique identifier of the associated user',
   })

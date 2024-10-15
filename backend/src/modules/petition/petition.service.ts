@@ -52,6 +52,16 @@ export class PetitionService {
         return petition;
     }
 
+    async findPetitionsByUserId(id: number): Promise<Petition[]> {
+        const petition = await this.petitionRepository.find(
+            { where: { author : {id} }, relations: ['author'],
+            });
+        if (!petition) {
+            throw new BadRequestException(`Petitions with id ${id} not found`);
+        }
+        return petition;
+    }
+
     // async findFavoritePetitions() : Promise<Petition[]> {
     //     return this.petitionRepository.find({
     //         where: { is_favorite: true },

@@ -7,8 +7,8 @@ import api from "../../modules/main-api/api.ts";
 
 import DonatNaZSU from '../../assets/images/DonatNaZSU.png';
 import BecomeVolunteer from '../../assets/images/BecomeVolunteer.png';
-//import WhoAreWe from '../../assets/images/WhoAreWe.png';
-//import WhoAreWe from '../../assets/animations/WhoAreWe.gif';
+import WhoAreWe from '../../assets/images/WhoAreWe.png';
+
 import GetHelp from '../../assets/images/GetHelp.png';
 import WhyUsImg from '../../assets/images/WhyUsImg.png';
 import WhyMeMainDesktop from '../../assets/images/WhyMeMainDesktop.png';
@@ -274,7 +274,7 @@ const HomePage: React.FC = () => {
                         <div
                             className="hidden xl:flex xl:order-1 md:flex md:order-1 xl:w-1/2 md:w-relative-1/2">
                             <img
-                                src="../../../public/gifs/WhoAreWe.gif"
+                                src={WhoAreWe}
                                 className="xl:w-full xl:mt-[10vh] xl:h-auto md:w-relative-elg md:h-[50%] md:ml-[5vw] xl:mr-0 md:mr-relative-md"
                                 alt="SVG Image"
                             />
@@ -288,7 +288,7 @@ const HomePage: React.FC = () => {
                                 {t('description_synara')}
                             </p>
                             <img
-                                src="../../../public/gifs/WhoAreWe.gif"
+                                src={WhoAreWe}
                                 className="xl:hidden md:hidden sm:w-[50%] sm:mx-auto"
                                 alt="SVG Image"
                             />
@@ -548,14 +548,14 @@ const HomePage: React.FC = () => {
 
                                 <img
                                     src={`${Section1}`}
-                                    className="xl:mr-12 sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-auto xl:h-auto md:w-relative-xlg md:h-auto"
+                                    className="xl:ml-[12vw] sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-[55%] xl:h-auto md:w-relative-xlg md:h-auto"
                                     alt="SVG Image"
                                 />
 
                                 {/* Card 2 */}
                                 <img
                                     src={`${Section2}`}
-                                    className="xl:mr-12 sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-auto xl:h-auto md:w-relative-xlg md:h-auto"
+                                    className="xl:ml-[12vw] sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-[55%] xl:h-auto md:w-relative-xlg md:h-auto"
                                     alt="SVG Image"
                                 />
                                 <motion.div
@@ -603,14 +603,14 @@ const HomePage: React.FC = () => {
 
                                 <img
                                     src={`${Section3}`}
-                                    className="xl:mr-12 sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-auto xl:h-auto md:w-relative-xlg md:h-auto"
+                                    className="xl:ml-[12vw] sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-[55%] xl:h-auto md:w-relative-xlg md:h-auto"
                                     alt="SVG Image"
                                 />
 
                                 {/* Card 4 */}
                                 <img
                                     src={`${Section4}`}
-                                    className="xl:mr-12 sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-auto xl:h-auto md:w-relative-xlg md:h-auto"
+                                    className="xl:ml-[12vw] sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-[55%] xl:h-auto md:w-relative-xlg md:h-auto"
                                     alt="SVG Image"
                                 />
                                 <motion.div
@@ -707,11 +707,11 @@ const HomePage: React.FC = () => {
                             </div>
 
                             {/* Правая сторона */}
-                            <div className="">
+                            <div className="w-auto">
 
                                 <img
                                     src={`${WhyMeMainDesktop}`}
-                                    className="sm:hidden md:block xl:block xl:ml-20 md:ml-12 xl:mt-2 md:mt-24 xl:w-full xl:h-full md:w-96 md:h-72 "
+                                    className="sm:hidden md:block xl:block xl:ml-20 md:ml-12 xl:mt-2 md:mt-24 xl:w-[75%] xl:h-auto md:w-96 md:h-72 "
                                     alt="SVG Image"
                                 />
                             </div>

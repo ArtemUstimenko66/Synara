@@ -94,6 +94,14 @@ export class GatheringsController {
     return this.gatheringService.findOne(+id);
   }
 
+  @ApiOperation({ summary: 'Get gatherings by user ID' })
+  @ApiResponse({ status: 200, type: [Gatherings] })
+  @Get('/user/:id')
+  findGatheringsByVolunteerId(@Param('id') id: number): Promise<Gatherings[]> {
+    return this.gatheringService.getGatheringsByVolunteerId(id);
+  }
+
+
   @ApiOperation({ summary: 'Partially update a gathering by ID' })
   @ApiResponse({ status: 200, type: Gatherings })
   @UseGuards(JwtAuthGuard)
