@@ -3,7 +3,7 @@ import GoogleImg from '../../../../assets/images/google.svg?react'; // Ensure th
 
 const GoogleLoginButton: React.FC = () => {
     const handleGoogleLogin = () => {
-        window.location.href = 'https://synara.help/auth-google/google';
+        window.location.href = 'https://synara.help/api/auth-google/google';
     };
 
     return (
