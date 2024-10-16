@@ -1,6 +1,7 @@
 import ReviewProfile from "./ui/ReviewProfile.tsx";
 import React from "react";
 import MiniStar from "../assets/MiniStar.svg?react";
+import {useTranslation} from "react-i18next";
 
 interface Review {
 	id: number;
@@ -33,14 +34,16 @@ interface ReviewsProps {
 }
 
 const Reviews: React.FC<ReviewsProps> = ({ reviews, rating }) => {
+	const {t} = useTranslation();
+
 	return (
 		<>
-			<h1 className="text-h2 font-kharkiv">Відгуки</h1>
+			<h1 className="text-h2 font-kharkiv">{t('responds')}</h1>
 			<div className="flex items-center mb-[6vh]">
 				<MiniStar className="w-6 h-6"></MiniStar>
 				<span className="text-2xl font-montserratMedium font-bold ml-[1vw]">{rating}</span>
 				<div className="h-8 border-l-2 border-gray-300 mx-4"></div>
-				<span className="font-montserratRegular text-pxll font-semibold">{reviews.length} Відгуків</span>
+				<span className="font-montserratRegular text-pxll font-semibold">{reviews.length} {t('reviews')}</span>
 			</div>
 			<div className="grid grid-cols-3 gap-6 mt-12">
 				{reviews.map((review) => (

@@ -176,7 +176,7 @@ const GatheringPage: React.FC = () => {
 								<Button hasBlue={true} className="px-4 text-relative-h5 md:w-full sm:w-full xl:w-full"
 										onClick={handleCreateGathering}>
                                     <span className="text-montserratMedium uppercase text-relative-h5">
-                                        Створити збір
+                                  		{t('create_gathering')}
                                     </span>
 								</Button>
 
@@ -221,7 +221,7 @@ const GatheringPage: React.FC = () => {
 											</Button>
 											<Button onClick={() => handleSort('DESC')}
 													className={`cursor-pointer py-2 px-10 ${sortOrder === 'ASC' ? 'text-blue-500' : 'text-black'}`}>
-												Сортувати за спаданням
+												{t('sort_by_decreasing')}
 											</Button>
 										</div>
 									)}
@@ -256,7 +256,7 @@ const GatheringPage: React.FC = () => {
 										<div
 											className="text-center font-montserratMedium flex flex-col items-center justify-center">
 											<img src={NothingFound} className="xl:w-[20vw] xl:h-auto sm:w-[50vw] md:w-[20vw] md:h-auto mb-4"/>
-											Наразі немає зборів за обраними фільтрами
+											{t('none_gathering')}
 										</div>
 									</div>
 								)}
@@ -271,7 +271,7 @@ const GatheringPage: React.FC = () => {
 								onClick={loadMoreGatherings}
 								className="bg-perfect-yellow text-black hover:bg-yellow-600 px-6 py-2 font-montserratRegular rounded-3xl"
 							>
-								ПОКАЗАТИ ЩЕ
+								{t('show_moreUPPER')}
 							</button>
 						</div>
 					)}

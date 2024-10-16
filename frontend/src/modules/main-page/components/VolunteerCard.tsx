@@ -7,6 +7,7 @@ import {Button} from "../../../ui/Button.tsx";
 import {getHelpTypeInUkrainianEngToUkr} from "../../../data/helpTypesMap.ts";
 import {getDayOfWeekInUkrainian} from "../../../data/dayOfWeekMap.ts";
 import {useNavigate} from "react-router-dom";
+import {useTranslation} from "react-i18next";
 
 const formatTime = (time: string): string => {
     if (!time) return '00:00';
@@ -33,6 +34,8 @@ const VolunteerCard: React.FC<VolunteerCardProps> = ({ id, name, rating, support
     const handleNavigateToProfile = ()=> {
         navigate(`/profile-volunteer/${id}`)
     }
+    const {t} = useTranslation();
+
     return (
         <div className="bg-perfect-gray w-full rounded-3xl flex flex-col h-full">
             <div className="flex items-center justify-between xl:px-10 sm:px-5 py-4 mb-2 mt-4">
@@ -93,7 +96,7 @@ const VolunteerCard: React.FC<VolunteerCardProps> = ({ id, name, rating, support
                     className="uppercase px-4 py-2 rounded-full xl:text-relative-p sm:text-relative-pxl bg-perfect-yellow"
                     onClick={handleNavigateToProfile}
                 >
-                    ПЕРЕГЛЯНУТИ ПРОФІЛЬ
+                    {t('view_profileUPPER')}
                 </Button>
             </div>
         </div>

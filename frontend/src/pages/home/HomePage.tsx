@@ -270,7 +270,7 @@ const HomePage: React.FC = () => {
 
                     {/* Second section - about us */}
                     <section
-                        className='w-full flex justify-center select-none sm:mt-[70vh] md:mt-[20vh] bg-transparent  flex-col xl:flex-row md:flex-row xl:mt-[20vw]  '>
+                        className='w-full flex justify-center select-none sm:mt-[70vh] md:mt-[20vh] bg-transparent  flex-col xl:flex-row md:flex-row xl:mt-[26vw]  '>
                         <div
                             className="hidden xl:flex xl:order-1 md:flex md:order-1 xl:w-1/2 md:w-relative-1/2">
                             <img

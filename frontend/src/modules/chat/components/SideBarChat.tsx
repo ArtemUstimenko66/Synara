@@ -9,6 +9,7 @@ import { fetchChats } from "../api/chatService.ts";
 import { debounce } from 'lodash';
 import { determineMessageType } from "../helpers/determineMessageType.ts";
 import Chat from "../interfaces/Chat.tsx";
+import {useTranslation} from "react-i18next";
 
 
 interface SideBarChatProps {
@@ -25,6 +26,9 @@ export const SideBarChat: React.FC<SideBarChatProps> = ({ isOpen, onClose }) => 
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [selectedChat, setSelectedChat] = useState<Chat | null>(null);
     const [selectedChatId, setSelectedChatId] = useState<number | null>(null);
+    const {t} = useTranslation();
+
+
     useEffect(() => {
         setSelectedChat(null);
         setSelectedChatId(null);
@@ -158,7 +162,7 @@ export const SideBarChat: React.FC<SideBarChatProps> = ({ isOpen, onClose }) => 
 
                 {loading ? (
                     <div className="flex flex-col items-center justify-center flex-grow">
-                        <p className="font-montserratMedium">Загрузка чатов...</p>
+                        <p className="font-montserratMedium">{t('loading_chats')}...</p>
                     </div>
                 ) : error ? (
                     <div className="flex flex-col items-center justify-center flex-grow">
@@ -190,17 +194,16 @@ export const SideBarChat: React.FC<SideBarChatProps> = ({ isOpen, onClose }) => 
                         </div>
                         <div className="mt-4 flex justify-center">
                             <a href="/chat" className="text-blue-500 xl:text-sm md:text-xs-pxl font-montserratMedium underline">
-                                Переглянути все в папці "Вхідні"
+                                {t('review_all_in_folder_income')}
                             </a>
                         </div>
                     </>
                 ) : (
                     <div className="flex flex-col items-center justify-center flex-grow mx-5">
                         <NoChats />
-                        <p className="text-center font-montserratMedium font-medium text-lg mb-2">У вас поки немає чатів</p>
+                        <p className="text-center font-montserratMedium font-medium text-lg mb-2">{t('you_have_not_chats')}</p>
                         <p className="text-center font-montserratMedium font-normal text-sm">
-                            У вас поки немає чатів. Почніть розмову з іншими користувачами, щоб надати або отримати допомогу
-                        </p>
+                            {t('you_have_not_chats_start_speaking_for_helping')}                        </p>
                     </div>
                 )}
 

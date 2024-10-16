@@ -76,7 +76,7 @@ const MainHeader: React.FC = () => {
 					
 						<NavItem text={t('how_it_worksUPPER')} to="/how-it-works"/>
 						<div className="text-perfect-yellow font-montserratMedium">
-							<NavItem text="КАРТА ДОПОМОГИ" to="/map-help"/>
+							<NavItem text={t('map_helpUPPER')} to="/map-help"/>
 						</div>
 					</nav>
 

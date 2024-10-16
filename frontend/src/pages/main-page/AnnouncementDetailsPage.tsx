@@ -317,7 +317,7 @@ const AnnouncementDetailsPage = () => {
                             {/* Левая часть (2/3 ширины) */}
                             <div className="w-full h-auto md:w-7/12">
                                 <p className="font-montserratRegular text-relative-ps mt-4">{details.description}</p>
-                                <p className="font-medium text-relative-pl font-montserratMedium mt-4">Деталі:</p>
+                                <p className="font-medium text-relative-pl font-montserratMedium mt-4">{t('details')}:</p>
                                 <p className="font-montserratRegular text-relative-ps mt-4">{details.details}</p>
                             </div>
 
@@ -349,7 +349,7 @@ const AnnouncementDetailsPage = () => {
                                 <div className="flex items-center pl-[2vw] mt-4">
                                     <PlaceMarker className="mr-2"/>
                                     <p className="font-montserratRegular font-semibold text-relative-ps">
-                                        Місце: {details.currentLocation}
+                                        {t('place')}: {details.currentLocation}
                                     </p>
                                 </div>
 
@@ -357,10 +357,10 @@ const AnnouncementDetailsPage = () => {
                                     <User className="mr-2"/>
                                     <div className="flex flex-col items-start mt-4">
                                         <p className="font-montserratRegular font-semibold text-relative-ps mt-4">
-                                            Переглянули оголошення: {details.viewsCount}
+                                            {t('review_ad')}: {details.viewsCount}
                                         </p>
                                         <p className="font-montserratRegular font-semibold text-relative-ps mt-4">
-                                            Відгукнулись: {details.responsesCount}
+                                            {t('responded')}: {details.responsesCount}
                                         </p>
                                     </div>
                                 </div>
@@ -373,19 +373,18 @@ const AnnouncementDetailsPage = () => {
                                         className="w-16 h-16 rounded-full object-cover mr-3"
                                     />
                                     <div className="pl-[2vw]">
-                                        <p className="text-relative-ps font-montserratMedium font-semibold uppercase">Автор
-                                            оголошення:</p>
+                                        <p className="text-relative-ps font-montserratMedium font-semibold uppercase">{t('ad_author')}: </p>
                                         <h4 className=" text-relative-ps font-montserratMedium">{details.user.firstName} {details.user.lastName}</h4>
                                     </div>
                                 </div>
 
                                 <div className="flex flex-row items-center pl-[2vw]">
-                                    <p className="font-semibold text-relative-ps font-montserratMedium uppercase">Контакти:</p>
+                                    <p className="font-semibold text-relative-ps font-montserratMedium uppercase">{t('contacts')}:</p>
                                     <p className="font-montserratRegular text-relative-ps pl-[1vw] uppercase"> {details.user.phoneNumber}</p>
                                 </div>
 
                                 {/* Social media icons */}
-                                <p className="uppercase mt-4 pl-[2vw] text-relative-ps">Поділіться:</p>
+                                <p className="uppercase mt-4 pl-[2vw] text-relative-ps">{t('share')}:</p>
                                 <div className="mt-2 flex justify-center space-x-6">
                                     <a href="#" aria-label="Facebook">
                                         <FontAwesomeIcon icon={['fab', 'facebook-f']} className="h-6 w-6"/>
@@ -407,9 +406,9 @@ const AnnouncementDetailsPage = () => {
 
                                         <>
                                             {isDone ? (
-                                                <h1 className="text-relative-h4 mt-[1vh] font-kharkiv uppercase text-center">Виконано</h1>
+                                                <h1 className="text-relative-h4 mt-[1vh] font-kharkiv uppercase text-center">{t('done')}</h1>
                                             ) : isCanceled ? (
-                                                <h1 className="text-relative-h4 mt-[1vh] font-kharkiv uppercase text-center">Скасовано</h1>
+                                                <h1 className="text-relative-h4 mt-[1vh] font-kharkiv uppercase text-center">{t('canceled')}</h1>
                                             ) : (
                                                 <>
                                                     <div className="mt-8 w-full">
@@ -417,11 +416,11 @@ const AnnouncementDetailsPage = () => {
                                                             onClick={openModalForDone}
                                                             className="flex items-center uppercase justify-center text-center w-full bg-perfect-yellow rounded-3xl font-montserratRegular"
                                                         >
-                                                            Виконано
+                                                            {t('done')}
                                                         </Button>
                                                     </div>
                                                     <Button hasBlue={true} className="py-1 px-4 uppercase" onClick={openModalForCancel}>
-                                                        Скасувати
+                                                        {t('cancel')}
                                                     </Button>
                                                 </>
                                             )}
@@ -449,12 +448,12 @@ const AnnouncementDetailsPage = () => {
                                                     ) : (
                                                         <Heart className="h-6 w-6 mr-2"/>
                                                     )}
-                                                    В ОБРАНЕ
+                                                    {t('to_favoriteUPPER')}
                                                 </Button>
                                             </div>
                                             <Button hasBlue={true} className="py-1 px-4 uppercase"
                                                     onClick={handleRespond}>
-                                                Відгукнутись
+                                                {t('to_respond')}
                                             </Button>
                                         </>
                                     }
@@ -571,7 +570,7 @@ const AnnouncementDetailsPage = () => {
                         ?
                         <>
                             <h1 className="text-relative-h4 font-kharkiv uppercase mt-[10vh] text-center">
-                                Схожі оголошення
+                                {t('similar_ad')}
                             </h1>
 
                             <div className="flex flex-col">

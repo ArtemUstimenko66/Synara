@@ -5,6 +5,7 @@ import GatheringCard from '../../gathering/ui/GatheringCard';
 import { Link } from 'react-router-dom';
 import PetitionCard from "../../petitions/components/PetitionCard.tsx";
 import NothingFound from "../../../assets/images/NothingFound.png";
+import {useTranslation} from "react-i18next";
 
 interface MainContentProps {
 	activeSection: string;
@@ -34,6 +35,7 @@ const MainContent: React.FC<MainContentProps> = ({
 	const calculatePercentage = (goal: number, raised: number) => {
 		return (raised / goal) * 100;
 	};
+	const {t} = useTranslation();
 
 	return (
 		<main className="w-full bg-almost-white p-8">
@@ -41,8 +43,8 @@ const MainContent: React.FC<MainContentProps> = ({
 
 			{activeSection === 'announcements' && (
 				<>
-					<h1 className="text-h2 font-kharkiv">Мої заяви</h1>
-					<h3 className="text-h5 font-kharkiv mb-[2vh]">Оголошення</h3>
+					<h1 className="text-h2 font-kharkiv">{t('my_statements')}</h1>
+					<h3 className="text-h5 font-kharkiv mb-[2vh]">{t('advertisement')}</h3>
 					{announcements.length > 0 ?
 						<AnnouncementsPart
 							requests={announcements}
@@ -51,7 +53,7 @@ const MainContent: React.FC<MainContentProps> = ({
 						<div className="flex items-center justify-center my-[10%] w-full text-gray-500">
 							<div className="text-center font-montserratMedium">
 								<img src={NothingFound} className="w-[20vw] h-auto"/>
-								Ви ще не створили жодного оголошення
+								{t('you_have_not_created_any_announcement')}
 							</div>
 						</div>
 					}
@@ -59,8 +61,8 @@ const MainContent: React.FC<MainContentProps> = ({
 			)}
 			{activeSection === 'gatherings' && (
 				<>
-				<h1 className="text-h2 font-kharkiv">Мої заяви</h1>
-					<h3 className="text-h5 font-kharkiv mb-[2vh]">Збори</h3>
+				<h1 className="text-h2 font-kharkiv">{t('my_statements')}</h1>
+					<h3 className="text-h5 font-kharkiv mb-[2vh]">{t('collection')}</h3>
 					<div className="grid grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-6">
 						{gatherings.length > 0 ?
 							(gatherings.map((gathering, index) => (
@@ -83,7 +85,7 @@ const MainContent: React.FC<MainContentProps> = ({
 							<div className="flex items-center justify-center my-[10%] xl:ml-[27vw] w-full text-gray-500">
 								<div className="text-center font-montserratMedium">
 									<img src={NothingFound} className="w-[20vw] h-auto"/>
-									Ви ще не створили жодного збору
+									{t('you_have_not_created_any_gathering')}
 								</div>
 							</div>
 						}
@@ -92,8 +94,8 @@ const MainContent: React.FC<MainContentProps> = ({
 			)}
 			{activeSection === 'petitions' && (
 				<>
-					<h1 className="text-h2 font-kharkiv">Мої заяви</h1>
-					<h3 className="text-h5 font-kharkiv mb-[2vh]">Петиції</h3>
+					<h1 className="text-h2 font-kharkiv">{t('my_statements')}</h1>
+					<h3 className="text-h5 font-kharkiv mb-[2vh]">{t('petitions')}</h3>
 					<div
 						className="grid xl:grid-cols-3 sm:grid-cols-1 xl:px-0 md:px-0 sm:px-4 md:grid-cols-2 gap-6 w-full">
 						{petitions.length > 0 ?
@@ -112,7 +114,7 @@ const MainContent: React.FC<MainContentProps> = ({
 							<div className="flex items-center justify-center my-[10%] xl:ml-[27vw] w-full text-gray-500">
 								<div className="text-center font-montserratMedium">
 									<img src={NothingFound} className="w-[20vw] h-auto"/>
-									Ви ще не створили жодної петиції
+									{t('you_have_not_created_any_petition')}
 								</div>
 							</div>
 						}
@@ -122,8 +124,8 @@ const MainContent: React.FC<MainContentProps> = ({
 
 			{activeSection === 'likedPetitions' && (
 				<>
-					<h1 className="text-h2 font-kharkiv">Збережені</h1>
-					<h3 className="text-h5 font-kharkiv mb-[2vh]">Петиції</h3>
+					<h1 className="text-h2 font-kharkiv">{t('saved')}</h1>
+					<h3 className="text-h5 font-kharkiv mb-[2vh]">{t('petitions')}</h3>
 					<div
 						className="grid xl:grid-cols-3 sm:grid-cols-1 xl:px-0 md:px-0 sm:px-4 md:grid-cols-2 gap-6 w-full">
 						{likedPetitions.length > 0 ?
@@ -142,7 +144,7 @@ const MainContent: React.FC<MainContentProps> = ({
 							<div className="flex items-center justify-center my-[10%] xl:ml-[27vw] w-full text-gray-500">
 								<div className="text-center font-montserratMedium">
 									<img src={NothingFound} className="w-[20vw] h-auto"/>
-									Ви ще не зберегли жодної петиції
+									{t('you_have_not_saved_any_petition')}
 								</div>
 							</div>
 						}
@@ -152,8 +154,8 @@ const MainContent: React.FC<MainContentProps> = ({
 
 			{activeSection === 'likedGatherings' && (
 				<>
-					<h1 className="text-h2 font-kharkiv">Збережені</h1>
-					<h3 className="text-h5 font-kharkiv mb-[2vh]">Збори</h3>
+					<h1 className="text-h2 font-kharkiv">{t('saved')}</h1>
+					<h3 className="text-h5 font-kharkiv mb-[2vh]">{t('collection')}</h3>
 					<div className="grid grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-6">
 						{likedGatherings.length > 0 ?
 							(likedGatherings.map((gathering, index) => (
@@ -177,7 +179,7 @@ const MainContent: React.FC<MainContentProps> = ({
 								<div
 									className="text-center font-montserratMedium flex flex-col items-center justify-center">
 									<img src={NothingFound} className="w-[20vw] h-auto mb-4"/>
-									Ви ще не зберегли жодного збору
+									{t('you_have_not_saved_any_gathering')}
 								</div>
 							</div>
 						}
@@ -187,8 +189,8 @@ const MainContent: React.FC<MainContentProps> = ({
 
 			{activeSection === 'likedAnnouncements' && (
 				<>
-					<h1 className="text-h2 font-kharkiv">Збережені</h1>
-					<h3 className="text-h5 font-kharkiv mb-[2vh]">Оголошення</h3>
+					<h1 className="text-h2 font-kharkiv">{t('saved')}</h1>
+					<h3 className="text-h5 font-kharkiv mb-[2vh]">{t('advertisement')}</h3>
 					{likedAnnouncements.length > 0 ?
 						<AnnouncementsPart
 							requests={likedAnnouncements}
@@ -197,7 +199,7 @@ const MainContent: React.FC<MainContentProps> = ({
 						<div className="flex items-center justify-center my-[10%] w-full text-gray-500">
 							<div className="text-center font-montserratMedium">
 								<img src={NothingFound} className="w-[20vw] h-auto"/>
-								Ви ще не зберегли жодного оголошення
+								{t('you_have_not_saved_any_announcement')}
 							</div>
 						</div>
 					}
@@ -206,8 +208,8 @@ const MainContent: React.FC<MainContentProps> = ({
 
 			{activeSection === 'doneAnnouncements' && (
 				<>
-					<h1 className="text-h2 font-kharkiv">Моя допомога</h1>
-					<h3 className="text-h5 font-kharkiv mb-[2vh]">Оголошення</h3>
+					<h1 className="text-h2 font-kharkiv">{t('my_help')}</h1>
+					<h3 className="text-h5 font-kharkiv mb-[2vh]">{t('advertisement')}</h3>
 					{completedAnnouncements.length > 0 ?
 						<AnnouncementsPart
 							requests={completedAnnouncements}
@@ -216,7 +218,7 @@ const MainContent: React.FC<MainContentProps> = ({
 						<div className="flex items-center justify-center my-[10%] w-full text-gray-500">
 							<div className="text-center font-montserratMedium">
 								<img src={NothingFound} className="w-[20vw] h-auto"/>
-								Ви ще не допомогли нікому за оголошенням
+								{t('you_have_not_helped_any_person')}
 							</div>
 						</div>
 					}

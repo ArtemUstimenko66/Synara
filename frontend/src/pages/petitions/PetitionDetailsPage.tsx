@@ -16,6 +16,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SearchPetitions from "../../modules/petitions/components/SearchPetitions.tsx";
 import {Player} from "@lottiefiles/react-lottie-player";
 import loadingAnimation from "../../assets/animations/logoLoading.json";
+import {useTranslation} from "react-i18next";
 
 interface GatheringDetails {
     id: number;
@@ -42,6 +43,7 @@ const GatheringDetailsPage = () => {
     const [details, setDetails] = useState<GatheringDetails | null>(null);
     const navigate = useNavigate();
     const [isFavorite, setIsFavorite] = useState(false);
+    const {t} = useTranslation();
 
     useEffect(() => {
         const loadDetails = async () => {
@@ -89,7 +91,7 @@ const GatheringDetailsPage = () => {
                         {/* Left Side - Create Petition Button */}
                         <Button onClick={handleGoCreatePetions} hasBlue={true}
                                 className="h-12 sm:w-[27%] md:w-[25%] xl:w-[25%] font-montserratMedium sm:text-xs md:text-xs xl:text-relative-h5">
-                            СТВОРИТИ ПЕТИЦІЮ
+                            {t('create_petitionUPPER')}
                         </Button>
 
                         {/* Center - Search Component */}
@@ -109,22 +111,22 @@ const GatheringDetailsPage = () => {
                             <div className="mb-6 ml-12">
                                 <p className="mb-2 flex items-center font-montserratRegular">
                                     <AvtorPetitions className="h-5 w-5  mr-6"/>
-                                    АВТОР (ІНІЦІАТОР): {details.petitionAuthor}
+                                    {t('author_iniciator')}: {details.petitionAuthor}
                                 </p>
                                 <p className="mb-2 font-montserratRegular flex items-center">
                                     <Calendar className="h-5 w-5 mr-6" />
-                                    ДАТА ОПРИЛЮДНЕННЯ: {formatDate(details.creationDate)}
+                                    {t('date_publishUPPER')}: {formatDate(details.creationDate)}
                                 </p>
                                 {details.responseDate ?
                                     <p className="font-montserratRegular flex items-center">
                                         <SMS className="h-5 w-5  mr-6"/>
-                                        ДАТА ВІДПОВІДІ: {formatDate(details.responseDate)}
+                                        {t('date_answerUPPER')}: {formatDate(details.responseDate)}
                                     </p>
                                     :
                                     <></>
                                 }
 
-                                <h3 className="text-xl font-montserratMedium my-12">ТЕКСТ ПЕТИЦІЇ</h3>
+                                <h3 className="text-xl font-montserratMedium my-12">{t('text_petitionUPPER')}</h3>
                             </div>
 
                             <p className="font-montserratRegular ml-12 mb-6 leading-7 w-[90%]">
@@ -138,21 +140,21 @@ const GatheringDetailsPage = () => {
                                 {details.is_completed ?
                                     <Button
                                         className="w-full py-1 border-2 border-green-600 text-green-600 font-semibold rounded-3xl cursor-default">
-                                        ЗБІР ПІДПИСІВ ЗАВЕРШЕНО
+                                        {t('collection_captions_end')}
                                     </Button>
                                     :
                                     <a href={details.link} target="_blank"
                                        rel="noopener noreferrer">
                                         <Button
                                             className="w-full py-1 border-2 uppercase border-dark-blue text-dark-blue font-semibold rounded-3xl cursor-default">
-                                            Підписати
+                                            {t('sign')}
                                         </Button>
                                     </a>
 
                                 }
                             </div>
 
-                            <h3 className="text-lg font-montserratRegular mb-4 uppercase">Поділіться петицією:</h3>
+                            <h3 className="text-lg font-montserratRegular mb-4 uppercase">{t('share_petition')}:</h3>
                             <div className="mt-2 flex justify-center space-x-6">
                                 <a href="#" aria-label="Facebook">
                                     <FontAwesomeIcon icon={['fab', 'facebook-f']} className="h-6 w-6"/>
@@ -177,7 +179,7 @@ const GatheringDetailsPage = () => {
                                     ) : (
                                         <Heart className="h-6 w-6 mr-2"/>
                                     )}
-                                    В ОБРАНЕ
+                                    {t('to_selectedUPPER')}
                                 </Button>
                             </div>
                         </div>

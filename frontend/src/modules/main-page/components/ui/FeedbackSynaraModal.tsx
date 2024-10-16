@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '../../../../ui/Button';
 import {submitSynaraFeedback} from "../../api/mainPageService.ts";
+import {useTranslation} from "react-i18next";
 
 
 interface FeedbackModalProps {
@@ -46,6 +47,7 @@ export const FeedbackSynaraModal: React.FC<FeedbackModalProps> = ({ isOpen, onCl
             setComment(text);
         }
     };
+    const {t} = useTranslation();
 
     if (!isOpen) return null;
 
@@ -55,7 +57,7 @@ export const FeedbackSynaraModal: React.FC<FeedbackModalProps> = ({ isOpen, onCl
                 <button onClick={onClose} className="absolute top-0 right-4 text-h3 hover:text-gray-800">
                     ×
                 </button>
-                <h2 className="mt-6 text-h4 text-center font-kharkiv mb-4">Залиште відгук про Synara</h2>
+                <h2 className="mt-6 text-h4 text-center font-kharkiv mb-4">{t('leave_feedback_about_synara')}</h2>
 
                 <div className="flex justify-center mb-4">
                     {[1, 2, 3, 4, 5].map((star) => (
@@ -69,19 +71,19 @@ export const FeedbackSynaraModal: React.FC<FeedbackModalProps> = ({ isOpen, onCl
                     ))}
                 </div>
 
-                <p className="font-montserratMedium">Коментар</p>
+                <p className="font-montserratMedium">{t('comment')}</p>
                 <textarea
                     className="w-full border resize-none border-light-blue font-montserratMedium rounded-lg p-2 mb-4"
                     rows={4}
-                    placeholder="Ваш коментар"
+                    placeholder={t('your_comment')}
                     value={comment}
                     onChange={handleCommentChange}
                 />
-                <p className="text-sm text-gray-500">{comment.length}/{maxCommentLength} символів</p>
+                <p className="text-sm text-gray-500">{comment.length}/{maxCommentLength} {t('symbols')}</p>
 
                 <div className="flex justify-center">
                     <Button isFilled={true} onClick={handleSubmit} className=" sm:w-full md:w-1/2 xl:w-1/2 uppercase bg-perfect-yellow text-almost-black">
-                        Залишити відгук
+                        {t('leave_feedbackLOW')}
                     </Button>
                 </div>
             </div>

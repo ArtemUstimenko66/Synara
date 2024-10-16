@@ -192,12 +192,12 @@ const CreateGatheringPage: React.FC = () => {
 
                 {/* Gathering name */}
                 <div className="w-full flex flex-col mb-4">
-                    <label className="font-montserratRegular mb-2">Назва збору*</label>
+                    <label className="font-montserratRegular mb-2">{t('gathering_name')}*</label>
                     <input
                         type="text"
                         name="name"
                         value={localData.name}
-                        placeholder="Назва"
+                        placeholder={t('gathering_name_hint')}
                         className="w-full p-3 border rounded-lg outline-none border-light-blue focus:border-dark-blue resize-none"
                         onChange={handleChange}
                     />
@@ -220,12 +220,12 @@ const CreateGatheringPage: React.FC = () => {
 
                 {/* Sum of gathering */}
                 <div className="w-full flex flex-col mb-4">
-                    <label className="font-montserratRegular mb-2">Сума збору*</label>
+                    <label className="font-montserratRegular mb-2">{t('sum_of_gathering')}*</label>
                     <input
                         type="text"
                         name="goal"
                         value={localData.goal}
-                        placeholder="Сума, яку треба зібрати"
+                        placeholder={t('sum_that_need_collect')}
                         className="w-full p-3 border rounded-lg outline-none border-light-blue focus:border-dark-blue resize-none"
                         onChange={handleGoalChange}
                     />
@@ -234,7 +234,7 @@ const CreateGatheringPage: React.FC = () => {
 
                 {/* Card number */}
                 <div className="w-full flex flex-col mb-4">
-                    <label className="font-montserratRegular mb-2">Номер карти*</label>
+                    <label className="font-montserratRegular mb-2">{t('card_number')}*</label>
                     <input
                         type="text"
                         name="numberOfCard"
@@ -248,11 +248,11 @@ const CreateGatheringPage: React.FC = () => {
 
                 {/* Description of gathering */}
                 <div className="w-full flex flex-col mb-4">
-                    <label className="font-montserratRegular mb-2">Опис збору*</label>
+                    <label className="font-montserratRegular mb-2">{t('gathering_description')}*</label>
                     <textarea
                         name="description"
                         value={localData.description}
-                        placeholder="Опис збору"
+                        placeholder={t('gathering_description')}
                         className="w-full p-3 border rounded-lg outline-none border-light-blue focus:border-dark-blue resize-none"
                         onChange={(e) => setLocalData(prevData => ({...prevData, description: e.target.value}))}
                         rows={4}
@@ -262,11 +262,11 @@ const CreateGatheringPage: React.FC = () => {
 
                 {/* Details of gathering */}
                 <div className="w-full flex flex-col mb-4">
-                    <label className="font-montserratRegular mb-2">Деталі збору*</label>
+                    <label className="font-montserratRegular mb-2">{t('gathering_details')}*</label>
                     <textarea
                         name="detail"
                         value={localData.detail}
-                        placeholder="Деталі збору"
+                        placeholder={t('gathering_details')}
                         className="w-full p-3 border rounded-lg outline-none border-light-blue focus:border-dark-blue resize-none"
                         onChange={(e) => setLocalData(prevData => ({...prevData, detail: e.target.value}))}
                         rows={4}
@@ -276,7 +276,7 @@ const CreateGatheringPage: React.FC = () => {
 
                 {/* Who need help */}
                 <div className="w-full flex flex-col mb-4">
-                    <label className="font-montserratRegular mb-2">Кому потрібна допомога*</label>
+                    <label className="font-montserratRegular mb-2">{t('who_need_help')}*</label>
                     <textarea
                         value={localData.whoNeedHelp}
                         placeholder={t('your_description')}
@@ -289,7 +289,7 @@ const CreateGatheringPage: React.FC = () => {
 
                 {/* For what we gather money */}
                 <div className="w-full flex flex-col mb-4">
-                    <label className="font-montserratRegular mb-2">На що підуть кошти*</label>
+                    <label className="font-montserratRegular mb-2">{t('where_money_will_be_used')}*</label>
                     <textarea
                         value={localData.whereMoneyWillUsed}
                         placeholder={t('your_description')}
@@ -340,7 +340,7 @@ const CreateGatheringPage: React.FC = () => {
                     className="w-full text-almost-black uppercase font-montserratRegular py-4 rounded-full mb-6"
                     onClick={handleSubmit}
                 >
-                    Створити
+                    {t('create')}
                 </Button>
 
                 {/* Sidebar */}

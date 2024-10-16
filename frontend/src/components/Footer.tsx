@@ -8,6 +8,7 @@ import { useMediaQuery } from 'react-responsive';
 import LogoFooter from '../assets/images/logo_Footer.svg?react';
 import DownArrow from '../assets/images/Down_Arrow.svg?react';
 import {useTranslation} from "react-i18next";
+import LanguageSelector from "./LanguageSelector.tsx";
 
 library.add(faFacebookF, faInstagram, faTwitter, faTelegramPlane);
 
@@ -50,6 +51,7 @@ const Footer: React.FC = () => {
                                     <li><a href="/petitions" className="hover:underline">{t('petitions')}</a></li>
                                     <li><a href="/main" className="hover:underline">{t('volunteerSearch')}</a></li>
                                 </ul>
+
                             )
                             }
 
@@ -71,6 +73,7 @@ const Footer: React.FC = () => {
                             <li><a href="/cookie-policy" className="hover:underline">{t('cookie_policy')}</a></li>
                             <li><a href="/faq" className="hover:underline">{t('the_most_frequent_questions')}</a></li>
                         </ul>
+
                     </AccordionSection>
                     <div className="border border-gray-200 mb-4 w-full"></div>
                     <AccordionSection title={t('communicationUPPER')}>
@@ -92,17 +95,25 @@ const Footer: React.FC = () => {
                             <a href="#" aria-label="Telegram">
                                 <FontAwesomeIcon icon={['fab', 'telegram-plane']}/>
                             </a>
+
                         </div>
                     </AccordionSection>
                     <div className="border border-gray-200 mb-4 w-full"></div>
-                    <div className="flex items-center justify-center">
+                    <div className="flex flex-col items-center">
                         <Link to=".">
-                            <LogoFooter className="text-xl font-bold w-[45%] xl:mr-32 md:mr-14"/>
+                            <LogoFooter className="text-xl font-bold w-full"/>
                         </Link>
+                        <div className="flex justify-between items-center w-full mt-[2vh] px-[5vw]">
+                            <div className="text-center text-pl items-center justify-center text-almost-black text-xs">
+                                ©2024 SYNARA. All rights reserved
+                            </div>
+                            <div className="text-right text-xs text-almost-black">
+                                <LanguageSelector/>
+                            </div>
+                        </div>
                     </div>
-                    <div className="text-center text-pl text-almost-black">
-                        ©2024 SYNARA. All rights reserved
-                    </div>
+
+
                 </>
             ) : (
                 <>
@@ -111,7 +122,7 @@ const Footer: React.FC = () => {
                         {/* Left section with logo */}
                         <div className=" mt-2 xl:mr-0 md:mr-5 justify-start flex">
                             <Link to=".">
-                                <LogoSynara className="text-xl font-bold w-[45%] xl:mr-32 md:mr-14" />
+                                <LogoSynara className="text-xl font-bold w-[45%] xl:mr-32 md:mr-14"/>
                             </Link>
                         </div>
                         {/* Navigation section */}
@@ -123,9 +134,11 @@ const Footer: React.FC = () => {
                                         <li><a href="/profile" className="hover:underline">{t('profile')}</a></li>
                                         <li><a href="/chat" className="hover:underline">{t('chat')}</a></li>
                                         <li><a href="/main" className="hover:underline">{t('advertisement')}</a></li>
-                                        <li><a href="/propositions" className="hover:underline">{t('propositions')}</a></li>
+                                        <li><a href="/propositions" className="hover:underline">{t('propositions')}</a>
+                                        </li>
                                         <li><a href="/petitions" className="hover:underline">{t('petitions')}</a></li>
                                         <li><a href="/main" className="hover:underline">{t('volunteerSearch')}</a></li>
+
                                     </ul>
                                 )
                                 }
@@ -135,7 +148,9 @@ const Footer: React.FC = () => {
                                     <li><a href="/about" className="hover:underline">{t('about_us')}</a></li>
                                     <li><a href="/gatherings" className="hover:underline">{t('collection')}</a></li>
                                     <li><a href="/map-help" className="hover:underline">{t('maps')}</a></li>
-                                    <li><a href="/how-it-works" className="hover:underline">{t('how_it_worksLOWER')}</a></li>
+                                    <li><a href="/how-it-works" className="hover:underline">{t('how_it_worksLOWER')}</a>
+                                    </li>
+
                                 </ul>
                             </div>
                         </div>
@@ -174,9 +189,12 @@ const Footer: React.FC = () => {
                             </div>
                         </div>
                     </div>
-                    <hr className="border-t border-gray-200  w-[110%]  border-2 mt-6 mb-4" />
+                    <hr className="border-t border-gray-200  w-[110%]  border-2 mt-6 mb-4"/>
                     <div className="text-left text-xs text-almost-black">
                         ©2024 SYNARA. All rights reserved
+                    </div>
+                    <div className="text-right text-xs text-almost-black -mt-[1vh] -mr-[10%]">
+                        <LanguageSelector/>
                     </div>
                 </>
             )}

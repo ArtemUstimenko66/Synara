@@ -8,7 +8,6 @@ import NavItem from "../../ui/NavItem.tsx";
 
 import { SideBar } from "../../modules/main-page/components/SideBar.tsx";
 import {useTranslation} from "react-i18next";
-import LanguageSelector from "../../components/LanguageSelector.tsx";
 
 const HeaderMaps: React.FC = () => {
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -38,7 +37,6 @@ const HeaderMaps: React.FC = () => {
 			<header
 				className={`w-full fixed top-0 left-0 z-30 transition-transform duration-300 ease-in-out bg-white`}
 			>
-				<LanguageSelector/>
 				<div className="flex justify-between 0 pl-[5%] items-center px-8 py-8 md:ml-10 md:mr-4 xl:ml-20 xl:mr-36">
 
 					{/* Logo */}
@@ -54,7 +52,7 @@ const HeaderMaps: React.FC = () => {
 
 						<NavItem text={t('how_it_worksUPPER')} to="/how-it-works"/>
 						<div className="text-dark-blue font-montserratMedium">
-							<NavItem text="КАРТА ТРИВОГ" to="/map-alert"/>
+							<NavItem text={t('map_alarmsUPPER')} to="/map-alert"/>
 						</div>
 					</nav>
 

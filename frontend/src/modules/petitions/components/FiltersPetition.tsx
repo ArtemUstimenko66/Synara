@@ -102,9 +102,9 @@ const FiltersPetition: React.FC<FiltersProps> = ({ onCloseSidebar, onOpenMap }) 
 
             {/* Topic petition dropdown */}
             <div className="mb-4">
-                <h3 className="text-lg font-montserratRegular mb-4">Тема петиції</h3>
+                <h3 className="text-lg font-montserratRegular mb-4">{t('petition_topic')}</h3>
                 <Button className={`w-full py-1 border border-blue-500  ${isDropdownOpen? "rounded-t-2xl": "rounded-full"}`} onClick={toggleDropdown}>
-                    {selectedTopic || "Оберіть тему"}
+                    {selectedTopic || t('choose_topic')}
                 </Button>
                 {isDropdownOpen && (
                         <div className={`w-full bg-white border-b border-l border-r border-blue-500 ${isDropdownOpen? "rounded-b-2xl": "rounded-b-2xl"}`}>
@@ -139,7 +139,7 @@ const FiltersPetition: React.FC<FiltersProps> = ({ onCloseSidebar, onOpenMap }) 
 
             {/* Type petition */}
             <div className="mb-4">
-                <h3 className="text-lg font-montserratRegular mb-4">Тип петиції</h3>
+                <h3 className="text-lg font-montserratRegular mb-4">{t('type_of_petition')}</h3>
                 <div className="space-y-2">
                     {categories.map((category, index) => (
                         <button

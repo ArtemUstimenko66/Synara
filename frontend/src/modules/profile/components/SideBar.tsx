@@ -7,6 +7,7 @@ import Account from '../assets/Account.svg?react';
 import Settings from '../assets/Settings.svg?react';
 import DownArrowIcon from '../assets/Down_arrow.svg?react';
 import {useAuth} from "../../../hooks/useAuth.ts";
+import {useTranslation} from "react-i18next";
 
 interface SidebarProps {
     activeSection: string;
@@ -59,6 +60,7 @@ const Sidebar: React.FC<SidebarProps> = ({
     };
 
     const  {role} = useAuth();
+    const {t} = useTranslation();
 
     return (
         <div className="w-full mr-[5vw] p-[3%] bg-gray-100 h-auto py-[2vh] rounded-3xl mt-8">
@@ -116,7 +118,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                             }}
                         >
                             <div className="flex items-center">
-                                <HelpingHand className="mr-2 h-6 w-6"/> Моя допомога
+                                <HelpingHand className="mr-2 h-6 w-6"/> {t('my_help')}
                             </div>
                             <DownArrowIcon
                                 className={`mr-5 transform transition-transform ${isHelpOpen ? 'rotate-0' : 'rotate-180'}`}/>
@@ -124,7 +126,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                         {isHelpOpen && (
                             <ul className="ml-16 ">
                                 <li className="cursor-pointer mb-[1.5vh]"
-                                    onClick={() => setActiveSection('doneAnnouncements')}>Оголошення
+                                    onClick={() => setActiveSection('doneAnnouncements')}>{t('advertisement')}
                                 </li>
                             </ul>
                         )}
@@ -146,7 +148,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                         }}
                     >
                         <div className="flex items-center">
-                            <VectorRequest className="mr-2"/> Мої заяви
+                            <VectorRequest className="mr-2"/> {t('my_statements')}
                         </div>
                         <DownArrowIcon
                             className={`mr-5 transform transition-transform ${isDeclarationsOpen ? 'rotate-0' : 'rotate-180'}`}/>
@@ -154,10 +156,10 @@ const Sidebar: React.FC<SidebarProps> = ({
                     {isDeclarationsOpen && (
                         <ul className="ml-16 ">
                             <li className="cursor-pointer"
-                                onClick={() => setActiveSection('announcements')}>Оголошення
+                                onClick={() => setActiveSection('announcements')}>{t('advertisement')}
                             </li>
-                            <li className="cursor-pointer" onClick={() => setActiveSection('gatherings')}>Збори</li>
-                            <li className="cursor-pointer" onClick={() => setActiveSection('petitions')}>Петиції</li>
+                            <li className="cursor-pointer" onClick={() => setActiveSection('gatherings')}>{t('navItem7')}</li>
+                            <li className="cursor-pointer" onClick={() => setActiveSection('petitions')}>{t('petitions')}</li>
                         </ul>
                     )}
 
@@ -173,19 +175,19 @@ const Sidebar: React.FC<SidebarProps> = ({
                         }}
                     >
                         <div className="flex items-center">
-                            <VectorLiked className="mr-2"/> Обране
+                            <VectorLiked className="mr-2"/> {t('selected')}
                         </div>
                         <DownArrowIcon
                             className={`mr-5 transform transition-transform ${isLikedOpen ? 'rotate-0' : 'rotate-180'}`}/>
                     </li>
                     {isLikedOpen && (
                         <ul className="ml-16 ">
-                            <li className="cursor-pointer" onClick={() => setActiveSection('likedPetitions')}>Петиції
+                            <li className="cursor-pointer" onClick={() => setActiveSection('likedPetitions')}>{t('petitions')}
                             </li>
-                            <li className="cursor-pointer" onClick={() => setActiveSection('likedGatherings')}>Збори
+                            <li className="cursor-pointer" onClick={() => setActiveSection('likedGatherings')}>{t('collection')}
                             </li>
                             <li className="cursor-pointer"
-                                onClick={() => setActiveSection('likedAnnouncements')}>Оголошення
+                                onClick={() => setActiveSection('likedAnnouncements')}>{t('advertisement')}
                             </li>
                         </ul>
                     )}
@@ -197,7 +199,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                         onClick={() => setIsAccountOpen(!isAccountOpen)}
                     >
                         <div className="flex items-center">
-                            <Account className="mr-2"/> Акаунт
+                            <Account className="mr-2"/> {t('account')}
                         </div>
                         <DownArrowIcon
                             className={`mr-5 transform transition-transform ${isAccountOpen ? 'rotate-0' : 'rotate-180'}`}/>
@@ -206,21 +208,21 @@ const Sidebar: React.FC<SidebarProps> = ({
                         <ul className="ml-16">
                             {role == "volunteer" ?
                                 <>
-                                    <li className="cursor-pointer">Статистика</li>
-                                    <li onClick={() => setActiveSection('reviews')} className="cursor-pointer">Відгуки
+                                    <li className="cursor-pointer">{t('statistic')}</li>
+                                    <li onClick={() => setActiveSection('reviews')} className="cursor-pointer">{t('responds')}
                                     </li>
                                 </>
                                 :
                                 <></>
                             }
-                            <li className="cursor-pointer">Дані</li>
+                            <li className="cursor-pointer">{t('datas')}</li>
                         </ul>
                     )}
 
                     {/* Settings */}
                     <hr className="border-gray-300 mx-4 mb-4"/>
                     <li className="cursor-pointer ml-8 flex items-center">
-                        <Settings className="mr-2"/> Налаштування
+                        <Settings className="mr-2"/> {t('settings')}
                     </li>
                 </ul>
             </nav>

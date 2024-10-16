@@ -2,6 +2,7 @@ import React from 'react';
 import Calendar from '../../../modules/main-page/assets/Calendar.svg?react';
 import { Button } from "../../../ui/Button.tsx";
 import { useNavigate } from 'react-router-dom';
+import {useTranslation} from "react-i18next";
 
 interface PetitionCardProps {
     id: string;
@@ -39,6 +40,7 @@ const PetitionCard: React.FC<PetitionCardProps> = ({ id, petitionNumber, topic, 
     const handleDetailsClick = () => {
         navigate(`/petition/${id}`);
     };
+    const {t} = useTranslation();
 
     return (
         <div className="bg-gray-100 rounded-3xl p-6 flex flex-col justify-between">
@@ -53,7 +55,7 @@ const PetitionCard: React.FC<PetitionCardProps> = ({ id, petitionNumber, topic, 
             <div className="flex justify-center">
                 <Button className="text-center px-4 py-2 bg-perfect-yellow font-montserratRegular rounded-3xl"
                         onClick={handleDetailsClick}>
-                    ДЕТАЛЬНІШЕ
+                    {t('more_detailsUPPER')}
                 </Button>
             </div>
         </div>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { GoogleMap, MarkerF, PolylineF, useLoadScript, InfoWindowF } from "@react-google-maps/api";
 import { searchMap } from "../../modules/main-page/api/mainPageService.ts";
 import HeaderMaps from "./HeaderMaps.tsx";
+import {useTranslation} from "react-i18next";
 
 const libraries = ['places']; // Статическая переменная для библиотек
 
@@ -12,7 +13,7 @@ const Maps: React.FC = () => {
 		// @ts-ignore
 		libraries,
 	});
-
+	const {t} = useTranslation();
 	const [activeMarker, setActiveMarker] = useState<number | null>(null);
 	const [userMarkers, setUserMarkers] = useState<{ id: number; name: string; position: { lat: number; lng: number } }[]>([]);
 	const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
@@ -109,14 +110,14 @@ const Maps: React.FC = () => {
 								<InfoWindowF onCloseClick={() => setActiveMarker(null)}>
 									<div>
 										<p>{name}</p>
-										<button onClick={buildRoute}>Построить маршрут</button>
+										<button onClick={buildRoute}>{t('make_route')}</button>
 									</div>
 								</InfoWindowF>
 							)}
 						</MarkerF>
 					))}
 					{userLocation && (
-						<MarkerF position={userLocation} title="Ваше местоположение"/>
+						<MarkerF position={userLocation} title={t('your_point')}/>
 					)}
 					{routePath.length > 0 && (
 						<PolylineF

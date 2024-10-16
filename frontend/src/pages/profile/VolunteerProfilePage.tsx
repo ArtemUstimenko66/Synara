@@ -20,6 +20,7 @@ import {getDayOfWeekInUkrainian} from "../../data/dayOfWeekMap.ts";
 import {getHelpTypeInUkrainianEngToUkr} from "../../data/helpTypesMap.ts";
 import MainContent from "../../modules/profile/components/MainContent.tsx";
 import {useAuth} from "../../hooks/useAuth.ts";
+import {useTranslation} from "react-i18next";
 
 
 const formatTime = (time: string): string => {
@@ -71,6 +72,7 @@ const formatDate = (dateString: string) => {
 const VolunteerProfilePage: React.FC = () => {
 
 	const {id} = useParams();
+	const {t} = useTranslation();
 
 	const [activeSection, setActiveSection] = useState<string>('reviews');
 	const [announcementsData, setAnnouncementsData] = useState([]);
@@ -183,21 +185,21 @@ const VolunteerProfilePage: React.FC = () => {
 
 						{/* Action Button */}
 						<Button className="bg-perfect-yellow  px-6 py-2 rounded-3xl" onClick={handleRespond}>
-							ЗВЕРНУТИСЬ
+							{t('contactUpper')}
 						</Button>
 					</div>
 
 					{/* About Section */}
 					<div className="mt-6 mx-6 grid grid-cols-2 ">
 						<div className="bg-white p-4 px-12 rounded-3xl">
-							<h3 className="font-montserratMedium mb-2">Про себе</h3>
+							<h3 className="font-montserratMedium mb-2">{t('about_yourself')}</h3>
 							<p className="text-sm text-gray-700">
 								{details.description}
 							</p>
 						</div>
 						<div className="bg-white p-4 mx-6 rounded-3xl">
 							<div className="flex">
-								<h3 className="font-montserratMedium mb-1 mr-2">Тип допомоги</h3>
+								<h3 className="font-montserratMedium mb-1 mr-2">{t('type_of_help')}</h3>
 								<VectorOfficial/>
 							</div>
 
@@ -222,19 +224,19 @@ const VolunteerProfilePage: React.FC = () => {
 				<div className=" space-x-3 mt-6">
 					<button
 						onClick={() => setActiveSection('reviews')}
-						className="text-dark-blue border-dark-blue border-2 font-montserratMedium rounded-full px-6 py-1">ВІДГУКИ
+						className="text-dark-blue border-dark-blue border-2 font-montserratMedium rounded-full px-6 py-1">{t('reviewsUPPER')}
 					</button>
 					<button
 						onClick={() => setActiveSection('announcements')}
-						className="text-dark-blue border-dark-blue border-2 font-montserratMedium rounded-full px-6 py-1">ОГОЛОШЕННЯ
+						className="text-dark-blue border-dark-blue border-2 font-montserratMedium rounded-full px-6 py-1">{t('announcementUPPER')}
 					</button>
 					<button
 						onClick={() => setActiveSection('petitions')}
-						className="text-dark-blue border-dark-blue border-2 font-montserratMedium rounded-full px-6 py-1">ПЕТИЦІЇ
+						className="text-dark-blue border-dark-blue border-2 font-montserratMedium rounded-full px-6 py-1">{t('petitionUPPER')}
 					</button>
 					<button
 						onClick={() => setActiveSection('gatherings')}
-						className="text-dark-blue border-dark-blue border-2 font-montserratMedium rounded-full px-6 py-1">ЗБОРИ
+						className="text-dark-blue border-dark-blue border-2 font-montserratMedium rounded-full px-6 py-1">{t('collectionsUPPER')}
 					</button>
 				</div>
 

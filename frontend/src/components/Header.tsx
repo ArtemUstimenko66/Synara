@@ -6,7 +6,6 @@ import { MobileMenu } from "./MobileMenu.tsx";
 import MenuCloseIcon from '../assets/images/icon-close-menu.svg?react';
 import MenuIcon from '../assets/images/icon-menu.svg?react';
 import LogoSynara from '../assets/images/logoSynara.svg?react';
-import LanguageSelector from "./LanguageSelector.tsx";
 import {useTranslation} from "react-i18next";
 
 const Header: React.FC = () => {
@@ -69,7 +68,7 @@ const Header: React.FC = () => {
                     {isMobileMenuOpen ? <MenuCloseIcon /> : <MenuIcon />}
                 </div>
             </div>
-            <LanguageSelector/>
+
             {/* Мобильное меню */}
             <MobileMenu isOpen={isMobileMenuOpen} />
         </header>

@@ -78,12 +78,12 @@ export const SideBar: React.FC<SideBarProps> = ({ isOpen, onClose, isFilters, on
                         <nav className="flex flex-col w-[90%] mx-5 space-y-3 text-lg flex-grow">
                             {role === 'волонтер' ? (
                                     <>
-                                <NavItem text="Оголошення" to="/main"/>
+                                <NavItem text={t('advertisement')} to="/main"/>
                                 <div className="xl:border-b xl:border-gray-300 xl:mt-[5vh] sm:mt-0"></div>
                                     </>
                                 ) : (
                                     <>
-                                <NavItem text="Пошук волонтера" to="/main"/>
+                                <NavItem text={t('search_volunteer')} to="/main"/>
                                 <div className="xl:border-b xl:border-gray-300 xl:mt-5 sm:mt-0"></div>
                                     </>
                                 )}

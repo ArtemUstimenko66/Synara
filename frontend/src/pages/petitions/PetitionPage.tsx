@@ -183,7 +183,7 @@ const PetitionPage: React.FC = () => {
 						{/* Left Side - Create Petition Button */}
 						<Button onClick={handleGoCreatePetions} hasBlue={true}
 								className="h-12 sm:w-full md:w-[25%] xl:w-[25%] font-montserratMedium sm:text-xs md:text-xs xl:text-relative-h5">
-							СТВОРИТИ ПЕТИЦІЮ
+							{t('create_petitionUPPER')}
 						</Button>
 
 						{/* Center - Search Component */}
@@ -196,7 +196,7 @@ const PetitionPage: React.FC = () => {
 						{/* Left Side - Filter Button */}
 						<Button hasBlue={true} className="px-4 -py-0.5 text-relative-h5 sm:mb-2 xl:mb-0 md:mb-0"
 								onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-							<span className="text-montserratMedium text-relative-h5 ">Фільтрувати</span>
+							<span className="text-montserratMedium text-relative-h5 ">{t('filter')}</span>
 						</Button>
 
 						{/* Right Side - Sort Button */}
@@ -219,19 +219,19 @@ const PetitionPage: React.FC = () => {
 										className="cursor-pointer text-center py-2 px-2 border-b-2 border-blue-500 text-black"
 										onClick={() => handleSort('signatureCount')}
 									>
-										За кількістю підписів
+										{t('by_amount_captions')}
 									</div>
 									<div
 										className="cursor-pointer text-center py-2 px-2 border-b-2 border-blue-500 text-black"
 										onClick={() => handleSort('creationDate')}
 									>
-										За датою створення
+										{t('by_created_date')}
 									</div>
 									<div
 										className="cursor-pointer text-center py-2 px-2 text-black"
 										onClick={() => handleSort('deadline')}
 									>
-										За дедлайном
+										{t('by_deadline')}
 									</div>
 								</div>
 							)}
@@ -257,7 +257,7 @@ const PetitionPage: React.FC = () => {
 								<div
 									className="text-center font-montserratMedium flex flex-col items-center justify-center">
 									<img src={NothingFound} className="xl:w-[20vw] xl:h-auto sm:w-[50vw] md:w-[20vw] md:h-auto mb-4"/>
-									Наразі немає зборів за обраними фільтрами
+									{t('now_no_gathering_exist')}
 								</div>
 							</div>
 						)}

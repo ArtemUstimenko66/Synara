@@ -8,7 +8,6 @@ import NavItem from "../../../../ui/NavItem.tsx";
 
 import { SideBar } from "../SideBar.tsx";
 import {useTranslation} from "react-i18next";
-import LanguageSelector from "../../../../components/LanguageSelector.tsx";
 import {useAuth} from "../../../../hooks/useAuth.ts";
 
 const MainHeader: React.FC = () => {
@@ -53,7 +52,6 @@ const MainHeader: React.FC = () => {
                 className={`w-full fixed bg-almost-white top-0 left-0 z-30 transition-transform duration-300 ease-in-out 
             ${isVisible ? 'header-slide-in' : 'header-slide-out'} `}
             >
-                <LanguageSelector/>
                 <div
                     className="flex justify-between 0 pl-[5%] items-center px-8 py-8 md:ml-10 md:mr-4 xl:ml-20 xl:mr-36">
 

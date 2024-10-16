@@ -128,12 +128,12 @@ const CreateAnnouncementPage: React.FC = () => {
 
                 {/* Announcement name */}
                 <div className="w-full flex flex-col mb-4">
-                    <label className="font-montserratRegular mb-2">Заголовок оголошення*</label>
+                    <label className="font-montserratRegular mb-2">{t('announcement_title')}*</label>
                     <input
                         type="text"
                         name="name"
                         //value={localData.name}
-                        placeholder="Назва"
+                        placeholder={t('name_ad')}
                         className="w-full p-3 border rounded-lg outline-none border-light-blue focus:border-dark-blue resize-none"
                         //onChange={handleChange}
                     />
@@ -156,12 +156,12 @@ const CreateAnnouncementPage: React.FC = () => {
 
                 {/* Place */}
                 <div className="w-full flex flex-col mb-4">
-                    <label className="font-montserratRegular mb-2">Місце*</label>
+                    <label className="font-montserratRegular mb-2">{t('place')}*</label>
                     <input
                         type="text"
                         name="name"
                         //value={localData.name}
-                        placeholder="онлайн / оффлайн (місце знаходження)"
+                        placeholder={t('online_offline_place')}
                         className="w-full p-3 border rounded-lg outline-none border-light-blue focus:border-dark-blue resize-none"
                        // onChange={handleChange}
                     />
@@ -184,11 +184,11 @@ const CreateAnnouncementPage: React.FC = () => {
 
                 {/* Details */}
                 <div className="w-full flex flex-col mb-4">
-                    <label className="font-montserratRegular mb-2">Деталі*</label>
+                    <label className="font-montserratRegular mb-2">{t('description')}*</label>
                     <textarea
                         name="detail"
                         //value={localData.detail}
-                        placeholder="Ваш опис"
+                        placeholder={t('your_description')}
                         className="w-full p-3 border rounded-lg outline-none border-light-blue focus:border-dark-blue resize-none"
                         //onChange={(e) => setLocalData(prevData => ({...prevData, detail: e.target.value}))}
                         rows={4}
@@ -256,7 +256,7 @@ const CreateAnnouncementPage: React.FC = () => {
                     className="w-full text-almost-black uppercase font-montserratRegular py-4 rounded-full mb-6"
                     onClick={handleSubmit}
                 >
-                    Створити
+                    {t('create')}
                 </Button>
 
                 {/* Sidebar */}

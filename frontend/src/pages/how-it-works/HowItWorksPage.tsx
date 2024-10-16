@@ -13,9 +13,12 @@ import Message from "../../assets/images/Message.svg";
 import Footer from '../../components/Footer.tsx';
 import SearchVolunteerSM from "../../ui/SearchVolunteerSM.tsx";
 import {useMediaQuery} from "react-responsive";
+import {useTranslation} from "react-i18next";
 
 const HowItWorksPage: React.FC = () => {
     const isSmallScreen = useMediaQuery({ query: '(max-width: 1025px)' });
+    const { t } = useTranslation();
+
     // @ts-ignore
     return (
         <Wrapper>
@@ -23,27 +26,22 @@ const HowItWorksPage: React.FC = () => {
             <div>
                 {/* ОГОЛОШЕННЯ */}
                 <section className="w-full h-auto flex flex-col items-center mt-32 select-none">
-                    <h2 className="xl:text-h2 md:text-relative-h3xl sm:text-h5 font-kharkiv mb-20 text-center">ОГОЛОШЕННЯ</h2>
+                    <h2 className="xl:text-h2 md:text-relative-h3xl sm:text-h5 font-kharkiv mb-20 text-center">{t('announcementUPPER')}</h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 xl:ml-3 md:ml-6">
                         <div className="flex flex-col items-center">
                             <img src={`${Request}`} alt="Icon" className="w-24 h-24"/>
-                            <h3 className="text-2xl font-montserratRegular text-dark-blue">Створення оголошення</h3>
-                            <p className="text-center text-xs-ps w-[80%]">Якщо вам потрібна допомога, створіть
-                                оголошення. Заповніть просту форму, опишіть свою проблему і вкажіть всі потрібні
-                                деталі.</p>
+                            <h3 className="text-2xl font-montserratRegular text-dark-blue">{t('creating_of_announcement')}</h3>
+                            <p className="text-center text-xs-ps w-[80%]">{t('creating_of_announcement_desc')}</p>
                         </div>
                         <div className="flex flex-col items-center">
                             <img src={`${Map}`} alt="Icon" className="w-24 h-24"/>
-                            <h3 className="text-2xl font-montserratRegular text-dark-blue">Карта допомоги</h3>
-                            <p className="text-center text-xs-ps w-[80%]">На карті ви побачите всі активні оголошення
-                                гуманітарної допомоги. Знайдіть найближчу до вас проблему і запропонуйте свою
-                                допомогу.</p>
+                            <h3 className="text-2xl font-montserratRegular text-dark-blue">{t('map_of_helpLower')}</h3>
+                            <p className="text-center text-xs-ps w-[80%]">{t('connection_desc')}</p>
                         </div>
                         <div className="flex flex-col items-center">
                             <img src={`${Message}`} alt="Icon" className="w-24 h-24"/>
-                            <h3 className="text-2xl font-montserratRegular text-dark-blue">Зв'язок</h3>
-                            <p className="text-center text-xs-ps w-[80%]">Переглядайте оголошення та відгукніться, якщо
-                                хочете допомогти. Ви зможете зв'язатися з автором через чат та обговорити деталі.</p>
+                            <h3 className="text-2xl font-montserratRegular text-dark-blue">{t('connection')}</h3>
+                            <p className="text-center text-xs-ps w-[80%]">{t('connection_desc')}</p>
                         </div>
                     </div>
                 </section>
@@ -51,17 +49,12 @@ const HowItWorksPage: React.FC = () => {
                 {/* ПРОПОЗИЦІЇ */}
                 <section className="w-full h-auto flex flex-col md:flex-row items-center mt-32 select-none">
                     <div className="md:w-1/2 w-full flex flex-col justify-center items-start">
-                        <h2 className="xl:text-h2 md:text-relative-h3xl sm:text-h5 font-kharkiv ml-[20%] mb-8">ПРОПОЗИЦІЇ</h2>
+                        <h2 className="xl:text-h2 md:text-relative-h3xl sm:text-h5 font-kharkiv ml-[20%] mb-8">{t('propositionUPPER')}</h2>
                         <p className="text-pd font-montserratRegular mx-[5vw] mb-4">
-                            Що таке пропозиції? Це як оголошення, тільки для багатьох людей. Вони можуть бути як для тих
-                            хто хоче надавати допомогу, так і для тих хто потребує її.
+                            {t('proposition_desc')}
                         </p>
                         <p className="text-pd font-montserratRegular mx-[5vw] mb-4">
-                            Створи свою пропозицію, якщо ти хочеш запропонувати допомогу, просто заповни спеціальну
-                            форму. Опиши допомогу, вкажи всі деталі та для кого розрахована ця пропозиція.
-                            Приєднуйся до ініціатив, якщо ти бачиш цікаву пропозицію, до якої хочеш долучитись, просто
-                            натисни кнопку "Приєднатися". Також є карта пропозицій, з нею завжди легко знайти оффлайн
-                            пропозиції в вашому регіоні.
+                            {t('create_proposition')}
                         </p>
                     </div>
                     <div className="w-1/2 flex justify-center items-center mt-12 md:mt-0">

@@ -1,6 +1,7 @@
 import { Button } from "../../../ui/Button.tsx";
 import AnnouncementCard from "./ui/AnnouncementCard.tsx";
 import HelpCard from "./ui/HelpCard.tsx";
+import {useTranslation} from "react-i18next";
 
 interface HelpProps {
 	announcement: Announcement[];
@@ -18,15 +19,16 @@ interface Announcement {
 
 
 const Help: React.FC<HelpProps> = ({ announcement, selectedRequestSection }) => {
+	const {t} = useTranslation();
 	return (
 		<>
-			<h1 className="text-h2 font-kharkiv">Моя допомога</h1>
+			<h1 className="text-h2 font-kharkiv">{t('my_help')}</h1>
 			<div className="flex justify-between h-10 mb-8">
-				<h2 className="uppercase font-montserratMedium txt-lg mb-6">Оголошення</h2>
+				<h2 className="uppercase font-montserratMedium txt-lg mb-6">{t('advertisement')}</h2>
 				<Button
 					className={`border-dark-blue border-2 text-dark-blue rounded-3xl font-montserratMedium ${selectedRequestSection === "Cancelled" ? 'border-2 border-dark-blue bg-dark-blue text-white rounded-3xl font-montserratMedium px-8 py-0.5' : ''}`}
 				>
-					Дивитись всі
+					{t('see_all')}
 				</Button>
 			</div>
 			<div className="grid grid-cols-3 grid-rows-2 gap-3">
@@ -44,10 +46,10 @@ const Help: React.FC<HelpProps> = ({ announcement, selectedRequestSection }) => 
 			<div className="text-center mt-8">
 				<button
 					className="bg-perfect-yellow text-black py-2 px-6 font-montserratRegular text-xs-pxl rounded-full hover:bg-orange-400 transition">
-					Показати ще
+					{t('show_more')}
 				</button>
 			</div>
-			<h3 className="my-4 text-lg font-montserratMedium uppercase">Пропозиції</h3>
+			<h3 className="my-4 text-lg font-montserratMedium uppercase">{t('propositions')}</h3>
 			{/* Тут будет отображаться список предложений */}
 			<div className="grid grid-cols-3 gap-6">
 				{/* Пример карточки предложения */}

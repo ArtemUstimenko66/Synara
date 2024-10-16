@@ -21,6 +21,7 @@ import {uk} from 'date-fns/locale';
 import GatheringCard from "../../modules/gathering/ui/GatheringCard.tsx";
 import { Player } from '@lottiefiles/react-lottie-player';
 import loadingAnimation from '../../assets/animations/logoLoading.json';
+import {useTranslation} from "react-i18next";
 
 interface GatheringDetails {
     id: number;
@@ -64,6 +65,7 @@ const GatheringDetailsPage = () => {
     const [hasMore, setHasMore] = useState(true);
     const [hasShowMore, setShowHasMore] = useState(true);
     const [isFavorite, setIsFavorite] = useState(false);
+    const {t} = useTranslation();
 
     const fetchFilteredGatherings = async () => {
 
@@ -196,7 +198,7 @@ const GatheringDetailsPage = () => {
                                 <Link to="/add-gathering" className="w-full md:w-1/2 xl:w-auto">
                                     <Button hasBlue={true} className="px-4 text-relative-h5 w-full">
                                         <span className="text-montserratMedium uppercase text-relative-h5">
-                                            Створити збір
+                                               {t('create_gathering')}
                                         </span>
                                     </Button>
                                 </Link>
@@ -220,7 +222,7 @@ const GatheringDetailsPage = () => {
                             {/* Левая часть (2/3 ширины) */}
                             <div className="w-full h-auto md:w-7/12">
                                 <p className="font-montserratRegular text-relative-ps mt-4">{details.description}</p>
-                                <p className="font-medium text-relative-pl font-montserratMedium mt-4">Деталі збору:</p>
+                                <p className="font-medium text-relative-pl font-montserratMedium mt-4">{t('gathering_details')}:</p>
                                 <p className="font-montserratRegular text-relative-ps mt-4">{details.detail}</p>
                                 <p className="font-medium text-relative-pl font-montserratMedium mt-4">Кому потрібна
                                     допомога:</p>

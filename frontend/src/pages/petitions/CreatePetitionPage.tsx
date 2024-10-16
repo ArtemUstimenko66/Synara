@@ -8,6 +8,7 @@ import {useNavigate} from "react-router-dom";
 import {ukrainianPetitionTypes} from "../../data/petitionTypesList.ts";
 import {Player} from "@lottiefiles/react-lottie-player";
 import loadingAnimation from "../../assets/animations/logoLoading.json";
+import {useTranslation} from "react-i18next";
 
 const CreatePetitionPage: React.FC = () => {
 	const [selectedOptions, setSelectedOptions] = useState<{ [key: string]: boolean }>({
@@ -31,42 +32,44 @@ const CreatePetitionPage: React.FC = () => {
 	const [errors, setErrors] = useState<{ [key: string]: string }>({});
 	const navigate = useNavigate();
 	const [loading, setLoading] = useState<boolean>(false);
+	const {t} = useTranslation();
 
 	const validateForm = () => {
 		const newErrors: { [key: string]: string } = {};
 
 		if (!formData.petitionNumber) {
-			newErrors.petitionNumber = 'Номер петиції є обов\'язковим';
+			newErrors.petitionNumber = t('number_of_petition_required');
 		}
 		if (!formData.petitionTitle) {
-			newErrors.petitionTitle = 'Назва петиції є обов\'язковою';
+			newErrors.petitionTitle = t('name_of_petition_required');
 		}
 		if (!formData.petitionAuthor) {
-			newErrors.petitionAuthor = 'Автор петиції є обов\'язковим';
+			newErrors.petitionAuthor = t('author_of_petition_required');
 		}
 		if (!formData.petitionTopic) {
-			newErrors.petitionTopic = 'Тема петиції є обов\'язковим';
+			newErrors.petitionTopic = t('topic_of_petition_required');
 		}
 		if (!formData.petitionType) {
-			newErrors.petitionType = 'Тип петиції є обов\'язковим';
+			newErrors.petitionType = t('type_of_petition_required');
 		}
 		if (!formData.petitionDate) {
-			newErrors.petitionDate = 'Дата петиції є обов\'язковою';
+			newErrors.petitionDate = t('date_of_petition_required');
 		}
 		if (!formData.petitionText) {
-			newErrors.petitionText = 'Текст петиції є обов\'язковим';
+			newErrors.petitionText = t('text_of_petition_required');
 		}
 		if (!formData.petitionLink) {
-			newErrors.petitionLink = 'Посилання на петицію є обов\'язковим';
+			newErrors.petitionLink = t('link_of_petition_required');
 		}
 		if (selectedOptions.terms && !formData.responseDate) {
-			newErrors.responseDate = 'Дата відповіді є обов\'язковою';
+			newErrors.responseDate = t('date_of_respond_required');
 		}
 
 		setErrors(newErrors);
 
 		return Object.keys(newErrors).length === 0;
 	};
+
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -174,16 +177,16 @@ const CreatePetitionPage: React.FC = () => {
 			<MainHeader />
 			<div className="flex justify-center items-center w-full mt-24">
 				<div className="w-full bg-white rounded-lg p-8">
-					<h1 className="text-center text-3xl font-normal font-kharkiv mb-6">ЗАПОВНІТЬ ДАНІ</h1>
+					<h1 className="text-center text-3xl font-normal font-kharkiv mb-6">{t('fill_dataUPPER')}</h1>
 					<form className="mx-32" onSubmit={handleSubmit}>
 						<div className="mb-4">
 							<label className="block font-montserratMedium mb-2" htmlFor="petition-number">
-								Номер петиції*
+								{t('petition_number')}*
 							</label>
 							<input
 								id="petitionNumber"
 								type="text"
-								placeholder="Номер"
+								placeholder={t('number')}
 								value={formData.petitionNumber}
 								onChange={handleInputChange}
 								className="w-full px-3 py-2 border border-dark-blue rounded-lg focus:outline-none focus:ring-1 focus:ring-gray-300"
@@ -193,12 +196,12 @@ const CreatePetitionPage: React.FC = () => {
 
 						<div className="mb-4">
 							<label className="block font-montserratMedium mb-2" htmlFor="petition-title">
-								Назва петиції*
+								{t('name_petition')}*
 							</label>
 							<input
 								id="petitionTitle"
 								type="text"
-								placeholder="Назва"
+								placeholder={t('name_petition_hint')}
 								value={formData.petitionTitle}
 								onChange={handleInputChange}
 								className="w-full px-3 py-2 border border-dark-blue rounded-lg focus:outline-none focus:ring-1 focus:ring-gray-300"
@@ -208,12 +211,12 @@ const CreatePetitionPage: React.FC = () => {
 
 						<div className="mb-4">
 							<label className="block font-montserratMedium mb-2" htmlFor="petition-author">
-								Автор петиції*
+								{t('petition_author')}*
 							</label>
 							<input
 								id="petitionAuthor"
 								type="text"
-								placeholder="Автор"
+								placeholder={t('author')}
 								value={formData.petitionAuthor}
 								onChange={handleInputChange}
 								className="w-full px-3 py-2 border border-dark-blue rounded-lg focus:outline-none focus:ring-1 focus:ring-gray-300"
@@ -223,7 +226,7 @@ const CreatePetitionPage: React.FC = () => {
 
 						<div className="mb-4">
 							<label className="block font-montserratMedium mb-2" htmlFor="petition-type">
-								Тип петиції*
+								{t('petition_type')}*
 							</label>
 							<div className="relative">
 								<input
@@ -231,7 +234,7 @@ const CreatePetitionPage: React.FC = () => {
 									value={inputValueType}
 									onChange={(e) => setInputValueType(e.target.value)}
 									onFocus={() => setIsFocusedType(true)}
-									placeholder="Тип"
+									placeholder={t('type')}
 									className="w-full p-3 border rounded-lg outline-none border-dark-blue focus:border-dark-blue"
 								/>
 								{isFocusedType && filteredTypes.length > 0 && (
@@ -261,7 +264,7 @@ const CreatePetitionPage: React.FC = () => {
 
 						<div className="mb-4">
 							<label className="block font-montserratMedium mb-2" htmlFor="petition-type">
-								Тема петиції*
+								{t('petition_topic')}*
 							</label>
 							<div className="relative">
 								<input
@@ -269,7 +272,7 @@ const CreatePetitionPage: React.FC = () => {
 									value={inputValue}
 									onChange={(e) => setInputValue(e.target.value)}
 									onFocus={() => setIsFocused(true)}
-									placeholder="Тема"
+									placeholder={t('topic')}
 									className="w-full p-3 border rounded-lg outline-none border-dark-blue focus:border-dark-blue"
 								/>
 								{isFocused && filteredTopics.length > 0 && (
@@ -299,12 +302,12 @@ const CreatePetitionPage: React.FC = () => {
 
 						<div className="mb-4">
 							<label className="block font-montserratMedium mb-2" htmlFor="petition-date">
-								Дата оприлюднення*
+								{t('date_of_promulgation')}*
 							</label>
 							<input
 								id="petitionDate"
 								type="text"
-								placeholder="Дата петиції - ДД / ММ / РРРР"
+								placeholder={t('date_petition')}
 								value={formData.petitionDate}
 								onChange={(e) => handleDateChange(e, 'petitionDate')}
 								className="w-full px-3 py-2 border border-dark-blue rounded-lg focus:outline-none focus:ring-1 focus:ring-gray-300"
@@ -333,12 +336,12 @@ const CreatePetitionPage: React.FC = () => {
 										  </span>
 										)}
 									</span>
-									Петиція з відповіддю*
+									{t('petition_with_answer')}*
 									{selectedOptions.terms ? (
 										<input
 											id="responseDate"
 											type="text"
-											placeholder="Дата відповіді - ДД / ММ / РРРР"
+											placeholder={t('date_of_answer')}
 											value={formData.responseDate}
 											onChange={(e) => handleDateChange(e, 'responseDate')}
 											className="ml-6 w-full px-3 py-2 border border-dark-blue rounded-lg focus:outline-none focus:ring-1 focus:ring-gray-300"
@@ -351,11 +354,11 @@ const CreatePetitionPage: React.FC = () => {
 
 						<div className="mb-4">
 							<label className="block font-montserratMedium mb-2" htmlFor="petition-text">
-								Текст петиції*
+								{t('text_petition')}*
 							</label>
 							<textarea
 								id="petitionText"
-								placeholder="Текст петиції"
+								placeholder={t('text_petition')}
 								value={formData.petitionText}
 								onChange={handleInputChange}
 								className="w-full px-3 py-2 border border-dark-blue rounded-lg focus:outline-none focus:ring-1 focus:ring-gray-300"
@@ -365,12 +368,12 @@ const CreatePetitionPage: React.FC = () => {
 
 						<div className="mb-4">
 							<label className="block font-montserratMedium mb-2" htmlFor="petition-link">
-								Посилання на петицію*
+								{t('link_to_petition')}*
 							</label>
 							<input
 								id="petitionLink"
 								type="text"
-								placeholder="Посилання"
+								placeholder={t('link')}
 								value={formData.petitionLink}
 								onChange={handleInputChange}
 								className="w-full px-3 py-2 border border-dark-blue rounded-lg focus:outline-none focus:ring-1 focus:ring-gray-300"
@@ -383,7 +386,7 @@ const CreatePetitionPage: React.FC = () => {
 								type="submit"
 								className="w-full bg-perfect-yellow  text-almost-black font-montserratRegular py-3 rounded-3xl hover:bg-orange-400 transition duration-200"
 							>
-								СТВОРИТИ
+								{t('createUPPER')}
 							</button>
 						</div>
 					</form>
