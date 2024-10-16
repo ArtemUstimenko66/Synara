@@ -81,7 +81,7 @@ const MapComponent: React.FC = () => {
 	const [states, setStates] = useState<{ [key: string]: { alertnow: boolean } }>({});
 
 	useEffect(() => {
-		fetch('http://localhost:8080/api/alerts')
+		fetch('https://synara.help/api/alerts')
 			.then((response) => response.json())
 			.then((data) => setStates(data.states))
 			.catch((error) => console.error('Error fetching data:', error));
