@@ -40,12 +40,12 @@ export class UserController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get('coordinates-by-city')
+  @Get('/coordinates-by-city')
   async getVictimCoordinates(@Query('city') city: string) {
     return this.victimService.findVictimsByCity(city);
   }
 
-  @Get('users-by-radius')
+  @Get('/users-by-radius')
   async getVictimsByRadius(
       @Query('radius') radius: number,
       @Query('city') city: string,
