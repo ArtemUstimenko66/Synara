@@ -24,7 +24,7 @@ export class FileController {
     this.bucket = this.configService.get<string>('AWS_S3_BUCKET_NAME');
   }
 
-  @Post('upload')
+  @Post('/upload')
   @UseInterceptors(FileInterceptor('file'))
   async uploadFile(
     @UploadedFile() file: Express.Multer.File,
@@ -42,7 +42,7 @@ export class FileController {
     return { file: fileRecord };
   }
 
-  @Post('upload-gathering-file')
+  @Post('/upload-gathering-file')
   @UseInterceptors(FileInterceptor('file'))
   async uploadGatheringFile(
     @UploadedFile() file: Express.Multer.File,

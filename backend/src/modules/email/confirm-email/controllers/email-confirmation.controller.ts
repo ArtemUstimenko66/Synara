@@ -4,7 +4,7 @@ import { Response } from 'express';
 import { UsersService } from '../../../users/services/users.service';
 import { SmsService } from '../../../sms/sms.service';
 
-@Controller('confirmation-email')
+@Controller('api/confirmation-email')
 // @UseInterceptors(ClassSerializerInterceptor )
 export class EmailConfirmationController {
   constructor(
