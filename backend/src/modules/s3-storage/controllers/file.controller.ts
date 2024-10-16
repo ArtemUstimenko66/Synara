@@ -11,7 +11,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiTags } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
 
-@ApiTags('Files')
+// @ApiTags('Files')
 @Controller('api/files')
 export class FileController {
   private readonly bucket: string;
