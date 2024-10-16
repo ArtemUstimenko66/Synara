@@ -126,7 +126,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                         {isHelpOpen && (
                             <ul className="ml-16 ">
                                 <li className="cursor-pointer mb-[1.5vh]"
-                                    onClick={() => setActiveSection('doneAnnouncements')}>{t('advertisement')}
+                                    onClick={() => setActiveSection('announcements')}>{t('advertisement')}
                                 </li>
                             </ul>
                         )}

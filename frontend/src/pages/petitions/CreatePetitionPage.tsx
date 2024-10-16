@@ -5,10 +5,12 @@ import VectorWhite from '../../assets/images/VectorWhite.svg?react';
 import { ukrainianPetitionTopics } from "../../data/petitionTopicsList.ts";
 import {createPetition} from "../../modules/petitions/api/petitionsService.ts";
 import {useNavigate} from "react-router-dom";
-import {ukrainianPetitionTypes} from "../../data/petitionTypesList.ts";
+
 import {Player} from "@lottiefiles/react-lottie-player";
 import loadingAnimation from "../../assets/animations/logoLoading.json";
 import {useTranslation} from "react-i18next";
+import {ukrainianPetitionTypes} from "../../data/petitionTypesList.ts";
+
 
 const CreatePetitionPage: React.FC = () => {
 	const [selectedOptions, setSelectedOptions] = useState<{ [key: string]: boolean }>({
