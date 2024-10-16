@@ -2,7 +2,7 @@ import {
   Body,
   Controller,
   Post,
-  UploadedFile,
+  UploadedFile, UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { S3Service } from '../services/s3.service';
@@ -10,9 +10,11 @@ import { FileService } from '../services/file.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiTags } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
+import { JwtAuthGuard } from "../../auth/guards/jwt-auth.guard";
 
-// @ApiTags('Files')
+@ApiTags('Files')
 @Controller('api/files')
+@UseGuards(JwtAuthGuard)
 export class FileController {
   private readonly bucket: string;
 
