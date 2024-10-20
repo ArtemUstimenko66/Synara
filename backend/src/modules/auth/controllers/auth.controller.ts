@@ -154,3 +154,4 @@ export class AuthController {
     res.redirect('https://synara.help/profile');
   }
 }
+
