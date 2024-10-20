@@ -3,6 +3,7 @@ import { Button } from "../../../ui/Button.tsx";
 import { User } from "../../registration/interfaces/User.tsx";
 import {sendCodeToPhoneNumber, verifyCode} from "../api/phoneVerificationService.ts";
 import {useTranslation} from "react-i18next";
+import {useNavigate} from "react-router-dom";
 
 type UpdatePasswordInfoProps = {
     userData: User;
@@ -30,13 +31,14 @@ const CheckPhone: React.FC<UpdatePasswordInfoProps> = ({ userData }) => {
     };
 
     const {t} = useTranslation();
-
+    const navigate = useNavigate();
     const handleVerifyCode = async () => {
         if (userData.phoneNumber && code) {
             try {
                 const response = await verifyCode(userData.phoneNumber, code);
                 if (response.success) {
                     setError(null);
+                    navigate("/home");
                 } else {
                     setError(t('cod_invalid_try_again'));
                 }

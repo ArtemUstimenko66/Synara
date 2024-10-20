@@ -38,11 +38,12 @@ const ProfilePage = () => {
         rating: '',
     });
 
-    const { userId, isAuthenticated, isLoading } = useAuth();
+    const { role, userId, isAuthenticated, isLoading } = useAuth();
 
     useEffect(() => {
         const fetchData = async () => {
             if (isAuthenticated && userId) {
+                console.log("userId ->", userId)
                 try {
                     const data = await getUser(userId);
                     console.log('getUser(userId): ', data);
@@ -52,15 +53,17 @@ const ProfilePage = () => {
                     setPetitionsData(data.petitions);
 
 
-                    const comments = await getCommentsAboutUser(Number(data.volunteer.id));
-                    setCommentsData(comments);
+
                     setUserData({
                         avatarUrl: data.avatarUrl,
                         firstName: data.firstName,
                         lastName: data.lastName,
                         birthDate: data.birthDate,
-                        rating: data.volunteer.rating,
+                        rating: role == "volunteer" ? data.volunteer.rating : 1,
                     });
+                    const comments = await getCommentsAboutUser(Number(data.volunteer.id));
+                    setCommentsData(comments);
+                    console.log("userData", userData)
                 } catch (error) {
                     console.log('Error fetching user data:', error);
                 }
