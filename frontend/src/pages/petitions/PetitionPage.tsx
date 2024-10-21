@@ -179,7 +179,7 @@ const PetitionPage: React.FC = () => {
 
 				<div className="flex flex-col w-full items-center mt-20">
 					{/* Top Section: Create Petition, Search, Filter, and Sort */}
-					<div className="flex sm:flex-col md:flex-row xl:flex-row w-full items-center md:mb-0 sm:mb-0 xl:mb-2">
+					<div className="flex  sm:flex-col md:flex-row xl:flex-row xl:w-full sm:w-[90%] items-center md:mb-0 sm:mb-0 xl:mb-2">
 						{/* Left Side - Create Petition Button */}
 						<Button onClick={handleGoCreatePetions} hasBlue={true}
 								className="h-12 sm:w-full md:w-[25%] xl:w-[25%] font-montserratMedium sm:text-xs md:text-xs xl:text-relative-h5">
@@ -192,7 +192,7 @@ const PetitionPage: React.FC = () => {
 						</div>
 					</div>
 
-					<div className="flex md:flex-row xl:flex-row sm:flex-col w-full justify-between mb-8">
+					<div className="flex md:flex-row xl:flex-row sm:flex-col  xl:w-full sm:w-[90%] justify-between mb-8">
 						{/* Left Side - Filter Button */}
 						<Button hasBlue={true} className="px-4 -py-0.5 text-relative-h5 sm:mb-2 xl:mb-0 md:mb-0"
 								onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
@@ -200,7 +200,7 @@ const PetitionPage: React.FC = () => {
 						</Button>
 
 						{/* Right Side - Sort Button */}
-						<div className="relative w-full md:w-3/4 xl:w-auto">
+						<div className="relative w-full md:w-3/4 justify-end flex xl:w-auto">
 							<Button
 								hasBlue={true}
 								className={`px-2 z-11 w-full md:w-auto xl:w-auto text-relative-h5 flex items-center justify-center space-x-3 transition-all duration-0 ${isDropdownOpen ? 'rounded-b-none rounded-t-3xl' : 'rounded-3xl'}`}
@@ -249,6 +249,7 @@ const PetitionPage: React.FC = () => {
 									petitionNumber={petition.petitionNumber}
 									topic={petition.topic}
 									creationDate={petition.creationDate}
+									responseDate={petition.responseDate}
 									text={petition.text}
 								/>
 							))

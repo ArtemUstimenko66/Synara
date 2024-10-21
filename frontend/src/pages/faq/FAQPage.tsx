@@ -62,8 +62,8 @@ const FAQPage = () => {
 		<Wrapper>
 			<MainHeader />
 			<div className="min-h-screen mt-20 ml-[3%] mr-[3%]">
-				<h1 className="text-h2 font-kharkiv uppercase">Найчастіші запитання</h1>
-				<h2 className="text-h3 font-kharkiv mt-8">Загальні питання про платформу:</h2>
+				<h1 className="text-h3 font-kharkiv uppercase">Найчастіші запитання</h1>
+				<h2 className="text-h5 font-kharkiv mt-8">Загальні питання про платформу:</h2>
 
 				{/* Section 1 */}
 				<div className="mt-8">
@@ -73,7 +73,7 @@ const FAQPage = () => {
 				</div>
 
 				{/* Section 2 */}
-				<h2 className="text-h3 font-kharkiv mt-12">Питання для потерпілих:</h2>
+				<h2 className="text-h5 font-kharkiv mt-12">Питання для потерпілих:</h2>
 				<div className="mt-8">
 					{questionsSection2.map((q, index) => (
 						<AccordionItem key={index} question={q.question} answer={q.answer} />
@@ -81,7 +81,7 @@ const FAQPage = () => {
 				</div>
 
 				{/* Section 3 */}
-				<h2 className="text-h3 font-kharkiv mt-12">Питання для волонтерів:</h2>
+				<h2 className="text-h5 font-kharkiv mt-12">Питання для волонтерів:</h2>
 				<div className="mt-8">
 					{questionsSection3.map((q, index) => (
 						<AccordionItem key={index} question={q.question} answer={q.answer} />
@@ -89,7 +89,7 @@ const FAQPage = () => {
 				</div>
 
 				{/* Section 4 */}
-				<h2 className="text-h3 font-kharkiv mt-12">Технічні питання:</h2>
+				<h2 className="text-h5 font-kharkiv mt-12">Технічні питання:</h2>
 				<div className="mt-8">
 					{questionsSection4.map((q, index) => (
 						<AccordionItem key={index} question={q.question} answer={q.answer} />

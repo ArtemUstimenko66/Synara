@@ -46,7 +46,7 @@ const VolunteerCard: React.FC<VolunteerCardProps> = ({ id, name, rating, support
                         alt="User Avatar"
                         className="xl:w-16 xl:h-16 sm:w-12 sm:h-12 rounded-full object-cover mr-3"
                     />
-                    <h3 className="xl:text-pxl sm:text-relative-h4 font-montserratMedium">{name}</h3>
+                    <h3 className="xl:text-relative-ps sm:text-relative-h2 md:text-relative-h4  font-montserratMedium">{name}</h3>
                 </div>
                 {/* Рейтинг */}
                 <div className="flex items-center ">
@@ -76,7 +76,7 @@ const VolunteerCard: React.FC<VolunteerCardProps> = ({ id, name, rating, support
             </div>
 
             {/* Дни и часы работы */}
-            <div className="flex xl:text-pl sm: text-relative-pxl font-montserratMedium justify-center items-center font-medium mb-4">
+            <div className="flex xl:text-relative-ps sm:text-relative-h2 md:text-relative-h4  font-montserratMedium justify-center items-center font-medium mb-4">
                 <div className="flex items-center mr-8">
                     <Calendar className="xl:h-8 xl:w-8 sm:h-7 sm:w-7"/>
                     <span className="xl:ml-5 sm:ml-2">
@@ -93,7 +93,7 @@ const VolunteerCard: React.FC<VolunteerCardProps> = ({ id, name, rating, support
             <div className="flex justify-center items-center font-montserratMedium ml-4 mb-4 p-4">
                 <Button
                     isFilled={true}
-                    className="uppercase px-4 py-2 rounded-full xl:text-relative-p sm:text-relative-pxl bg-perfect-yellow"
+                    className="uppercase px-4 py-2 rounded-full xl:text-relative-ps sm:text-relative-h2 md:text-relative-h4  bg-perfect-yellow"
                     onClick={handleNavigateToProfile}
                 >
                     {t('view_profileUPPER')}

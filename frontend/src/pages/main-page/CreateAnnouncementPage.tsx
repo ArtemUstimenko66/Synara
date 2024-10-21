@@ -118,7 +118,7 @@ const CreateAnnouncementPage: React.FC = () => {
 
     return (
         <Wrapper>
-            <div className="min-h-screen bg-almost-white">
+            <div className="min-h-screen bg-almost-white mx-[5vw]">
 
                 {/* Header */}
                 <MainHeader/>

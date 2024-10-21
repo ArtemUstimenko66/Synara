@@ -550,7 +550,7 @@ const AnnouncementDetailsPage = () => {
                                                     handlePrevImage();
                                                 }}
                                             >
-                                                <LeftSlide className="h-10 w-10 text-white"/>
+                                                <LeftSlide className="xl:h-10 xl:w-10 sm:h-8 sm:w-8 text-white"/>
                                             </div>
                                         )}
 
@@ -563,7 +563,7 @@ const AnnouncementDetailsPage = () => {
                                                     handleNextImage();
                                                 }}
                                             >
-                                                <RightSlide className="h-10 w-10 text-white"/>
+                                                <RightSlide className="xl:h-10 xl:w-10 sm:h-8 sm:w-8 text-white"/>
                                             </div>
                                         )}
                                     </div>

@@ -216,11 +216,11 @@ const GatheringPage: React.FC = () => {
 										<div
 											className="w-full bg-white border-2 border-blue-500 rounded-b-3xl absolute left-0 top-full z-10 -mt-1">
 											<Button onClick={() => handleSort('ASC')}
-													className={`cursor-pointer py-2 px-2 border-b-2 border-blue-500 ${sortOrder === 'DESC' ? 'text-blue-500' : 'text-black'}`}>
+													className={`cursor-pointer w-full py-2 px-2 border-b-2 border-blue-500 ${sortOrder === 'DESC' ? 'text-blue-500' : 'text-black'}`}>
 												{t('sort_by_increasing')}
 											</Button>
 											<Button onClick={() => handleSort('DESC')}
-													className={`cursor-pointer py-2 px-10 ${sortOrder === 'ASC' ? 'text-blue-500' : 'text-black'}`}>
+													className={`cursor-pointer w-full py-2 px-10 ${sortOrder === 'ASC' ? 'text-blue-500' : 'text-black'}`}>
 												{t('sort_by_decreasing')}
 											</Button>
 										</div>

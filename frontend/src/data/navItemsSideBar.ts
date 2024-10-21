@@ -8,5 +8,6 @@ export const navItems = [
     { text: "Про нас", to: "/about" },
     { text: "Збори", to: "/gatherings" },
     { text: "Карти", to: "/map-help" },
-    { text: "Як це працює", to: "/how-it-works" }
+    { text: "Як це працює", to: "/how-it-works" },
+    { text: "Карта тривог", to: "/map-alert" }
 ];

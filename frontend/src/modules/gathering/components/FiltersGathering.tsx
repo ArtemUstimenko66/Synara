@@ -3,6 +3,7 @@ import { Button } from "../../../ui/Button.tsx";
 import { useSearchParams } from "react-router-dom";
 import { urgencyTranslations } from "../../../data/urgencyMap.ts";
 import {useTranslation} from "react-i18next";
+import BackArrow from '../../../assets/images/back_arrow_mini.svg?react';
 
 import {termsEndingsMap} from "../../../data/termsEndingsMap.ts";
 
@@ -124,8 +125,12 @@ const FiltersGathering: React.FC<FiltersProps> = ({ onCloseSidebar }) => {
 
     return (
         <div className="p-4 w-full mx-4 rounded-lg">
-            <h2 className="text-relative-h4 font-kharkiv mb-4 text-center">{t('filtration')}</h2>
-
+            <div className="flex justify-between items-center">
+                <button onClick={ onCloseSidebar} className="mb-[2vh] xl:hidden sm:flex md:flex">
+                    <BackArrow />
+                </button>
+                <h2 className="xl:text-relative-h4 sm:text-relative-h1 font-kharkiv mb-4 sm:mr-[30%] md:mr-[30%] xl:mr-0 xl:ml-[10%] sm:ml-0 text-center">{t('filtration')}</h2>
+            </div>
             {/* Quantity of many gathered */}
             <div className="mb-4">
                 <h3 className="text-lg font-montserratRegular mb-2">{t('gathered_money')}</h3>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import {useNavigate, useParams} from 'react-router-dom';
+import {Link, useNavigate, useParams} from 'react-router-dom';
 import Wrapper from "../../ui/Wrapper.tsx";
 import MainHeader from "../../modules/main-page/components/ui/MainHeader.tsx";
 import { Button } from "../../ui/Button.tsx";
@@ -35,7 +35,7 @@ interface GatheringDetails {
 
 
 const formatDate = (dateString: string) => {
-    return format(new Date(dateString), 'd MMMM yyyy', { locale: uk }); // Добавлен год
+    return format(new Date(dateString), 'd MMMM yyyy', { locale: uk });
 };
 
 const GatheringDetailsPage = () => {
@@ -87,34 +87,34 @@ const GatheringDetailsPage = () => {
             <Wrapper>
                 <MainHeader />
                 <div className="mt-[9vh]">
-                    <div className="flex w-full items-center mb-8">
+                    <div className="flex xl:flex-row md:flex-col sm:flex-col w-[95%] items-center mb-8 mx-[2vw]">
                         {/* Left Side - Create Petition Button */}
                         <Button onClick={handleGoCreatePetions} hasBlue={true}
-                                className="h-12 sm:w-[27%] md:w-[25%] xl:w-[25%] font-montserratMedium sm:text-xs md:text-xs xl:text-relative-h5">
+                                className="h-12 sm:w-full  md:w-full  xl:w-[25%] font-montserratMedium sm:text-relative-h2 md:text-relative-h4 xl:text-relative-h5">
                             {t('create_petitionUPPER')}
                         </Button>
 
                         {/* Center - Search Component */}
-                        <div className="ml-4 w-full h-14">
+                        <div className="xl:ml-4 sm:ml-0 xl:mt-0 sm:mt-4  w-full h-14">
                             <SearchPetitions />
                         </div>
                     </div>
 
-                    <div className="flex items-start w-full ">
-                        <h2 className="text-lg ml-12 font-montserratMedium mt-1 ">№{details.petitionNumber}</h2>
-                        <h1 className="text-4xl font-kharkiv uppercase text-center w-full">{details.title}</h1>
+                    <div className="flex xl:flex-row md:flex-col sm:flex-col xl:items-start sm:items-center w-full ">
+                        <h2 className="xl:text-relative-ps sm:text-relative-h1 md:text-relative-h2  xl:ml-12 sm:ml-0 font-montserratMedium mt-1 ">№{details.petitionNumber}</h2>
+                        <h1 className="xl:text-relative-h4 sm:text-relative-h1 md:text-relative-h2   font-kharkiv uppercase text-center w-full">{details.title}</h1>
                     </div>
                     {/* Detailed Petition View */}
-                    <div className="w-full flex justify-between mt-8">
+                    <div className="w-full flex xl:flex-row md:flex-col sm:flex-col justify-between mt-8 sm:mx-[5vw]">
                         {/* Левая часть с основным контентом */}
-                        <div className="w-2/3 ">
-                            <div className="mb-6 ml-12">
+                        <div className="xl:w-2/3 sm:w-full sm:order-2 xl:order-1 sm:mt-[2vh] xl:mt-0">
+                            <div className="mb-6  sm:ml-0">
                                 <p className="mb-2 flex items-center font-montserratRegular">
                                     <AvtorPetitions className="h-5 w-5  mr-6"/>
                                     {t('author_iniciator')}: {details.petitionAuthor}
                                 </p>
                                 <p className="mb-2 font-montserratRegular flex items-center">
-                                    <Calendar className="h-5 w-5 mr-6" />
+                                    <Calendar className="h-5 w-5 mr-6"/>
                                     {t('date_publishUPPER')}: {formatDate(details.creationDate)}
                                 </p>
                                 {details.responseDate ?
@@ -129,13 +129,24 @@ const GatheringDetailsPage = () => {
                                 <h3 className="text-xl font-montserratMedium my-12">{t('text_petitionUPPER')}</h3>
                             </div>
 
-                            <p className="font-montserratRegular ml-12 mb-6 leading-7 w-[90%]">
+                            <p className="font-montserratRegular sm:ml-0 mb-6 leading-7 w-[90%]">
                                 {details.text}
                             </p>
+
+                            <div className="sm:flex md:flex xl:hidden mt-8 w-full">
+                                <Link
+                                    to="/petitions"
+                                    className="px-8 py-2 flex items-center justify-center text-center w-[90%] uppercase bg-perfect-yellow rounded-3xl font-montserratRegular"
+                                >
+
+                                    {t('seeMorePetitions')}
+                                </Link>
+                            </div>
                         </div>
 
                         {/* Правая боковая панель */}
-                        <div className="w-1/3 h-fit p-8 bg-gray-100 rounded-3xl ">
+                        <div
+                            className="xl:w-1/3 sm:w-[90%] xl:mr-[10vw]  sm:order-1 xl:order-2 h-fit p-8 bg-gray-100 rounded-3xl ">
                             <div className="mb-6">
                                 {details.is_completed ?
                                     <Button
@@ -163,7 +174,7 @@ const GatheringDetailsPage = () => {
                                     <FontAwesomeIcon icon={['fab', 'instagram']} className="h-7 w-7"/>
                                 </a>
                                 <a href="#" aria-label="Twitter">
-                                    <FontAwesomeIcon icon={['fab', 'twitter']} className="h-6 w-6"/>
+                                    <FontAwesomeIcon icon={['fab', 'x-twitter']} className="h-6 w-6"/>
                                 </a>
                                 <a href="#" aria-label="Telegram">
                                     <FontAwesomeIcon icon={['fab', 'telegram-plane']} className="h-6 w-6"/>

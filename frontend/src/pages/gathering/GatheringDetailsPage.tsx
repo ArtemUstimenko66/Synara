@@ -22,6 +22,7 @@ import GatheringCard from "../../modules/gathering/ui/GatheringCard.tsx";
 import { Player } from '@lottiefiles/react-lottie-player';
 import loadingAnimation from '../../assets/animations/logoLoading.json';
 import {useTranslation} from "react-i18next";
+import {useMediaQuery} from "react-responsive";
 
 interface GatheringDetails {
     id: number;
@@ -66,6 +67,7 @@ const GatheringDetailsPage = () => {
     const [hasShowMore, setShowHasMore] = useState(true);
     const [isFavorite, setIsFavorite] = useState(false);
     const {t} = useTranslation();
+    const isTabletScreen = useMediaQuery({ query: '(max-width: 1025px)' });
 
     const fetchFilteredGatherings = async () => {
 
@@ -190,21 +192,26 @@ const GatheringDetailsPage = () => {
         <>
             <Wrapper>
                 <MainHeader />
-                <div className="w-full max-w-[80vw] mx-auto mt-[9vh]">
-                    <div className="w-full mb-8 space-y-4">
+                <div className="w-full max-w-[80vw] mx-auto xl:mt-[9vh] sm:mt-[9vh]">
+                    <div
+                        className="flex xl:flex-row md:flex-row sm:flex-col xl:space-x-4 md:space-x-4  sm:space-x-0 sm:space-y-4 md:space-y-0 xl:space-y-0 items-center  justify-center">
                         {/* Top part */}
-                        <div className="w-full flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
-                            <div className="w-3/12">
-                                <Link to="/add-gathering" className="w-full md:w-1/2 xl:w-auto">
-                                    <Button hasBlue={true} className="px-4 text-relative-h5 w-full">
-                                        <span className="text-montserratMedium uppercase text-relative-h5">
+                        <div className="flex xl:flex-row md:flex-row sm:flex-col w-full items-center mb-[1vh] justify-start">
+                            <div className="xl:w-3/12 mb:w-4/12 sm:w-full sm:mb-[2vh] md:mb-0 xl:mb-0">
+                                <Link to="/add-gathering" className=" xl:w-auto">
+                                    <Button hasBlue={true} className="uppercase text-relative-h5 sm:w-full px-8 py-3 xl:my-5 sm:my-0">
+                                        <span
+                                            className="uppercase xl:text-relative-ps sm:text-relative-h2 md:text-relative-h4 ">
                                                {t('create_gathering')}
                                         </span>
                                     </Button>
                                 </Link>
                             </div>
-                            <div className="w-9/12 h-[50px] ml-[1vw] flex justify-center">
-                                <SearchGathering />
+                            <div className="w-full xl:ml-[2vw] md:ml-[2vw] sm:ml-0 md:w-8/12  xl:w-3/4 flex flex-col items-center justify-end">
+                                {/* Search Component */}
+                                <div className="w-full xl:mt-4 sm:mb-0 sm:mt-0 xl:mb-3 md:mt-0">
+                                    <SearchGathering/>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -212,28 +219,31 @@ const GatheringDetailsPage = () => {
                     {/* Main part */}
                     <div className="max-w-screen-lg h-auto mx-auto p-4">
                         {/* Заголовок по центру */}
-                        <h1 className="text-relative-h4 font-kharkiv uppercase text-center">
+                        <h1 className="xl:text-relative-h4 sm:text-relative-h1 font-kharkiv uppercase text-center">
                             {details.name}
                         </h1>
 
 
-                        {/* Основной контент: левая и правая часть */}
-                        <div className="flex flex-row h-auto gap-8 mt-8">
-                            {/* Левая часть (2/3 ширины) */}
-                            <div className="w-full h-auto md:w-7/12">
-                                <p className="font-montserratRegular text-relative-ps mt-4">{details.description}</p>
-                                <p className="font-medium text-relative-pl font-montserratMedium mt-4">{t('gathering_details')}:</p>
-                                <p className="font-montserratRegular text-relative-ps mt-4">{details.detail}</p>
-                                <p className="font-medium text-relative-pl font-montserratMedium mt-4">Кому потрібна
+                        {/* Main part */}
+                        <div className="flex sm:flex-col xl:flex-row h-auto gap-8 mt-8">
+                            {/*Left part (2/3 width) */}
+                            <div className="w-full h-auto xl:w-7/12 sm:order-2 xl:order-1 ">
+                                <p className="font-montserratRegular xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3 s mt-4">{details.description}</p>
+                                <p className="font-medium xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3  font-montserratMedium mt-4">{t('gathering_details')}:</p>
+                                <p className="font-montserratRegular xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3  mt-4">{details.detail}</p>
+                                <p className="font-medium xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3  font-montserratMedium mt-4">Кому
+                                    потрібна
                                     допомога:</p>
-                                <p className="font-montserratRegular text-relative-ps mt-4">{details.whoNeedHelp}</p>
-                                <p className="font-medium text-relative-pl font-montserratMedium mt-4">На що підуть
+                                <p className="font-montserratRegular xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3  mt-4">{details.whoNeedHelp}</p>
+                                <p className="font-medium xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3  font-montserratMedium mt-4">На
+                                    що підуть
                                     кошти:</p>
-                                <p className="font-montserratRegular text-relative-ps mt-4">{details.whereMoneyWillUsed}</p>
+                                <p className="font-montserratRegular xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3  mt-4">{details.whereMoneyWillUsed}</p>
                             </div>
 
-                            {/* Правая часть (1/3 ширины) */}
-                            <div className="w-full md:w-5/12 flex flex-col bg-gray-100 h-auto rounded-3xl p-4 flex-1">
+                            {/*  Right part (1/3 width) */}
+                            <div
+                                className="w-full xl:w-3/12  sm:order-1 xl:order-2  flex flex-col bg-gray-100 h-auto rounded-3xl pr-[2vw] py-[4vh] flex-1 px-[2vw]">
                                 {/* Percentage of collected sum */}
                                 <div
                                     className="w-full  bg-almost-white h-11 border-2 border-dark-blue rounded-3xl mt-[1vh]">
@@ -248,7 +258,12 @@ const GatheringDetailsPage = () => {
                                             )}%`,
                                         }}
                                     >
-                                        <span className="text-white font-montserratMedium">
+                                        <span className={`font-montserratMedium ${Math.floor(
+                                                calculatePercentage(
+                                                    parseFloat(details.goal),
+                                                    parseFloat(details.collected)
+                                                )
+                                            )=== 0 ? 'text-blue-500 sm:ml-[10vw] xl:ml-[5vw]' : 'text-white'} }`}>
                                             {`${Math.floor(
                                                 calculatePercentage(
                                                     parseFloat(details.goal),
@@ -261,16 +276,16 @@ const GatheringDetailsPage = () => {
 
                                 {/* Money goal and collected */}
                                 <div className="mt-4 flex flex-row items-center justify-center space-x-4">
-                                    <p className="font-montserratRegular font-semibold text-relative-pl mt-4">Ціль: {formatNumber(details.goal)} </p>
-                                    <p className="font-montserratRegular text-relative-ps mt-4">зібрано: {formatNumber(details.collected)} </p>
+                                    <p className="font-montserratRegular font-semibold xl:text-relative-pl sm:text-relative-h2 md:text-relative-h3 mt-4">Ціль: {formatNumber(details.goal)} </p>
+                                    <p className="font-montserratRegular xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3 mt-4">Зібрано: {formatNumber(details.collected)} </p>
                                 </div>
 
                                 {/* Dates */}
                                 <div className="mt-4 flex flex-row items-center justify-center space-x-2">
                                     <Calendar className="h-8 w-8"/>
-                                    <p className="font-montserratRegular font-semibold text-relative-ps">{formatDate(details.startGathering)}</p>
-                                    <p className="font-montserratRegular font-semibold text-relative-ps">-</p>
-                                    <p className="font-montserratRegular font-semibold text-relative-ps">{formatDate(details.endGathering)}</p>
+                                    <p className="font-montserratRegular font-semibold xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3">{formatDate(details.startGathering)}</p>
+                                    <p className="font-montserratRegular font-semibold xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3">-</p>
+                                    <p className="font-montserratRegular font-semibold xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3">{formatDate(details.endGathering)}</p>
                                 </div>
 
                                 {/* Donate and to favorite buttons */}
@@ -301,24 +316,25 @@ const GatheringDetailsPage = () => {
                                         className="w-16 h-16 rounded-full object-cover mr-3"
                                     />
                                     <div className="pl-[2vw]">
-                                        <p className="text-relative-ps font-montserratMedium font-semibold uppercase">Автор
+                                        <p className="xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3 font-montserratMedium font-semibold uppercase">Автор
                                             оголошення:</p>
-                                        <h4 className=" text-relative-ps font-montserratMedium">{details.user.firstName} {details.user.lastName}</h4>
+                                        <h4 className=" xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3 font-montserratMedium">{details.user.firstName} {details.user.lastName}</h4>
                                     </div>
                                 </div>
 
                                 <div className="flex flex-row items-center pl-[2vw]">
-                                    <p className="font-semibold text-relative-ps font-montserratMedium uppercase">Контакти:</p>
-                                    <p className="font-montserratRegular text-relative-ps pl-[1vw] uppercase"> {details.user.phoneNumber}</p>
+                                    <p className="font-semibold xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3 font-montserratMedium uppercase">Контакти:</p>
+                                    <p className="font-montserratRegular xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3 pl-[1vw] uppercase"> {details.user.phoneNumber}</p>
                                 </div>
 
                                 <div className="flex flex-row items-center pl-[2vw]">
-                                    <p className="font-semibold text-relative-ps font-montserratMedium uppercase">Email:</p>
-                                    <p className="font-montserratRegular text-relative-ps pl-[1vw]"> {details.user.email}</p>
+                                    <p className="font-semibold xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3 font-montserratMedium uppercase">Email:</p>
+                                    <p className="font-montserratRegular xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3 pl-[1vw]"> {details.user.email}</p>
                                 </div>
 
                                 {/* Social media icons */}
-                                <p className="uppercase mt-4 pl-[2vw] text-relative-ps">Поділіться збором:</p>
+                                <p className="uppercase mt-4 pl-[2vw] xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3">Поділіться
+                                    збором:</p>
                                 <div className="mt-2 flex justify-center space-x-6">
                                     <a href="#" aria-label="Facebook">
                                         <FontAwesomeIcon icon={['fab', 'facebook-f']} className="h-6 w-6"/>
@@ -327,7 +343,7 @@ const GatheringDetailsPage = () => {
                                         <FontAwesomeIcon icon={['fab', 'instagram']} className="h-7 w-7"/>
                                     </a>
                                     <a href="#" aria-label="Twitter">
-                                        <FontAwesomeIcon icon={['fab', 'twitter']} className="h-6 w-6"/>
+                                        <FontAwesomeIcon icon={['fab', 'x-twitter']} className="h-6 w-6"/>
                                     </a>
                                     <a href="#" aria-label="Telegram">
                                         <FontAwesomeIcon icon={['fab', 'telegram-plane']} className="h-6 w-6"/>
@@ -337,25 +353,26 @@ const GatheringDetailsPage = () => {
                         </div>
 
                         {/* Изображение с соседними картинками */}
-                        {details.files.length>0
-                            ?
+                        {details.files.length > 0 ?
                             <>
                                 <div className="flex justify-center my-[4vh]">
                                     <div className="flex items-center">
                                         {selectedImageIndex > 0 && (
-                                            <div
-                                                className="justify-center flex w-[25vw] mx-[1vw] h-[28vh]"
-                                                onClick={() => openModal(selectedImageIndex - 1)}
-                                            >
-                                                <img
-                                                    src={details.files[selectedImageIndex - 1].fileUrl}
-                                                    alt={details.files[selectedImageIndex].fileName}
-                                                    className="w-full h-auto rounded-lg cursor-pointer"
-                                                />
-                                            </div>
+                                            !isTabletScreen ? (
+                                                <div
+                                                    className={`justify-center flex w-[25vw] mx-[1vw]  ${isTabletScreen ? "w-full h-auto": " w-[25vw] h-[28vh]"}`}
+                                                    onClick={() => openModal(selectedImageIndex - 1)}
+                                                >
+                                                    <img
+                                                        src={details.files[selectedImageIndex - 1].fileUrl}
+                                                        alt={details.files[selectedImageIndex].fileName}
+                                                        className="w-full h-auto rounded-lg cursor-pointer"
+                                                    />
+                                                </div>
+                                            ) : null
                                         )}
                                         <div
-                                            className="justify-center flex w-[25vw] mx-[1vw] h-[28vh]"
+                                            className={`justify-center flex w-[25vw] mx-[1vw] ${isTabletScreen ? "w-full h-auto": " w-[25vw] h-[28vh]"}`}
                                             onClick={() => openModal(selectedImageIndex)}
                                         >
                                             <img
@@ -365,80 +382,82 @@ const GatheringDetailsPage = () => {
                                             />
                                         </div>
                                         {selectedImageIndex < details.files.length - 1 && (
-                                            <div
-                                                className="justify-center flex w-[25vw] mx-[1vw] h-[28vh]"
-                                                onClick={() => openModal(selectedImageIndex + 1)}
-                                            >
-                                                <img
-                                                    src={details.files[selectedImageIndex + 1].fileUrl}
-                                                    alt={details.files[selectedImageIndex].fileName}
-                                                    className="w-full h-auto rounded-lg cursor-pointer"
-                                                />
-                                            </div>
+                                            !isTabletScreen ? (
+                                                <div
+                                                    className={`justify-center flex mx-[1vw] ${isTabletScreen ? "w-full h-auto": " w-[25vw] h-[28vh]"}`}
+                                                    onClick={() => openModal(selectedImageIndex + 1)}
+                                                >
+                                                    <img
+                                                        src={details.files[selectedImageIndex + 1].fileUrl}
+                                                        alt={details.files[selectedImageIndex].fileName}
+                                                        className="w-full h-auto rounded-lg cursor-pointer"
+                                                    />
+                                                </div>
+                                            ) : null
                                         )}
                                     </div>
                                 </div>
 
-                                {/* Полоски выбора изображений */}
+
+                                {/* stripes under images */}
                                 <div className="flex justify-center mt-2 space-x-2">
                                     {details.files.length >= 3 ?
-                                (details.files.map((_, index) => (
-                                <div
-                                key={index}
-                                onClick={() => handleImageSelect(index)}
-                                className={`h-2 cursor-pointer rounded-full transition-all duration-500 ease-in-out
-                                                        ${selectedImageIndex === index ? 'bg-dark-blue w-12' : 'bg-baby-blue w-8'}`}
-                            ></div>
-                            )))
-                        :
-                        <></>
-                        }
-                    </div>
+                                        (details.files.map((_, index) => (
+                                            <div
+                                                key={index}
+                                                onClick={() => handleImageSelect(index)}
+                                                className={`h-2 cursor-pointer rounded-full transition-all duration-500 ease-in-out
+                                                    ${selectedImageIndex === index ? 'bg-dark-blue w-12' : 'bg-baby-blue w-8'}`}
+                                            ></div>
+                                        )))
+                                        :
+                                        <></>
+                                    }
+                                </div>
+
+                                {/* modal img */}
+                                {isModalOpen && (
+                                    <div
+                                        className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50"
+                                        onClick={closeModal}>
+                                        <div className="relative">
+
+                                            <img
+                                                src={details.files[selectedImageIndex].fileUrl}
+                                                alt={details.files[selectedImageIndex].fileName}
+                                                className="flex w-[65vw] mx-[1vw] xl:h-[70vh] sm:h-auto rounded-lg"
+                                            />
+
+                                        </div>
 
 
-                    {isModalOpen && (
-                    <div
-                        className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50"
-                        onClick={closeModal}>
-                        <div className="relative">
+                                        {/* left arrow */}
+                                        {selectedImageIndex > 0 && (
+                                            <div
+                                                className="absolute left-[4vw] top-1/2 ь transform -translate-y-1/2 cursor-pointer"
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    handlePrevImage();
+                                                }}
+                                            >
+                                                <LeftSlide className="xl:h-10 xl:w-10 sm:h-8 sm:w-8 text-white"/>
+                                            </div>
+                                        )}
 
-                            <img
-                                src={details.files[selectedImageIndex].fileUrl}
-                                alt={details.files[selectedImageIndex].fileName}
-                                className="flex w-[65vw] mx-[1vw] h-[70vh] rounded-lg"
-                            />
-
-                        </div>
-
-
-                        {/* Левая стрелка */}
-                        {selectedImageIndex > 0 && (
-                            <div
-                                className="absolute left-[4vw] top-1/2 ь transform -translate-y-1/2 cursor-pointer"
-                                onClick={(e) => {
-                                    e.stopPropagation(); // Предотвращаем закрытие модального окна
-                                    handlePrevImage();
-                                }}
-                            >
-                                <LeftSlide className="h-10 w-10 text-white"/>
-                            </div>
-                        )}
-
-                        {/* Правая стрелка */}
-                        {selectedImageIndex < details.files.length - 1 && (
-                            <div
-                                className="absolute right-[4vw] top-1/2 transform -translate-y-1/2 cursor-pointer"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleNextImage();
-                                }}
-                            >
-                                <RightSlide className="h-10 w-10 text-white"/>
-                            </div>
-                        )}
-                    </div>
-                    )}
-                            </>
+                                        {/* right arrow */}
+                                        {selectedImageIndex < details.files.length - 1 && (
+                                            <div
+                                                className="absolute right-[4vw] top-1/2 transform -translate-y-1/2 cursor-pointer"
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    handleNextImage();
+                                                }}
+                                            >
+                                                <RightSlide className="xl:h-10 xl:w-10 sm:h-8 sm:w-8  text-white"/>
+                                            </div>
+                                        )}
+                                    </div>
+                                )}</>
                             :
                             <></>
                         }

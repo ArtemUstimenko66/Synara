@@ -106,6 +106,7 @@ const MainContent: React.FC<MainContentProps> = ({
 										petitionNumber={petition.petitionNumber}
 										topic={petition.topic}
 										creationDate={petition.creationDate}
+										responseDate={petition.responseDate}
 										text={petition.text}
 									/>
 								))
@@ -136,6 +137,7 @@ const MainContent: React.FC<MainContentProps> = ({
 										petitionNumber={petition.petitionNumber}
 										topic={petition.topic}
 										creationDate={petition.creationDate}
+										responseDate={petition.responseDate}
 										text={petition.text}
 									/>
 								))
