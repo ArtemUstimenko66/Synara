@@ -1,9 +1,9 @@
-import { useNavigate } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import BackArrowComponent from "../../modules/registration/components/ui/BackArrow.tsx";
 import  { useState } from "react";
 import { Button } from "../../ui/Button.tsx";
 import {resetPassword} from "../../modules/reset-password/api/resetPasswordService.ts";
-import LogoSynara from '../../assets/images/logoSynara.svg?react';
+import LogoSynara from '../../assets/images/logoRegistration.svg?react';
 import {useTranslation} from "react-i18next";
 const NewPasswordPage = () => {
     const navigate = useNavigate();
@@ -55,7 +55,10 @@ const NewPasswordPage = () => {
     return (
         <div className="bg-dark-blue min-h-screen h-screen flex ">
             <div className="w-2/6 p-8 xl:flex md:hidden sm:hidden items-left justify-left mt-10 ml-28">
-                <div className="text-almost-white font-montserratRegular font-bold text-relative-h4">LOGO</div>
+                <Link to="/home">
+                    <LogoSynara
+                        className="text-almost-white font-montserratRegular font-bold text-relative-h4"></LogoSynara>
+                </Link>
             </div>
 
             <div

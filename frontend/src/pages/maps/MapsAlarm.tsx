@@ -61,7 +61,7 @@ const regions: RegionData[] = [
 	{ name: 'Mykolaiv', image: mykolaiv, regionKey: 'Миколаївська область', displayName: 'Миколаїв', textClass1: 'ukraine-map-text-none', textClass2: 'ukraine-map-text066' },
 	{ name: 'Kirovohrad', image: kirovohrad, regionKey: 'Кіровоградська область', displayName: 'Кропивницький', textClass1: 'ukraine-map-text-none', textClass2: 'ukraine-map-text070' },
 	{ name: 'Khmelnytskyi', image: khmelnytskyi, regionKey: 'Хмельницька область', displayName: 'Хмельницький', textClass1: 'ukraine-map-text-none', textClass2: 'ukraine-map-text074' },
-	{ name: 'Rivne', image: rivne, regionKey: 'Рівненська область', displayName: 'Ровне', textClass1: 'ukraine-map-text-none', textClass2: 'ukraine-map-text078' },
+	{ name: 'Rivne', image: rivne, regionKey: 'Рівненська область', displayName: 'Рівне', textClass1: 'ukraine-map-text-none', textClass2: 'ukraine-map-text078' },
 	{ name: 'Chernihiv', image: chernihiv, regionKey: 'Чернігівська область', displayName: 'Чернігів', textClass1: 'ukraine-map-text-none', textClass2: 'ukraine-map-text082' },
 	{ name: 'Poltava', image: poltava, regionKey: 'Полтавська область', displayName: 'Полтава', textClass1: 'ukraine-map-text-none', textClass2: 'ukraine-map-text086' },
 	{ name: 'Zhytomyr', image: zhytomyr, regionKey: 'Житомирська область', displayName: 'Житомир', textClass1: 'ukraine-map-text088', textClass2: 'ukraine-map-text-none' },
@@ -111,7 +111,7 @@ const MapComponent: React.FC = () => {
 
 								className={`${region.name === 'Simferopol' || region.name === 'Sevastopol' ? `alert ukraine-map-${region.name.toLowerCase()}` : getRegionClass(region.regionKey)} ukraine-map-${region.name.toLowerCase()}`}
 							/>
-							<span className={region.textClass1} style={getColorClass(index)}>
+							<span className={`${region.textClass1} font-montserratRegular`} style={getColorClass(index)}>
                                 <span>{region.displayName}</span>
                             </span>
 							{region.textClass2 && (

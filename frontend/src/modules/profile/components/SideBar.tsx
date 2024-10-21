@@ -45,22 +45,23 @@ const Sidebar: React.FC<SidebarProps> = ({
                                              birthDate,
                                          }) => {
     const [isLanguageOpen, setIsLanguageOpen] = useState(false);
-    const [selectedLanguage, setSelectedLanguage] = useState('Українська');
     const [isLikedOpen, setIsLikedOpen] = useState(false);
     const [isDeclarationsOpen, setIsDeclarationsOpen] = useState(false);
-    const languages = ['Українська', 'English'];
+
+    const { t, i18n } = useTranslation();
+    const [currentLanguage, setCurrentLanguage] = useState(i18n.language);
 
     const toggleLanguageDropdown = () => {
         setIsLanguageOpen(!isLanguageOpen);
     };
 
-    const selectLanguage = (language: string) => {
-        setSelectedLanguage(language);
+    const changeLanguage = (lng: string) => {
+        i18n.changeLanguage(lng);
+        setCurrentLanguage(lng);
         setIsLanguageOpen(false);
     };
 
     const  {role} = useAuth();
-    const {t} = useTranslation();
 
     return (
         <div className="w-full mr-[5vw] p-[3%] bg-gray-100 h-auto py-[2vh] rounded-3xl mt-8">
@@ -80,27 +81,24 @@ const Sidebar: React.FC<SidebarProps> = ({
 
             {/* Language */}
             <nav className="font-montserratRegular">
-                {/* Dropdown for language selection */}
                 <div className="cursor-pointer ml-8 flex items-center justify-between" onClick={toggleLanguageDropdown}>
                     <div className="flex items-center">
-                        <VectorLanguage className="mr-2"/> {selectedLanguage}
+                        <VectorLanguage className="mr-2"/> {currentLanguage === 'uk' ? t('Ukrainian') : t('English')}
                     </div>
-                    <DownArrowIcon
-                        className={`mr-5 transform transition-transform ${isLanguageOpen ? 'rotate-0' : 'rotate-180'}`}/>
+                    <DownArrowIcon className={`mr-5 transform transition-transform ${isLanguageOpen ? 'rotate-0' : 'rotate-180'}`} />
                 </div>
                 {isLanguageOpen && (
                     <ul className="ml-16 mt-2 space-y-2">
-                        {languages
-                            .filter((lang) => lang !== selectedLanguage)
-                            .map((language) => (
-                                <li
-                                    key={language}
-                                    className="cursor-pointer flex items-center"
-                                    onClick={() => selectLanguage(language)}
-                                >
-                                    {language}
-                                </li>
-                            ))}
+                        {currentLanguage !== 'en' && (
+                            <li className="cursor-pointer flex items-center" onClick={() => changeLanguage('en')}>
+                                {t('English')}
+                            </li>
+                        )}
+                        {currentLanguage !== 'uk' && (
+                            <li className="cursor-pointer flex items-center" onClick={() => changeLanguage('uk')}>
+                                {t('Ukrainian')}
+                            </li>
+                        )}
                     </ul>
                 )}
 

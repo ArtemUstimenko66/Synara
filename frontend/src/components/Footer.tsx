@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFacebookF, faInstagram, faTwitter, faTelegramPlane } from '@fortawesome/free-brands-svg-icons';
+import { faFacebookF, faInstagram, faXTwitter, faTelegramPlane } from '@fortawesome/free-brands-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import LogoSynara from '../assets/images/logo_Footer.svg?react';
 import { Link } from 'react-router-dom';
@@ -10,7 +10,7 @@ import DownArrow from '../assets/images/Down_Arrow.svg?react';
 import {useTranslation} from "react-i18next";
 import LanguageSelector from "./LanguageSelector.tsx";
 
-library.add(faFacebookF, faInstagram, faTwitter, faTelegramPlane);
+library.add(faFacebookF, faInstagram, faXTwitter, faTelegramPlane);
 
 const AccordionSection: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -90,7 +90,7 @@ const Footer: React.FC = () => {
                                 <FontAwesomeIcon icon={['fab', 'instagram']}/>
                             </a>
                             <a href="#" aria-label="Twitter">
-                                <FontAwesomeIcon icon={['fab', 'twitter']}/>
+                                <FontAwesomeIcon icon={['fab', 'x-twitter']}/>
                             </a>
                             <a href="#" aria-label="Telegram">
                                 <FontAwesomeIcon icon={['fab', 'telegram-plane']}/>
@@ -181,7 +181,7 @@ const Footer: React.FC = () => {
                                     <FontAwesomeIcon icon={['fab', 'instagram']}/>
                                 </a>
                                 <a href="#" aria-label="Twitter">
-                                    <FontAwesomeIcon icon={['fab', 'twitter']}/>
+                                    <FontAwesomeIcon icon={['fab', 'x-twitter']}/>
                                 </a>
                                 <a href="#" aria-label="Telegram">
                                     <FontAwesomeIcon icon={['fab', 'telegram-plane']}/>

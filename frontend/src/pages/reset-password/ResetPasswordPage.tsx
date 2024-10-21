@@ -3,8 +3,8 @@ import { UserLogin } from "../../modules/login/interfaces/UserLogin.tsx";
 import BackArrowComponent from "../../modules/registration/components/ui/BackArrow.tsx";
 import UpdatePassword from "../../modules/reset-password/components/UpdatePassword.tsx";
 import EmailSend from "../../modules/reset-password/components/EmailSend.tsx";
-import { useNavigate } from 'react-router-dom';
-import LogoSynara from '../../assets/images/logoSynara.svg?react';
+import {Link, useNavigate} from 'react-router-dom';
+import LogoSynara from '../../assets/images/logoRegistration.svg?react';
 
 const ResetPasswordPage = () => {
     const [currentStep, setCurrentStep] = useState(1);
@@ -46,8 +46,10 @@ const ResetPasswordPage = () => {
 
             {/* Лого слева только на больших экранах */}
             <div className="w-2/6 p-8 xl:flex md:hidden sm:hidden items-left justify-left mt-10 ml-28">
-
-                <div className="text-almost-white font-montserratRegular font-bold text-relative-h4">LOGO</div>
+                <Link to="/home">
+                    <LogoSynara
+                        className="text-almost-white font-montserratRegular font-bold text-relative-h4"></LogoSynara>
+                </Link>
             </div>
 
             <div className="xl:w-5/6 md:w-full sm:w-full bg-almost-white xl:rounded-l-3xl xl:min-h-screen xl:px-relative-md flex flex-col xl:items-start xl:justify-start sm:items-center sm:justify-center">

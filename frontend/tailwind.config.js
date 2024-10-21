@@ -51,6 +51,7 @@ module.exports = {
         'relative-h3xl': '3.2vw',   // Relative header 2 size
         'relative-h3': '2.5vw',    // Relative header 3 size
         'relative-h4': '2vw',    // Relative header 3 size
+        'relative-h5sm': '2.9vw',    // Relative header 3 size
         'relative-pxl': '1.5625vw',// Relative extra large paragraph size
         'relative-pl': '1.25vw',   // Relative large paragraph size
         'relative-ps': '1vw',      // Relative standard paragraph size

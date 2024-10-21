@@ -24,6 +24,7 @@ import {useTranslation} from "react-i18next";
 
 
 const formatTime = (time: string): string => {
+	if (!time) return '00:00';
 	return time.length <= 2 ? `${time}:00` : time;
 };
 
@@ -61,6 +62,7 @@ interface VolunteerDetails {
 
 
 const formatDate = (dateString: string) => {
+	if (!dateString) return '00.00.0000';
 	const date = new Date(dateString);
 	const day = String(date.getDate()).padStart(2, '0');
 	const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -163,7 +165,7 @@ const VolunteerProfilePage: React.FC = () => {
 					<div className="flex justify-between items-center">
 						{/* Profile Info */}
 						<div className="flex items-center space-x-4">
-							<img src={details.user.avatarUrl} alt="Profile"
+							<img src={details.user.avatarUrl || 'https://via.placeholder.com/150'} alt="Profile"
 								 className="rounded-full w-16 h-16"/>
 							<div>
 								<h2 className="text-lg font-montserratRegular">{`${details.user.firstName} ${details.user.lastName}`}</h2>
@@ -171,16 +173,29 @@ const VolunteerProfilePage: React.FC = () => {
 							</div>
 							<div className="flex items-center ">
 								<MiniStar className="w-6 h-6"></MiniStar>
-								<span className=" text-sm font-montserratRegular mr-12">{details.rating}</span>
+								<span className=" text-sm font-montserratRegular mr-12">{details.rating || 0}</span>
 								<Calendar className="w-6 h-6 mr-1"/>
-								<p className="text-sm font-montserratMedium">{getDayOfWeekInUkrainian(details.startWorkingDay)} - {getDayOfWeekInUkrainian(details.endWorkingDay)}</p>
+								<p className="text-sm font-montserratMedium">
+									{details.startWorkingDay && details.endWorkingDay
+										? `${getDayOfWeekInUkrainian(details.startWorkingDay)} - ${getDayOfWeekInUkrainian(details.endWorkingDay)}`
+										: "Пн-Пт"}
+								</p>
 							</div>
-							<div className="flex items-center ">
+							<div className="flex items-center">
 								<Clock className="w-6 h-6 mr-2"/>
-								<p className="text-sm font-montserratMedium mr-40">{formatTime(details.startTime)} - {formatTime(details.endTime)}</p>
+								<p className="text-sm font-montserratMedium mr-40">
+									{details.startTime && details.endTime
+										? `${formatTime(details.startTime)} - ${formatTime(details.endTime)}`
+										: "09:00 - 18:00"}
+								</p>
 								<PlaceMarker className="w-6 h-6 mr-2"/>
-								<p className="text-sm font-montserratRegular ">{details.city}, {details.region}</p>
+								<p className="text-sm font-montserratRegular">
+									{details.city && details.region
+										? `${details.city}, ${details.region}`
+										: "Київ, Київська областть"}
+								</p>
 							</div>
+
 						</div>
 
 						{/* Action Button */}
