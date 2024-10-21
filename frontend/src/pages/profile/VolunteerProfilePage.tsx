@@ -91,7 +91,7 @@ const VolunteerProfilePage: React.FC = () => {
 			if (isAuthenticated && userId) {
 				try {
 					const data = await getUser(userId);
-					console.log('getUser(userId): ', data);
+					console.log(`getUser(${userId}): `, data);
 				} catch (error) {
 					console.log('Error fetching user data:', error);
 				}
@@ -118,7 +118,7 @@ const VolunteerProfilePage: React.FC = () => {
 					const gatherings = await getUserGatherings(Number(id));
 					setGatheringsData(gatherings);
 
-					const comments = await getCommentsAboutUser(Number(data.id));
+					const comments = await getCommentsAboutUser(Number(id));
 					setCommentsData(comments);
 				} catch (error) {
 					console.error('Failed to fetch announcements or petitions:', error);

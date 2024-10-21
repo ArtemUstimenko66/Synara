@@ -160,7 +160,7 @@ export const unarchiveChat = async (chatId: number) => {
 
 export const submitFeedback = async (feedbackData: any) => {
     try {
-        const response = await api.post('https://synara.help/api/comments/', feedbackData, { withCredentials: true });
+        const response = await api.post('/comments/', feedbackData, { withCredentials: true });
         console.log('Feedback submitted:', feedbackData);
         return response;
     } catch (error) {
