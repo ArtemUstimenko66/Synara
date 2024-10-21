@@ -28,6 +28,7 @@ import {urgencyTranslations} from "../../data/urgencyMap.ts";
 import {useAuth} from "../../hooks/useAuth.ts";
 import Cookies from "js-cookie";
 import ModalAsk from "../../modules/profile/components/ui/ModalAsk.tsx";
+import {useMediaQuery} from "react-responsive";
 
 
 
@@ -58,7 +59,7 @@ const AnnouncementDetailsPage = () => {
     const [filteredAnnouncements, ] = useState<any[] | null>(null);
     const [searchParams, ] = useSearchParams();
 
-    const limit = 4;
+    const limit = 3;
     const {t} = useTranslation();
     const { role, isLoading } = useAuth();
     const [offset, setOffset] = useState(0);
@@ -72,7 +73,7 @@ const AnnouncementDetailsPage = () => {
     const navigate = useNavigate();
 
     const {userId}=useAuth();
-
+    const isTabletScreen = useMediaQuery({ query: '(max-width: 1025px)' });
 
     const hasViewedAnnouncement = (announcementId: number) => {
         const viewedAnnouncements = Cookies.get('viewedAnnouncements');
@@ -287,18 +288,18 @@ const AnnouncementDetailsPage = () => {
             <Wrapper>
                 <MainHeader />
                 <div className="w-full max-w-[80vw] mx-auto mt-[9vh]">
-                    <div className="flex flex-row space-x-4 items-center  justify-center">
-                        <div className="w-full md:w-1/2 xl:w-1/4 flex flex-col items-center mb-[1vh] justify-start">
+                    <div className="flex xl:flex-row md:flex-row sm:flex-col xl:space-x-4 md:space-x-4  sm:space-x-0 sm:space-y-4 md:space-y-0 xl:space-y-0 items-center  justify-center">
+                        <div className="w-full md:w-2/6 xl:w-1/4 flex flex-col items-center mb-[1vh] justify-start">
                             {/* Help Map Button */}
                             <Button hasBlue={true}
-                                    className="uppercase text-relative-h5 px-8 py-3 my-5 w-full xl:w-full">
+                                    className="uppercase text-relative-h5 px-8 py-3 xl:my-5 sm:my-0 w-full xl:w-full">
                                 {t('map_of_help')}
                             </Button>
                         </div>
 
-                        <div className="w-full  md:w-1/2 xl:w-3/4 flex flex-col items-center justify-end">
+                        <div className="w-full  md:w-4/6 xl:w-3/4 flex flex-col items-center justify-end">
                             {/* Search Component */}
-                            <div className="w-full mt-4  mb-3 md:mt-0">
+                            <div className="w-full xl:mt-4 sm:mb-0 sm:mt-0 xl:mb-3 md:mt-0">
                                 <SearchComponent/>
                             </div>
                         </div>
@@ -307,59 +308,59 @@ const AnnouncementDetailsPage = () => {
                     {/* Main part */}
                     <div className="max-w-screen-lg h-auto mx-auto p-4">
                         {/* Заголовок по центру */}
-                        <h1 className="text-relative-h4 font-kharkiv uppercase text-center">
+                        <h1 className="xl:text-relative-h4 sm:text-relative-h1 font-kharkiv uppercase text-center">
                             {details.title}
                         </h1>
 
 
-                        {/* Основной контент: левая и правая часть */}
-                        <div className="flex flex-row h-auto gap-8 mt-8">
-                            {/* Левая часть (2/3 ширины) */}
-                            <div className="w-full h-auto md:w-7/12">
-                                <p className="font-montserratRegular text-relative-ps mt-4">{details.description}</p>
-                                <p className="font-medium text-relative-pl font-montserratMedium mt-4">{t('details')}:</p>
-                                <p className="font-montserratRegular text-relative-ps mt-4">{details.details}</p>
+                        {/* Main part */}
+                        <div className="flex sm:flex-col xl:flex-row h-auto gap-8 mt-8">
+                            {/* Left part (2/3 width) */}
+                            <div className="w-full h-auto xl:w-2/3 sm:order-2 xl:order-1 ">
+                                <p className="font-montserratRegular xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3 mt-4">{details.description}</p>
+                                <p className="font-medium xl:text-relative-pl sm:text-relative-h2  font-montserratMedium mt-4">{t('details')}:</p>
+                                <p className="font-montserratRegular xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3 mt-4">{details.details}</p>
                             </div>
 
-                            {/* Правая часть (1/3 ширины) */}
+                            {/* Right part (1/3 width) */}
                             <div
-                                className="w-full md:w-5/12 flex flex-col bg-gray-100 h-auto rounded-3xl pr-[2vw] py-[4vh] flex-1">
+                                className="w-full xl:w-1/3  sm:order-1 xl:order-2  flex flex-col bg-gray-100 h-auto rounded-3xl pr-[2vw] py-[4vh] flex-1">
 
 
                                 <div className="flex justify-between w-full items-center">
                                     <span
-                                        className="bg-blue-500 text-white font-montserratRegular text-relative-ps px-4 pr-[5vw] py-1 rounded-r-full">
+                                        className="bg-blue-500 text-white font-montserratRegular xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3 px-4 pr-[5vw] py-1 rounded-r-full">
                                         {t(getHelpToKey(details.type_help))}
                                     </span>
                                     {isDateInFuture && details.is_urgent && diffDays <= 5 && (
                                         <div
-                                            className="text-blue-500 border-2 border-dark-blue rounded-full text-relative-ps px-[2vw]">
+                                            className="text-blue-500 border-2 border-dark-blue rounded-full xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3 px-[2vw]">
                                             {diffDays} {diffDays === 1 ? t('day_announcement') : t('day_announcement_v_2')}
                                         </div>
                                     )}
                                 </div>
 
                                 <div className="flex items-center pl-[2vw]  mt-4">
-                                    <Calendar className="mr-2"/>
-                                    <p className="font-montserratRegular font-semibold text-relative-ps ">
+                                    <Calendar className="mr-2 sm:h-8 sm:w-8"/>
+                                    <p className="font-montserratRegular font-semibold xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3 ">
                                         {`${formattedDateCreated} -
                                         ${formattedDate}`}</p>
                                 </div>
 
                                 <div className="flex items-center pl-[2vw] mt-4">
-                                    <PlaceMarker className="mr-2"/>
-                                    <p className="font-montserratRegular font-semibold text-relative-ps">
+                                    <PlaceMarker className="mr-2 sm:h-8 sm:w-8"/>
+                                    <p className="font-montserratRegular font-semibold xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3">
                                         {t('place')}: {details.currentLocation}
                                     </p>
                                 </div>
 
                                 <div className="flex items-center pl-[2vw]">
-                                    <User className="mr-2"/>
+                                    <User className="mr-2 sm:h-8 sm:w-8"/>
                                     <div className="flex flex-col items-start mt-4">
-                                        <p className="font-montserratRegular font-semibold text-relative-ps mt-4">
+                                        <p className="font-montserratRegular font-semibold xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3 mt-4">
                                             {t('review_ad')}: {details.viewsCount}
                                         </p>
-                                        <p className="font-montserratRegular font-semibold text-relative-ps mt-4">
+                                        <p className="font-montserratRegular font-semibold xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3 mt-4">
                                             {t('responded')}: {details.responsesCount}
                                         </p>
                                     </div>
@@ -373,18 +374,18 @@ const AnnouncementDetailsPage = () => {
                                         className="w-16 h-16 rounded-full object-cover mr-3"
                                     />
                                     <div className="pl-[2vw]">
-                                        <p className="text-relative-ps font-montserratMedium font-semibold uppercase">{t('ad_author')}: </p>
-                                        <h4 className=" text-relative-ps font-montserratMedium">{details.user.firstName} {details.user.lastName}</h4>
+                                        <p className="xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3 font-montserratMedium font-semibold uppercase">{t('ad_author')}: </p>
+                                        <h4 className=" xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3 font-montserratMedium">{details.user.firstName} {details.user.lastName}</h4>
                                     </div>
                                 </div>
 
                                 <div className="flex flex-row items-center pl-[2vw]">
-                                    <p className="font-semibold text-relative-ps font-montserratMedium uppercase">{t('contacts')}:</p>
-                                    <p className="font-montserratRegular text-relative-ps pl-[1vw] uppercase"> {details.user.phoneNumber}</p>
+                                    <p className="font-semibold xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3 font-montserratMedium uppercase">{t('contacts')}:</p>
+                                    <p className="font-montserratRegular xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3 pl-[1vw] uppercase"> {details.user.phoneNumber}</p>
                                 </div>
 
                                 {/* Social media icons */}
-                                <p className="uppercase mt-4 pl-[2vw] text-relative-ps">{t('share')}:</p>
+                                <p className="uppercase mt-4 pl-[2vw] xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3">{t('share')}:</p>
                                 <div className="mt-2 flex justify-center space-x-6">
                                     <a href="#" aria-label="Facebook">
                                         <FontAwesomeIcon icon={['fab', 'facebook-f']} className="h-6 w-6"/>
@@ -393,7 +394,7 @@ const AnnouncementDetailsPage = () => {
                                         <FontAwesomeIcon icon={['fab', 'instagram']} className="h-7 w-7"/>
                                     </a>
                                     <a href="#" aria-label="Twitter">
-                                        <FontAwesomeIcon icon={['fab', 'twitter']} className="h-6 w-6"/>
+                                        <FontAwesomeIcon icon={['fab', 'x-twitter']} className="h-6 w-6"/>
                                     </a>
                                     <a href="#" aria-label="Telegram">
                                         <FontAwesomeIcon icon={['fab', 'telegram-plane']} className="h-6 w-6"/>
@@ -406,15 +407,15 @@ const AnnouncementDetailsPage = () => {
 
                                         <>
                                             {isDone ? (
-                                                <h1 className="text-relative-h4 mt-[1vh] font-kharkiv uppercase text-center">{t('done')}</h1>
+                                                <h1 className="xl:text-relative-h4 sm:text-relative-h2 md:text-relative-h3 mt-[1vh] font-kharkiv uppercase text-center">{t('done')}</h1>
                                             ) : isCanceled ? (
-                                                <h1 className="text-relative-h4 mt-[1vh] font-kharkiv uppercase text-center">{t('canceled')}</h1>
+                                                <h1 className="xl:text-relative-h4 sm:text-relative-h2 md:text-relative-h3 mt-[1vh] font-kharkiv uppercase text-center">{t('canceled')}</h1>
                                             ) : (
                                                 <>
                                                     <div className="mt-8 w-full">
                                                         <Button
                                                             onClick={openModalForDone}
-                                                            className="flex items-center uppercase justify-center text-center w-full bg-perfect-yellow rounded-3xl font-montserratRegular"
+                                                            className="flex xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3 items-center uppercase justify-center text-center w-full bg-perfect-yellow rounded-3xl font-montserratRegular"
                                                         >
                                                             {t('done')}
                                                         </Button>
@@ -461,25 +462,27 @@ const AnnouncementDetailsPage = () => {
                             </div>
                         </div>
 
-                        {/* Изображение с соседними картинками */}
+                        {/* images */}
                         {details.files.length > 0 ?
                             <>
                                 <div className="flex justify-center my-[4vh]">
                                     <div className="flex items-center">
                                         {selectedImageIndex > 0 && (
-                                            <div
-                                                className="justify-center flex w-[25vw] mx-[1vw] h-[28vh]"
-                                                onClick={() => openModal(selectedImageIndex - 1)}
-                                            >
-                                                <img
-                                                    src={details.files[selectedImageIndex - 1].fileUrl}
-                                                    alt={details.files[selectedImageIndex].fileName}
-                                                    className="w-full h-auto rounded-lg cursor-pointer"
-                                                />
-                                            </div>
+                                            !isTabletScreen ? (
+                                                <div
+                                                    className={`justify-center flex w-[25vw] mx-[1vw]  ${isTabletScreen ? "w-full h-auto": " w-[25vw] h-[28vh]"}`}
+                                                    onClick={() => openModal(selectedImageIndex - 1)}
+                                                >
+                                                    <img
+                                                        src={details.files[selectedImageIndex - 1].fileUrl}
+                                                        alt={details.files[selectedImageIndex].fileName}
+                                                        className="w-full h-auto rounded-lg cursor-pointer"
+                                                    />
+                                                </div>
+                                            ) : null
                                         )}
                                         <div
-                                            className="justify-center flex w-[25vw] mx-[1vw] h-[28vh]"
+                                            className={`justify-center flex w-[25vw] mx-[1vw] ${isTabletScreen ? "w-full h-auto": " w-[25vw] h-[28vh]"}`}
                                             onClick={() => openModal(selectedImageIndex)}
                                         >
                                             <img
@@ -489,21 +492,24 @@ const AnnouncementDetailsPage = () => {
                                             />
                                         </div>
                                         {selectedImageIndex < details.files.length - 1 && (
-                                            <div
-                                                className="justify-center flex w-[25vw] mx-[1vw] h-[28vh]"
-                                                onClick={() => openModal(selectedImageIndex + 1)}
-                                            >
-                                                <img
-                                                    src={details.files[selectedImageIndex + 1].fileUrl}
-                                                    alt={details.files[selectedImageIndex].fileName}
-                                                    className="w-full h-auto rounded-lg cursor-pointer"
-                                                />
-                                            </div>
+                                            !isTabletScreen ? (
+                                                <div
+                                                    className={`justify-center flex mx-[1vw] ${isTabletScreen ? "w-full h-auto": " w-[25vw] h-[28vh]"}`}
+                                                    onClick={() => openModal(selectedImageIndex + 1)}
+                                                >
+                                                    <img
+                                                        src={details.files[selectedImageIndex + 1].fileUrl}
+                                                        alt={details.files[selectedImageIndex].fileName}
+                                                        className="w-full h-auto rounded-lg cursor-pointer"
+                                                    />
+                                                </div>
+                                            ) : null
                                         )}
                                     </div>
                                 </div>
 
-                                {/* Полоски выбора изображений */}
+
+                                {/* stripes under images */}
                                 <div className="flex justify-center mt-2 space-x-2">
                                     {details.files.length >= 3 ?
                                         (details.files.map((_, index) => (
@@ -519,7 +525,7 @@ const AnnouncementDetailsPage = () => {
                                     }
                                 </div>
 
-                                {/* Модальное окно для отображения выбранного изображения */}
+                                {/* modal img */}
                                 {isModalOpen && (
                                     <div
                                         className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50"
@@ -529,18 +535,18 @@ const AnnouncementDetailsPage = () => {
                                             <img
                                                 src={details.files[selectedImageIndex].fileUrl}
                                                 alt={details.files[selectedImageIndex].fileName}
-                                                className="flex w-[65vw] mx-[1vw] h-[70vh] rounded-lg"
+                                                className="flex w-[65vw] mx-[1vw] xl:h-[70vh] sm:h-auto rounded-lg"
                                             />
 
                                         </div>
 
 
-                                        {/* Левая стрелка */}
+                                        {/* left arrow */}
                                         {selectedImageIndex > 0 && (
                                             <div
                                                 className="absolute left-[4vw] top-1/2 ь transform -translate-y-1/2 cursor-pointer"
                                                 onClick={(e) => {
-                                                    e.stopPropagation(); // Предотвращаем закрытие модального окна
+                                                    e.stopPropagation();
                                                     handlePrevImage();
                                                 }}
                                             >
@@ -548,12 +554,12 @@ const AnnouncementDetailsPage = () => {
                                             </div>
                                         )}
 
-                                        {/* Правая стрелка */}
+                                        {/* right arrow */}
                                         {selectedImageIndex < details.files.length - 1 && (
                                             <div
                                                 className="absolute right-[4vw] top-1/2 transform -translate-y-1/2 cursor-pointer"
                                                 onClick={(e) => {
-                                                    e.stopPropagation(); // Предотвращаем закрытие модального окна
+                                                    e.stopPropagation();
                                                     handleNextImage();
                                                 }}
                                             >
@@ -569,7 +575,7 @@ const AnnouncementDetailsPage = () => {
                     {hasShowMore
                         ?
                         <>
-                            <h1 className="text-relative-h4 font-kharkiv uppercase mt-[10vh] text-center">
+                            <h1 className="xl:text-relative-h4 sm:text-relative-h1 font-kharkiv uppercase mt-[10vh] text-center">
                                 {t('similar_ad')}
                             </h1>
 
@@ -578,7 +584,8 @@ const AnnouncementDetailsPage = () => {
                                     <div className="w-full mt-4 ml-4 flex flex-wrap justify-start">
                                         {(filteredAnnouncements || announcements).length > 0 ? (
                                             (filteredAnnouncements || announcements).map((announcement, index) => (
-                                                <div key={index} className="w-full md:w-[48%] xl:w-[32%] mr-[1vw] p-2 mt-4">
+                                                <div key={index}
+                                                     className="w-full md:w-[48%] xl:w-[32%] mr-[1vw] p-2 mt-4">
                                                     <Announcement
                                                         id={`${announcement.id}`}
                                                         userName={`${announcement.user.firstName} ${announcement.user.lastName}`}
