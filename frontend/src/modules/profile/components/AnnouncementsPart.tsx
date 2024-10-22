@@ -15,7 +15,7 @@ interface AnnouncementsPartProps {
 const AnnouncementsPart: React.FC<AnnouncementsPartProps> = ({ requests}) => {
 	return (
 		<>
-			<div className="grid grid-cols-2 gap-6">
+			<div className="grid sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
 				{requests.map((announcement) => (
 					<AnnouncementCard
 						key={announcement.id}

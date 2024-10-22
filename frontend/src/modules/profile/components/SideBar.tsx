@@ -64,7 +64,7 @@ const Sidebar: React.FC<SidebarProps> = ({
     const  {role} = useAuth();
 
     return (
-        <div className="w-full mr-[5vw] p-[3%] bg-gray-100 h-auto py-[2vh] rounded-3xl mt-8">
+        <div className="md:w-full sm:w-[95%] xl:w-full mr-[5vw] xl:ml-0 md:ml-0 sm:ml-3 p-[3%] bg-gray-100  h-auto py-[2vh] rounded-3xl mt-8">
             {/* Photo */}
             <div className="mb-6 flex items-center ml-2">
                 <img

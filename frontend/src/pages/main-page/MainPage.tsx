@@ -23,6 +23,7 @@ import {
 } from "../../redux/announcementsSlice.ts";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "../../redux/store.ts";
+import Header from "../../components/Header.tsx";
 
 interface User {
     id: string;
@@ -68,7 +69,7 @@ const MainPage: React.FC = () => {
 
     const dispatch = useDispatch<AppDispatch>();
     const { isLoading, limit } = useSelector((state: any) => state.announcements);
-    const { role, isLoading: isAuthLoading } = useAuth();
+    const { isAuthenticated, role, isLoading: isAuthLoading } = useAuth();
     //console.log("role ->", role);
 
     const { announcements = [], hasMore = false } = useSelector(
@@ -243,7 +244,13 @@ const MainPage: React.FC = () => {
         <Wrapper>
             <div className=" bg-almost-white">
                 {/* Header */}
-                <MainHeader />
+                {
+                    isAuthenticated
+                        ?
+                        <MainHeader />
+                        :
+                        <Header />
+                }
 
                 {/* Main content */}
                 <div className="w-full mt-[8vh] px-4">

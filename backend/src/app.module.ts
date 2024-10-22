@@ -27,6 +27,7 @@ import {CommentsModule} from "./modules/comments/comments.module";
 import {CurrentPhonesModule} from "./modules/current-phones/current-phones.module";
 import {SynaraCommentModule} from "./modules/synara-comments/synara-comment.module";
 import {MapModule} from "./modules/maps-alarm/app.module";
+import {ConfirmIpnModule} from "./modules/confirm-ipn/confirm-ipn.module";
 
 @Module({
   imports: [
@@ -47,6 +48,7 @@ import {MapModule} from "./modules/maps-alarm/app.module";
     SmsModule,
     CacheModule,
     ConfirmEmailModule,
+    ConfirmIpnModule,
     SendEmailModule,
     FileModule,
     PasswordModule,

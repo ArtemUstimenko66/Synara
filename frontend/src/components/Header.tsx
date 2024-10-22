@@ -8,7 +8,11 @@ import MenuIcon from '../assets/images/icon-menu.svg?react';
 import LogoSynara from '../assets/images/logoSynara.svg?react';
 import {useTranslation} from "react-i18next";
 
-const Header: React.FC = () => {
+interface HeaderProps {
+    className?: string;
+}
+
+const Header: React.FC<HeaderProps> = ({ className }) => {
     const [isVisible, setIsVisible] = useState(true);
     const [isAtTop, setIsAtTop] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
@@ -31,7 +35,7 @@ const Header: React.FC = () => {
 
     return (
         <header
-            className={`w-full fixed top-0 left-0 z-50 transition-transform duration-300 ease-in-out 
+            className={`${className} w-full fixed top-0 left-0 z-50 transition-transform duration-300 ease-in-out 
             ${isVisible ? 'header-slide-in' : 'header-slide-out'} 
             ${isAtTop ? 'transition-background-color' : 'bg-white shadow-sm'}`}
         >

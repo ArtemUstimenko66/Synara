@@ -107,18 +107,14 @@ const Filters: React.FC<FiltersProps> = ({ onCloseSidebar, onOpenMap }) => {
     const applyFilters = async () => {
         const translatedCategories = selectedCategories.map(category => helpTypesMap[category]);
 
-        // Создаем копию существующих searchParams
         const newSearchParams = new URLSearchParams(searchParams);
 
-        // Добавляем категории
         newSearchParams.delete('type');  // Сначала очищаем текущие фильтры по категориям
         translatedCategories.forEach(category => newSearchParams.append('type', category));
 
-        // Добавляем срочность (urgency)
         if (selectedUrgency) {
             newSearchParams.set('isUrgent', urgencyTranslations[selectedUrgency]);
         } else {
-            // Удаляем параметр isUrgent, если не выбран
             newSearchParams.delete('isUrgent');
         }
 
@@ -147,17 +143,15 @@ const Filters: React.FC<FiltersProps> = ({ onCloseSidebar, onOpenMap }) => {
             newSearchParams.delete('ukraine');
         }
 
-        // Обновляем параметры URL, сохраняя другие параметры
         setSearchParams(newSearchParams);
 
-        // Закрываем сайдбар после применения фильтров
         onCloseSidebar();
     };
 
     const {t} = useTranslation();
 
     const handleNumericInput = (value: string, setter: { (value: React.SetStateAction<string>): void; (value: React.SetStateAction<string>): void; (arg0: any): void; }) => {
-        if (/^\d*$/.test(value)) { // Regex to allow only digits
+        if (/^\d*$/.test(value)) {
             setter(value);
         }
     };
@@ -212,16 +206,6 @@ const Filters: React.FC<FiltersProps> = ({ onCloseSidebar, onOpenMap }) => {
                     <div className="mb-4">
                         <h3 className="text-lg font-montserratRegular mb-4">{t('urgency')}</h3>
                         <div className="space-y-2">
-                            {/*{urgencies.map((urgency, index) => (*/}
-                            {/*    <button*/}
-                            {/*        key={index}*/}
-                            {/*        onClick={() => selectUrgency(urgency)}*/}
-                            {/*        className={`w-full py-1 font-montserratRegular border border-dark-blue rounded-full*/}
-                            {/*            ${selectedUrgency === urgency ? 'bg-dark-blue text-white' : ''}`}*/}
-                            {/*    >*/}
-                            {/*        {urgency}*/}
-                            {/*    </button>*/}
-                            {/*))}*/}
                             <button
                                 onClick={() => selectUrgency('Терміново')}
                                 className={`w-full py-1 font-montserratRegular border border-dark-blue rounded-full

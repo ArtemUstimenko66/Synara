@@ -29,6 +29,8 @@ import cherkasy from './region_images/cherkasy1044-uq5.svg';
 import kyiv from './region_images/kyiv1045-oewl.svg';
 import kyivcity from './region_images/kyivcity1045-xxd9.svg';
 import HeaderMapsAlarm from "./HeaderMapsAlarm.tsx";
+import Header from "../../components/Header.tsx";
+import {useAuth} from "../../hooks/useAuth.ts";
 
 
 interface RegionData {
@@ -79,6 +81,7 @@ const getColorClass = (index: number) => {
 
 const MapComponent: React.FC = () => {
 	const [states, setStates] = useState<{ [key: string]: { alertnow: boolean } }>({});
+	const { isAuthenticated} = useAuth();
 
 	useEffect(() => {
 		fetch('https://synara.help/api/alerts')
@@ -98,7 +101,14 @@ const MapComponent: React.FC = () => {
 
 	return (
 		<div>
-			<HeaderMapsAlarm/>
+			{
+				isAuthenticated
+					?
+					<HeaderMapsAlarm/>
+					:
+					<Header />
+			}
+
 			<title>Ukraine Map Alerts</title>
 
 			<div className="ukraine-map-container">

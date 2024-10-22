@@ -109,10 +109,10 @@ const ProfilePage = () => {
     return (
         <Wrapper>
             <MainHeader />
-            <div className="min-h-screen flex mt-12">
-                <div className="flex flex-1">
+            <div className="min-h-screen flex xl:mt-12 md:mt-12 sm:mt-6">
+                <div className="md:flex xl:flex xl:flex-1 md:flex-1 sm:flex-row ">
                     {/* Sidebar */}
-                    <div className="w-[20%]">
+                    <div className="sm:mx-0 md:mx-0 xl:mx-0 md:w-[20%] xl:w-[20%] ">
                         <Sidebar
                             activeSection={activeSection}
                             setActiveSection={setActiveSection}

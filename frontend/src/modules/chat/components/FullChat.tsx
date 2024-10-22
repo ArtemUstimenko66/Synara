@@ -10,6 +10,9 @@ import { useWebSocket } from "../../../hooks/WebSocketContext.tsx";
 import { formatTime } from "../helpers/formatTime.ts";
 import { formatDate } from "../helpers/formatDate.ts";
 import {determineMessageType} from "../helpers/determineMessageType.ts";
+
+import { Player } from '@lottiefiles/react-lottie-player';
+import loadingAnimation from '../../../assets/animations/logoLoading.json';
 import {
     fetchChats,
     fetchMessages,
@@ -235,6 +238,17 @@ const FullChat: React.FC = () => {
         }
     }, [selectedChatId, skip, loading, hasMore]);
 
+    if (loading) {
+        <div className="flex justify-center items-center h-screen">
+            <Player
+                autoplay
+                loop
+                src={loadingAnimation}
+                style={{height: '200px', width: '200px'}}
+            />
+        </div>
+    }
+
     // group messages by date and load chat list when messages change
     useEffect(() => {
         // group messages by date
@@ -443,7 +457,7 @@ const FullChat: React.FC = () => {
 
 
 
-    const isSmallScreen = useMediaQuery({ query: '(max-width: 768px)' });
+    const isSmallScreen = useMediaQuery({ query: '(max-width: 1025px)' });
 
     const selectedChat = chatList.find((chat) => chat.id === selectedChatId);
     const [isChatOpen, setIsChatOpen] = useState(false);
@@ -468,10 +482,10 @@ const FullChat: React.FC = () => {
                 <MainHeader />
 
                 <div
-                    className={`${isSmallScreen ? 'w-full' : 'xl:w-1/3'} ${isSmallScreen && isChatOpen ? 'hidden' : ''} mt-[10vh] bg-white relative`}>
+                    className={`${isSmallScreen ? 'w-full' : 'xl:w-1/3'} ${isSmallScreen && isChatOpen ? 'hidden' : ''}  md:w-[90vw] sm:w-full mt-[10vh] bg-white relative`}>
 
                     <div
-                        className={`xl:w-full w-[90%] xl:ml-0 ml-[5%] mb-8 ${isSmallScreen ? 'flex flex-col space-y-4' : 'flex items-center space-x-4'}`}>
+                        className={`xl:w-full w-[90%] xl:ml-0 ml-[5%] mb-8 ${isSmallScreen ? 'flex flex-col space-y-4' : 'flex items-center '}`}>
                         <Button
                             isFilled={true}
                             className={`bg-perfect-yellow text-black w-full xl:w-[14vw] text-center py-2 px-5 transition-all duration-0 ${
@@ -490,8 +504,29 @@ const FullChat: React.FC = () => {
                                 />
                             </div>
                         </Button>
+                        {dropdownOpen && (
+                            <div
+                                className=" absolute sm:top-[2.5vh] md:top-[1.7vh] xl:top-[3.8vh] xl:w-[14vw] md:w-[81vw] sm:w-[90vw]  bg-perfect-yellow rounded-b-2xl text-black z-10">
 
-                        <div className={`relative flex items-center ${isSmallScreen ? 'w-full' : 'flex-grow'}`}>
+                                <ul>
+                                    {getAvailableFilters(filter).map((option) => (
+                                        <div key={option.key}
+                                             className="flex items-center px-2 mb-1 justify-between">
+                                            <li
+                                                className="px-4 py-2 font-montserratMedium cursor-pointer"
+                                                onClick={() =>
+                                                    handleFilterChange(option.key as 'active' | 'archived' | 'blocked')
+                                                }
+                                            >
+                                                {option.label}
+                                            </li>
+                                        </div>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
+
+                        <div className={`relative flex sm:ml-0 md:ml-0 xl:ml-5 items-center ${isSmallScreen ? 'w-full' : 'flex-grow'}`}>
                             <Input
                                 type="text"
                                 value={username}
@@ -503,30 +538,10 @@ const FullChat: React.FC = () => {
                         </div>
                     </div>
 
-                    {dropdownOpen && (
-                        <div
-                            className="absolute -mt-[3.3vh] w-[14vw] bg-perfect-yellow rounded-b-2xl text-black shadow-lg z-10">
-                            <ul>
-                                {getAvailableFilters(filter).map((option) => (
-                                    <div key={option.key}
-                                         className="flex space-x-2 items-center px-2 mb-1 justify-between">
-                                        <li
-                                            className="px-4 py-2 font-montserratMedium cursor-pointer"
-                                            onClick={() =>
-                                                handleFilterChange(option.key as 'active' | 'archived' | 'blocked')
-                                            }
-                                        >
-                                            {option.label}
-                                        </li>
-                                    </div>
-                                ))}
-                            </ul>
-                        </div>
-                    )}
 
                     {/* Список чатов */}
                     <div
-                        className="flex-1 overflow-y-auto"
+                        className="flex-1 sm:mx-5 md:mx-0 xl:mx-0 overflow-y-auto"
                         style={{
                             scrollbarWidth: 'none',
                             msOverflowStyle: 'none',
@@ -556,7 +571,7 @@ const FullChat: React.FC = () => {
 
 
                 <div
-                    className={`${isSmallScreen ? 'h-full' : 'h-full xl:w-2/3'} ${isSmallScreen && !isChatOpen ? 'hidden' : ''} w-full flex flex-col p-8 mt-[6vh]`}>
+                    className={`${isSmallScreen ? 'h-full' : 'h-full xl:w-2/3'} ${isSmallScreen && !isChatOpen ? 'hidden' : ''}  md:w-[90vw] sm:w-full flex flex-col xl:p-8 md:px-0 sm:p-0 sm:px-4 mt-[6vh]`}>
                     {selectedChat ? (
                         <div className="text-left w-full h-[83vh] flex space-y-2 flex-col">
                             <div className="flex items-center mb-4 w-full">

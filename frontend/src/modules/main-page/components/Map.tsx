@@ -319,14 +319,10 @@ export const Map: React.FC<SideBarProps> = ({ isOpen, onClose, onBackToFilters, 
         onBackToFilters();
     };
 
-    // @ts-ignore
-    // @ts-ignore
-    // @ts-ignore
-    // @ts-ignore
-    // @ts-ignore
-    // @ts-ignore
-    // @ts-ignore
-    // @ts-ignore
+    const clearAllRoutes = () => {
+        setRoutePath([]);
+    }
+
     return (
         <Fragment>
             <>
@@ -336,6 +332,8 @@ export const Map: React.FC<SideBarProps> = ({ isOpen, onClose, onBackToFilters, 
                         onClick={onClose}
                     ></div>
                 )}
+
+
 
                 {/* Sidebar */}
                 <div
@@ -368,7 +366,7 @@ export const Map: React.FC<SideBarProps> = ({ isOpen, onClose, onBackToFilters, 
                                     alignItems: "center",
                                     marginBottom: "1px"
                                 }}>
-                                    <span className="mt-2 text-xs-ps font-montserratRegular">{t('radius')}:</span>
+                                    <span className="mt-2 text-xs-ps font-montserratRegular">{t('radius')}</span>
                                     <span className="text-xs-ps font-montserratRegular">{(circleRadius / 1000).toFixed(0)} км</span>
                                 </label>
                                 <Slider
@@ -481,6 +479,12 @@ export const Map: React.FC<SideBarProps> = ({ isOpen, onClose, onBackToFilters, 
                                 {/*{directions && <DirectionsRenderer directions={directions} />}*/}
                             </GoogleMap>
                         ) : null}
+
+                        {
+                            routePath.length > 0 && (
+                                <button className="bg-almost-white mt-[2vh] uppercase border-2 border-dark-blue rounded-full text-dark-blue mx-[1.9vw] py-3 px-4" onClick={clearAllRoutes}>Очистити всі маршрути</button>
+                            )
+                        }
 
                         <div className="flex flex-col space-y-3 mx-8 mt-2">
                             <Button isFilled={true} className=" uppercase text-black py-3 md:text-pxl"

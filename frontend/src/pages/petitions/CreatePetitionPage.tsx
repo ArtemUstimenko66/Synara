@@ -180,7 +180,7 @@ const CreatePetitionPage: React.FC = () => {
 			<div className="flex justify-center items-center w-full mt-24">
 				<div className="w-full bg-white rounded-lg p-8">
 					<h1 className="text-center text-3xl font-normal font-kharkiv mb-6">{t('fill_dataUPPER')}</h1>
-					<form className="mx-32" onSubmit={handleSubmit}>
+					<form className="xl:mx-32 sm:mx-0" onSubmit={handleSubmit}>
 						<div className="mb-4">
 							<label className="block font-montserratMedium mb-2" htmlFor="petition-number">
 								{t('petition_number')}*

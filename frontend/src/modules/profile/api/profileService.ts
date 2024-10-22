@@ -171,3 +171,13 @@ export const respondVolunteer = async (userId: number) => {
         throw error;
     }
 };
+
+export const getVolunteerQualification = async (volunteerId: number) => {
+    try {
+        const response = await api.get(`/files/check-volunteer-documents/${volunteerId}`, { withCredentials: true });
+        return response.data;
+    } catch (error) {
+        console.error("Ошибка при получении докуметнов пользователя:", error);
+        throw error;
+    }
+};

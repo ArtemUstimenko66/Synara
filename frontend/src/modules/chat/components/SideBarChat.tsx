@@ -10,7 +10,8 @@ import { debounce } from 'lodash';
 import { determineMessageType } from "../helpers/determineMessageType.ts";
 import Chat from "../interfaces/Chat.tsx";
 import {useTranslation} from "react-i18next";
-
+import { Player } from '@lottiefiles/react-lottie-player';
+import loadingAnimation from '../../../assets/animations/logoLoading.json';
 
 interface SideBarChatProps {
     isOpen: boolean;
@@ -161,8 +162,13 @@ export const SideBarChat: React.FC<SideBarChatProps> = ({ isOpen, onClose }) => 
                 </div>
 
                 {loading ? (
-                    <div className="flex flex-col items-center justify-center flex-grow">
-                        <p className="font-montserratMedium">{t('loading_chats')}...</p>
+                    <div className="flex justify-center items-center h-screen">
+                        <Player
+                            autoplay
+                            loop
+                            src={loadingAnimation}
+                            style={{height: '200px', width: '200px'}}
+                        />
                     </div>
                 ) : error ? (
                     <div className="flex flex-col items-center justify-center flex-grow">

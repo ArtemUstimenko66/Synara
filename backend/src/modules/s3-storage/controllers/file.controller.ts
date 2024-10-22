@@ -1,6 +1,6 @@
 import {
   Body,
-  Controller,
+  Controller, Get, Param,
   Post,
   UploadedFile, UseGuards,
   UseInterceptors,
@@ -52,4 +52,10 @@ export class FileController {
   ) {
     return this.fileService.uploadGatheringFile(gatheringId, file, this.bucket);
   }
+
+  @Get("check-volunteer-documents/:userId")
+  async checkVolunteerDocuments(@Param('userId') userId: number) {
+    return this.fileService.checkVolunteerDocuments(userId);
+  }
+
 }

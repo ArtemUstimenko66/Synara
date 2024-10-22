@@ -579,7 +579,7 @@ const AnnouncementDetailsPage = () => {
                                 {t('similar_ad')}
                             </h1>
 
-                            <div className="flex flex-col">
+                            <div className="flex flex-col w-full">
                                 <div className="w-full flex justify-between">
                                     <div className="w-full mt-4 ml-4 flex flex-wrap justify-start">
                                         {(filteredAnnouncements || announcements).length > 0 ? (

@@ -26,6 +26,7 @@ export const sendEmailConfirmation = async (email: string) => {
         throw error;
     }
 };
+
 export const uploadDocument = async (file: File) => {
     const formData = new FormData();
     formData.append('file', file);
@@ -39,6 +40,16 @@ export const uploadDocument = async (file: File) => {
         return response.data;
     } catch (error) {
         console.error("Failed to upload document:", error);
+        throw error;
+    }
+};
+
+export const checkUNP = async (date: string, ipn: string) => {
+    try {
+        const response = await api.post('/confirm-ipn/check', { date, ipn });
+        return response.data;
+    } catch (error) {
+        console.error("Email confirmation failed:", error);
         throw error;
     }
 };

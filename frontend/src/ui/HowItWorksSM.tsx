@@ -5,6 +5,7 @@ import Section1  from '../assets/images/section1.png';
 import Section2  from '../assets/images/section2.png';
 import Section3  from '../assets/images/section3.png';
 import Section4  from '../assets/images/section4.png';
+import {Link} from "react-router-dom";
 
 const HowItWorksSM = () => {
     const [activeStep, setActiveStep] = useState(0);
@@ -62,7 +63,9 @@ const HowItWorksSM = () => {
                 {steps[activeStep].description}
             </p>
             <div className="mt-8">
-                <Button isFilled={true}>{t('more_detailsUPPER')}</Button>
+                <Link to='/how-it-works'>
+                    <Button isFilled={true}>{t('more_detailsUPPER')}</Button>
+                </Link>
             </div>
         </section>
     );

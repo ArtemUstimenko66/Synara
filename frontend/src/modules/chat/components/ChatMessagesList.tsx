@@ -30,6 +30,8 @@ import {formatDate} from "../helpers/formatDate.ts";
 import Message from "../interfaces/Message.tsx";
 import {FeedbackModal} from "./ui/FeedbackModal.tsx";
 import {Link} from "react-router-dom";
+import {Player} from "@lottiefiles/react-lottie-player";
+import loadingAnimation from "../../../assets/animations/logoLoading.json";
 
 interface ChatMessagesListProps {
     isOpen: boolean;
@@ -58,6 +60,17 @@ export const ChatMessagesList: React.FC<ChatMessagesListProps> = ({ isOpen, onCl
     const { userId, role } = useAuth();
 
     const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
+
+    if (loading) {
+        <div className="flex justify-center items-center h-screen">
+            <Player
+                autoplay
+                loop
+                src={loadingAnimation}
+                style={{height: '200px', width: '200px'}}
+            />
+        </div>
+    }
 
     // Сброс skip при изменении чата
     useEffect(() => {
@@ -120,6 +133,8 @@ export const ChatMessagesList: React.FC<ChatMessagesListProps> = ({ isOpen, onCl
             setLoading(false);
         }
     }, [chatId, skip, loading, hasMore, take]);
+
+
 
     useEffect(() => {
         if (chatId && !loading && hasMore) {

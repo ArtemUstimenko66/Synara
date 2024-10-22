@@ -45,7 +45,7 @@ const Reviews: React.FC<ReviewsProps> = ({ reviews, rating }) => {
 				<div className="h-8 border-l-2 border-gray-300 mx-4"></div>
 				<span className="font-montserratRegular text-pxll font-semibold">{reviews.length} {t('reviews')}</span>
 			</div>
-			<div className="grid grid-cols-3 gap-6 mt-12">
+			<div className="grid sm:grid-cols-1 md:grid-cols-3 xl:grid-cols-3 gap-6 mt-12">
 				{reviews.map((review) => (
 					<ReviewProfile
 						key={review.id}

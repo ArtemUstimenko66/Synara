@@ -3,7 +3,10 @@ import { GoogleMap, MarkerF, PolylineF, useLoadScript, InfoWindowF } from "@reac
 import { searchMap } from "../../modules/main-page/api/mainPageService.ts";
 import HeaderMaps from "./HeaderMaps.tsx";
 import {useTranslation} from "react-i18next";
-
+import Header from "../../components/Header.tsx";
+import {useAuth} from "../../hooks/useAuth.ts";
+import { Player } from '@lottiefiles/react-lottie-player';
+import loadingAnimation from '../../assets/animations/logoLoading.json';
 const libraries = ['places']; // Статическая переменная для библиотек
 
 const Maps: React.FC = () => {
@@ -21,6 +24,7 @@ const Maps: React.FC = () => {
 	const [map, setMap] = useState<google.maps.Map | null>(null);
 	const [currentMarker, setCurrentMarker] = useState<{ lat: number; lng: number } | null>(null);
 	const [directionsService, setDirectionsService] = useState<google.maps.DirectionsService | null>(null);
+	const { isAuthenticated} = useAuth();
 
 	useEffect(() => {
 		if (isLoaded && map) {
@@ -88,11 +92,36 @@ const Maps: React.FC = () => {
 		}
 	};
 
-	if (!isLoaded) return <div>Loading...</div>;
+	if (!isLoaded)  return (
+		<div className="flex items-center justify-center h-screen">
+			<Player
+				autoplay
+				loop
+				src={loadingAnimation}
+				style={{ height: '200px', width: '200px' }}
+			/>
+		</div>
+	);;
+
+	const clearAllRoutes = () => {
+		setRoutePath([]);
+	}
 
 	return (
 		<div style={{ width: "100vw", height: "100vh" }}>
-			<HeaderMaps/>
+			{
+				isAuthenticated
+					?
+					<HeaderMaps/>
+					:
+					<Header className="bg-almost-white"/>
+			}
+			{
+				routePath.length > 0 && (
+					<button className=" fixed bottom-10 z-30 right-20 bg-perfect-yellow mt-[2vh] uppercase border-2 border-perfect-yellow rounded-full text-almost-black mx-[1.9vw] py-3 px-4" onClick={clearAllRoutes}>Очистити всі маршрути</button>
+				)
+			}
+
 			<div className="w-full h-full">
 				<GoogleMap
 					center={userLocation || {lat: 49.9935, lng: 36.2304}}

@@ -19,15 +19,25 @@ import SupportIcon from '../../assets/images/SupportIcon.svg?react';
 import MainHeader from "../../modules/main-page/components/ui/MainHeader.tsx";
 import WhoAreWe from "../../assets/images/WhoAreWe.png";
 import {useMediaQuery} from "react-responsive";
+import {useAuth} from "../../hooks/useAuth.ts";
+import Header from "../../components/Header.tsx";
 
 
 
 const AboutPage = () => {
     const { t } = useTranslation();
     const isSmallScreen = useMediaQuery({ query: '(max-width: 1025px)' });
+    const { isAuthenticated} = useAuth();
     return (
         <Wrapper>
-            <MainHeader />
+            {
+                isAuthenticated
+                    ?
+                    <MainHeader />
+                    :
+                    <Header />
+            }
+
             <div className="min-h-screen mt-24 ml-[3%] mr-[3%] font-montserratRegular">
                 <section className="w-full h-auto flex flex-col items-center px-4 md:px-8 mt-24">
                     <h2 className="xl:text-h2 sm:text-h4 font-montserratMedium uppercase text-center">{t('about_us')}</h2>

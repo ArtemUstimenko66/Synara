@@ -17,6 +17,7 @@ import {Player} from "@lottiefiles/react-lottie-player";
 import loadingAnimation from "../../assets/animations/logoLoading.json";
 import NothingFound from "../../assets/images/NothingFound.png";
 import {useTranslation} from "react-i18next";
+import Header from "../../components/Header.tsx";
 
 
 const calculatePercentage = (goal: number, raised: number) => {
@@ -163,7 +164,13 @@ const GatheringPage: React.FC = () => {
 	return (
 		<>
 			<Wrapper>
-				<MainHeader />
+				{
+					isAuthenticated
+						?
+						<MainHeader />
+						:
+						<Header />
+				}
 
 				<div className="w-full max-w-[80vw] mx-auto mt-[9vh]">
 
@@ -189,7 +196,7 @@ const GatheringPage: React.FC = () => {
 						</div>
 
 						{/* Нижняя строка с фильтрами и сортировкой */}
-						<div className="w-full md:flex-row xl:flex sm:flex-col justify-between items-center">
+						<div className="flex w-full md:flex-row xl:flex sm:flex-col justify-between items-center">
 							{/* Кнопка "Фільтрувати" (прижата к левой части) */}
 							<div className="sm:w-full md:w-2/12 xl:w-2/12 xl:mb-0 md:mb-0 sm:mb-2">
 								<Button hasBlue={true} className="px-4 text-relative-h5 w-full"

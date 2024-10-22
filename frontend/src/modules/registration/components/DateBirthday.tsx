@@ -3,6 +3,7 @@ import VectorWhite from '../../../assets/images/VectorWhite.svg?react';
 import { Button } from "../../../ui/Button";
 
 import {useTranslation} from "react-i18next";
+import {checkUNP} from "../api/registerService.ts";
 
 type DateBirthdayProps = {
     onNextStep: () => void;
@@ -13,7 +14,7 @@ type DateBirthdayProps = {
 const DateBirthday: React.FC<DateBirthdayProps> = ({ onNextStep, selectedRole, setUserData }) => {
     const [dateOfBirth, setDateOfBirth] = useState<string>('');
     const [selectedGender, setSelectedGender] = useState<string | null>(null);
-    const [volunteerId, setVolunteerId] = useState<number | ''>('');
+    const [volunteerId, setVolunteerId] = useState<string>('');
     const [unp, setUnp] = useState<number | ''>('');
     const [selectedOptions, setSelectedOptions] = useState<{ [key: string]: boolean }>({
         terms: false,
@@ -82,33 +83,50 @@ const DateBirthday: React.FC<DateBirthdayProps> = ({ onNextStep, selectedRole, s
         return Object.keys(newErrors).length === 0;
     };
 
-    const handleSubmit = () => {
-        if(validateFields())
-        {
-            const [day, month, year] = dateOfBirth.split(' / ').map(part => parseInt(part, 10));
+    function formatDate(inputDate: string): string {
+        const [day, month, year] = inputDate.split(' / ');
+        const formattedDate = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+        return formattedDate;
+    }
 
-            if (year && month && day) {
-                const formattedDate = `${year.toString().padStart(4, '0')}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+    const handleSubmit = async () => {
 
-                const localData = {
-                    dateOfBirth: formattedDate,
-                    gender: selectedGender,
-                    volunteerId,
-                    unp,
-                };
+        const isValidUNP = await checkUNP(formatDate(dateOfBirth), unp.toString());
+        console.log("dateOfBirth ->", formatDate(dateOfBirth));
+        console.log("unp ->", unp.toString());
+        console.log("isValid UNP ->", isValidUNP);
+        if (isValidUNP == "valid") {
+            if(validateFields())
+            {
+                const [day, month, year] = dateOfBirth.split(' / ').map(part => parseInt(part, 10));
 
-                console.log("Updated User Data: ", localData);
+                if (year && month && day) {
+                    const formattedDate = `${year.toString().padStart(4, '0')}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
 
-                if (typeof setUserData === 'function') {
-                    // @ts-ignore
-                    setUserData(prev => ({...prev, ...localData}));
-                    onNextStep();
+                    const localData = {
+                        dateOfBirth: formattedDate,
+                        gender: selectedGender,
+                        volunteerId,
+                        unp,
+                    };
+
+                    console.log("Updated User Data: ", localData);
+
+                    if (typeof setUserData === 'function') {
+                        // @ts-ignore
+                        setUserData(prev => ({...prev, ...localData}));
+                        onNextStep();
+                    } else {
+                        console.error("setUserData is not a function");
+                    }
                 } else {
-                    console.error("setUserData is not a function");
+                    console.error("Invalid date format");
                 }
-            } else {
-                console.error("Invalid date format");
             }
+        }
+        else {
+            setErrors({...errors, unp: errors.unp });
+            console.error("Invalid unp");
         }
     };
 
@@ -118,6 +136,16 @@ const DateBirthday: React.FC<DateBirthdayProps> = ({ onNextStep, selectedRole, s
             [option]: !prevState[option],
         }));
     };
+
+    const handleUnpChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+
+        const filteredValue = value.replace(/\D/g, '').slice(0, 10);
+
+        // @ts-ignore
+        setUnp(filteredValue);
+    };
+
 
     const { t } = useTranslation();
 
@@ -180,8 +208,8 @@ const DateBirthday: React.FC<DateBirthdayProps> = ({ onNextStep, selectedRole, s
                             name="volunteerId"
                             placeholder="**********"
                             className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
-                            value={volunteerId === '' ? '' : volunteerId}
-                            onChange={(e) => setVolunteerId(e.target.value === '' ? '' : Number(e.target.value))}
+                            value={volunteerId}
+                            onChange={(e) => setVolunteerId(e.target.value)}
                         />
                     </div>
                 )}
@@ -194,8 +222,10 @@ const DateBirthday: React.FC<DateBirthdayProps> = ({ onNextStep, selectedRole, s
                         placeholder="**********"
                         className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
                         value={unp === '' ? '' : unp}
-                        onChange={(e) => setUnp(e.target.value === '' ? '' : Number(e.target.value))}
+                        //onChange={(e) => setUnp(e.target.value === '' ? '' : Number(e.target.value))}
+                        onChange={handleUnpChange}
                     />
+
                     {errors.unp && <p className="text-red-500 text-sm">{errors.unp}</p>}
                 </div>
             </div>

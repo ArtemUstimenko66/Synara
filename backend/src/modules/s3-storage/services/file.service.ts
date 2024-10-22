@@ -85,4 +85,18 @@ export class FileService {
     });
     return this.fileGatheringRepository.save(file);
   }
+
+  //true - valid
+  //false - invalid
+  async checkVolunteerDocuments(userId: number) {
+    const result = await this.userRepository
+        .createQueryBuilder('user')
+        .innerJoin('user.files', 'file')
+        .where('user.id = :userId', { userId })
+        .andWhere('file.isAvatar = :isAvatar', { isAvatar: false })
+        .getCount();
+
+    return result > 0;
+  }
+
 }

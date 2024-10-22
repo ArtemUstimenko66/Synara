@@ -300,13 +300,13 @@ const HomePage: React.FC = () => {
                     </section>
 
                     {/* Third section - the last collections of money*/}
-                    <section className="w-full h-auto flex flex-col items-center xl:mt-64 md:mt-[10vw] select-none">
+                    <section className="w-full h-auto flex flex-col items-center xl:mt-64 md:mt-[10vw] select-none ">
                         <h2 className="xl:text-h2 sm:mt-24 xl:mt-0 sm:text-h5  md:text-relative-h3xl font-kharkiv xl:mb-16 md:mb-16 sm:mb-4">{t('last_collectionUPPER')}</h2>
                         <div
-                            className="sm:hidden md:block xl:block sm:space-y-[2vh] xl:space-y-0 md:justify-center xl:ml-0 md:ml-[23vw] grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-6 xl:flex xl:flex-row xl:gap-16 justify-center items-center">
+                            className="sm:hidden md:flex  sm:space-y-[2vh] xl:space-y-0  xl:ml-0  grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-6 xl:flex xl:flex-row xl:gap-16 justify-center items-center">
 
-                            <div className="flex flex-col md:flex-row">
-                                <div className="w-full flex justify-between">
+
+
                                     <div className="w-full mt-4 ml-4 flex flex-wrap justify-start">
                                         {gatherings.length > 0 ? (
                                             gatherings.map((gathering, index) => (
@@ -333,8 +333,8 @@ const HomePage: React.FC = () => {
                                                 </div>
                                             </div>
                                         )}
-                                    </div>
-                                </div>
+
+
 
                             </div>
 

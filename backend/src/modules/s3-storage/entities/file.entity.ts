@@ -33,6 +33,15 @@ export class File {
   })
   fileType?: string;
 
+  @ApiProperty({
+    example: false,
+    description: 'Confirmation of user email',
+    type: Boolean,
+  })
+  @Column({ default: false })
+  isAvatar?: boolean;
+
+
   @ManyToOne(() => User, (user) => user.files)
   @ApiProperty({
     description: 'User associated with the file',

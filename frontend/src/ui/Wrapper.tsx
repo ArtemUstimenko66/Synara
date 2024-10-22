@@ -35,7 +35,7 @@ const Wrapper: React.FC<WrapperProps> = ({ children }) => {
                         className="xl:hidden sm:hidden absolute h-[28vw] md:h-[30vh] -mt-3 md:flex md:bg-dark-blue w-full overflow-hidden"/>
                 </div>
             )}
-            <div className="flex-1 md:mx-12 xl:mx-28 py-8 relative z-10">
+            <div className="flex-1 sm:mx-0 md:mx-12 xl:mx-28 py-8 relative z-10">
                 {children}
             </div>
         </div>

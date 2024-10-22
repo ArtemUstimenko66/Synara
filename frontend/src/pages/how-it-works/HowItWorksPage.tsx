@@ -14,15 +14,23 @@ import Footer from '../../components/Footer.tsx';
 import SearchVolunteerSM from "../../ui/SearchVolunteerSM.tsx";
 import {useMediaQuery} from "react-responsive";
 import {useTranslation} from "react-i18next";
+import Header from "../../components/Header.tsx";
+import {useAuth} from "../../hooks/useAuth.ts";
 
 const HowItWorksPage: React.FC = () => {
     const isSmallScreen = useMediaQuery({ query: '(max-width: 1025px)' });
     const { t } = useTranslation();
-
+    const { isAuthenticated} = useAuth();
     // @ts-ignore
     return (
         <Wrapper>
-            <MainHeader/>
+            {
+                isAuthenticated
+                    ?
+                    <MainHeader />
+                    :
+                    <Header />
+            }
             <div>
                 {/* ОГОЛОШЕННЯ */}
                 <section className="w-full h-auto flex flex-col items-center mt-32 select-none">

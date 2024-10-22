@@ -10,7 +10,7 @@ export const MobileMenu = ({ isOpen = false }) => {
         { text: t('main'), to: "/home" },
         { text: t('about_us'), to: "/about" },
         { text: t('collection'), to: "/gatherings" },
-        { text: t('maps'), to: "/maps" },
+        { text: t('maps'), to: "/map-help" },
         { text: t('how_it_worksLOWER'), to: "/how-it-works" }
     ];
 
