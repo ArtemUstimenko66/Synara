@@ -2,12 +2,21 @@ import MainHeader from "../../modules/main-page/components/ui/MainHeader.tsx";
 import Footer from "../../components/Footer.tsx";
 import Wrapper from "../../ui/Wrapper.tsx";
 import {useTranslation} from "react-i18next";
+import {Helmet} from "react-helmet-async";
 
 
 const PrivacyPolicyPage = () => {
 	const {t} = useTranslation();
 	return (
 		<Wrapper>
+			<Helmet>
+				<title>Політика конфіденційності - Synara</title>
+				<meta name="description" content="Дізнайтеся про нашу політику конфіденційності на платформі Synara. Як ми захищаємо вашу інформацію." />
+				<meta name="keywords" content="політика конфіденційності, Synara, захист інформації, користувач" />
+				<meta name="robots" content="index, follow" />
+				<link rel="canonical" href="https://synara.help/privacy-policy" />
+			</Helmet>
+
 			<MainHeader />
 			<div className="min-h-screen mt-24 mx-[10vw] font-montserratRegular">
 				<h1 className="sm:text-h3 xl:text-h2 md:text-h2 font-kharkiv mb-8">{t('privacy_policy')}</h1>

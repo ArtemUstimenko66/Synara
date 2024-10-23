@@ -16,6 +16,7 @@ import {Map} from "../../modules/main-page/components/Map.tsx";
 import {Player} from "@lottiefiles/react-lottie-player";
 import loadingAnimation from "../../assets/animations/logoLoading.json";
 import NothingFound from "../../assets/images/NothingFound.png";
+import {Helmet} from "react-helmet-async";
 
 const PetitionPage: React.FC = () => {
 
@@ -174,6 +175,14 @@ const PetitionPage: React.FC = () => {
 
 	return (
 		<>
+			<Helmet>
+				<title>Петиції - Synara</title>
+				<meta name="description" content="Створіть та підпишіть петицію для підтримки важливих ініціатив. Долучайтеся до спільноти, щоб змінити світ на краще!" />
+				<meta name="keywords" content="петиції, Synara, підтримка, ініціативи, волонтерство" />
+				<meta name="robots" content="index, follow" />
+				<link rel="canonical" href="https://synara.help/petitions" />
+			</Helmet>
+
 			<Wrapper>
 				<MainHeader />
 

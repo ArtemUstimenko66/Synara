@@ -50,6 +50,7 @@
     "react-dom": "^18.3.1",
     "react-feather": "^2.0.10",
     "react-google-button": "^0.8.0",
+    "react-helmet-async": "^2.0.5",
     "react-i18next": "^15.0.2",
     "react-input-emoji": "^5.9.0",
     "react-international-phone": "^4.3.0",

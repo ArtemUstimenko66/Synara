@@ -21,6 +21,7 @@ import WhoAreWe from "../../assets/images/WhoAreWe.png";
 import {useMediaQuery} from "react-responsive";
 import {useAuth} from "../../hooks/useAuth.ts";
 import Header from "../../components/Header.tsx";
+import {Helmet} from "react-helmet-async";
 
 
 
@@ -30,6 +31,13 @@ const AboutPage = () => {
     const { isAuthenticated} = useAuth();
     return (
         <Wrapper>
+            <Helmet>
+                <title>Synara - Платформа для українців</title>
+                <meta name="description" content="Synara — це платформа, створена українцями для українців, щоб об'єднати тих, хто потребує допомоги з тими, хто готовий її надати." />
+                <meta name="keywords" content="Synara, платформа, українці, допомога, підтримка, спільнота" />
+                <meta name="robots" content="index, follow" />
+                <link rel="canonical" href="https://synara.help/about" />
+            </Helmet>
             {
                 isAuthenticated
                     ?

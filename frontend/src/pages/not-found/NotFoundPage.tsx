@@ -2,6 +2,7 @@ import React from 'react';
 import MainHeader from "../../modules/main-page/components/ui/MainHeader.tsx";
 import NotFound404 from '../../assets/images/NotFound404.png';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 const NotFoundPage: React.FC = () => {
     const navigate = useNavigate(); // Initialize the navigate function
@@ -12,6 +13,14 @@ const NotFoundPage: React.FC = () => {
     // @ts-ignore
     return (
         <>
+            <Helmet>
+                <title>404 - Сторінка не знайдена - Synara</title>
+                <meta name="description" content="Вибачте, але сторінка, яку ви шукаєте, не знайдена. Перевірте URL або поверніться на головну." />
+                <meta name="keywords" content="404, не знайдено, Synara, помилка, головна" />
+                <meta name="robots" content="noindex, nofollow" />
+                <link rel="canonical" href="https://synara.help/*" />
+            </Helmet>
+
             <MainHeader/>
             <div className="flex justify-center items-center h-screen">
 

@@ -15,6 +15,7 @@ import {
 import Footer from "../../components/Footer.tsx";
 import {Player} from "@lottiefiles/react-lottie-player";
 import loadingAnimation from "../../assets/animations/logoLoading.json";
+import {Helmet} from "react-helmet-async";
 
 const ProfilePage = () => {
     const [activeSection, setActiveSection] = useState<string>('announcements');
@@ -108,6 +109,13 @@ const ProfilePage = () => {
 
     return (
         <Wrapper>
+            <Helmet>
+                <title>Профіль - Synara</title>
+                <meta name="description" content="Перегляньте та редагуйте ваш профіль на платформі Synara. Оновіть свою інформацію для покращення досвіду." />
+                <meta name="keywords" content="профіль, Synara, редагування, користувач, волонтерство" />
+                <meta name="robots" content="index, follow" />
+                <link rel="canonical" href="https://synara.help/profile" />
+            </Helmet>
             <MainHeader />
             <div className="min-h-screen flex xl:mt-12 md:mt-12 sm:mt-6">
                 <div className="md:flex xl:flex xl:flex-1 md:flex-1 sm:flex-row ">

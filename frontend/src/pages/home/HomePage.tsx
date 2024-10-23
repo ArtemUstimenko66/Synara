@@ -51,6 +51,7 @@ import {Player} from "@lottiefiles/react-lottie-player";
 import loadingAnimation from "../../assets/animations/logoLoading.json";
 
 import { motion } from "framer-motion";
+import {Helmet} from "react-helmet-async";
 
 const calculatePercentage = (goal: number, raised: number) => {
     return (raised / goal) * 100;
@@ -242,6 +243,14 @@ const HomePage: React.FC = () => {
     };
 
     return (
+        <>
+            <Helmet>
+                <title>Головна - Synara</title>
+                <meta name="description" content="Ласкаво просимо на платформу Synara. Долучайтеся до підтримки ініціатив та отримуйте допомогу." />
+                <meta name="keywords" content="Synara, головна, підтримка, ініціативи, українці" />
+                <meta name="robots" content="index, follow" />
+                <link rel="canonical" href="https://synara.help/home" />
+            </Helmet>
         <div className="w-full relative">
             <Wrapper>
                 {/* Header */}
@@ -956,6 +965,7 @@ const HomePage: React.FC = () => {
                 <Footer/>
             </Wrapper>
         </div>
+        </>
     );
 };
 

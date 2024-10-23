@@ -1,6 +1,7 @@
 import MainHeader from "../../modules/main-page/components/ui/MainHeader.tsx";
 import Footer from "../../components/Footer.tsx";
 import Wrapper from "../../ui/Wrapper.tsx";
+import {Helmet} from "react-helmet-async";
 
 const animationFadeIn = "animate-fadeIn";
 const animationSlideIn = "animate-slideIn";
@@ -8,6 +9,13 @@ const animationSlideIn = "animate-slideIn";
 const CookiePolicyPage = () => {
 	return (
 		<Wrapper>
+			<Helmet>
+				<title>Політика використання cookie - Synara</title>
+				<meta name="description" content="Дізнайтеся про нашу політику використання кукі на платформі Synara." />
+				<meta name="keywords" content="кукі, політика, Synara, українці, конфіденційність" />
+				<meta name="robots" content="index, follow" />
+				<link rel="canonical" href="https://synara.help/cookie-policy" />
+			</Helmet>
 			<MainHeader />
 			<div className="min-h-screen mt-24 mx-[10vw] font-montserratRegular text-black">
 				<h1 className={`text-h3 font-kharkiv mb-8 ${animationFadeIn}`}>Політика використання cookie</h1>

@@ -28,6 +28,7 @@ import {getHelpTypeInUkrainianEngToUkr} from "../../data/helpTypesMap.ts";
 import MainContent from "../../modules/profile/components/MainContent.tsx";
 import {useAuth} from "../../hooks/useAuth.ts";
 import {useTranslation} from "react-i18next";
+import {Helmet} from "react-helmet-async";
 
 
 const formatTime = (time: string): string => {
@@ -170,6 +171,14 @@ const VolunteerProfilePage: React.FC = () => {
 
 	return (
 		<Wrapper>
+			<Helmet>
+				<title>Профіль Волонтера - Synara</title>
+				<meta name="description" content="Перегляньте та редагуйте інформацію про волонтера на платформі Synara. Долучайтеся до ініціатив та отримуйте підтримку." />
+				<meta name="keywords" content="профіль волонтера, Synara, волонтерство, ініціативи, користувач" />
+				<meta name="robots" content="index, follow" />
+				<link rel="canonical" href="https://synara.help/profile-volunteer" />
+			</Helmet>
+
 			<MainHeader />
 			<div className=" flex-col items-center mt-20">
 				{/* Profile Card */}

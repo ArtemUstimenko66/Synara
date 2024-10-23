@@ -3,6 +3,7 @@ import Footer from "../../components/Footer.tsx";
 import Wrapper from "../../ui/Wrapper.tsx";
 import { useState } from "react";
 import DownArrow from '../../assets/images/Down_Arrow.svg?react';
+import {Helmet} from "react-helmet-async";
 
 const questionsSection1 = [
 	{ question: "Що таке Synara?", answer: "Synara - це онлайн-платформа, створена для об'єднання людей, які постраждали від війни в Україні, з тими, хто готовий надати їм допомогу. Це місце, де можна знайти підтримку, ресурси та волонтерів, які допоможуть подолати труднощі та відновити своє життя." },
@@ -60,6 +61,13 @@ const AccordionItem = ({ question, answer }) => {
 const FAQPage = () => {
 	return (
 		<Wrapper>
+			<Helmet>
+				<title>Найчастіші запитання - Synara</title>
+				<meta name="description" content="Знайдіть відповіді на найчастіші запитання про платформу Synara, її функції та можливості." />
+				<meta name="keywords" content="FAQ, запитання, Synara, українці, допомога" />
+				<meta name="robots" content="index, follow" />
+				<link rel="canonical" href="https://synara.help/faq" />
+			</Helmet>
 			<MainHeader />
 			<div className="min-h-screen mt-20 ml-[3%] mr-[3%]">
 				<h1 className="text-h3 font-kharkiv uppercase">Найчастіші запитання</h1>

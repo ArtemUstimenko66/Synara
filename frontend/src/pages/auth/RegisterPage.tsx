@@ -17,6 +17,7 @@ import VictimSecond from '../../assets/images/VictimSecond.svg?react';
 import VolunteerSecond from '../../assets/images/VolunteerSecond.svg?react';
 import EmailAccept from '../../assets/images/EmailAccept.svg?react';
 import AuntidificationSecond from '../../assets/images/AuntidificationSecond.svg?react';
+import {Helmet} from "react-helmet-async";
 
 const Registration = () => {
     const [currentStep, setCurrentStep] = useState(1);
@@ -167,55 +168,67 @@ const Registration = () => {
         return null;
     };
     return (
-        <div className="bg-dark-blue min-h-screen h-screen flex ">
-            <div className="w-2/6 p-8 xl:flex md:hidden sm:hidden items-left flex flex-col justify-center mt-10 ">
-                <Link to="/home">
-                    <LogoSynara className="text-almost-white font-montserratRegular font-bold text-relative-h4"></LogoSynara>
-                </Link>
-                {renderStepImage()}
-            </div>
-            <div
-                className="xl:w-5/6 md:w-full sm:w-full bg-almost-white xl:rounded-l-3xl h-full xl:px-relative-md flex flex-col xl:items-start xl:justify-start sm:items-center sm:justify-center">
-                <div className="flex w-11/12 mt-[2.5vh] xl:hidden">
-                    <div className="xl:mt-[20%]">
-                        <BackArrowComponent onClick={handleBackArrowClick}/>
-                    </div>
-                    <div className="flex w-full justify-center ">
-                        <Link to="/home">
-                            <LogoSynaraBlue className="xl:hidden md:flex sm:flex  sm:w-24 sm:h-24"/>
-                        </Link>
-                    </div>
+        <>
+            <Helmet>
+                <title>Реєстрація - Synara</title>
+                <meta name="description"
+                      content="Заповніть форму реєстрації на платформі Synara, щоб стати частиною спільноти та отримати доступ до важливих ресурсів."/>
+                <meta name="keywords" content="реєстрація, акаунт, Synara, українці, допомога"/>
+                <meta name="robots" content="index, follow"/>
+                <link rel="canonical" href="https://synara.help/registration"/>
+            </Helmet>
+
+            <div className="bg-dark-blue min-h-screen h-screen flex ">
+                <div className="w-2/6 p-8 xl:flex md:hidden sm:hidden items-left flex flex-col justify-center mt-10 ">
+                    <Link to="/home">
+                        <LogoSynara
+                            className="text-almost-white font-montserratRegular font-bold text-relative-h4"></LogoSynara>
+                    </Link>
+                    {renderStepImage()}
                 </div>
-
-                <div className="flex h-full w-11/12">
-                    <div className="xl:flex sm:hidden">
-                        {currentStep > 1 && currentStep < 5 && (
-                            <BackArrowComponent onClick={() => setCurrentStep(currentStep - 1)}/>
-                        )}
-                        {currentStep == 6 && (
-                            <BackArrowComponent onClick={() => handleBackArrowClick()}/>
-                        )}
+                <div
+                    className="xl:w-5/6 md:w-full sm:w-full bg-almost-white xl:rounded-l-3xl h-full xl:px-relative-md flex flex-col xl:items-start xl:justify-start sm:items-center sm:justify-center">
+                    <div className="flex w-11/12 mt-[2.5vh] xl:hidden">
+                        <div className="xl:mt-[20%]">
+                            <BackArrowComponent onClick={handleBackArrowClick}/>
+                        </div>
+                        <div className="flex w-full justify-center ">
+                            <Link to="/home">
+                                <LogoSynaraBlue className="xl:hidden md:flex sm:flex  sm:w-24 sm:h-24"/>
+                            </Link>
+                        </div>
                     </div>
 
-                    <div className="xl:max-w-2xl xl:ml-24 sm:ml-5 mt-7 flex flex-col justify-start flex-grow">
-                        {currentStep < 5 && (
-                            <>
-                                <h1 className="font-kharkiv xl:text-relative-h3xl sm:text-relative-h2 mb-relative-ssm mt-relative-ssm">
-                                    СТВОРЕННЯ АККАУНТУ
-                                </h1>
-                                <div className="mb-relative-sm flex justify-start">
-                                    <Stepper currentStep={currentStep} onStepChange={setCurrentStep}/>
-                                </div>
-                            </>
-                        )}
+                    <div className="flex h-full w-11/12">
+                        <div className="xl:flex sm:hidden">
+                            {currentStep > 1 && currentStep < 5 && (
+                                <BackArrowComponent onClick={() => setCurrentStep(currentStep - 1)}/>
+                            )}
+                            {currentStep == 6 && (
+                                <BackArrowComponent onClick={() => handleBackArrowClick()}/>
+                            )}
+                        </div>
 
-                        <div className="flex-grow flex flex-col justify-between">
-                            {steps.find(step => step.step === currentStep)?.component}
+                        <div className="xl:max-w-2xl xl:ml-24 sm:ml-5 mt-7 flex flex-col justify-start flex-grow">
+                            {currentStep < 5 && (
+                                <>
+                                    <h1 className="font-kharkiv xl:text-relative-h3xl sm:text-relative-h2 mb-relative-ssm mt-relative-ssm">
+                                        СТВОРЕННЯ АККАУНТУ
+                                    </h1>
+                                    <div className="mb-relative-sm flex justify-start">
+                                        <Stepper currentStep={currentStep} onStepChange={setCurrentStep}/>
+                                    </div>
+                                </>
+                            )}
+
+                            <div className="flex-grow flex flex-col justify-between">
+                                {steps.find(step => step.step === currentStep)?.component}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 

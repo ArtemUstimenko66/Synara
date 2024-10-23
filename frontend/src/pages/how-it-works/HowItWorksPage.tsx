@@ -16,6 +16,7 @@ import {useMediaQuery} from "react-responsive";
 import {useTranslation} from "react-i18next";
 import Header from "../../components/Header.tsx";
 import {useAuth} from "../../hooks/useAuth.ts";
+import { Helmet } from 'react-helmet-async';
 
 const HowItWorksPage: React.FC = () => {
     const isSmallScreen = useMediaQuery({ query: '(max-width: 1025px)' });
@@ -24,6 +25,14 @@ const HowItWorksPage: React.FC = () => {
     // @ts-ignore
     return (
         <Wrapper>
+            <Helmet>
+                <title>Як це працює - Synara</title>
+                <meta name="description" content="Зв'яжіться з нами для отримання допомоги або інформації про нашу платформу Synara." />
+                <meta name="keywords" content="Synara, як це працює, контакти, підтримка, допомога, українці" />
+                <meta name="robots" content="index, follow" />
+                <link rel="canonical" href="https://synara.help/how-it-works" />
+            </Helmet>
+
             {
                 isAuthenticated
                     ?

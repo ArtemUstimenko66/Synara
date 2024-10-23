@@ -3,12 +3,21 @@ import Footer from "../../components/Footer.tsx";
 import Wrapper from "../../ui/Wrapper.tsx";
 import {Link} from "react-router-dom";
 import {useTranslation} from "react-i18next";
+import {Helmet} from "react-helmet-async";
 
 
 const TermsOfUsePage = () => {
 	const {t}= useTranslation();
 	return (
 		<Wrapper>
+			<Helmet>
+				<title>Правила використання сайту - Synara</title>
+				<meta name="description" content="Ознайомтеся з правилами використання платформи Synara. Всі користувачі повинні дотримуватися цих правил." />
+				<meta name="keywords" content="правила, використання, Synara, платформа, користувач" />
+				<meta name="robots" content="index, follow" />
+				<link rel="canonical" href="https://synara.help/terms-of-use" />
+			</Helmet>
+
 			<MainHeader />
 			<div className="min-h-screen mt-24 font-montserratRegular text-black mx-[10vw]">
 				<h1 className={`text-h2s font-kharkiv mb-8`}>{t('terms_of_use')}</h1>

@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import { useLocation } from 'react-router-dom';
-import MainIllustration from '../assets/images/MainIllustration.svg'
 import MobileMainIllustration from '../assets/images/MobileMainImage.svg';
+//import MainIllustration from '../assets/images/MainIllustration.svg';
 import {useMediaQuery} from "react-responsive";
 
 interface WrapperProps {
@@ -25,17 +25,24 @@ const Wrapper: React.FC<WrapperProps> = ({ children }) => {
                         />
                         :
                         <img
-                            src={`${MainIllustration}`}
+                            src="/1_2.gif"
                             className="w-full h-auto sm:hidden xl:block md:block"
-                            alt="SVG Image"
+                            alt="Desktop GIF Image"
+                            loading="lazy"
                         />
-                    }
+                //         <img
+                //         src={`${MainIllustration}`}
+                //      className="w-full h-auto sm:hidden xl:block md:block"
+                //      alt="SVG Image"
+                // />
+            }
 
-                    <div
-                        className="xl:hidden sm:hidden absolute h-[28vw] md:h-[30vh] -mt-3 md:flex md:bg-dark-blue w-full overflow-hidden"/>
-                </div>
-            )}
-            <div className="flex-1 sm:mx-0 md:mx-12 xl:mx-28 py-8 relative z-10">
+            <div
+                className="xl:hidden sm:hidden absolute h-[28vw] md:h-[30vh] -mt-3 md:flex md:bg-dark-blue w-full overflow-hidden"/>
+        </div>
+    )
+}
+    <div className="flex-1 sm:mx-0 md:mx-12 xl:mx-28 py-8 relative z-10">
                 {children}
             </div>
         </div>

@@ -24,6 +24,7 @@ import {
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "../../redux/store.ts";
 import Header from "../../components/Header.tsx";
+import {Helmet} from "react-helmet-async";
 
 interface User {
     id: string;
@@ -242,6 +243,14 @@ const MainPage: React.FC = () => {
 
     return (
         <Wrapper>
+            <Helmet>
+                <title>Головна - Synara</title>
+                <meta name="description" content="Ласкаво просимо на платформу Synara. Тут ви можете знайти оголошення та волонтерів, готових допомогти." />
+                <meta name="keywords" content="Synara, головна, оголошення, волонтери, допомога, українці" />
+                <meta name="robots" content="index, follow" />
+                <link rel="canonical" href="https://synara.help/main" />
+            </Helmet>
+
             <div className=" bg-almost-white">
                 {/* Header */}
                 {

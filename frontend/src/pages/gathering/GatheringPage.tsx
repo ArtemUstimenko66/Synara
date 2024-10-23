@@ -18,6 +18,7 @@ import loadingAnimation from "../../assets/animations/logoLoading.json";
 import NothingFound from "../../assets/images/NothingFound.png";
 import {useTranslation} from "react-i18next";
 import Header from "../../components/Header.tsx";
+import {Helmet} from "react-helmet-async";
 
 
 const calculatePercentage = (goal: number, raised: number) => {
@@ -163,6 +164,14 @@ const GatheringPage: React.FC = () => {
 
 	return (
 		<>
+			<Helmet>
+				<title>Збори - Synara</title>
+				<meta name="description" content="Долучайтеся до зборів на платформі Synara, щоб підтримати важливі ініціативи та проекти." />
+				<meta name="keywords" content="збори, підтримка, ініціативи, Synara, українці" />
+				<meta name="robots" content="index, follow" />
+				<link rel="canonical" href="https://synara.help/gatherings" />
+			</Helmet>
+
 			<Wrapper>
 				{
 					isAuthenticated
