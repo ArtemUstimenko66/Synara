@@ -135,6 +135,7 @@
   "enter_valid_year": "The year must be between 1900 and",
   "choose_gender": "Please select a gender",
   "enter_valid_itn": "Please enter ITN",
+  "enter_right_itn": "Please enter right ITN",
   "itn_is_a_number": "ITN must be a number",
   "you_must_agree_to_the_terms_of_use": "You must agree to the terms of use",
   "you_must_consent_to_the_processing_of_personal_data": "You must consent to the processing of personal data",

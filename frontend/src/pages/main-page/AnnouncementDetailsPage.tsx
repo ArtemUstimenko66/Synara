@@ -369,7 +369,7 @@ const AnnouncementDetailsPage = () => {
 
                                 <div className="flex items-center justify-start p-4 mb-2 mt-4 ml-4">
                                     <img
-                                        src={details.user.avatarUrl}
+                                        src={details.user.avatarUrl || 'https://via.placeholder.com/150'}
                                         alt="User Avatar"
                                         className="w-16 h-16 rounded-full object-cover mr-3"
                                     />

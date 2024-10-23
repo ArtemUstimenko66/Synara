@@ -133,6 +133,7 @@
   "enter_valid_year": "Рік повинен бути між 1900 та",
   "choose_gender": "Будь ласка, виберіть стать",
   "enter_valid_itn": "Будь ласка, введіть РНОКПП",
+  "enter_right_itn": "Будь ласка, введіть правильний РНОКПП",
   "itn_is_a_number": "РНОКПП повинно бути числом",
   "you_must_agree_to_the_terms_of_use": "Ви повинні погодитися з правилами користування",
   "you_must_consent_to_the_processing_of_personal_data": "Ви повинні дати згоду на обробку персональних даних",

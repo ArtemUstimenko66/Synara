@@ -16,6 +16,9 @@ const DateBirthday: React.FC<DateBirthdayProps> = ({ onNextStep, selectedRole, s
     const [selectedGender, setSelectedGender] = useState<string | null>(null);
     const [volunteerId, setVolunteerId] = useState<string>('');
     const [unp, setUnp] = useState<number | ''>('');
+
+    const [validUNP, setValidUNP] = useState<string>('');
+
     const [selectedOptions, setSelectedOptions] = useState<{ [key: string]: boolean }>({
         terms: false,
         personalData: false,
@@ -77,6 +80,9 @@ const DateBirthday: React.FC<DateBirthdayProps> = ({ onNextStep, selectedRole, s
         if (!selectedOptions.personalData) {
             newErrors.personalData = t('you_must_consent_to_the_processing_of_personal_data');
         }
+        if (validUNP=="invalid") {
+            newErrors.unp = t('enter_right_itn');
+        }
 
         setErrors(newErrors);
 
@@ -92,10 +98,12 @@ const DateBirthday: React.FC<DateBirthdayProps> = ({ onNextStep, selectedRole, s
     const handleSubmit = async () => {
 
         const isValidUNP = await checkUNP(formatDate(dateOfBirth), unp.toString());
+        setValidUNP(isValidUNP);
         console.log("dateOfBirth ->", formatDate(dateOfBirth));
         console.log("unp ->", unp.toString());
         console.log("isValid UNP ->", isValidUNP);
-        if (isValidUNP == "valid") {
+
+
             if(validateFields())
             {
                 const [day, month, year] = dateOfBirth.split(' / ').map(part => parseInt(part, 10));
@@ -123,11 +131,6 @@ const DateBirthday: React.FC<DateBirthdayProps> = ({ onNextStep, selectedRole, s
                     console.error("Invalid date format");
                 }
             }
-        }
-        else {
-            setErrors({...errors, unp: errors.unp });
-            console.error("Invalid unp");
-        }
     };
 
     const toggleOption = (option: string) => {

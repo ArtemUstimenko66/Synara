@@ -120,7 +120,7 @@ const ProfilePage = () => {
                             setIsHelpOpen={setIsHelpOpen}
                             isAccountOpen={isAccountOpen}
                             setIsAccountOpen={setIsAccountOpen}
-                            avatarUrl={userData.avatarUrl}
+                            avatarUrl={userData.avatarUrl || 'https://via.placeholder.com/150'}
                             firstName={userData.firstName}
                             lastName={userData.lastName}
                             birthDate={userData.birthDate}

@@ -557,7 +557,7 @@ const FullChat: React.FC = () => {
                                             type: determineMessageType(chat.message),
                                             time: chat.time,
                                             name: chat.name,
-                                            imageUrl: chat.imageUrl,
+                                            imageUrl: chat.imageUrl || 'https://via.placeholder.com/150',
                                         }}
                                         showDivider={index !== filteredChatList.length - 1}
                                         unreadCount={chat.unreadCount}
@@ -578,7 +578,7 @@ const FullChat: React.FC = () => {
                                 <button onClick={onCloseChat} className="sm:flex xl:hidden">
                                     <DownArrowIcon className="h-4 w-4 mr-5"/>
                                 </button>
-                                <img src={selectedChat.imageUrl} alt={selectedChat.name}
+                                <img src={selectedChat.imageUrl || 'https://via.placeholder.com/150'} alt={selectedChat.name}
                                      className="xl:w-12 xl:h-12 md:w-20 md:h-20 rounded-full mr-4 font-montserratRegular hidden xl:flex"/>
                                 <h3 className=" font-montserratMedium font-medium xl:text-xs-pxl ">{selectedChat.name}</h3>
                                 <div className="ml-auto flex xl:space-x-2 space-x-1">

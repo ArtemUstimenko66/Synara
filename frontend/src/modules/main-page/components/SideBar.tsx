@@ -75,11 +75,11 @@ export const SideBar: React.FC<SideBarProps> = ({ isOpen, onClose, isFilters, on
 
 
                         {/* Nav items */}
-                        <nav className="flex flex-col w-[90%] mx-5 space-y-3 text-lg flex-grow">
-                            {role === 'волонтер' ? (
+                        <nav className="flex flex-col w-[90%] h-[50%] mx-5 space-y-3 xl:text-lg md:text-lg sm:text-pl flex-grow">
+                            {role === 'volunteer' ? (
                                     <>
                                 <NavItem text={t('advertisement')} to="/main"/>
-                                <div className="xl:border-b xl:border-gray-300 xl:mt-[5vh] sm:mt-0"></div>
+                                <div className="xl:border-b xl:border-gray-300 xl:mt-5 sm:mt-0"></div>
                                     </>
                                 ) : (
                                     <>

@@ -14,14 +14,14 @@ const ModalForbidden: React.FC<ModalProps> = ({ onClose }) => {
             <div className="fixed inset-0 bg-black opacity-50" onClick={onClose}></div>
 
             {/* Modal content */}
-            <div className="relative bg-white rounded-3xl border-2 border-dark-blue p-8 shadow-lg z-60 w-[30%] h-auto">
+            <div className="relative bg-white rounded-3xl border-2 border-dark-blue p-8 shadow-lg z-60 xl:w-[30%] md:w-[70%] sm:w-[95%] h-auto">
                 {/* Close button */}
                 <CloseIconModal
                     className="absolute top-4 right-4 h-5 w-5 cursor-pointer"
                     onClick={onClose}
                 />
 
-                <h2 className="text-relative-h4 font-kharkiv mb-4 text-center">
+                <h2 className="xl:text-relative-h4 md:text-relative-h2 sm:text-relative-h1 font-kharkiv mb-4 text-center">
                     На жаль, ви не можете створити збір.
                 </h2>
                 <p className="w-[70%] mx-auto text-center text-relative-p font-montserratRegular mb-6">

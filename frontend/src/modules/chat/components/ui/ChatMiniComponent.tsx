@@ -32,7 +32,7 @@ export const ChatMiniComponent: React.FC<MessageItemProps & { onChatClick: () =>
             <div className="flex items-center space-x-4 sm:space-x-2">
                 {/* Адаптация изображения */}
                 <img
-                    src={message.imageUrl}
+                    src={message.imageUrl || 'https://via.placeholder.com/150'}
                     alt={message.name}
                     className="rounded-full xl:w-14 xl:h-14 md:w-12 md:h-12 sm:w-10 sm:h-10"
                 />

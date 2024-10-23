@@ -49,7 +49,7 @@ const Reviews: React.FC<ReviewsProps> = ({ reviews, rating }) => {
 				{reviews.map((review) => (
 					<ReviewProfile
 						key={review.id}
-						avatar={review.author.avatarUrl}
+						avatar={review.author.avatarUrl || 'https://via.placeholder.com/150'}
 						rating={review.rating}
 						comment={review.description}
 						name={`${review.author.firstName} ${review.author.lastName}`}

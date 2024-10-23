@@ -68,7 +68,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             {/* Photo */}
             <div className="mb-6 flex items-center ml-2">
                 <img
-                    src={avatarUrl}
+                    src={avatarUrl || 'https://via.placeholder.com/150'}
                     alt="Profile"
                     className="mt-2 rounded-full w-14 h-14 mx-auto"
                 />

@@ -190,7 +190,7 @@ export const SideBarChat: React.FC<SideBarChatProps> = ({ isOpen, onClose }) => 
                                         type: determineMessageType(chat.message),
                                         time: chat.time,
                                         name: chat.name,
-                                        imageUrl: chat.imageUrl,
+                                        imageUrl: chat.imageUrl || 'https://via.placeholder.com/150',
                                     }}
                                     showDivider={index < chats.length - 1}
                                     onChatClick={() => handleChatClick(chat, chat.id)}
