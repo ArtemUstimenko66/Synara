@@ -52,6 +52,11 @@ export const createAnnouncement = async (data: AnnouncementData) => {
             date_posted: data.datePosted || '',
             description: data.description,
             type_help: data.typeHelp,
+
+            title: data.title,
+            details: data.details,
+            currentLocation: data.currentLocation,
+
             viewsCount: 0,
             responsesCount: 0
         }, { withCredentials: true });

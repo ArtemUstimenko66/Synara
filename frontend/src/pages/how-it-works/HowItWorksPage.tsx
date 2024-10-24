@@ -149,19 +149,39 @@ const HowItWorksPage: React.FC = () => {
                                 </div>
                             </div>
                         </div>
-                        <img
-                            src={`${Section3}`}
-                            className="xl:ml-[10vw] sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-[65%] xl:h-auto md:w-relative-xlg md:h-auto"
-                            alt="SVG Image"
-                        />
+
+                        {isSmallScreen ?
+                            <img
+                                src={`${Section3}`}
+                                className="xl:ml-[10vw] sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-[65%] xl:h-auto md:w-relative-xlg md:h-auto"
+                                alt="SVG Image"
+                            />
+                            :
+                            <img
+                                src="/EmailBird.gif"
+                                className="xl:ml-[10vw] sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-[65%] xl:h-auto md:w-relative-xlg md:h-auto"
+                                alt="Desktop GIF Image"
+                                loading="lazy"
+                            />
+                        }
 
                         {/* Card 4 */}
 
-                        <img
-                            src={`${Section4}`}
-                            className="xl:ml-[2vw] sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-[55%] xl:h-auto md:w-relative-xlg md:h-auto"
-                            alt="SVG Image"
-                        />
+
+                        {isSmallScreen ?
+                            <img
+                                src={`${Section4}`}
+                                className="xl:ml-[2vw] sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-[55%] xl:h-auto md:w-relative-xlg md:h-auto"
+                                alt="SVG Image"
+                            />
+                            :
+                            <img
+                                src="/StartWihtContinue.gif"
+                                className="xl:ml-[2vw] sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-[55%] xl:h-auto md:w-relative-xlg md:h-auto"
+                                alt="Desktop GIF Image"
+                                loading="lazy"
+                            />
+                        }
 
                         <div className="flex flex-col md:flex-row items-start">
                             <div className="flex flex-row items-start xl:mt-20 md:mt-12 xl:ml-auto md:-ml-6">
@@ -187,7 +207,18 @@ const HowItWorksPage: React.FC = () => {
                 {/* ЗБОРИ */}
                 <section className="w-full h-auto flex flex-col md:flex-row items-center mt-32 select-none">
                     <div className="w-1/2 flex justify-center items-center mt-12 md:mt-0">
-                        <img src={`${GatheringImg}`} alt="Blue Cube" className="xl:w-[50%] mt-[5vh] xl:h-auto rounded-lg"/>
+
+                        {isSmallScreen ?
+                            <img src={`${GatheringImg}`} alt="Blue Cube"
+                                 className="xl:w-[50%] mt-[5vh] xl:h-auto rounded-lg"/>
+                            :
+                            <img
+                                src="/Gatherings.gif"
+                                className="xl:w-[50%] mt-[5vh] xl:h-auto rounded-lg"
+                                alt="Desktop GIF Image"
+                                loading="lazy"
+                            />
+                        }
                     </div>
                     <div className="md:w-1/2 w-full flex flex-col justify-center items-start">
                         <h2 className="xl:text-h2 md:text-relative-h3xl sm:text-h5 font-kharkiv xl:ml-[20%] sm:ml-[40%] my-[10vh] mb-8">ЗБОРИ</h2>

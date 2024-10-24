@@ -22,7 +22,7 @@ import {useMediaQuery} from "react-responsive";
 import {useAuth} from "../../hooks/useAuth.ts";
 import Header from "../../components/Header.tsx";
 import {Helmet} from "react-helmet-async";
-
+import LazyLoadGif from "../../components/LazyLoadGif.tsx";
 
 
 const AboutPage = () => {
@@ -50,27 +50,42 @@ const AboutPage = () => {
                 <section className="w-full h-auto flex flex-col items-center px-4 md:px-8 mt-24">
                     <h2 className="xl:text-h2 sm:text-h4 font-montserratMedium uppercase text-center">{t('about_us')}</h2>
                     <div className="flex flex-col md:flex-row items-center xl:mt-12 sm:mt-0 space-y-6 md:space-y-0">
-                        <div className="w-full">
-                            <div
-                                className="hidden xl:flex xl:order-1 md:flex md:order-1 xl:w-2/3 md:w-relative-1/2">
-                                <img
-                                    src={`${WhoAreWe}`}
-                                    className="xl:w-full  xl:h-auto md:w-relative-elg md:h-auto md:ml-[5vw] xl:mr-0 md:mr-relative-md"
-                                    alt="SVG Image"
-                                />
-                            </div>
+                        <div className="w-[30vw]">
+
+                                {isSmallScreen ? (
+                                    <img
+                                        src={WhoAreWe}
+                                        className="xl:w-full xl:h-auto md:w-[80%] md:h-auto md:ml-[5vw] xl:mr-0 md:mr-relative-md"
+                                        alt="SVG Image"
+                                    />
+                                ) : (
+                                    <div className="hidden xl:flex xl:order-1 md:flex md:order-1 xl:w-2/3 md:w-[40%]">
+                                    <img
+                                        src="/WhoAreWe.gif"
+                                        className="xl:w-full xl:h-auto md:w-[40%] md:h-auto md:ml-[5vw] xl:mr-0 md:mr-relative-md"
+                                        alt="Desktop GIF Image"
+                                        loading="lazy"
+                                    />
+                                    </div>
+                                )}
+
                         </div>
-                        <div className="text-md_body text-gray-700 font-montserratRegular md:ml-8">
+                        <div className="text-md_body md:w-[50vw] sm:w-auto text-gray-700 font-montserratRegular md:ml-8">
                             <p>
                                 Synara — це платформа, створена українцями для українців. У ці складні часи, коли наша
-                                країна переживає випробування, ми об'єднуємо тих, хто потребує допомоги, з тими, хто
-                                готовий її надати. Ми віримо в силу людської доброти та солідарності, і знаємо, що разом
-                                ми можемо подолати будь-які труднощі.
+                                країна
+                                переживає випробування, ми об'єднуємо тих, хто потребує допомоги, з тими, хто готовий її
+                                надати.
+                                Ми віримо в силу людської доброти та солідарності, і знаємо, що разом ми можемо подолати
+                                будь-які
+                                труднощі.
                             </p>
                             <p className="mt-4">
-                                Ця платформа працює 24/7. Ви можете скористатися нашими сервісами в
-                                будь-який час і з будь-якого пристрою. Ми постійно працюємо над вдосконаленням нашої
-                                платформи, щоб зробити її ще більш зручною для вас.
+                                Ця платформа працює 24/7. Ви можете скористатися нашими сервісами в будь-який час і з
+                                будь-якого
+                                пристрою. Ми постійно працюємо над вдосконаленням нашої платформи, щоб зробити її ще
+                                більш зручною
+                                для вас.
                             </p>
                         </div>
                     </div>
@@ -147,54 +162,57 @@ const AboutPage = () => {
                 {/* Section 3: "Наша мета" */}
                 {!isSmallScreen ? (
                     <section className="w-full h-auto flex flex-col items-center px-4 md:px-8 mt-32">
-
                         <div className="flex flex-row justify-between items-center w-full mt-12">
-                            <Meta className="w-[70%] h-96"/>
+
+
+                                <LazyLoadGif
+                                    gifSrc="/OurGoal.gif"
+                                    placeholderSrc={"../../assets/images/meta.svg"}
+                                    altText="How It Works GIF"
+                                    placeholderClassName="w-[70%] h-96"
+                                    gifClassName="w-[35%] h-auto mr-[5vw]"
+                                />
+
                             <div className="flex flex-col items-start w-full">
                                 <h2 className="text-h2 font-montserratMedium items-center ml-[25%] mb-8">НАША МЕТА</h2>
                                 <p className="flex-1 text-md_body text-gray-700 font-montserratRegular ml-8">
                                     Наша мета – об’єднати небайдужих людей, щоб разом ми могли зробити світ кращим. Ми
-                                    створили
-                                    платформу, де кожен може знайти допомогу або надати її іншим. Незалежно від того, чи
-                                    ти
-                                    хочеш поділитися речами, які тобі більше не потрібні, запропонувати свої знання та
-                                    вміння,
+                                    створили платформу, де кожен може знайти допомогу або надати її іншим. Незалежно від
+                                    того, чи
+                                    ти хочеш поділитися речами, які тобі більше не потрібні, запропонувати свої знання
+                                    та вміння,
                                     або просто підтримати когось емоційно – на нашій платформі ти знайдеш однодумців.
                                 </p>
-                                <br/>
                                 <p className="flex-1 text-md_body text-gray-700 font-montserratRegular ml-8">
-                                    Адже кожен з нас може зробити щось добре. Неважливо, чи це буде маленька допомога
-                                    сусіду, чи велика
-                                    акція для всієї спільноти. Головне – це наше бажання зробити світ кращим.
+                                    Адже кожен з нас може зробити щось добре. Неважливо, чи это будет маленькая допомога
+                                    сусіду, чи велика акція для всієї спільноти.
+                                    Головне – це наше бажання зробити світ кращим.
                                 </p>
                             </div>
-
                         </div>
                     </section>
                 ) : (
                     <section className="w-full h-auto flex flex-col items-center px-4 md:px-8 mt-32">
-                        <div className="flex flex-col md:flex-row justify-between items-center w-full ">
-                            <h2 className="text-h4 font-montserratMedium text-center mb-8 md:ml-[25%]">НАША МЕТА</h2>
-                            <Meta className="w-full md:w-[70%] h-64 md:h-96 mb-8"/>
-                            <div className="flex flex-col items-start w-full">
-                                <p className="text-md_body text-gray-700 font-montserratRegular mb-4 px-4">
-                                    Наша мета – об’єднати небайдужих людей, щоб разом ми могли зробити світ кращим. Ми
-                                    створили
-                                    платформу, де кожен може знайти допомогу або надати її іншим. Незалежно від того, чи
-                                    ти
-                                    хочеш поділитися речами, які тобі більше не потрібні, запропонувати свої знання та
-                                    вміння,
-                                    або просто підтримати когось емоційно – на нашій платформі ти знайдеш однодумців.
-                                </p>
-                                <p className="text-md_body text-gray-700 font-montserratRegular px-4">
-                                    Адже кожен з нас може зробити щось добре. Неважливо, чи це буде маленька допомога
-                                    сусіду, чи велика
-                                    акція для всієї спільноти. Головне – це наше бажання зробити світ кращим.
-                                </p>
-                            </div>
+                        <h2 className="text-h4 font-montserratMedium text-center mb-8 md:ml-[5%]">НАША МЕТА</h2>
+                        <Meta className="w-full md:w-[70%] h-64 md:h-96 mb-8"/>
+                        <div className="flex flex-col items-start w-full px-4">
+                            <p className="text-md_body text-gray-700 font-montserratRegular mb-4">
+                                Наша мета – об’єднати небайдужих людей, щоб разом ми могли зробити світ кращим. Ми
+                                створили платформу, де кожен може знайти допомогу або надати її іншим. Незалежно від
+                                того, чи
+                                ти хочеш поділитися речами, які тобі більше не потрібні, запропонувати свої знання та
+                                вміння,
+                                або просто підтримати когось емоційно – на нашій платформі ти знайдеш однодумців.
+                            </p>
+                            <p className="text-md_body text-gray-700 font-montserratRegular">
+                                Адже кожен з нас може зробити щось добре. Неважливо, чи це буде маленька допомога
+                                сусіду, чи велика акція для всієї спільноти.
+                                Головне – це наше бажання зробити світ кращим.
+                            </p>
                         </div>
                     </section>
                 )}
+
 
                 <section className="w-full h-auto flex flex-col items-center select-none mt-32">
                     <h2 className="xl:text-h2 md:text-relative-h3xl sm:text-h4 sm:text-h5  font-kharkiv sm:mb-8 md:mb-20 xl:mb-20 text-center">{t('why_usUPPER')}</h2>
@@ -228,7 +246,7 @@ const AboutPage = () => {
                                 />
                             </div>
                             <div
-                                className=" xl:mt-16 md:mt-8 sm:mt-6 space-y-8 md:space-y-4 sm:space-y-4 font-bold font-montserratRegular">
+                                className=" xl:mt-16 md:mt-8 sm:mt-6 xl:w-[55vw] space-y-8 md:space-y-4 sm:space-y-4 font-bold font-montserratRegular">
                                 <div className="flex items-center">
                                     <VectorBlue
                                         className="xl:w-10 xl:h-10 md:w-10 md:h-10 sm:w-10 sm:h-10 sm:mr-4 md:mr-0 xl:mr-0"/>
@@ -259,12 +277,20 @@ const AboutPage = () => {
 
                         {/* Правая сторона */}
                         <div className="w-auto">
-
-                            <img
-                                src={`${WhyMeMainDesktop}`}
-                                className="sm:hidden md:block xl:block xl:ml-20 md:ml-12 xl:mt-2 md:mt-24 xl:w-[75%] xl:h-auto md:w-96 md:h-72 "
-                                alt="SVG Image"
-                            />
+                            {isSmallScreen ?
+                                <img
+                                    src={`${WhyMeMainDesktop}`}
+                                    className="sm:hidden md:block xl:block xl:ml-20 md:ml-12 xl:mt-2 md:mt-24 xl:w-[95%] xl:h-auto md:w-96 md:h-auto "
+                                    alt="SVG Image"
+                                />
+                                :
+                                <img
+                                    src="/WhyUs.gif"
+                                    className="sm:hidden md:block xl:block xl:ml-20 md:ml-12 xl:mt-2 md:mt-24 xl:w-[95%] xl:h-auto md:w-96 md:h-72 "
+                                    alt="Desktop GIF Image"
+                                    loading="lazy"
+                                />
+                            }
                         </div>
                     </div>
                 </section>
@@ -277,11 +303,21 @@ const AboutPage = () => {
                         <div
                             className="flex xl:flex-col md:flex-col sm:flex-row  xl:items-center max-w-xs md:max-w-sm xl:max-w-md">
                             <div className="">
-                                <img
-                                    src={`${BecomeVolunteer}`}
-                                    className="w-24 sm:w-auto md:ml-8 sm:mr-8 xl:mr-0 sm:h-auto h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"
-                                    alt="SVG Image"
-                                />
+                                {isSmallScreen ?
+                                    <img
+                                        src={`${BecomeVolunteer}`}
+                                        className="w-24 sm:w-auto md:ml-8 sm:mr-8 xl:mr-0 sm:h-auto h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"
+                                        alt="SVG Image"
+                                    />
+                                    :
+                                    <img
+                                        src="/BecomeVolunteer.gif"
+                                        className="w-24 sm:w-auto md:ml-8 sm:mr-8 xl:mr-0 sm:h-auto h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"
+                                        alt="Desktop GIF Image"
+                                        loading="lazy"
+                                    />
+                                }
+
                             </div>
                             <div className="sm:flex-row">
                                 <h3 className="xl:text-center sm:text-center xl:text-h3 md:text-relative-h3xl font-kharkiv mt-4 w-full max-w-xs md:max-w-sm xl:max-w-md">{t('Become_a_volunteer')}</h3>
@@ -296,11 +332,20 @@ const AboutPage = () => {
                             className="flex xl:flex-col md:flex-col sm:flex-row-reverse items-center max-w-xs md:max-w-sm xl:max-w-md select-none">
                             <div className="sm:flex sm:justify-start">
                                 {/* Картинка справа на экранах sm */}
-                                <img
-                                    src={`${GetHelp}`}
-                                    className="w-24 sm:w-auto md:ml-8 sm:mr-8 xl:mr-0 sm:h-auto h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"
-                                    alt="SVG Image"
-                                />
+                                {isSmallScreen ?
+                                    <img
+                                        src={`${GetHelp}`}
+                                        className="w-24 sm:w-auto md:ml-8 sm:mr-8 xl:mr-0 sm:h-auto h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"
+                                        alt="SVG Image"
+                                    />
+                                    :
+                                    <img
+                                        src="/GetHelp.gif"
+                                        className="w-24 sm:w-auto md:ml-8 sm:mr-8 xl:mr-0 sm:h-auto h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"
+                                        alt="Desktop GIF Image"
+                                        loading="lazy"
+                                    />
+                                }
                             </div>
                             <div className="sm:flex sm:flex-col sm:justify-center">
                                 {/* Текст слева на экранах sm */}
@@ -316,11 +361,21 @@ const AboutPage = () => {
                         <div
                             className="flex xl:flex-col md:flex-col sm:flex-row items-center max-w-xs md:max-w-sm xl:max-w-md select-none">
                             <div className="">
-                                <img
-                                    src={`${DonatNaZSU}`}
-                                    className="w-24 sm:w-auto md:ml-8 sm:mr-8 xl:mr-0 sm:h-auto h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"
-                                    alt="SVG Image"
-                                /></div>
+                                {isSmallScreen ?
+                                    <img
+                                        src={`${DonatNaZSU}`}
+                                        className="w-24 sm:w-auto md:ml-8 sm:mr-8 xl:mr-0 sm:h-auto h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"
+                                        alt="SVG Image"
+                                    />
+                                    :
+                                    <img
+                                        src="/DonatnaZSU.gif"
+                                        className="w-24 sm:w-auto md:ml-8 sm:mr-8 xl:mr-0 sm:h-auto h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"
+                                        alt="Desktop GIF Image"
+                                        loading="lazy"
+                                    />
+                                }
+                            </div>
                             <div className="sm:flex-row">
                                 <h3 className="xl:text-center sm:text-center xl:text-h3 md:text-relative-h3xl font-kharkiv mt-4 w-full max-w-xs md:max-w-sm xl:max-w-md">{t('donate_ZSU')}</h3>
                                 <p className="sm:text-xs xl:text-xs-pxl text-center font-montserratRegular mt-2 w-full max-w-xs md:max-w-sm xl:max-w-md">

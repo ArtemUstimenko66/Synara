@@ -3,4 +3,7 @@ export default interface AnnouncementData {
     description: string;
     typeHelp: string;
     files?: string[];
+    title: string;
+    details: string;
+    currentLocation: string;
 }

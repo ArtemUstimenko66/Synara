@@ -7,4 +7,7 @@ export interface Announcement {
     helpTypes?: string[];
     documents?: File[];
     userId: number;
+    title: string;
+    details: string;
+    currentLocation: string;
 }

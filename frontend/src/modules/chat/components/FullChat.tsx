@@ -56,6 +56,7 @@ import {Link, useParams} from "react-router-dom";
 import {FeedbackModal} from "./ui/FeedbackModal.tsx";
 import CallVolunteer from "./CallVolunteer.tsx";
 import CallVictim from "./CallVictim.tsx";
+import LazyLoadGif from "../../../components/LazyLoadGif.tsx";
 
 
 
@@ -742,7 +743,17 @@ const FullChat: React.FC = () => {
 
                     ) : (
                         <div className="flex flex-col items-center justify-center h-full text-center">
-                            <StartContinue/>
+                            {isSmallScreen ? (
+                                <StartContinue/>
+                            ) : (
+                                <LazyLoadGif
+                                    gifSrc="/StartWihtContinue.gif"
+                                    placeholderSrc={"../assets/StarctContinue.svg"}
+                                    altText="How It Works GIF"
+                                    placeholderClassName=""
+                                    gifClassName=" sm:w-[30%] xl:w-[35%] h-auto md:w-relative-xlg"
+                                />
+                            )}
                             <h3 className="text-lg font-montserratMedium font-semibold">Почніть з того, на чому
                                 зупинилися</h3>
                             <p className="text-gray-500 font-montserratMedium">Виберіть розмову і починайте

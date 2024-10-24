@@ -21,8 +21,10 @@ import loadingAnimation from '../../assets/animations/logoLoading.json';
 const CreateAnnouncementPage: React.FC = () => {
     const [datePosted, setDatePosted] = useState<string>('');
     const [localData, setLocalData] = useState<Partial<Announcement>>({
-       // name: '',
+        title: '',
         description: '',
+        details: '',
+        currentLocation: '',
         datePosted: '',
         helpTypes: [],
         documents: [],
@@ -51,6 +53,14 @@ const CreateAnnouncementPage: React.FC = () => {
         console.log("localDATA", localData);
     };
 
+    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setLocalData(prevData => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
+
     const handleDocumentUpload = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.files) {
             const newDocuments = Array.from(event.target.files);
@@ -70,7 +80,12 @@ const CreateAnnouncementPage: React.FC = () => {
 
     const handleSubmit = async () => {
         setIsLoading(true);
-        const newErrors = validateFields({ datePosted, description: localData.description || '' });
+        const newErrors = validateFields({
+            datePosted,
+            description: localData.description || '',
+            title: localData.title || '',
+            currentLocation: localData.currentLocation || '',
+            details: localData.details || '',});
         setErrors(newErrors);
 
         if (Object.keys(newErrors).length === 0) {
@@ -79,8 +94,12 @@ const CreateAnnouncementPage: React.FC = () => {
                 const announcementData = {
                     description: localData.description || '',
                     datePosted: formattedDate,
+                    title: localData.title || '',
+                    details: localData.details || '',
+                    currentLocation: localData.currentLocation || '',
                     typeHelp: translateHelpType(localData.helpTypes?.[0] || 'Гуманітарна'),
                 };
+                console.log("announcementData -> ",announcementData);
 
                 const createdAnnouncement = await createAnnouncement(announcementData);
                 const announcementId = createdAnnouncement.id;
@@ -131,13 +150,13 @@ const CreateAnnouncementPage: React.FC = () => {
                     <label className="font-montserratRegular mb-2">{t('announcement_title')}*</label>
                     <input
                         type="text"
-                        name="name"
-                        //value={localData.name}
+                        name="title"
+                        value={localData.title}
                         placeholder={t('name_ad')}
                         className="w-full p-3 border rounded-lg outline-none border-light-blue focus:border-dark-blue resize-none"
-                        //onChange={handleChange}
+                        onChange={handleChange}
                     />
-                    {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
+                    {errors.title && <p className="text-red-500 text-sm">{errors.title}</p>}
                 </div>
 
 
@@ -159,24 +178,25 @@ const CreateAnnouncementPage: React.FC = () => {
                     <label className="font-montserratRegular mb-2">{t('place')}*</label>
                     <input
                         type="text"
-                        name="name"
-                        //value={localData.name}
+                        name="currentLocation"
+                        value={localData.currentLocation}
                         placeholder={t('online_offline_place')}
                         className="w-full p-3 border rounded-lg outline-none border-light-blue focus:border-dark-blue resize-none"
-                       // onChange={handleChange}
+                        onChange={handleChange}
                     />
-                    {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
+                    {errors.currentLocation && <p className="text-red-500 text-sm">{errors.currentLocation}</p>}
                 </div>
 
                 {/* Description */}
                 <div className="w-full flex flex-col mb-4">
                     <label className="font-montserratRegular mb-2">{t('description')}*</label>
                     <textarea
+                        name="description"
                         value={localData.description}
                         placeholder={t('your_description')}
                         className="w-full p-3 border rounded-lg outline-none border-light-blue focus:border-dark-blue resize-none"
                         rows={6}
-                        onChange={(e) => setLocalData(prevData => ({...prevData, description: e.target.value}))}
+                        onChange={handleChange}
                     />
                     {errors.description && <p className="text-red-500 text-sm">{errors.description}</p>}
                 </div>
@@ -187,10 +207,10 @@ const CreateAnnouncementPage: React.FC = () => {
                     <label className="font-montserratRegular mb-2">Деталі*</label>
                     <textarea
                         name="detail"
-                        //value={localData.detail}
+                        value={localData.details}
                         placeholder="Деталі"
                         className="w-full p-3 border rounded-lg outline-none border-light-blue focus:border-dark-blue resize-none"
-                        //onChange={(e) => setLocalData(prevData => ({...prevData, detail: e.target.value}))}
+                        onChange={(e) => setLocalData(prevData => ({...prevData, details: e.target.value}))}
                         rows={4}
                     />
                     {errors.detail && <p className="text-red-500 text-sm">{errors.detail}</p>}
@@ -247,7 +267,6 @@ const CreateAnnouncementPage: React.FC = () => {
                         ))}
                     </div>
                 </div>
-
 
 
                 {/* Create button */}

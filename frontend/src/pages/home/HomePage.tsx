@@ -50,8 +50,8 @@ import {AppDispatch, RootState} from "../../redux/store.ts";
 import {Player} from "@lottiefiles/react-lottie-player";
 import loadingAnimation from "../../assets/animations/logoLoading.json";
 
-import { motion } from "framer-motion";
 import {Helmet} from "react-helmet-async";
+import LazyLoadGif from "../../components/LazyLoadGif.tsx";
 
 const calculatePercentage = (goal: number, raised: number) => {
     return (raised / goal) * 100;
@@ -74,6 +74,11 @@ const HomePage: React.FC = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     const dispatch = useDispatch<AppDispatch>();
+
+
+
+    const isSmallScreen = useMediaQuery({ query: '(max-width: 1025px)' });
+
 
     const { gatherings = [] } = useSelector(
         (state: RootState) => state.gatherings || {}
@@ -215,7 +220,7 @@ const HomePage: React.FC = () => {
         return () => clearInterval(interval);
     }, [isPaused]);
 
-    const isSmallScreen = useMediaQuery({ query: '(max-width: 1025px)' });
+
 
     if (isLoading) {
         return (
@@ -229,18 +234,6 @@ const HomePage: React.FC = () => {
             </div>
         );
     }
-
-    const fadeInLeft = {
-        hidden: { opacity: 0, x: -100 },
-        visible: { opacity: 1, x: 0, transition: { duration: 0.6 } },
-        exit: { opacity: 0, x: -100, transition: { duration: 0.6 } },
-    };
-
-    const fadeInRight = {
-        hidden: { opacity: 0, x: 100 },
-        visible: { opacity: 1, x: 0, transition: { duration: 0.6 } },
-        exit: { opacity: 0, x: 100, transition: { duration: 0.6 } },
-    };
 
     return (
         <>
@@ -282,11 +275,20 @@ const HomePage: React.FC = () => {
                         className='w-full flex justify-center select-none sm:mt-[70vh] md:mt-[20vh] bg-transparent  flex-col xl:flex-row md:flex-row xl:mt-[20.5vw]  '>
                         <div
                             className="hidden xl:flex xl:order-1 md:flex md:order-1 xl:w-1/2 md:w-relative-1/2">
-                            <img
-                                src={WhoAreWe}
-                                className="xl:w-full xl:mt-[10vh] xl:h-auto md:w-relative-elg md:h-[50%] md:ml-[5vw] xl:mr-0 md:mr-relative-md"
-                                alt="SVG Image"
-                            />
+                            {isSmallScreen ?
+                                <img
+                                    src={WhoAreWe}
+                                    className="xl:w-full md:mt-[10vh] xl:h-auto md:w-[60%] md:h-[45%] md:ml-[5vw] ьвЖ xl:mr-0 md:mr-relative-md"
+                                    alt="SVG Image"
+                                />
+                                :
+                                <img
+                                    src="/WhoAreWe.gif"
+                                    className="xl:w-full xl:mt-[9vh] xl:h-auto md:w-relative-elg md:h-[50%] md:ml-[5vw] xl:mr-0 md:mr-relative-md"
+                                    alt="Desktop GIF Image"
+                                    loading="lazy"
+                                />
+                            }
                         </div>
                         <div
                             className="relative text-center order-2 xl:order-2 md:order-2 xl:text-left md:text-left xl:ml-24 xl:w-11/12">
@@ -470,11 +472,20 @@ const HomePage: React.FC = () => {
                             <div
                                 className="flex xl:flex-col md:flex-col sm:flex-row  xl:items-center max-w-xs md:max-w-sm xl:max-w-md">
                                 <div className="">
-                                    <img
-                                        src={`${BecomeVolunteer}`}
-                                        className="w-24 sm:w-auto md:ml-8 sm:mr-8 xl:mr-0 sm:h-auto h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"
-                                        alt="SVG Image"
-                                    />
+                                    {isSmallScreen ?
+                                        <img
+                                            src={`${BecomeVolunteer}`}
+                                            className="w-24 sm:w-auto md:ml-8 sm:mr-8 xl:mr-0 sm:h-auto h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"
+                                            alt="SVG Image"
+                                        />
+                                        :
+                                        <img
+                                            src="/BecomeVolunteer.gif"
+                                            className="w-24 sm:w-auto md:ml-8 sm:mr-8 xl:mr-0 sm:h-auto h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"
+                                            alt="Desktop GIF Image"
+                                            loading="lazy"
+                                        />
+                                    }
                                 </div>
                                 <div className="sm:flex-row">
                                     <h3 className="xl:text-center sm:text-center xl:text-h3 md:text-relative-h3xl font-kharkiv mt-4 w-full max-w-xs md:max-w-sm xl:max-w-md">{t('Become_a_volunteer')}</h3>
@@ -489,11 +500,20 @@ const HomePage: React.FC = () => {
                                 className="flex xl:flex-col md:flex-col sm:flex-row-reverse items-center max-w-xs md:max-w-sm xl:max-w-md select-none">
                                 <div className="sm:flex sm:justify-start">
                                     {/* Картинка справа на экранах sm */}
-                                    <img
-                                        src={`${GetHelp}`}
-                                        className="w-24 sm:w-auto md:ml-8 sm:mr-8 xl:mr-0 sm:h-auto h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"
-                                        alt="SVG Image"
-                                    />
+                                    {isSmallScreen ?
+                                        <img
+                                            src={`${GetHelp}`}
+                                            className="w-24 sm:w-auto md:ml-8 sm:mr-8 xl:mr-0 sm:h-auto h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"
+                                            alt="SVG Image"
+                                        />
+                                        :
+                                        <img
+                                            src="/GetHelp.gif"
+                                            className="w-24 sm:w-auto md:ml-8 sm:mr-8 xl:mr-0 sm:h-auto h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"
+                                            alt="Desktop GIF Image"
+                                            loading="lazy"
+                                        />
+                                    }
                                 </div>
                                 <div className="sm:flex sm:flex-col sm:justify-center">
                                     {/* Текст слева на экранах sm */}
@@ -509,11 +529,22 @@ const HomePage: React.FC = () => {
                             <div
                                 className="flex xl:flex-col md:flex-col sm:flex-row items-center max-w-xs md:max-w-sm xl:max-w-md select-none">
                                 <div className="">
-                                    <img
-                                        src={`${DonatNaZSU}`}
-                                        className="w-24 sm:w-auto md:ml-8 sm:mr-8 xl:mr-0 sm:h-auto h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"
-                                        alt="SVG Image"
-                                    /></div>
+                                    {isSmallScreen ?
+                                        <img
+                                            src={`${DonatNaZSU}`}
+                                            className="w-24 sm:w-auto md:ml-8 sm:mr-8 xl:mr-0 sm:h-auto h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"
+                                            alt="SVG Image"
+                                        />
+                                        :
+                                        <img
+                                            src="/DonatnaZSU.gif"
+                                            className="w-24 sm:w-auto md:ml-8 sm:mr-8 xl:mr-0 sm:h-auto h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"
+                                            alt="Desktop GIF Image"
+                                            loading="lazy"
+                                        />
+                                    }
+
+                                </div>
                                 <div className="sm:flex-row">
                                     <h3 className="xl:text-center sm:text-center xl:text-h3 md:text-relative-h3xl font-kharkiv mt-4 w-full max-w-xs md:max-w-sm xl:max-w-md">{t('donate_ZSU')}</h3>
                                     <p className="sm:text-xs xl:text-xs-pxl text-center font-montserratRegular mt-2 w-full max-w-xs md:max-w-sm xl:max-w-md">
@@ -534,12 +565,8 @@ const HomePage: React.FC = () => {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 xl:ml-3 md:ml-6">
 
                                 {/* Card 1 */}
-                                <motion.div
+                                <div
                                     className="flex flex-col md:flex-row items-start"
-                                    initial="hidden"
-                                    whileInView="visible"
-                                    variants={fadeInLeft}
-                                    viewport={{once: true}}
                                 >
                                     <div className="flex flex-row items-start xl:mt-20 md:mt-12">
                                         <div
@@ -553,26 +580,45 @@ const HomePage: React.FC = () => {
                                             </p>
                                         </div>
                                     </div>
-                                </motion.div>
+                                </div>
 
-                                <img
-                                    src={`${Section1}`}
-                                    className="xl:ml-[12vw] sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-[55%] xl:h-auto md:w-relative-xlg md:h-auto"
-                                    alt="SVG Image"
-                                />
+                                {isSmallScreen ? (
+                                    <img
+                                        src={`${Section1}`}
+                                        className="xl:ml-[12vw] sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-[55%] xl:h-auto md:w-relative-xlg md:h-auto"
+                                        alt="SVG Image"
+                                    />
+                                ) : (
+                                    <LazyLoadGif
+                                        gifSrc="/HowItWorks1.gif"
+                                        placeholderSrc={Section1}
+                                        altText="How It Works GIF"
+                                        placeholderClassName="xl:ml-[12vw] sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-[55%] xl:h-auto md:w-relative-xlg md:h-auto"
+                                        gifClassName="xl:ml-[12vw] sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-[55%] xl:h-auto md:w-relative-xlg md:h-auto"
+                                    />
+                                )}
 
                                 {/* Card 2 */}
-                                <img
-                                    src={`${Section2}`}
-                                    className="xl:ml-[12vw] sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-[55%] xl:h-auto md:w-relative-xlg md:h-auto"
-                                    alt="SVG Image"
-                                />
-                                <motion.div
+
+
+
+                                {isSmallScreen ? (
+                                    <img
+                                        src={`${Section2}`}
+                                        className="xl:ml-[12vw] sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-[55%] xl:h-auto md:w-relative-xlg md:h-auto"
+                                        alt="SVG Image"
+                                    />
+                                ) : (
+                                    <LazyLoadGif
+                                        gifSrc="/HowItWorks2.gif"
+                                        placeholderSrc={Section2}
+                                        altText="How It Works GIF"
+                                        placeholderClassName="xl:ml-[12vw] sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-[55%] xl:h-auto md:w-relative-xlg md:h-auto"
+                                        gifClassName="xl:ml-[12vw] sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-[55%] xl:h-auto md:w-relative-xlg md:h-auto"
+                                    />
+                                )}
+                                <div
                                     className="flex flex-col md:flex-row items-start"
-                                    initial="hidden"
-                                    whileInView="visible"
-                                    variants={fadeInRight}
-                                    viewport={{once: true}}
                                 >
                                     <div className="flex flex-row items-start xl:mt-20 md:mt-12 xl:ml-auto md:-ml-6">
                                         <div
@@ -586,15 +632,11 @@ const HomePage: React.FC = () => {
                                             </p>
                                         </div>
                                     </div>
-                                </motion.div>
+                                </div>
 
                                 {/* Card 3 */}
-                                <motion.div
+                                <div
                                     className="flex flex-col md:flex-row items-start"
-                                    initial="hidden"
-                                    whileInView="visible"
-                                    variants={fadeInLeft}
-                                    viewport={{once: true}}
                                 >
                                     <div className="flex flex-row items-start xl:mt-20 md:mt-12">
                                         <div
@@ -608,26 +650,45 @@ const HomePage: React.FC = () => {
                                             </p>
                                         </div>
                                     </div>
-                                </motion.div>
+                                </div>
 
-                                <img
-                                    src={`${Section3}`}
-                                    className="xl:ml-[12vw] sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-[55%] xl:h-auto md:w-relative-xlg md:h-auto"
-                                    alt="SVG Image"
-                                />
+
+                                {isSmallScreen ? (
+                                    <img
+                                        src={`${Section3}`}
+                                        className="xl:ml-[12vw] sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-[55%] xl:h-auto md:w-relative-xlg md:h-auto"
+                                        alt="SVG Image"
+                                    />
+                                ) : (
+                                    <LazyLoadGif
+                                        gifSrc="/HowItWorks3.gif"
+                                        placeholderSrc={Section3}
+                                        altText="How It Works GIF"
+                                        placeholderClassName="xl:ml-[12vw] sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-[55%] xl:h-auto md:w-relative-xlg md:h-auto"
+                                        gifClassName="xl:ml-[12vw] sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-[55%] xl:h-auto md:w-relative-xlg md:h-auto"
+                                    />
+                                )}
 
                                 {/* Card 4 */}
-                                <img
-                                    src={`${Section4}`}
-                                    className="xl:ml-[12vw] sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-[55%] xl:h-auto md:w-relative-xlg md:h-auto"
-                                    alt="SVG Image"
-                                />
-                                <motion.div
+
+                                {isSmallScreen ? (
+                                    <img
+                                        src={`${Section4}`}
+                                        className="xl:ml-[12vw] sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-[55%] xl:h-auto md:w-relative-xlg md:h-auto"
+                                        alt="SVG Image"
+                                    />
+                                ) : (
+                                    <LazyLoadGif
+                                        gifSrc="/HowItWorks4.gif"
+                                        placeholderSrc={Section4}
+                                        altText="How It Works GIF"
+                                        placeholderClassName="xl:ml-[12vw] sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-[55%] xl:h-auto md:w-relative-xlg md:h-auto"
+                                        gifClassName="xl:ml-[12vw] sm:w-[50%] md:mr-16 xl:mt-auto md:mt-10 xl:w-[55%] xl:h-auto md:w-relative-xlg md:h-auto"
+                                    />
+                                )}
+
+                                <div
                                     className="flex flex-col md:flex-row items-start"
-                                    initial="hidden"
-                                    whileInView="visible"
-                                    variants={fadeInRight}
-                                    viewport={{once: true}}
                                 >
                                     <div className="flex flex-row items-start xl:mt-20 md:mt-12 xl:ml-auto md:-ml-6">
                                         <div
@@ -641,7 +702,7 @@ const HomePage: React.FC = () => {
                                             </p>
                                         </div>
                                     </div>
-                                </motion.div>
+                                </div>
 
                             </div>
                             <Link to='/how-it-works'>
@@ -716,20 +777,28 @@ const HomePage: React.FC = () => {
                             </div>
 
                             {/* Правая сторона */}
-                            <div className="w-auto">
-
-                                <img
-                                    src={`${WhyMeMainDesktop}`}
-                                    className="sm:hidden md:block xl:block xl:ml-20 md:ml-12 xl:mt-2 md:mt-24 xl:w-[75%] xl:h-auto md:w-96 md:h-72 "
-                                    alt="SVG Image"
-                                />
+                            <div className="w-[40%]">
+                                {isSmallScreen ?
+                                    <img
+                                        src={`${WhyMeMainDesktop}`}
+                                        className="sm:hidden md:block xl:block xl:ml-20 md:ml-12 xl:mt-2 md:mt-24 xl:w-[75%] xl:h-auto md:w-96 md:h-auto "
+                                        alt="SVG Image"
+                                    />
+                                    :
+                                    <img
+                                        src="/WhyUs.gif"
+                                        className="sm:hidden md:block xl:block xl:ml-20 md:ml-12 xl:mt-2 md:mt-24 xl:w-[75%] xl:h-auto md:w-96 md:h-72 "
+                                        alt="Desktop GIF Image"
+                                        loading="lazy"
+                                    />
+                                }
                             </div>
                         </div>
                     </section>
 
                     {/* Seventh section - our statistics */}
                     <section className="w-full h-auto flex flex-col items-center select-none mt-40">
-                        <h2 className="xl:text-h2 sm:text-h3 md:text-relative-h2 sm:text-h5  font-kharkiv sm:mb-4 md:mb-16 xl:mb-16 text-center">{t('our_statisticUPPER')}</h2>
+                    <h2 className="xl:text-h2 sm:text-h3 md:text-relative-h2 sm:text-h5  font-kharkiv sm:mb-4 md:mb-16 xl:mb-16 text-center">{t('our_statisticUPPER')}</h2>
 
                         <div className="flex flex-col md:hidden xl:hidden sm:block">
                             <div className="sm:text-pxll sm:text-center font-kharkiv">{t('during_the_period')}</div>

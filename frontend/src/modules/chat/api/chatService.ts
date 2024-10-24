@@ -47,7 +47,7 @@ export const fetchChats = async (filter: 'active' | 'archived' | 'blocked', user
                 name: `${firstMember.firstName} ${firstMember.lastName}`,
                 message: lastMessage ? lastMessage.content : 'Нет сообщений',
                 time: lastMessage ? formatMessageTime(new Date(lastMessage.timestamp)) : '',
-                imageUrl: firstMember.avatarUrl || 'default-avatar-url.jpg',
+                imageUrl: firstMember.avatarUrl || 'https://via.placeholder.com/150',
                 isArchived: chat.isArchived,
                 isBlocked: chat.isBlocked,
                 unreadCount: chat.unreadCount || 0,

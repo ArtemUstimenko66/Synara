@@ -12,6 +12,8 @@ import Chat from "../interfaces/Chat.tsx";
 import {useTranslation} from "react-i18next";
 import { Player } from '@lottiefiles/react-lottie-player';
 import loadingAnimation from '../../../assets/animations/logoLoading.json';
+import LazyLoadGif from "../../../components/LazyLoadGif.tsx";
+import {useMediaQuery} from "react-responsive";
 
 interface SideBarChatProps {
     isOpen: boolean;
@@ -28,7 +30,7 @@ export const SideBarChat: React.FC<SideBarChatProps> = ({ isOpen, onClose }) => 
     const [selectedChat, setSelectedChat] = useState<Chat | null>(null);
     const [selectedChatId, setSelectedChatId] = useState<number | null>(null);
     const {t} = useTranslation();
-
+    const isSmallScreen = useMediaQuery({ query: '(max-width: 1025px)' });
 
     useEffect(() => {
         setSelectedChat(null);
@@ -206,7 +208,18 @@ export const SideBarChat: React.FC<SideBarChatProps> = ({ isOpen, onClose }) => 
                     </>
                 ) : (
                     <div className="flex flex-col items-center justify-center flex-grow mx-5">
-                        <NoChats />
+
+                        {isSmallScreen ? (
+                            <NoChats />
+                        ) : (
+                            <LazyLoadGif
+                                gifSrc="/NoChats.gif"
+                                placeholderSrc={"../assets/NoChats.svg"}
+                                altText="How It Works GIF"
+                                placeholderClassName=""
+                                gifClassName=""
+                            />
+                        )}
                         <p className="text-center font-montserratMedium font-medium text-lg mb-2">{t('you_have_not_chats')}</p>
                         <p className="text-center font-montserratMedium font-normal text-sm">
                             {t('you_have_not_chats_start_speaking_for_helping')}                        </p>

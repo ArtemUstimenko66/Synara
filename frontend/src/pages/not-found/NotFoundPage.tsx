@@ -3,10 +3,11 @@ import MainHeader from "../../modules/main-page/components/ui/MainHeader.tsx";
 import NotFound404 from '../../assets/images/NotFound404.png';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import {useMediaQuery} from "react-responsive";
 
 const NotFoundPage: React.FC = () => {
     const navigate = useNavigate(); // Initialize the navigate function
-
+    const isSmallScreen = useMediaQuery({ query: '(max-width: 1025px)' });
     const handleGoHome = () => {
         navigate('/main'); // Redirect to the /main route
     };
@@ -38,7 +39,22 @@ const NotFoundPage: React.FC = () => {
                     </button>
                 </div>
                 <div className="ml-16 sm:hidden xl:block md:block">
-                    <img src={NotFound404} className="w-96 h-96"/>
+                    <div className="ml-16 sm:hidden xl:block md:block">
+                        {isSmallScreen ?
+                            <img
+                                src={`${NotFound404}`}
+                                className="w-96 h-96"
+                                alt="SVG Image"
+                            />
+                            :
+                            <img
+                                src="/NotFound.gif"
+                                className="w-96 h-96"
+                                alt="Desktop GIF Image"
+                                loading="lazy"
+                            />
+                        }
+                    </div>
                 </div>
             </div>
         </>
