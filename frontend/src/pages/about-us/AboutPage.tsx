@@ -72,20 +72,10 @@ const AboutPage = () => {
                         </div>
                         <div className="text-md_body md:w-[50vw] sm:w-auto text-gray-700 font-montserratRegular md:ml-8">
                             <p>
-                                Synara — це платформа, створена українцями для українців. У ці складні часи, коли наша
-                                країна
-                                переживає випробування, ми об'єднуємо тих, хто потребує допомоги, з тими, хто готовий її
-                                надати.
-                                Ми віримо в силу людської доброти та солідарності, і знаємо, що разом ми можемо подолати
-                                будь-які
-                                труднощі.
+                                {t('about_text_1')}
                             </p>
                             <p className="mt-4">
-                                Ця платформа працює 24/7. Ви можете скористатися нашими сервісами в будь-який час і з
-                                будь-якого
-                                пристрою. Ми постійно працюємо над вдосконаленням нашої платформи, щоб зробити її ще
-                                більш зручною
-                                для вас.
+                                {t('about_text_2')}
                             </p>
                         </div>
                     </div>
@@ -99,11 +89,9 @@ const AboutPage = () => {
                         <div className="container mx-auto flex flex-row items-center justify-between">
                             {/* Левая колонка: текст */}
                             <div className="flex flex-col w-[35%]">
-                                <h2 className="text-h2 font-kharkiv mb-4">НАШІ ЦІННОСТІ</h2>
+                                <h2 className="text-h2 font-kharkiv mb-4">{t('our_values')}</h2>
                                 <p className="text-xs-pl font-montserratRegular">
-                                    Ми об'єднуємо людей, щоб вони могли підтримувати один одного. Разом ми можемо
-                                    досягти
-                                    всього, що захочемо!
+                                    {t('value_text')}
                                 </p>
                             </div>
 
@@ -111,15 +99,15 @@ const AboutPage = () => {
                             <div className="flex flex-row w-1/2 justify-around  font-kharkiv mt-12 lg:mt-0">
                                 <div className="flex flex-col items-center">
                                     <SupportIcon className="w-32 h-32"/>
-                                    <h3 className="text-xl mt-4">Підтримка</h3>
+                                    <h3 className="text-xl mt-4">{t('support')}</h3>
                                 </div>
                                 <div className="flex flex-col items-center">
                                     <ComunityIcon className="w-32 h-32"/>
-                                    <h3 className="text-xl mt-4">Спільнота</h3>
+                                    <h3 className="text-xl mt-4">{t('community')}</h3>
                                 </div>
                                 <div className="flex flex-col items-center">
                                     <HelpIcon className="w-32 h-32"/>
-                                    <h3 className="text-xl mt-4">Допомога</h3>
+                                    <h3 className="text-xl mt-4">{t('help')}</h3>
                                 </div>
                             </div>
                         </div>
@@ -131,11 +119,9 @@ const AboutPage = () => {
                         <div className="container mx-auto flex flex-col lg:flex-row items-center justify-between">
                             {/* Левая колонка: текст */}
                             <div className="flex flex-col w-full lg:w-[35%] text-center lg:text-left">
-                                <h2 className="text-h4 font-kharkiv mb-4">НАШІ ЦІННОСТІ</h2>
+                                <h2 className="text-h4 font-kharkiv mb-4">{t('our_values')}</h2>
                                 <p className="text-xs-pl font-montserratRegular">
-                                    Ми об'єднуємо людей, щоб вони могли підтримувати один одного. Разом ми можемо
-                                    досягти
-                                    всього, що захочемо!
+                                    {t('value_text')}
                                 </p>
                             </div>
 
@@ -144,15 +130,15 @@ const AboutPage = () => {
                                 className="flex flex-wrap w-full lg:w-1/2 justify-center lg:justify-around font-kharkiv mt-12 lg:mt-0 gap-8">
                                 <div className="flex flex-col items-center w-1/2 sm:w-1/3">
                                     <SupportIcon className="w-24 h-24 sm:w-32 sm:h-32"/>
-                                    <h3 className="text-lg sm:text-xl mt-4">Підтримка</h3>
+                                    <h3 className="text-lg sm:text-xl mt-4">{t('support')}</h3>
                                 </div>
                                 <div className="flex flex-col items-center w-1/2 sm:w-1/3">
                                     <ComunityIcon className="w-24 h-24 sm:w-32 sm:h-32"/>
-                                    <h3 className="text-lg sm:text-xl mt-4">Спільнота</h3>
+                                    <h3 className="text-lg sm:text-xl mt-4">{t('community')}</h3>
                                 </div>
                                 <div className="flex flex-col items-center w-1/2 sm:w-1/3">
                                     <HelpIcon className="w-24 h-24 sm:w-32 sm:h-32"/>
-                                    <h3 className="text-lg sm:text-xl mt-4">Допомога</h3>
+                                    <h3 className="text-lg sm:text-xl mt-4">{t('help')}</h3>
                                 </div>
                             </div>
                         </div>
@@ -174,40 +160,26 @@ const AboutPage = () => {
                                 />
 
                             <div className="flex flex-col items-start w-full">
-                                <h2 className="text-h2 font-montserratMedium items-center ml-[25%] mb-8">НАША МЕТА</h2>
+                                <h2 className="text-h2 font-montserratMedium items-center ml-[25%] mb-8">{t('our_goal')}</h2>
                                 <p className="flex-1 text-md_body text-gray-700 font-montserratRegular ml-8">
-                                    Наша мета – об’єднати небайдужих людей, щоб разом ми могли зробити світ кращим. Ми
-                                    створили платформу, де кожен може знайти допомогу або надати її іншим. Незалежно від
-                                    того, чи
-                                    ти хочеш поділитися речами, які тобі більше не потрібні, запропонувати свої знання
-                                    та вміння,
-                                    або просто підтримати когось емоційно – на нашій платформі ти знайдеш однодумців.
+                                    {t('our_goal_text')}
                                 </p>
-                                <p className="flex-1 text-md_body text-gray-700 font-montserratRegular ml-8">
-                                    Адже кожен з нас може зробити щось добре. Неважливо, чи это будет маленькая допомога
-                                    сусіду, чи велика акція для всієї спільноти.
-                                    Головне – це наше бажання зробити світ кращим.
+                                <p className="flex-1 text-md_body text-gray-700 font-montserratRegular mt-[2vw] ml-8">
+                                    {t('our_goal_text2')}
                                 </p>
                             </div>
                         </div>
                     </section>
                 ) : (
                     <section className="w-full h-auto flex flex-col items-center px-4 md:px-8 mt-32">
-                        <h2 className="text-h4 font-montserratMedium text-center mb-8 md:ml-[5%]">НАША МЕТА</h2>
+                        <h2 className="text-h4 font-montserratMedium text-center mb-8 md:ml-[5%]">{t('our_goal')}</h2>
                         <Meta className="w-full md:w-[70%] h-64 md:h-96 mb-8"/>
                         <div className="flex flex-col items-start w-full px-4">
                             <p className="text-md_body text-gray-700 font-montserratRegular mb-4">
-                                Наша мета – об’єднати небайдужих людей, щоб разом ми могли зробити світ кращим. Ми
-                                створили платформу, де кожен може знайти допомогу або надати її іншим. Незалежно від
-                                того, чи
-                                ти хочеш поділитися речами, які тобі більше не потрібні, запропонувати свої знання та
-                                вміння,
-                                або просто підтримати когось емоційно – на нашій платформі ти знайдеш однодумців.
+                                {t('our_goal_text')}
                             </p>
                             <p className="text-md_body text-gray-700 font-montserratRegular">
-                                Адже кожен з нас може зробити щось добре. Неважливо, чи це буде маленька допомога
-                                сусіду, чи велика акція для всієї спільноти.
-                                Головне – це наше бажання зробити світ кращим.
+                                {t('our_goal_text2')}
                             </p>
                         </div>
                     </section>
@@ -386,7 +358,7 @@ const AboutPage = () => {
                     </div>
                 </section>
                 <section className="w-full flex flex-col items-center mt-32 mb-8">
-                    <h2 className="xl:text-h2 sm:text-h4 font-kharkiv mb-12">НАШІ СОЦМЕРЕЖІ</h2>
+                    <h2 className="xl:text-h2 sm:text-h4 font-kharkiv mb-12">{t('our_networks')}</h2>
                     <div className="flex xl:space-x-44 sm:space-x-4">
                         {/* Facebook */}
                         <div

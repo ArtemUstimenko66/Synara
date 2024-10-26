@@ -18,6 +18,7 @@ import VolunteerSecond from '../../assets/images/VolunteerSecond.svg?react';
 import EmailAccept from '../../assets/images/EmailAccept.svg?react';
 import AuntidificationSecond from '../../assets/images/AuntidificationSecond.svg?react';
 import {Helmet} from "react-helmet-async";
+import {useTranslation} from "react-i18next";
 
 const Registration = () => {
     const [currentStep, setCurrentStep] = useState(1);
@@ -124,6 +125,7 @@ const Registration = () => {
     ];
 
     const navigate = useNavigate();
+    const {t} = useTranslation();
 
     const handleBackArrowClick = () => {
         navigate('/home');
@@ -213,7 +215,7 @@ const Registration = () => {
                             {currentStep < 5 && (
                                 <>
                                     <h1 className="font-kharkiv xl:text-relative-h3xl sm:text-relative-h2 mb-relative-ssm mt-relative-ssm">
-                                        СТВОРЕННЯ АККАУНТУ
+                                        {t('acc_creation')}
                                     </h1>
                                     <div className="mb-relative-sm flex justify-start">
                                         <Stepper currentStep={currentStep} onStepChange={setCurrentStep}/>

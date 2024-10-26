@@ -8,9 +8,11 @@ import LoginMainPicture from '../../assets/images/LoginMain.svg?react';
 import LoginMainSMMD from '../../assets/images/LoginMainSMMD.svg?react';
 import {Link} from "react-router-dom";
 import { Helmet } from 'react-helmet-async';
+import {useTranslation} from "react-i18next";
 
 const LoginPage = () => {
     const [currentStep, setCurrentStep] = useState(1);
+    const { t } = useTranslation();
 
     const [userData] = useState<UserLogin>({
         email: '',
@@ -65,7 +67,7 @@ const LoginPage = () => {
                             {/* Заголовок */}
                             <div className="w-full flex xl:items-start sm:items-center xl:justify-start sm:justify-center ">
                                 <h1 className="font-kharkiv xl:ml-0 xl:text-relative-h2 sm:text-relative-h1 xl:mb-relative-ssm mt-relative-ssm">
-                                    ВХІД В АККАУНТ
+                                    {t('account_login')}
                                 </h1>
                             </div>
 

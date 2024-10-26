@@ -292,7 +292,7 @@ const HomePage: React.FC = () => {
                         </div>
                         <div
                             className="relative text-center order-2 xl:order-2 md:order-2 xl:text-left md:text-left xl:ml-24 xl:w-11/12">
-                            <h1 className='xl:text-h1 sm:text-h4 sm:mb-4 sm:mt-8 md:mt-0  md:mb-0 xl: text-almost-white font-kharkiv xl:whitespace-pre-line xl:mt-6 mb-0 xl:tracking-tight md:text-relative-h3xl'>
+                            <h1 className='xl:text-h1 sm:text-h4 sm:mb-[8%] sm:mt-[8%] md:mt-0  md:mb-0 xl: text-almost-white font-kharkiv xl:whitespace-pre-line xl:mt-[10%] mb-0 xl:tracking-tight md:text-relative-h3xl'>
                                 {t('who_are_we')}
                             </h1>
                             <p className='text-almost-white sm:text-left sm:m-4 md:m-0 xl:m-0 sm:text-xs-ps font-montserratRegular xl:text-pl md:text-relative-pxl xl:mt-1 xl:mb-4 md:mb-relative-sm whitespace-pre-line md:whitespace-pre-line'>
@@ -866,7 +866,7 @@ const HomePage: React.FC = () => {
                                         className="sm:w-[80%] sm:h-[80%] xl:w-auto xl:h-auto md:w-[105%] md:h-[105%] md:mt-8 md:ml-8 xl:mt-0 xl:ml-0"/>
                                 </div>
                                 <div
-                                    className="xl:mt-40 xl:ml-40 md:mt-10 md:ml-10 sm:-mt-4 sm:-ml-10 absolute inset-0 flex flex-col items-center justify-center text-white text-h3 text-center">
+                                    className="xl:mt-40 xl:ml-40 md:mt-10 md:ml-10 sm:-mt-12 sm:-ml-16 absolute inset-0 flex flex-col items-center justify-center text-white text-h3 text-center">
                                     <h2 className="font-montserratMedium sm:text-h3 font-extrabold text-white xl:text-5xl md:text-relative-h1">435k</h2>
                                     <p className="xl:mt-4 sm:text-xs-pxl md:mt-2 xl:text-xl md:text-relative-h4 whitespace-pre-line font-montserratRegular text-white">{t('hryvnia_to_ZSU')}</p>
                                 </div>
@@ -888,7 +888,7 @@ const HomePage: React.FC = () => {
                                         className="sm:w-[90%] sm:h-[90%] xl:w-auto xl:h-auto md:w-[110%] md:h-[110%]"/>
                                 </div>
                                 <div
-                                    className="xl:mt-12 md:mt-1 xl:ml-56 md:ml-24 sm:mt-0 sm:ml-0 absolute inset-0 flex flex-col items-center justify-center text-white text-h3 text-center">
+                                    className="xl:mt-12 md:mt-1 xl:ml-56 md:ml-24 sm:mt-0 sm:ml-8 absolute inset-0 flex flex-col items-center justify-center text-white text-h3 text-center">
                                     <h2 className="font-montserratMedium sm:text-h3 font-extrabold text-white xl:text-5xl md:text-relative-h1">543</h2>
                                     <p className="xl:mt-4 sm:text-xs-pxl md:mt-2 xl:text-xl md:text-relative-h4 whitespace-pre-line font-montserratRegular text-white">{t('psychological_help')}</p>
                                 </div>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from "../ui/Button.tsx";
 import NavItem from "../ui/NavItem.tsx";
-import { Link } from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import { MobileMenu } from "./MobileMenu.tsx";
 import MenuCloseIcon from '../assets/images/icon-close-menu.svg?react';
 import MenuIcon from '../assets/images/icon-menu.svg?react';
@@ -18,6 +18,7 @@ const Header: React.FC<HeaderProps> = ({ className }) => {
     const [lastScrollY, setLastScrollY] = useState(0);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const { t } = useTranslation();
+    const location = useLocation();
 
     const handleScroll = () => {
         const currentScrollY = window.scrollY;
@@ -43,16 +44,29 @@ const Header: React.FC<HeaderProps> = ({ className }) => {
 
                 {/* Логотип */}
                 <Link to="/home">
-                    <LogoSynara className="text-xl font-bold xl:mr-44 md:mr-14" />
+                    <LogoSynara className="text-xl font-bold xl:mr-44 md:mr-14"/>
                 </Link>
 
                 {/* Элементы навигации для компьютера */}
-                <nav className="flex-grow hidden md:hidden sm:hidden xl:flex xl:space-x-20 md:space-x-10 xl:mr-10 md:mr-5 items-center">
-                    <NavItem text={t('mainUPPER')} to="/home" />
-                    <NavItem text={t('about_usUPPER')} to="/about" />
-                    <NavItem text={t('collectionsUPPER')} to="/gatherings" />
-                    <NavItem text={t('mapUPPER')} to="/map-help" />
-                    <NavItem text={t('how_it_worksUPPER')} to="/how-it-works" />
+                <nav
+                    className="flex-grow hidden md:hidden sm:hidden xl:flex xl:space-x-20 md:space-x-10 xl:mr-10 md:mr-5 items-center">
+                    {[
+                        {text: t('mainUPPER'), path: '/home'},
+                        {text: t('about_usUPPER'), path: '/about'},
+                        {text: t('collectionsUPPER'), path: '/gatherings'},
+                        {text: t('mapUPPER'), path: '/map-help'},
+                        {text: t('how_it_worksUPPER'), path: '/how-it-works'},
+                    ].map((item) => (
+                        <NavItem
+                            key={item.path}
+                            text={item.text}
+                            to={item.path}
+                            className={`
+                relative transition-all
+                ${location.pathname === item.path ? 'xl:after:content-[""] xl:after:absolute xl:after:bottom-0 xl:after:left-0 xl:after:right-0 xl:after:h-1 xl:after:bg-yellow-500 xl:after:rounded-full xl:after:mt-2' : ''}
+            `}
+                        />
+                    ))}
                 </nav>
 
                 {/* Кнопки для аутентификации */}
@@ -69,12 +83,12 @@ const Header: React.FC<HeaderProps> = ({ className }) => {
                 <div className="flex md:flex sm:flex xl:hidden ml-auto cursor-pointer z-30"
                      onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 >
-                    {isMobileMenuOpen ? <MenuCloseIcon /> : <MenuIcon />}
+                    {isMobileMenuOpen ? <MenuCloseIcon/> : <MenuIcon/>}
                 </div>
             </div>
 
             {/* Мобильное меню */}
-            <MobileMenu isOpen={isMobileMenuOpen} />
+            <MobileMenu isOpen={isMobileMenuOpen}/>
         </header>
     );
 };

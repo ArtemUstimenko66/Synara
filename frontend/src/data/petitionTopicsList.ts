@@ -1,19 +1,19 @@
 export enum PetitionTopic {
-    ALL_PETITIONS = 'c',
-    NO_SUBJECT = 'Без теми',
-    INDUSTRY_TRADE_BUSINESS = 'Промисловість і торгівля',
-    AGRARIAN_POLICY = 'Аграрна політика',
-    LAND_RELATIONS = 'Земельні відносини',
-    TRANSPORT = 'Транспорт',
-    COMMUNICATION = 'Зв’язок',
-    ECONOMIC_PRICE_INVESTMENT = 'Економічна та інвестиційна',
-    FINANCIAL_POLICY = 'Фінансова політика',
-    TAX_POLICY = 'Податкова політика',
-    CUSTOMS_POLICY = 'Митна політика',
-    SOCIAL_PROTECTION = 'Соціальний захист',
-    LABOR_SALARY = 'Праця і зарплата',
+    ALL_PETITIONS = 'all_petitions',
+    NO_SUBJECT = 'no_subject',
+    INDUSTRY_TRADE_BUSINESS = 'industry_trade_business',
+    AGRARIAN_POLICY = 'agrarian_policy',
+    LAND_RELATIONS = 'land_relations',
+    TRANSPORT = 'transport',
+    COMMUNICATION = 'communication',
+    ECONOMIC_PRICE_INVESTMENT = 'economic_price_investment',
+    FINANCIAL_POLICY = 'financial_policy',
+    TAX_POLICY = 'tax_policy',
+    CUSTOMS_POLICY = 'customs_policy',
+    SOCIAL_PROTECTION = 'social_protection',
+    LABOR_SALARY = 'labor_salary',
 }
 
-export const ukrainianPetitionTopics: string[] = Object.values(PetitionTopic).filter(topic => topic !== 'c');
+export const ukrainianPetitionTopics: string[] = Object.values(PetitionTopic).filter(topic => topic !== 'all_petitions');
 
 console.log(ukrainianPetitionTopics);

@@ -204,11 +204,11 @@ const CreateAnnouncementPage: React.FC = () => {
 
                 {/* Details */}
                 <div className="w-full flex flex-col mb-4">
-                    <label className="font-montserratRegular mb-2">Деталі*</label>
+                    <label className="font-montserratRegular mb-2">{t('details')}*</label>
                     <textarea
                         name="detail"
                         value={localData.details}
-                        placeholder="Деталі"
+                        placeholder={t('details')}
                         className="w-full p-3 border rounded-lg outline-none border-light-blue focus:border-dark-blue resize-none"
                         onChange={(e) => setLocalData(prevData => ({...prevData, details: e.target.value}))}
                         rows={4}

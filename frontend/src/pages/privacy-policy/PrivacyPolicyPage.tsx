@@ -24,80 +24,92 @@ const PrivacyPolicyPage = () => {
 
 				<div className="space-y-10 text-lg leading-relaxed">
 					<section>
-						<h2 className="text-h5 font-semibold mb-4">1. {t('introduction')}</h2>
 						<p className="text-pl">
 							{t('privacy_policy_introduction')}
 						</p>
 					</section>
 
-					<section >
-						<h2 className="text-h5 font-semibold mb-4">2. {t('gathering_info')}</h2>
+					<section>
+						<h2 className="text-h5 font-semibold mb-4">1. {t('gathering_info')}</h2>
 						<p className="text-pl">
-							{t("during_of_usage_site")}
-							<ul className="list-disc ml-5 mt-2">
-								<li>{t('your_name_email')}</li>
-								<li>{t('details_of_request')}</li>
-								<li>{t('info_about_your_coordinates')}</li>
-								<li>{t('technical_information')}</li>
-							</ul>
+							1.1. {t("privacy_policy_gathering_1")}
+						</p>
+						<p className="text-pl">
+							1.2. {t("privacy_policy_gathering_2")}
+						</p>
+						<p className="text-pl">
+							1.3. {t("privacy_policy_gathering_3")}
 						</p>
 					</section>
 
 					<section>
-						<h2 className="text-h5 font-semibold mb-4">3. {t('data_usage')}</h2>
+						<h2 className="text-h5 font-semibold mb-4">2. {t("data_transfer")}</h2>
 						<p className="text-pl">
-							{t('collected_data_need_for')}
-							<ul className="list-disc ml-5 mt-2">
-								<li>{t('collected_data_need_for1')}</li>
-								<li>{t('collected_data_need_for2')}</li>
-								<li>{t('collected_data_need_for3')}</li>
-							</ul>
+							2.1. {t("privacy_policy_data_transfer_1")}
+						</p>
+						<p className="text-pl">
+							2.2. {t("privacy_policy_data_transfer_2")}
 						</p>
 					</section>
 
 					<section>
-						<h2 className="text-h5 font-semibold mb-4">4. {t('info_protection')}</h2>
+						<h2 className="text-h5 font-semibold mb-4">3. {t("data_protection")}</h2>
 						<p className="text-pl">
-							{t('info_protection_desc')}
+							3.1. {t("privacy_policy_data_protection_1")}
 						</p>
-
-					</section>
-
-					<section >
-						<h2 className="text-h5 font-semibold mb-4">5. {t('user_rights')}</h2>
 						<p className="text-pl">
-							{t('user_rights_desc')}
+							3.2. {t("privacy_policy_data_protection_2")}
 						</p>
-					</section>
-
-					<section >
-						<h2 className="text-h5 font-semibold mb-4">6. {t('transferring_data')}</h2>
 						<p className="text-pl">
-							{t('transferring_data_desc')}
+							3.2. {t("privacy_policy_data_protection_3")}
 						</p>
 					</section>
 
 					<section>
-						<h2 className="text-h5 font-semibold mb-4">7. {t('changes_to_private_policy')}</h2>
+						<h2 className="text-h5 font-semibold mb-4">4. {t('user_rights')}</h2>
 						<p className="text-pl">
-							{t('changes_to_private_policy_desc')}
+							4.1. {t("privacy_policy_user_rights_1")}
+						</p>
+
+					</section>
+
+					<h2 className="sm:text-h3 xl:text-h2 md:text-h2 font-kharkiv mb-8">{t('financial_transactions')}</h2>
+					<section>
+						<h2 className="text-h5 font-semibold mb-4">1. {t('payment_processing')}</h2>
+						<p className="text-pl">
+							1.1. {t('payment_processing_1')}
+						</p>
+						<p className="text-pl">
+							1.2. {t('payment_processing_2')}
+						</p>
+					</section>
+					<section>
+						<h2 className="text-h5 font-semibold mb-4">2. {t('refunds')}</h2>
+						<p className="text-pl">
+							2.1. {t('refunds_1')}
+						</p>
+					</section>
+					<section>
+						<h2 className="text-h5 font-semibold mb-4">3. {t('tax_responsibility')}</h2>
+						<p className="text-pl">
+							3.1. {t('tax_responsibility_1')}
 						</p>
 					</section>
 
-					<section >
-						<h2 className="text-h5 font-semibold mb-4">8. {t('contacts')}</h2>
+
+					<section>
 						<p className="text-pl">
-							{t('if_you_gave_any_questions_contact')}:
+							{t("privacy_policy_user_rights_2")}
 							<a href="mailto:synara.support@email.com" className="text-blue-500 hover:underline ml-2">
 								synara.support@email.com
 							</a>
 						</p>
 					</section>
+
 				</div>
 			</div>
 
-			{/* Футер */}
-			<Footer />
+			<Footer/>
 		</Wrapper>
 	);
 };

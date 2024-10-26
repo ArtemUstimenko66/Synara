@@ -9,6 +9,7 @@ import LogoFooter from '../assets/images/logo_Footer.svg?react';
 import DownArrow from '../assets/images/Down_Arrow.svg?react';
 import {useTranslation} from "react-i18next";
 import LanguageSelector from "./LanguageSelector.tsx";
+import {useAuth} from "../hooks/useAuth.ts";
 
 library.add(faFacebookF, faInstagram, faXTwitter, faTelegramPlane);
 
@@ -32,8 +33,21 @@ const AccordionSection: React.FC<{ title: string; children: React.ReactNode }> =
 
 const Footer: React.FC = () => {
     const { t } = useTranslation();
+    const {role}=useAuth();
     const isSmallScreen = useMediaQuery({query: '(max-width: 640px)'});
-    const isHomePage = location.pathname === '/home';
+    const publicPaths = [
+        '/home',
+        '/about',
+        '/how-it-works',
+        '/terms-of-use',
+        '/privacy-policy',
+        '/cookie-policy',
+        '/gatherings',
+        '/faq'
+    ];
+
+    const isHomePage = publicPaths.includes(location.pathname) && !role;
+
     return (
         <footer className="xl:py-8 md:py-8 mt-4 xl:w-[90%] md:w-[90%] sm:w-[100%] justify-center flex flex-col font-montserratRegular">
             {isSmallScreen ? (

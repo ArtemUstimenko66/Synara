@@ -1,7 +1,6 @@
 import MainHeader from "../../modules/main-page/components/ui/MainHeader.tsx";
 import Footer from "../../components/Footer.tsx";
 import Wrapper from "../../ui/Wrapper.tsx";
-import {Link} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 import {Helmet} from "react-helmet-async";
 
@@ -24,51 +23,58 @@ const TermsOfUsePage = () => {
 
 				{/* Контент с анимациями */}
 				<div className="space-y-10 text-lg leading-relaxed">
-					<section >
-						<h2 className="text-h5 font-semibold mb-4">1. {t('introduction')}</h2>
+					<section>
+						<h2 className="text-h5 font-semibold mb-4">{t('section_1_title')}</h2>
 						<p className="text-pl">
-							{t('terms_of_use_description')}
+							{t('section_1_content_1')}
 						</p>
-					</section>
-
-					<section >
-						<h2 className="text-h5 font-semibold mb-4">2. {t('content_usage')}</h2>
 						<p className="text-pl">
-							{t('content_usage_description')}
+							{t('section_1_content_2')}
 						</p>
-					</section>
-
-					<section >
-						<h2 className="text-h5 font-semibold mb-4">3. {t('users_responsibility')}</h2>
 						<p className="text-pl">
-							{t('users_responsibility_description')}
+							{t('section_1_content_3')}
 						</p>
 					</section>
 
 					<section>
-						<h2 className="text-h5 font-semibold mb-4">4. {t('disclaimer')}</h2>
+						<h2 className="text-h5 font-semibold mb-4">{t('section_2_title')}</h2>
 						<p className="text-pl">
-							{t('disclaimer_description')}
+							{t('section_2_content_1')}
 						</p>
-					</section>
-
-					<section >
-						<h2 className="text-h5 font-semibold mb-4">5. {t('confidentiality')}</h2>
 						<p className="text-pl">
-							{t('privacy_description1')} <Link to="/privacy-policy" className="text-blue-700 hover:underline">{t('political_of_privacy')}</Link>.
-							{t('privacy_description2')}
+							{t('section_2_content_2')}
 						</p>
-					</section>
-
-					<section>
-						<h2 className="text-h5 font-semibold mb-4">6. {t('changes_about_terms_of_use')}</h2>
 						<p className="text-pl">
-							{t('changes_about_terms_of_use2')}
+							{t('section_2_content_3')}
 						</p>
 					</section>
 
 					<section>
-						<h2 className="text-h5 font-semibold mb-4">7. {t('contacts')}</h2>
+						<h2 className="text-h5 font-semibold mb-4">{t('section_3_title')}</h2>
+						<p className="text-pl">
+							{t('section_3_content_1')}
+						</p>
+						<p className="text-pl">
+							{t('section_3_content_2')}
+						</p>
+						<p className="text-pl">
+							{t('section_3_content_3')}
+						</p>
+					</section>
+
+					<section>
+						<h2 className="text-h5 font-semibold mb-4">{t('section_4_title')}</h2>
+						<p className="text-pl">
+							{t('section_4_content_1')}
+						</p>
+						<p className="text-pl">
+							{t('section_4_content_2')}
+						</p>
+					</section>
+
+
+					<section>
+						<h2 className="text-h5 font-semibold mb-4"> {t('contacts')}</h2>
 						<p className="text-pl">
 							{t('if_you_have_questions_mail_to')}
 							<a href="mailto:synara.support@email.com" className="text-blue-700 hover:underline ml-2">

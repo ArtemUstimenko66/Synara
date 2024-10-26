@@ -4,30 +4,31 @@ import Section1 from "../assets/images/SearchVolunteer1.png";
 import Section2 from "../assets/images/SearchVolunteer2.png";
 import Section3 from "../assets/images/SearchVolunteer3.png";
 import Section4 from "../assets/images/SearchVolunteer4.png";
+import {useTranslation} from "react-i18next";
 
 const SearchVolunteerSM = () => {
     const [activeStep, setActiveStep] = useState(0);
-
+    const { t } = useTranslation();
     const steps = [
         {
-            title: "Переглянь профілі:",
+            title: `${t('profile_look')}`,
             image: Section1,
-            description: "Спочатку ти можеш переглянути короткі описи різних волонтерів. Це як заглянути в їхні візитки.",
+            description:  `${t('profile_text')}`,
         },
         {
-            title: "Оберіть свій вибір:",
+            title: `${t('make_choice')}`,
             image: Section2,
-            description: "Якщо якийсь волонтер тобі сподобався, ти можеш зайти на його сторінку, щоб дізнатися про нього більше.",
+            description: `${t('make_choice_text')}`,
         },
         {
-            title: "Подай запит:",
+            title: `${t('submit_request')}`,
             image: Section3,
-            description: "Сподобався волонтер? Просто натисни кнопку \"Подати запит\". Це як написати лист новому другу.",
+            description: `${t('submit_request_text')}`,
         },
         {
-            title: "Отримай відповідь:",
+            title: `${t('get_an_answer')}`,
             image: Section4,
-            description: "Волонтер отримає твоє повідомлення і зможе переглянути твою сторінку. Якщо він готовий допомогти, то відпише тобі.",
+            description: `${t('get_an_answer_text')}`,
         },
     ];
 

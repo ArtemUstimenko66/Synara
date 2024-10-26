@@ -295,12 +295,16 @@ const MainPage: React.FC = () => {
                             <div
                                 className="w-full flex flex-col md:flex-row md:space-x-4 items-end justify-end mt-4 md:mt-0">
                                 {/* Add Announcement Button */}
+                                {role=="victim" ?
                                 <Link to="/add-announcement" className="w-full md:w-1/2 xl:w-auto">
                                     <Button hasBlue={true} className="px-4 w-full md:w-auto xl:w-auto">
                                         <span
                                             className="text-montserratMediumtext-relative-h5">{t('add_announcement')}</span>
                                     </Button>
                                 </Link>
+                                    :
+                                    <></>
+                                }
 
                                 {/* Sort Button with Dropdown */}
                                 <div className="w-full md:w-1/2 xl:w-auto mt-4 md:mt-0 flex justify-end">

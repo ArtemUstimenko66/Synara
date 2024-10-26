@@ -5,6 +5,7 @@ import { MuiPhone } from "../ui/MuiPhone.tsx";
 import DeleteImg from '../../../../assets/images/DeleteImg.svg?react';
 
 import {regionsWithCities} from "../../../../data/Regions.ts";
+import {useTranslation} from "react-i18next";
 
 type AddressVolunteerInfoProps = {
     userData: any;
@@ -26,7 +27,7 @@ const AddressVolunteer: React.FC<AddressVolunteerInfoProps> = ({ onNextStep, set
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [regionOptions, setRegionOptions] = useState<string[]>([]);
     const [cityOptions, setCityOptions] = useState<string[]>([]);
-
+    const {t} = useTranslation();
 
     const handleRegionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const userInput = event.target.value;
@@ -122,17 +123,17 @@ const AddressVolunteer: React.FC<AddressVolunteerInfoProps> = ({ onNextStep, set
         const newErrors: { [key: string]: string } = {};
 
         if (!selectedRegion) {
-            newErrors.region = 'Будь ласка, виберіть область';
+            newErrors.region = t('select_region');
         }
         if (!selectedCity) {
-            newErrors.city = 'Будь ласка, виберіть місто';
+            newErrors.city = t('select_city');
         }
         // @ts-ignore
         if (localData.phoneNumber.length <= 5) {
-            newErrors.phoneNumber = 'Будь ласка, введіть номер телефону';
+            newErrors.phoneNumber = t('enter_telephone_number');
         }
         if (!localData.helpTypes || localData.helpTypes.length === 0) {
-            newErrors.helpTypes = 'Будь ласка, виберіть хоча б один тип допомоги';
+            newErrors.helpTypes = t('choose_type_of_help');
         }
 
         setErrors(newErrors);
@@ -157,17 +158,17 @@ const AddressVolunteer: React.FC<AddressVolunteerInfoProps> = ({ onNextStep, set
 
     return (
         <div className="flex flex-col items-start xl:pr-8 xl:pb-8 w-full">
-            <h2 className="sm:text-xs-pxl xl:text-relative-h4 font-kharkiv mb-4">Заповніть данні</h2>
+            <h2 className="sm:text-xs-pxl xl:text-relative-h4 font-kharkiv mb-4">{t('fill_in_the_data')}</h2>
 
             <div className="flex w-full space-x-4 mb-4">
                 <div className="w-1/2 flex flex-col xl:block sm:hidden">
-                    <label className="font-montserratRegular mb-2">Область*</label>
+                    <label className="font-montserratRegular mb-2">{t('region')}*</label>
                     <div className="relative">
                         <input
                             type="text"
                             value={selectedRegion}
                             onChange={handleRegionChange}
-                            placeholder="Область проживання"
+                            placeholder={t('region_of_living')}
                             className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
                         />
                         {errors.region && <p className="text-red-500 xl:block sm:hidden text-sm">{errors.region}</p>}
@@ -188,13 +189,13 @@ const AddressVolunteer: React.FC<AddressVolunteerInfoProps> = ({ onNextStep, set
                 </div>
 
                 <div className="w-1/2 flex flex-col xl:block sm:hidden">
-                    <label className="font-montserratRegular mb-2">Місто*</label>
+                    <label className="font-montserratRegular mb-2">{t('city')}*</label>
                     <div className="relative">
                         <input
                             type="text"
                             value={selectedCity}
                             onChange={handleCityChange}
-                            placeholder="Місто проживання"
+                            placeholder={t('city_of_living')}
                             disabled={!selectedRegion}
                             className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
                         />
@@ -216,13 +217,13 @@ const AddressVolunteer: React.FC<AddressVolunteerInfoProps> = ({ onNextStep, set
                 </div>
             </div>
             <div className="sm:w-full flex flex-col xl:hidden sm:block">
-                <label className="font-montserratRegular mb-2">Область*</label>
+                <label className="font-montserratRegular mb-2">{t('region')}*</label>
                 <div className="relative">
                     <input
                         type="text"
                         value={selectedRegion}
                         onChange={handleRegionChange}
-                        placeholder="Область проживання"
+                        placeholder={t('region_of_living')}
                         className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
                     />
                     {errors.region && <p className="text-red-500 xl:hidden sm:block text-sm">{errors.region}</p>}
@@ -243,13 +244,13 @@ const AddressVolunteer: React.FC<AddressVolunteerInfoProps> = ({ onNextStep, set
             </div>
 
             <div className="sm:w-full flex flex-col xl:hidden sm:block">
-                <label className="font-montserratRegular mb-2">Місто*</label>
+                <label className="font-montserratRegular mb-2">{t('city')}*</label>
                 <div className="relative">
                     <input
                         type="text"
                         value={selectedCity}
                         onChange={handleCityChange}
-                        placeholder="Місто проживання"
+                        placeholder={t('city_of_living')}
                         disabled={!selectedRegion}
                         className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
                     />
@@ -270,7 +271,7 @@ const AddressVolunteer: React.FC<AddressVolunteerInfoProps> = ({ onNextStep, set
                 </div>
             </div>
             <div className="w-full mb-4">
-                <label className="font-montserratRegular mb-8">Номер телефону*</label>
+                <label className="font-montserratRegular mb-8">{t('telephone_number')}*</label>
                 <MuiPhone
                     value={localData.phoneNumber || ''}
                     onChange={(phone) => setLocalData(prevData => ({...prevData, phoneNumber: phone}))}
@@ -280,9 +281,9 @@ const AddressVolunteer: React.FC<AddressVolunteerInfoProps> = ({ onNextStep, set
             </div>
 
             <div className="w-full mb-4">
-                <label className="font-montserratRegular mb-2">Яку допомогу ви можете надавати:*</label>
+                <label className="font-montserratRegular mb-2">{t('enter_type_of_given_help')}*</label>
                 <div className="flex flex-wrap gap-1">
-                    {['Психологічна', 'Гуманітарна', 'Інформаційна', 'Матеріальна'].map(helpType => (
+                    {['Психологічна', 'Гуманітарна', 'Інформаційна', 'Матеріальна'].map((helpType, index) => (
                         <button
                             key={helpType}
                             onClick={() => handleHelpSelect(helpType)}
@@ -290,7 +291,7 @@ const AddressVolunteer: React.FC<AddressVolunteerInfoProps> = ({ onNextStep, set
                                 (localData.helpTypes as string[]).includes(helpType) ? 'bg-dark-blue border-dark-blue text-white' : 'border-light-blue'
                             }`}
                         >
-                            {helpType}
+                            {t(`categories${index + 1}`)}
                         </button>
                     ))}
                 </div>
@@ -299,12 +300,12 @@ const AddressVolunteer: React.FC<AddressVolunteerInfoProps> = ({ onNextStep, set
             {(localData?.helpTypes?.includes('Психологічна') || localData?.helpTypes?.includes('Інформаційна')) && (
                 <div className="w-full mb-4">
                     <div className="flex flex-col">
-                        <label className="xl:text-xs-pl sm:text-pd font-montserratRegular">Документи, підтверджуючі кваліфікацію</label>
+                        <label className="xl:text-xs-pl sm:text-pd font-montserratRegular">{t('documents_confirmed_qualification')}</label>
                         <button
                             className="w-52 mb-2 mt-2 p-2 uppercase text-center border-2 rounded-lg outline-none border-light-blue text-light-blue"
                             onClick={handleAddDocumentClick}
                         >
-                            Додати документи
+                            {t('add_documents')}
                         </button>
                         <input
                             ref={fileInputRef}

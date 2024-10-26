@@ -87,9 +87,9 @@ export const SideBarChat: React.FC<SideBarChatProps> = ({ isOpen, onClose }) => 
     };
 
     const filterOptions = [
-        { key: 'active', label: 'Активні чати' },
-        { key: 'archived', label: 'Архівовані чати' },
-        { key: 'blocked', label: 'Заблоковані чати' },
+        { key: 'active', label: t('active_chats') },
+        { key: 'archived', label: t('archived_chats') },
+        { key: 'blocked', label: t('blocked_chats') },
     ];
 
     const getAvailableFilters = (currentFilter: string) => {

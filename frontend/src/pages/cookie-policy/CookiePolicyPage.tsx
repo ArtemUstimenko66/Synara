@@ -2,11 +2,13 @@ import MainHeader from "../../modules/main-page/components/ui/MainHeader.tsx";
 import Footer from "../../components/Footer.tsx";
 import Wrapper from "../../ui/Wrapper.tsx";
 import {Helmet} from "react-helmet-async";
+import {useTranslation} from "react-i18next";
 
 const animationFadeIn = "animate-fadeIn";
 const animationSlideIn = "animate-slideIn";
 
 const CookiePolicyPage = () => {
+	const {t} = useTranslation();
 	return (
 		<Wrapper>
 			<Helmet>
@@ -18,101 +20,93 @@ const CookiePolicyPage = () => {
 			</Helmet>
 			<MainHeader />
 			<div className="min-h-screen mt-24 mx-[10vw] font-montserratRegular text-black">
-				<h1 className={`text-h3 font-kharkiv mb-8 ${animationFadeIn}`}>Політика використання cookie</h1>
+				<h1 className={`text-h3 font-kharkiv mb-8 ${animationFadeIn}`}>
+					{t('cookie_policy')}
+				</h1>
 
-				{/* Контент с анимациями */}
 				<div className="space-y-10 text-lg leading-relaxed">
 					<section className={`${animationSlideIn} delay-100`}>
-						<h2 className="text-h5 font-semibold mb-4">Політика використання файлів Cookie</h2>
+						<h2 className="text-h5 font-semibold mb-4">
+							{t('cookie_policy_intro')}
+						</h2>
 						<p className="text-pl">
-							Ця Політика використання файлів Cookie пояснює, як наш сайт використовує файли cookie, та
-							які дані збираються з їх допомогою. Ми прагнемо забезпечити прозорість щодо того, як
-							обробляються ваші персональні дані під час користування нашим сайтом.
+							{t('cookie_policy_description')}
 						</p>
 					</section>
 
 					<section className={`${animationSlideIn} delay-200`}>
-						<h2 className="text-h5 font-semibold mb-4">Що таке файли Cookie?</h2>
+						<h2 className="text-h5 font-semibold mb-4">
+							{t('what_are_cookies')}
+						</h2>
 						<p className="text-pl">
-							Файли cookie — це невеликі текстові файли, які зберігаються на вашому пристрої (комп'ютері,
-							планшеті, смартфоні) під час відвідування вебсайтів. Вони використовуються для того, щоб
-							вебсайт запам'ятав ваші дії та налаштування (наприклад, мову або налаштування відображення),
-							а також для поліпшення користувацького досвіду.
+							{t('what_are_cookies_description')}
 						</p>
 					</section>
 
 					<section className={`${animationSlideIn} delay-300`}>
-						<h2 className="text-h5 font-semibold mb-4">Які типи файлів Cookie ми використовуємо?</h2>
+						<h2 className="text-h5 font-semibold mb-4">
+							{t('types_of_cookies')}
+						</h2>
 						<p className="text-pl">
-							Наш сайт використовує різні типи файлів cookie:
+							{t('types_of_cookies_intro')}
 						</p>
 						<ul className="list-disc list-inside">
-							<li><strong>Сесійні файли cookie:</strong> Зберігаються лише протягом часу вашого сеансу на
-								сайті і автоматично видаляються після його завершення.
+							<li>
+								<strong>{t('session_cookies')}:</strong> {t('session_cookies_description')}
 							</li>
-							<li><strong>Постійні файли cookie:</strong> Зберігаються на вашому пристрої протягом певного
-								часу або до їхнього видалення вручну. Вони дозволяють нашому сайту запам'ятовувати ваші
-								налаштування при повторному відвідуванні.
+							<li>
+								<strong>{t('persistent_cookies')}:</strong> {t('persistent_cookies_description')}
 							</li>
-							<li><strong>Файли cookie сторонніх організацій:</strong> Це файли cookie, які встановлюються
-								сторонніми сервісами, наприклад, для аналітики (Google Analytics) або інтеграції
-								соціальних мереж (X (Twitter)).
+							<li>
+								<strong>{t('third_party_cookies')}:</strong> {t('third_party_cookies_description')}
 							</li>
 						</ul>
 					</section>
+
 
 					<section className={`${animationSlideIn} delay-400`}>
-						<h2 className="text-h5 font-semibold mb-4">Для чого ми використовуємо файли Cookie?</h2>
-						<p className="text-pl">
-							Ми використовуємо такі типи кукі:
-						</p>
+						<h2 className="text-h5 font-semibold mb-4">{t('why_we_use_cookies')}</h2>
+						<p className="text-pl">{t('why_we_use_cookies_intro')}</p>
 						<ul className="list-disc list-inside">
-							<li><strong>Функціональність сайту:</strong> Ми використовуємо файли cookie для забезпечення коректної роботи нашого сайту та покращення зручності його використання. Вони дозволяють зберігати ваші особисті налаштування та покращувати навігацію.</li>
-							<li><strong>Аналітика:</strong> Ми використовуємо файли cookie для збору анонімної статистичної інформації про те, як відвідувачі використовують наш сайт. Це допомагає нам покращувати його роботу, виявляти проблеми та оптимізувати контент.</li>
-							<li><strong>Реклама та маркетинг:</strong> Сторонні файли cookie можуть використовуватися для показу персоналізованих оголошень або збору інформації для аналітики рекламних кампаній.</li>
+							<li><strong>{t('site_functionality')}:</strong> {t('site_functionality_description')}</li>
+							<li><strong>{t('analytics')}:</strong> {t('analytics_description')}</li>
+							<li>
+								<strong>{t('advertising_and_marketing')}:</strong> {t('advertising_and_marketing_description')}
+							</li>
 						</ul>
 					</section>
 
-
 					<section className={`${animationSlideIn} delay-500`}>
-						<h2 className="text-h5 font-semibold mb-4">Як керувати файлами Cookie?</h2>
-						<p className="text-pl">
-							У більшості браузерів ви можете керувати файлами cookie через налаштування. Ви можете
-							видаляти або блокувати файли cookie, але це може вплинути на функціональність нашого сайту.
-						</p>
+						<h2 className="text-h5 font-semibold mb-4">{t('how_to_manage_cookies')}</h2>
+						<p className="text-pl">{t('manage_cookies_intro')}</p>
 						<ul className="list-disc list-inside">
-							<li>Щоб керувати файлами cookie у вашому браузері, ви можете відвідати розділи налаштувань або використати інструкції відповідного браузера (Google Chrome, Mozilla Firefox, Safari, Edge тощо).
-							</li>
-							<li>Якщо ви хочете відмовитися від файлів cookie, що використовуються сторонніми сервісами для реклами, ви можете зробити це через налаштування реклами таких сервісів.
-							</li>
+							<li>{t('manage_cookies_browser')}</li>
+							<li>{t('opt_out_of_third_party_cookies')}</li>
 						</ul>
 					</section>
 
 					<section className={`${animationSlideIn} delay-600`}>
-						<h2 className="text-h5 font-semibold mb-4"> Зміни до Політики використання файлів Cookie</h2>
-						<p className="text-pl">
-							Ми можемо оновлювати цю Політику час від часу, публікуючи нову версію на нашому сайті. Ми рекомендуємо регулярно переглядати цю сторінку, щоб бути в курсі змін у використанні файлів cookie.
-						</p>
+						<h2 className="text-h5 font-semibold mb-4">{t('cookie_policy_updates')}</h2>
+						<p className="text-pl">{t('cookie_policy_updates_description')}</p>
 					</section>
 
 					<section className={`${animationSlideIn} delay-700`}>
-						<h2 className="text-h5 font-semibold mb-4">Контактна інформація</h2>
+						<h2 className="text-h5 font-semibold mb-4">{t('contact_info')}</h2>
 						<p className="text-pl">
-							Якщо у вас виникли питання щодо нашої Політики використання файлів Cookie або ви хочете отримати більше інформації, будь ласка, зв'яжіться з нами за електронною адресою:
+							{t('contact_info_description')}
 							<a href="mailto:synara.support@email.com" className="text-blue-700 hover:underline ml-2">
 								synara.support@email.com
 							</a>.
 						</p>
-						<p className="text-pl mt-5">
-							Ця Політика використання файлів Cookie розроблена для того, щоб гарантувати прозорість та інформованість користувачів нашого сайту щодо використання cookie та збереження їхнього приватного простору.
-						</p>
+						<p className="text-pl mt-5">{t('cookie_policy_purpose')}</p>
 					</section>
 				</div>
 			</div>
 
 			<Footer/>
 		</Wrapper>
-	);
+	)
+		;
 };
 
 export default CookiePolicyPage;

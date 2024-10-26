@@ -240,13 +240,9 @@ const GatheringDetailsPage = () => {
                                 <p className="font-montserratRegular xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3 s mt-4">{details.description}</p>
                                 <p className="font-medium xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3  font-montserratMedium mt-4">{t('gathering_details')}:</p>
                                 <p className="font-montserratRegular xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3  mt-4">{details.detail}</p>
-                                <p className="font-medium xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3  font-montserratMedium mt-4">Кому
-                                    потрібна
-                                    допомога:</p>
+                                <p className="font-medium xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3  font-montserratMedium mt-4">{t('who_need_help')}:</p>
                                 <p className="font-montserratRegular xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3  mt-4">{details.whoNeedHelp}</p>
-                                <p className="font-medium xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3  font-montserratMedium mt-4">На
-                                    що підуть
-                                    кошти:</p>
+                                <p className="font-medium xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3  font-montserratMedium mt-4">{t('where_money_will_be_used')}:</p>
                                 <p className="font-montserratRegular xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3  mt-4">{details.whereMoneyWillUsed}</p>
                             </div>
 
@@ -285,8 +281,8 @@ const GatheringDetailsPage = () => {
 
                                 {/* Money goal and collected */}
                                 <div className="mt-4 flex flex-row items-center justify-center space-x-4">
-                                    <p className="font-montserratRegular font-semibold xl:text-relative-pl sm:text-relative-h2 md:text-relative-h3 mt-4">Ціль: {formatNumber(details.goal)} </p>
-                                    <p className="font-montserratRegular xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3 mt-4">Зібрано: {formatNumber(details.collected)} </p>
+                                    <p className="font-montserratRegular font-semibold xl:text-relative-pl sm:text-relative-h2 md:text-relative-h3 mt-4">{t('goal')}: {formatNumber(details.goal)} </p>
+                                    <p className="font-montserratRegular xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3 mt-4">{t('collected')}: {formatNumber(details.collected)} </p>
                                 </div>
 
                                 {/* Dates */}
@@ -300,7 +296,7 @@ const GatheringDetailsPage = () => {
                                 {/* Donate and to favorite buttons */}
                                 <div className="flex flex-col px-[1vw] justify-between space-y-3 mt-4">
                                     <Button hasBlue={true} className="py-2 px-4 uppercase">
-                                        Задонатити зараз
+                                        {t('donate_now')}
                                     </Button>
                                     <div className="mt-8 w-full">
                                         <Button
@@ -312,7 +308,7 @@ const GatheringDetailsPage = () => {
                                             ) : (
                                                 <Heart className="h-6 w-6 mr-2"/>
                                             )}
-                                            В ОБРАНЕ
+                                            {t('to_favoriteUPPER')}
                                         </Button>
                                     </div>
                                 </div>
@@ -325,25 +321,23 @@ const GatheringDetailsPage = () => {
                                         className="w-16 h-16 rounded-full object-cover mr-3"
                                     />
                                     <div className="pl-[2vw]">
-                                        <p className="xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3 font-montserratMedium font-semibold uppercase">Автор
-                                            оголошення:</p>
+                                        <p className="xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3 font-montserratMedium font-semibold uppercase"> {t('author_gatherings')}:</p>
                                         <h4 className=" xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3 font-montserratMedium">{details.user.firstName} {details.user.lastName}</h4>
                                     </div>
                                 </div>
 
                                 <div className="flex flex-row items-center pl-[2vw]">
-                                    <p className="font-semibold xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3 font-montserratMedium uppercase">Контакти:</p>
+                                    <p className="font-semibold xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3 font-montserratMedium uppercase">{t('contacts')}:</p>
                                     <p className="font-montserratRegular xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3 pl-[1vw] uppercase"> {details.user.phoneNumber}</p>
                                 </div>
 
                                 <div className="flex flex-row items-center pl-[2vw]">
-                                    <p className="font-semibold xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3 font-montserratMedium uppercase">Email:</p>
+                                    <p className="font-semibold xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3 font-montserratMedium uppercase">{t('email')}:</p>
                                     <p className="font-montserratRegular xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3 pl-[1vw]"> {details.user.email}</p>
                                 </div>
 
                                 {/* Social media icons */}
-                                <p className="uppercase mt-4 pl-[2vw] xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3">Поділіться
-                                    збором:</p>
+                                <p className="uppercase mt-4 pl-[2vw] xl:text-relative-ps sm:text-relative-h2 md:text-relative-h3">{t('share_gathering')}:</p>
                                 <div className="mt-2 flex justify-center space-x-6">
                                     <a href="#" aria-label="Facebook">
                                         <FontAwesomeIcon icon={['fab', 'facebook-f']} className="h-6 w-6"/>
@@ -475,7 +469,7 @@ const GatheringDetailsPage = () => {
                             ?
                             <>
                                 <h1 className="text-relative-h4 font-kharkiv uppercase mt-[10vh] text-center">
-                                    Термінові збори
+                                    {t('urgent_gathering')}
                                 </h1>
 
                                 <div className="flex flex-col">

@@ -2,12 +2,14 @@ import React from 'react';
 import { Button } from '../../../../ui/Button.tsx';
 import { Link } from 'react-router-dom';
 import CloseIconModal from '../../assets/CloseIconModal.svg?react';
+import {useTranslation} from "react-i18next";
 
 interface ModalProps {
     onClose: () => void;
 }
 
 const ModalForbidden: React.FC<ModalProps> = ({ onClose }) => {
+    const {t} = useTranslation();
     return (
         <div className="fixed inset-0 flex items-center justify-center z-50">
             {/* Dark background */}
@@ -22,21 +24,21 @@ const ModalForbidden: React.FC<ModalProps> = ({ onClose }) => {
                 />
 
                 <h2 className="xl:text-relative-h4 md:text-relative-h2 sm:text-relative-h1 font-kharkiv mb-4 text-center">
-                    На жаль, ви не можете створити збір.
+                    {t(`sorry_cant_create_gathering`)}
                 </h2>
                 <p className="w-[70%] mx-auto text-center text-relative-p font-montserratRegular mb-6">
-                    Щоб пробовжити:
+                    {t(`sorry_cant_create_gathering`)}
                 </p>
                 <p className="w-[70%] mx-auto text-center text-relative-p font-montserratRegular mb-6">
-                    1. Вам повинно бути більше 18 років.
+                    1. {t(`over_18`)}
                 </p>
                 <p className="w-[70%] mx-auto text-center text-relative-p font-montserratRegular mb-6">
-                    2. Ви повинні вказати РНОКПП в акаунті.
+                    2. {t(`write_itn`)}
                 </p>
                 <div className="flex justify-center">
                     <Link to="/profile">
                         <Button hasBlue={true} className="uppercase py-2 px-4 w-auto">
-                            Перейти в акаунт
+                            {t(`go_to_account`)}
                         </Button>
                     </Link>
                 </div>

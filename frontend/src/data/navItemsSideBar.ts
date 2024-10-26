@@ -1,13 +1,13 @@
 export const navItems = [
-    { text: "Профіль", to: "/profile" },
-    { text: "Чат", to: "/chat" },
-    { text: "Петиції", to: "/petitions" },
-    { text: "Статистика", to: "/statistics" },
-    { text: "Налаштування", to: "/settings" },
-    { text: "Головна", to: "/main" },
-    { text: "Про нас", to: "/about" },
-    { text: "Збори", to: "/gatherings" },
-    { text: "Карти", to: "/map-help" },
-    { text: "Як це працює", to: "/how-it-works" },
-    { text: "Карта тривог", to: "/map-alert" }
+    { textKey: "profile", to: "/profile" },
+    { textKey: "chat", to: "/chat" },
+    { textKey: "petitions", to: "/petitions" },
+    { textKey: "statistics", to: "/statistics" },
+    { textKey: "settings", to: "/settings" },
+    { textKey: "home", to: "/main" },
+    { textKey: "about_us", to: "/about" },
+    { textKey: "gatherings", to: "/gatherings" },
+    { textKey: "map_help", to: "/map-help" },
+    { textKey: "how_it_works", to: "/how-it-works" },
+    { textKey: "map_alert", to: "/map-alert" }
 ];

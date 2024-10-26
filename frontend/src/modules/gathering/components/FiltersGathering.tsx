@@ -6,6 +6,7 @@ import {useTranslation} from "react-i18next";
 import BackArrow from '../../../assets/images/back_arrow_mini.svg?react';
 
 import {termsEndingsMap} from "../../../data/termsEndingsMap.ts";
+import i18n from "i18next";
 
 interface FiltersProps {
     onApplyFilters: (filteredAnnouncements: any[]) => void;
@@ -17,10 +18,29 @@ const FiltersGathering: React.FC<FiltersProps> = ({ onCloseSidebar }) => {
     const [selectedUrgency, setSelectedUrgency] = useState<string | null>(null);
     const [moneyFrom, setMoneyFrom] = useState('');
     const [moneyTo, setMoneyTo] = useState('');
-
+    const {t} = useTranslation();
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const categories = ['Завершуються цього тижня', 'Завершуються цього місяця', 'Безстрокові'];
+    const translations = {
+        ending_this_week: "Завершуються цього тижня",
+        ending_this_month: "Завершуються цього місяця",
+        no_term: "Без терміну"
+    };
+
+    // Переводы на других языках (например, английский)
+    const translationsEN = {
+        ending_this_week: "Ending this week",
+        ending_this_month: "Ending this month",
+        no_term: "No term"
+    };
+
+    // Получение текущего языка через i18n
+    const currentLanguage = i18n.language; // Теперь используем i18n для получения языка
+
+    // Создание массива категорий в зависимости от текущего языка
+    const categories = currentLanguage === 'uk' ?
+        Object.values(translations) :
+        Object.values(translationsEN);
 
 
     // sync filters with url
@@ -114,8 +134,6 @@ const FiltersGathering: React.FC<FiltersProps> = ({ onCloseSidebar }) => {
 
         onCloseSidebar();
     };
-
-    const {t} = useTranslation();
 
     const handleNumericInput = (value: string, setter: { (value: React.SetStateAction<string>): void; (value: React.SetStateAction<string>): void; (arg0: any): void; }) => {
         if (/^\d*$/.test(value)) {

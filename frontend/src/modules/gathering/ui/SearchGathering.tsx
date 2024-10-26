@@ -1,12 +1,14 @@
 import React, { useState, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import SearchIcon from '../../../modules/main-page/assets/searchIcon.svg?react';
+import {useTranslation} from "react-i18next";
 
 
 const SearchGathering: React.FC = () => {
 	const [searchTerm, setSearchTerm] = useState<string>('');
 	const [, setSearchParams] = useSearchParams();
 	const inputRef = useRef<HTMLInputElement>(null);
+	const {t} = useTranslation();
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchTerm(e.target.value);
@@ -33,7 +35,7 @@ const SearchGathering: React.FC = () => {
 				value={searchTerm}
 				onChange={handleInputChange}
 				onKeyPress={handleKeyPress}
-				placeholder="Пошук збору"
+				placeholder={t(`search_gathering`)}
 				className="w-full bg-transparent text-almost-black text-montserratMedium placeholder-black focus:outline-none"
 				ref={inputRef}
 			/>

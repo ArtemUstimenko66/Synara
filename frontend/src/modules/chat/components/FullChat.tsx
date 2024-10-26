@@ -57,12 +57,13 @@ import {FeedbackModal} from "./ui/FeedbackModal.tsx";
 import CallVolunteer from "./CallVolunteer.tsx";
 import CallVictim from "./CallVictim.tsx";
 import LazyLoadGif from "../../../components/LazyLoadGif.tsx";
+import {useTranslation} from "react-i18next";
 
 
 
 const FullChat: React.FC = () => {
     const { loadedChatId } = useParams<{ loadedChatId: string }>();
-
+    const {t} = useTranslation();
     const [selectedChatId, setSelectedChatId] = useState<number | null>(loadedChatId ? Number(loadedChatId) : null);
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [filter, setFilter] = useState<'active' | 'archived' | 'blocked'>('active');
@@ -367,9 +368,9 @@ const FullChat: React.FC = () => {
     };
 
     const filterOptions = [
-        { key: 'active', label: 'Активні чати' },
-        { key: 'archived', label: 'Архівовані чати' },
-        { key: 'blocked', label: 'Заблоковані чати' },
+        { key: 'active', label: t('active_chats') },
+        { key: 'archived', label: t('archived_chats') },
+        { key: 'blocked', label: t('blocked_chats') },
     ];
 
     const getAvailableFilters = (currentFilter: string) => {

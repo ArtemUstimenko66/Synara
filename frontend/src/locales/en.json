@@ -7,7 +7,7 @@
   "read_moreUPPER" : "READ MORE",
   "last_collectionUPPER" : "LAST COLLECTION",
   "VIEW_OTHERS_UPPER": "VIEW OTHERS",
-  "JOIN_TO_US_UPPER": "JOIN TO US",
+  "JOIN_TO_US_UPPER": "JOIN US",
   "Become_a_volunteer": "Become a volunteer",
   "Under_Become_a_volunteer": "Would you like to make some help? Become a volunteer and change the world better!",
   "get_help" : "Get Help",
@@ -65,6 +65,30 @@
   "English": "English",
   "seeMorePetitions": "See other",
 
+  "volunteer_search": "SEARCH VOLUNTEERS",
+
+  "make_choice": "Make your choice:",
+  "make_choice_text": "If you like a volunteer, you can visit their page to\nto find out more about them.",
+
+  "submit_request": "Submit request:",
+  "submit_request_text": "Do you like the volunteer? Just click the ‘Submit a request’ button. It's like writing a letter to a new friend.",
+
+  "get_an_answer": "Get an answer:",
+  "get_an_answer_text": "The volunteer will receive your message and will be able to view your page. If they are willing to help, they will reply to you.",
+
+  "gatherings": "GATHERINGS",
+  "profile_look": "Check out profiles:",
+  "gatherings_text_1": "Do you want to make the world a better place? On our website you can find many interesting projects and\nand support those that are close to you. Do you have an idea on how to make life better?",
+  "gatherings_text_2": "Create your own collection and unite people around it! How does it work? It's very simple. You can\nbrowse different projects, learn more about them and support the ones you like.\nOr you can create your own collection by telling others about your idea. It's like an online piggy bank,\nwhere everyone can add their own bricks. You can change the world: Even a small contribution can\ncan make a big difference.",
+
+  "petitions_uppercase": "PETITIONS",
+  "petitions_text1": "Browse thousands of petitions on a variety of topics. If something interests you, click on the\nthe petition to find out more about it.",
+  "petitions_text2": "If you agree with this idea, click the ‘Sign’ button. You will be redirected to the\nwebsite where you can officially support the petition.",
+  "petitions_text3": "Do you know about an important petition? Create your own announcement! Fill in the simple form and paste the link to the petition.",
+
+
+  "profile_text": "First, you can look at the short descriptions of the different volunteers. It's like looking at their business cards.",
+
   "mainUPPER": "MAIN",
   "about_usUPPER": "ABOUT US",
   "collectionsUPPER": "COLLECTIONS",
@@ -76,6 +100,8 @@
   "goal": "Goal",
   "collected": "Collected",
 
+  "share_gathering": "Share gathering",
+  "urgent_gathering": "Urgent gatherings",
   "account_login": "ACCOUNT LOGIN",
   "email": "Email",
   "email_address": "Email address",
@@ -169,8 +195,55 @@
   "informational": "Informational",
   "material": "Material",
 
+  "sorry_cant_create_gathering": "Sorry, you cannot create a gathering.",
+  "to_continue": "To continue:",
+  "over_18": "You must be over 18 years old.",
+  "write_itn": "You must specify ITN in the account.",
+  "go_to_account": "Go to account",
+
+  "search_gathering": "Search gathering",
+
+  "ending_this_week": "Ends this week",
+  "ending_this_month": "Ends this month",
+  "no_term": "No term",
+
+  "community_initiatives": "Community initiatives",
+  "organizational_initiatives": "Organizational initiatives",
+  "official": "Official",
+
+  "petition_topics": {
+    "all_petitions": "All Petitions",
+    "no_subject": "No Subject",
+    "industry_trade_business": "Industry and Trade",
+    "agrarian_policy": "Agrarian Policy",
+    "land_relations": "Land Relations",
+    "transport": "Transport",
+    "communication": "Communication",
+    "economic_price_investment": "Economic and Investment",
+    "financial_policy": "Financial Policy",
+    "tax_policy": "Tax Policy",
+    "customs_policy": "Customs Policy",
+    "social_protection": "Social Protection",
+    "labor_salary": "Labor and Salary"
+  },
 
 
+
+  "statistics": "Statistics",
+
+  "home": "Home",
+
+  "map_help": "Map Help",
+  "donate_now": "Donate now",
+  "map_alert": "Map Alert",
+
+
+
+"our_site_use_cookie": "Our site uses cookies to ensure correct operation. By continuing to use the site, you agree to the use of cookies in accordance with our Privacy Policy.",
+  "settings_cookie": "You can change the cookie settings in your browser.",
+  "learn_more": "Learn more.",
+  "close": "Close",
+  "your_message": "Your message",
   "the_field_cannot_be_empty": "The field cannot be empty.",
   "password_are_not_equal": "Passwords do not match.",
   "password_need_be_longer_6": "The password must contain at least 6 characters.",
@@ -308,10 +381,10 @@
   "done": "Done",
   "canceled": "Cancelled",
   "cancel": "Cancel",
-  "to_favoriteUPPER": "TO SELECTED",
+  "to_favoriteUPPER": "ADD TO FAVORITE",
   "to_respond": "Respond",
   "similar_ad": "Similar announcements",
-
+  "author_gatherings": "Gathering author",
 
   "announcement_title": "Title of announcement",
 
@@ -475,8 +548,8 @@
   "changes_about_terms_of_use": "Changes to the terms of use",
   "changes_about_terms_of_use2": "We reserve the right to change these terms at any time.\n\t\t\t\t\t\t\tAll changes become effective after their publication on this page.\n\t\t\t\t\t\t\tBy continuing to use the site after the terms change, you agree to the new rules.",
   "if_you_have_questions_mail_to": "If you have any questions about these terms of use, please contact us at:",
-  "privacy_policy_introduction": "We understand how important the privacy of your information is.\n\t\t\t\t\t\t\tOur site provides assistance to people who need humanitarian, psychological and material support,\n\t\t\t\t\t\t\tand we are committed to handling your personal information with care. This section describes\n\t\t\t\t\t\t\thow we collect and use your personal data.",
-  "gathering_info": "Collection of information",
+  "privacy_policy_introduction": "We respect your privacy and are committed to protecting the personal data of users in accordance with the current legislation of Ukraine, in particular the Law of Ukraine ‘On Personal Data Protection’. This Privacy Policy describes how we collect, use and protect your personal data.",
+  "gathering_info": "Collection and use of personal information",
   "during_of_usage_site": "When you use our site, we may collect the following types of information:",
   "your_name_email": "Your name, email and phone number.",
   "details_of_request": "Details of requests for psychological or humanitarian assistance.",
@@ -504,6 +577,143 @@
   "connection_desc": "View the ad and respond if\nwant to help You can contact the author via chat and discuss the details.",
   "propositionUPPER": "PROPOSITION",
   "proposition_desc": "What are offers? It's like an ad, only to a lot of people. They can be like for those\nwho wants to provide help, and for those who need it.",
-  "create_proposition": "Create your offer, if you want to offer help, just fill out the special form\nform Describe the help, specify all the details and for whom this offer is intended.\nJoin the initiatives, if you see an interesting offer that you want to join, it's simple\nclick the \"Join\" button. There is also a map of offers, with which it is always easy to find offline\noffers in your area."
+  "create_proposition": "Create your offer, if you want to offer help, just fill out the special form\nform Describe the help, specify all the details and for whom this offer is intended.\nJoin the initiatives, if you see an interesting offer that you want to join, it's simple\nclick the \"Join\" button. There is also a map of offers, with which it is always easy to find offline\noffers in your area.",
+
+
+  "section_1_title": "1. Definition of Parties",
+  "section_1_content_1": "1.1. Platform - an online resource that allows Victims to post requests for assistance, and Volunteers to offer help.",
+  "section_1_content_2": "1.2. User - an individual who creates an account on the platform as either a Victim or a Volunteer.",
+  "section_1_content_3": "1.3. Advertisement - a message about the need for assistance, posted by a Victim on the platform.",
+  "section_2_title": "2. Registration and Use of Accounts",
+  "section_2_content_1": "2.1. To use the platform, a user must create an account and provide accurate information.",
+  "section_2_content_2": "2.2. The user agrees not to use the platform for any illegal purposes.",
+  "section_2_content_3": "2.3. Users must comply with the laws of Ukraine, including the Law of Ukraine 'On Volunteering Activities.'",
+  "section_3_title": "3. Advertisements and Fundraising",
+  "section_3_content_1": "3.1. Victims can post ads requesting help, and Volunteers have the right to assist through donations or other means.",
+  "section_3_content_2": "3.2. Fundraising on the platform is conducted in accordance with the laws of Ukraine, including the Law of Ukraine 'On Payment Systems and Transfers in Ukraine.'",
+  "section_3_content_3": "3.3. All financial transactions are processed through verified payment systems using bank cards, following the NBU norms on online payment security.",
+  "section_4_title": "4. User Responsibilities",
+  "section_4_content_1": "4.1. Users are responsible for the information provided, as well as for actions performed through their accounts.",
+  "section_4_content_2": "4.2. The platform is not responsible for the content of advertisements or actions performed by users outside of the platform.",
+
+  "support": "Support",
+  "community": "Community",
+  "help": "Help",
+
+  "our_values": "OUR VALUES",
+
+  "about_text_1": "Synara is a platform created by Ukrainians for Ukrainians. In these challenging times, when our country is going through trials, we unite those who need help with those who are ready to provide it. We believe in the power of human kindness and solidarity, and we know that together we can overcome any difficulties.",
+  "about_text_2": "This platform is available 24/7. You can use our services at any time and from any device. We are constantly working to improve our platform to make it even more convenient for you.",
+
+  "value_text": "We bring people together so that they can support each other. Together we can achieve anything we want!",
+  "our_networks": "OUR SOCIAL NETWORKS",
+  "our_networks": "OUR SOCIAL NETWORKS",
+  "our_goal_text2": "After all, each of us can do something good. It doesn't matter if it's a small help to a neighbour or a big event for the whole community. The main thing is our desire to make the world a better place.",
+  "our_goal_text": "Our goal is to unite people who care so that together we can make the world a better place. We have created a platform where everyone can find help or provide it to others. Whether you want to share things you no longer need, offer your knowledge and skills, or simply support someone emotionally, you will find like-minded people on our platform.\nAfter all, each of us can do something good. It doesn't matter if it's a small help to a neighbour or a big event for the whole community. The main thing is our desire to make the world a better place.",
+  "our_goal": "OUR GOAL",
+
+
+  "privacy_policy_title": "Privacy Policy - Synara",
+  "privacy_policy_description": "Learn about our privacy policy on the Synara platform. How we protect your information.",
+  "privacy_policy_keywords": "privacy policy, Synara, information protection, user",
+  "privacy_policy_gathering_1": "The platform collects users' personal data to provide services, including: name, surname, email, phone number, and other necessary data.",
+  "privacy_policy_gathering_2": "Personal data is collected only with the user's consent and is used solely for the purpose of providing platform services.",
+  "privacy_policy_gathering_3": "Personal data may be used to maintain contact with users, process payments, and support platform functionality.",
+  "data_transfer": "Data Transfer to Third Parties",
+  "privacy_policy_data_transfer_1": "We do not transfer users' personal data to third parties without their consent, except in cases provided by the laws of Ukraine.",
+  "privacy_policy_data_transfer_2": "All transactions are processed using secure payment systems that protect users' data in accordance with legal requirements and NBU standards.",
+  "data_protection": "Data Protection",
+  "privacy_policy_data_protection_1": "We use all necessary security measures to protect users' personal data from unauthorized access, loss, or alteration.",
+  "privacy_policy_data_protection_2": "The platform ensures secure data storage in accordance with information security standards, including encryption and access protection to databases.",
+  "privacy_policy_data_protection_3": "Your data is stored on Amazon Web Services (AWS) servers, which meet high security standards. AWS provides reliable data protection, including encryption at rest and in transit, allowing us to guarantee the confidentiality of your personal data.",
+  "privacy_policy_user_rights_1": "Users have the right to access their personal data, correct or delete it, and may withdraw their consent to personal data processing.",
+  "privacy_policy_user_rights_2": "To exercise their rights, the user can contact the platform's support service at the email address",
+
+  "financial_transactions": "Financial Transactions",
+  "payment_processing": "Payment Processing",
+  "payment_processing_1": "All financial transactions on the platform are conducted through certified payment systems that ensure reliability and security of funds transfers.",
+  "payment_processing_2": "Users can use bank cards to make transfers. All transactions are protected by PCI DSS security standards.",
+  "refunds": "Refunds",
+  "refunds_1": "In the event that a refund is necessary, the user should contact support to initiate the refund process, in compliance with current legislation and the terms of the specific payment system.",
+  "tax_responsibility": "Tax Responsibility",
+  "tax_responsibility_1": "Users who receive donations are responsible for reporting received funds in accordance with current tax legislation in Ukraine.",
+  "cookie_policy": "Cookie Policy",
+  "cookie_policy_intro": "Cookie Policy",
+  "cookie_policy_description": "This Cookie Policy explains how our site uses cookies and what data is collected through them. We strive to ensure transparency regarding the handling of your personal data while using our site.",
+  "what_are_cookies": "What are Cookies?",
+  "what_are_cookies_description": "Cookies are small text files stored on your device (computer, tablet, smartphone) during website visits. They are used to help the website remember your actions and preferences (such as language or display settings) and to enhance the user experience.",
+  "types_of_cookies": "What Types of Cookies Do We Use?",
+  "types_of_cookies_intro": "Our site uses various types of cookies:",
+  "session_cookies": "Session Cookies",
+  "session_cookies_description": "Stored only for the duration of your session on the site and automatically deleted when the session ends.",
+  "persistent_cookies": "Persistent Cookies",
+  "persistent_cookies_description": "Stored on your device for a certain period or until manually deleted. They allow our site to remember your preferences on repeat visits.",
+  "third_party_cookies": "Third-Party Cookies",
+  "third_party_cookies_description": "These cookies are set by external services, such as for analytics (Google Analytics) or social media integration (X (Twitter)).",
+
+  "why_we_use_cookies": "Why do we use cookies?",
+  "why_we_use_cookies_intro": "We use the following types of cookies:",
+  "site_functionality": "Site Functionality",
+  "site_functionality_description": "We use cookies to ensure our site functions correctly and to improve its usability. They allow us to save your personal settings and improve navigation.",
+  "analytics": "Analytics",
+  "analytics_description": "We use cookies to collect anonymous statistical information about how visitors use our site. This helps us improve its performance, identify issues, and optimize content.",
+  "advertising_and_marketing": "Advertising and Marketing",
+  "advertising_and_marketing_description": "Third-party cookies may be used to display personalized ads or to collect information for advertising analytics.",
+
+  "how_to_manage_cookies": "How to Manage Cookies",
+  "manage_cookies_intro": "In most browsers, you can manage cookies through settings. You can delete or block cookies, but this may affect the functionality of our site.",
+  "manage_cookies_browser": "To manage cookies in your browser, you can visit the settings section or use the respective browser's instructions (Google Chrome, Mozilla Firefox, Safari, Edge, etc.).",
+  "opt_out_of_third_party_cookies": "If you want to opt out of third-party cookies used for advertising, you can do so through the ad settings of those services.",
+
+  "cookie_policy_updates": "Cookie Policy Updates",
+  "cookie_policy_updates_description": "We may update this Policy from time to time by publishing a new version on our site. We recommend reviewing this page regularly to stay informed about changes in cookie usage.",
+
+  "contact_info": "Contact Information",
+  "contact_info_description": "If you have questions about our Cookie Policy or would like more information, please contact us by email:",
+  "cookie_policy_purpose": "This Cookie Policy is designed to ensure transparency and to inform users of our site about cookie usage and privacy protection.",
+
+  "acc_creation": "ACCOUNT CREATION",
+
+  "MostpoweredUPPER": "FREQUENTLY ASKED QUESTIONS",
+  "faqFromPlatfom": "General Questions About the Platform",
+  "whatAboutSynara": "What is Synara?",
+  "answerAboutSynara": "Synara is an online platform created to connect people affected by the war in Ukraine with those who are ready to help them. It’s a place where people can find support, resources, and volunteers who will assist them in overcoming difficulties and rebuilding their lives.",
+  "aboutMetaPlatform": "What is the purpose of the platform?",
+  "answerAboutMeta": "The platform's purpose is to provide comprehensive assistance to those affected by the war by creating a convenient and effective tool for finding and offering help. We aim to ensure access to various types of support, including humanitarian, psychological, legal, and informational assistance, as well as to foster the restoration of social connections and integration into a new environment.",
+  "aboutUserPlatform": "Who can use the platform?",
+  "answerUserPlatfrom": "The platform is designed for everyone affected by the war in Ukraine, regardless of age, gender, social status, or place of residence. We also welcome volunteers who are ready to offer help and support, as well as organizations working in the field of war relief.",
+  "howToRegPlatform": "How to register on the platform?",
+  "answerHowToReg": "To register on the platform, click the \"Register\" button on the main page. Select your role (affected person or volunteer) and complete the registration form by providing the required information. After successful registration, you will have access to all the platform's features and be able to create help requests or offer your support to others.",
+  "questionFromVictim": "Questions for Affected Persons",
+  "howToCreateHelp": "How to create a help request?",
+  "answerToCreateHelp": "To create a help request, log in to your account and go to the \"Need Help\" section. Click the \"Create Request\" button, choose the category of assistance needed, and fill out the form with a detailed description of your needs. Be sure to provide contact information so volunteers can reach you.",
+  "aboutTypeHelp": "What types of assistance can be received on the platform?",
+  "answerTypeHelp": "Our platform offers various types of assistance, including: Humanitarian assistance: food, clothing, hygiene products, medicines, etc. Psychological assistance: consultations with psychologists, support groups, help with managing stress and trauma. Legal assistance: consultations with lawyers, help with documentation, rights protection. Informational assistance: up-to-date and verified information about your rights, available resources, and services. Financial support: monetary aid, job search assistance, temporary housing.",
+  "howToSeekVolunteer": "How to find a volunteer?",
+  "answerToSeekVolunteer": "You can find a volunteer who meets your needs by using the search feature on the platform. Specify the category of assistance needed, your location, and other criteria, and the system will match you with suitable volunteers. You can also browse volunteer announcements offering help and contact them directly through the platform.",
+  "aboutSecurityPlatform": "How is my safety ensured on the platform?",
+  "answerAboutSecurityPlatform": "We take our users' security very seriously. We take all necessary measures to protect your personal data and ensure secure communication on the platform. All volunteers go through a verification process, and their profiles contain feedback from other users. Additionally, we have a content moderation system and the option to report suspicious activity.",
+  "howToSpeakWithVolunteer": "How to communicate with a volunteer?",
+  "answterToSpeakWithVolunteer": "Communication with volunteers takes place directly on the platform once they respond to your request, or if you find them through search. You can choose the communication method that suits you best: a text chat for real-time messaging or a voice chat for direct conversation and support.",
+  "questionForVolunteer": "Questions for Volunteers",
+  "howToBeVolunteer": "How to become a volunteer on the platform?",
+  "answerToBeVolunteer": "To become a volunteer, click the \"Register\" button on the main page and select the \"Volunteer\" role. Fill out the registration form by providing your contact information, skills, and experience, as well as the types of assistance you’re ready to offer. After successful registration, you will have access to the volunteer section.",
+  "howToSeekAnnouncement": "How to find help requests?",
+  "answerSeekAnnoucement": "Go to the \"Search Announcements\" section and use the filters to find help requests that match your abilities and interests. You can filter announcements by the type of assistance, the location of the affected person, urgency, etc.",
+  "howToSendYourHelp": "How to offer your help?",
+  "answerToSendYourHelp": "Open the announcement that interests you, and click the \"Details\" button. Indicate the specific assistance you can provide and leave a short message for the affected person. After that, you can contact them through the platform to discuss details.",
+  "howToTakeCertificate": "How to receive an award or certificate?",
+  "answerToTakeCertificate": "Awards and certificates are given to volunteers for active participation and high-quality services. The criteria for receiving awards may include the number of requests fulfilled, positive feedback from the affected persons, participation in special projects, etc. You can find information about received awards and certificates in your profile.",
+  "howToTakeHelpWithVolunteer": "How to get support if you encounter challenges during volunteering?",
+  "questionAboutTechnick": "Technical Questions",
+  "howToChangePassword": "How to change the password?",
+  "answerToChangePassword": "To change your password, first log into your account. Then go to the \"Settings\" or \"My Profile\" section, where you’ll find the \"Change Password\" option. Click on it, enter your current password, then enter the new password twice. Complete the process by clicking \"Save\" or \"Change Password.\"",
+  "howToUpdateEmail": "How to recover access to the account?",
+  "answerToUpdateEmail": "If you forgot your password and can’t log into your account, don’t worry. On the login page, find the link \"Forgot Password?\" or \"Recover Access\" and click it. Enter the email address you used during registration, and we’ll send you an email with password recovery instructions. Simply follow the link in the email and create a new password.",
+  "howToDeleteEmail": "How to delete my account?",
+  "answerAboutDeleteEmail": "If you decide to delete your account, log in and go to the \"Settings\" or \"My Profile\" section. There you’ll find the \"Delete Account\" option. Click on it and confirm deletion. Remember, deleting your account is irreversible, and all your data will be removed from the platform.",
+  "howDecideTech": "What to do if I encounter technical issues with the platform?",
+  "answerDecideTech": "If you encounter technical issues while using the platform, first try refreshing the page or clearing your browser cache. Also, make sure you have a stable internet connection. If the problem persists, try using another browser or device. If these actions don’t help, contact our support team, describing the issue in as much detail as possible. We will do our best to help you resolve it quickly."
+
 
 }

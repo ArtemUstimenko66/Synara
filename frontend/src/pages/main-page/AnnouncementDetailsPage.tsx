@@ -267,8 +267,8 @@ const AnnouncementDetailsPage = () => {
 
     const openModalForDone = () => {
         setModalContent({
-            title: 'Завершити оголошення',
-            message: 'Вам надали потрібну допомогу і ви хочете закрити це оголошення?',
+            title: t('end_announcement'),
+            message: t('you_had_needed_help_and_want_close_ad'),
             action: handleDoneAnnouncement
         });
         setModalOpen(true);
@@ -276,8 +276,8 @@ const AnnouncementDetailsPage = () => {
 
     const openModalForCancel = () => {
         setModalContent({
-            title: 'Скасувати оголошення',
-            message: 'Ви впевнені, що хочете скасувати це оголошення?',
+            title: t('cancel_ad'),
+            message: t('are_you_sure_to_cancel_ad'),
             action: handleCancelAnnouncement
         });
         setModalOpen(true);

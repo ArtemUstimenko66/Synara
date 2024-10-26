@@ -75,27 +75,29 @@ export const SideBar: React.FC<SideBarProps> = ({ isOpen, onClose, isFilters, on
 
 
                         {/* Nav items */}
-                        <nav className="flex flex-col w-[90%] h-[50%] mx-5 space-y-3 xl:text-lg md:text-lg sm:text-pl flex-grow">
+                        <nav
+                            className="flex flex-col w-[90%] h-[50%] mx-5 space-y-3 xl:text-lg md:text-lg sm:text-pl flex-grow">
                             {role === 'volunteer' ? (
-                                    <>
-                                <NavItem text={t('advertisement')} to="/main"/>
-                                <div className="xl:border-b xl:border-gray-300 xl:mt-5 sm:mt-0"></div>
-                                    </>
-                                ) : (
-                                    <>
-                                <NavItem text={t('search_volunteer')} to="/main"/>
-                                <div className="xl:border-b xl:border-gray-300 xl:mt-5 sm:mt-0"></div>
-                                    </>
-                                )}
+                                <>
+                                    <NavItem text={t('advertisement')} to="/main"/>
+                                    <div className="xl:border-b xl:border-gray-300 xl:mt-5 sm:mt-0"></div>
+                                </>
+                            ) : (
+                                <>
+                                    <NavItem text={t('search_volunteer')} to="/main"/>
+                                    <div className="xl:border-b xl:border-gray-300 xl:mt-5 sm:mt-0"></div>
+                                </>
+                            )}
                             {navItems.slice(0, isSmallScreen ? navItems.length : 7).map((item, index) => (
                                 <div key={`${item.to}-${index}`} className="flex flex-col">
-                                    <NavItem text={item.text} to={item.to}/>
+                                    <NavItem text={t(item.textKey)} to={item.to}/>
                                     {index < navItems.length - 1 && (
                                         <div className="xl:border-b xl:border-gray-300 xl:mt-5 sm:mt-0"></div>
                                     )}
                                 </div>
                             ))}
                         </nav>
+
 
                         {/* Buttons */}
                         <div className="flex flex-col xl:space-y-5 sm:space-y-2 mx-5 mb-6">

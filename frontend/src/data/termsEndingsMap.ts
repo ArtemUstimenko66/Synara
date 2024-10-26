@@ -1,7 +1,10 @@
 export const termsEndingsMap: { [key: string]: string } = {
     'Завершуються цього тижня': 'EndsThisWeek',
     'Завершуються цього місяця': 'EndsThisMonth',
-    'Безстрокові': 'NoTerm',
+    'Без терміну': 'NoTerm',
+    'Ending this week': 'EndsThisWeek',
+    'Ending this month': 'EndsThisMonth',
+    'No term': 'NoTerm',
 };
 
 export const getTermsEndings = (typeHelp: string): string => {

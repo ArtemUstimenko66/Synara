@@ -4,6 +4,7 @@ import { Button } from "../../../../ui/Button.tsx";
 import 'react-international-phone/style.css';
 import {MuiPhone} from "../ui/MuiPhone.tsx";
 import {regionsWithCities} from "../../../../data/Regions.ts";
+import {useTranslation} from "react-i18next";
 
 type AddressVictimInfoProps = {
     userData: any;
@@ -20,7 +21,7 @@ const AddressVictim: React.FC<AddressVictimInfoProps> = ({ userData, setUserData
     const [house, setHouse] = useState<number | ''>(userData.house || '');
     const [apartment, setApartment] = useState<number | ''>(userData.apartment || '');
     const [phoneNumber, setPhone] = useState<string>(userData.phoneNumber || '');
-
+    const {t} = useTranslation();
     const handleRegionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const userInput = event.target.value;
         setSelectedRegion(userInput);
@@ -72,28 +73,28 @@ const AddressVictim: React.FC<AddressVictimInfoProps> = ({ userData, setUserData
         const newErrors: { [key: string]: string } = {};
 
         if (!selectedRegion) {
-            newErrors.region = 'Будь ласка, виберіть область';
+            newErrors.region = t('select_region');
         }
         if (!selectedCity) {
-            newErrors.city = 'Будь ласка, виберіть місто';
+            newErrors.city = t('select_city');
         }
         if (!street) {
-            newErrors.street = 'Будь ласка, введіть назву вулиці';
+            newErrors.street = t('enter_street');
         } else if (!startsWithCapital(street)) {
-            newErrors.street = 'Назва вулиці має починатися з великої літери';
+            newErrors.street = t('the_street_name_must_begin_with_a_capital_letter');
         }
         if (!house) {
-            newErrors.house = 'Будь ласка, введіть номер будинку';
+            newErrors.house = t('enter_house_number');
         } else if (isNaN(house)) {
-            newErrors.house = 'Будинок повинен бути числом';
+            newErrors.house = t('enter_valid_house_number');
         }
         if (!apartment && apartment !== 0) {
-            newErrors.apartment = 'Будь ласка, введіть номер квартири';
+            newErrors.apartment = t('enter_valid_apartment_number');
         } else if (isNaN(apartment)) {
-            newErrors.apartment = 'Квартира повинна бути числом';
+            newErrors.apartment = t('enter_correct_apartment_number');
         }
         if (phoneNumber.length <= 5) {
-            newErrors.phoneNumber = 'Будь ласка, введіть номер телефону';
+            newErrors.phoneNumber = t('enter_telephone_number');
         }
 
         if (Object.keys(newErrors).length > 0) {
@@ -115,17 +116,17 @@ const AddressVictim: React.FC<AddressVictimInfoProps> = ({ userData, setUserData
 
     return (
         <div className="flex flex-col items-start pr-8 pb-8 w-full">
-            <h2 className="sm:text-xs-pxl xl:text-relative-h4 font-kharkiv mb-4">Заповніть данні</h2>
+            <h2 className="sm:text-xs-pxl xl:text-relative-h4 font-kharkiv mb-4">{t('fill_in_the_data')}</h2>
 
             <div className="flex xl:w-full sm:w-full space-x-4 mb-4">
                 <div className="w-1/2 flex flex-col xl:block sm:hidden">
-                    <label className="font-montserratRegular mb-2">Область*</label>
+                    <label className="font-montserratRegular mb-2">{t('region')}*</label>
                     <div className="relative">
                         <input
                             type="text"
                             value={selectedRegion}
                             onChange={handleRegionChange}
-                            placeholder="Область проживання"
+                            placeholder={t('region_of_living')}
                             className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
                         />
                         {errors.region && <p className="text-red-500 xl:block sm:hidden text-sm">{errors.region}</p>}
@@ -146,13 +147,13 @@ const AddressVictim: React.FC<AddressVictimInfoProps> = ({ userData, setUserData
                 </div>
 
                 <div className="w-1/2 flex flex-col xl:block sm:hidden">
-                    <label className="font-montserratRegular mb-2">Місто*</label>
+                    <label className="font-montserratRegular mb-2">{t('city')}*</label>
                     <div className="relative">
                         <input
                             type="text"
                             value={selectedCity}
                             onChange={handleCityChange}
-                            placeholder="Місто проживання"
+                            placeholder={t('city_of_living')}
                             disabled={!selectedRegion}
                             className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
                         />
@@ -178,13 +179,13 @@ const AddressVictim: React.FC<AddressVictimInfoProps> = ({ userData, setUserData
 
 
             <div className="xl:w-full sm:w-full xl:hidden sm:block">
-                <label className="font-montserratRegular mb-2">Область*</label>
+                <label className="font-montserratRegular mb-2">{t('region')}*</label>
                 <div className="relative">
                     <input
                         type="text"
                         value={selectedRegion}
                         onChange={handleRegionChange}
-                        placeholder="Область проживання"
+                        placeholder={t('region_of_living')}
                         className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
                     />
                     {errors.region && <p className="text-red-500 xl:hidden sm:block text-sm">{errors.region}</p>}
@@ -205,13 +206,13 @@ const AddressVictim: React.FC<AddressVictimInfoProps> = ({ userData, setUserData
             </div>
 
             <div className="xl:w-full sm:w-full xl:hidden sm:block">
-                <label className="font-montserratRegular mb-2">Місто*</label>
+                <label className="font-montserratRegular mb-2">{t('city')}*</label>
                 <div className="relative">
                     <input
                         type="text"
                         value={selectedCity}
                         onChange={handleCityChange}
-                        placeholder="Місто проживання"
+                        placeholder={t('city_of_living')}
                         disabled={!selectedRegion}
                         className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
                     />
@@ -232,10 +233,10 @@ const AddressVictim: React.FC<AddressVictimInfoProps> = ({ userData, setUserData
                 </div>
             </div>
             <div className="w-full xl:mb-6 sm:mb-2">
-                <label className="font-montserratRegular mb-2">Вулиця</label>
+                <label className="font-montserratRegular mb-2">{t('street')}</label>
                 <input
                     type="text"
-                    placeholder="Назва вулиці"
+                    placeholder={t('street_name')}
                     value={street}
                     onChange={(e) => setStreet(e.target.value)}
                     className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
@@ -246,10 +247,10 @@ const AddressVictim: React.FC<AddressVictimInfoProps> = ({ userData, setUserData
             <div className="flex w-full space-x-4 mb-4">
                 <div className="w-1/2 flex flex-col">
                     <div className="relative">
-                        <label className="font-montserratRegular mb-2">Будинок</label>
+                        <label className="font-montserratRegular mb-2">{t('house')}</label>
                         <input
                             type="number"
-                            placeholder="Номер будинку"
+                            placeholder={t('house_number')}
                             value={house === '' ? '' : house}
                             onChange={(e) => setHouse(Number(e.target.value))}
                             className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
@@ -260,10 +261,10 @@ const AddressVictim: React.FC<AddressVictimInfoProps> = ({ userData, setUserData
 
                 <div className="w-1/2 flex flex-col">
                     <div className="relative">
-                        <label className="font-montserratRegular mb-2">Квартира</label>
+                        <label className="font-montserratRegular mb-2">{t('apartment')}</label>
                         <input
                             type="number"
-                            placeholder="Номер квартири"
+                            placeholder={t('apartment_number')}
                             value={apartment === '' ? '' : apartment}
                             onChange={(e) => setApartment(Number(e.target.value))}
                             className="w-full p-3 border-2 rounded-lg outline-none border-light-blue focus:border-dark-blue"
@@ -274,7 +275,7 @@ const AddressVictim: React.FC<AddressVictimInfoProps> = ({ userData, setUserData
             </div>
 
             <div className="w-full mb-4">
-                <label className="font-montserratRegular mb-2">Номер телефону*</label>
+                <label className="font-montserratRegular mb-2">{t('telephone_number')}*</label>
                 <MuiPhone
                     value={phoneNumber}
                     onChange={(phone) => setPhone(phone)}
@@ -286,7 +287,7 @@ const AddressVictim: React.FC<AddressVictimInfoProps> = ({ userData, setUserData
                 className="w-full bg-perfect-yellow text-almost-black py-3 rounded-full mt-6 hover:bg-perfect-yellow transition"
                 onClick={handleSubmit}
             >
-                ПРОДОВЖИТИ
+                {t('continueUPPER')}
             </Button>
         </div>
     );

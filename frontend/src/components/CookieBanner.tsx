@@ -5,10 +5,12 @@ import CookieMobileBird from '../assets/images/BirdMobile.svg?react';
 import { Link } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import Cookies from 'js-cookie';
+import {useTranslation} from "react-i18next";
 
 const CookieBanner: React.FC = () => {
     const isMobileScreen = useMediaQuery({ query: '(max-width: 767px)' });
     const isTabletScreen = useMediaQuery({ query: '(max-width: 1025px)' });
+    const {t} = useTranslation();
 
     const [isBannerVisible, setIsBannerVisible] = useState(true);
 
@@ -41,15 +43,15 @@ const CookieBanner: React.FC = () => {
 
                 <div className="absolute bottom-2 right-8 xl:right-[7%] sm:right-[2%] xl:w-full sm:mb-[4vh] md:mb-0 xl:mb-0 h-auto xl:p-8">
                     <p className="font-montserratRegular xl:text-relative-ps md:text-relative-pxl sm:text-relative-h5sm md:ml-[15vw] text-center xl:mx-[10%] md:mx-[10%] mt-4 sm:mx-[15%]">
-                        Наш сайт використовує файли cookies для забезпечення коректної роботи. Продовжуючи користуватись сайтом, ви погоджуєтесь на використання cookies згідно з нашою Політикою конфіденційності.
+                        {t('our_site_use_cookie')}
                     </p>
                     <p className="font-montserratRegular xl:text-relative-ps md:text-relative-pxl sm:text-relative-h5sm text-center xl:mx-4 md:mx-[10%] my-4 sm:mx-[15%]">
-                        Ви можете змінити налаштування cookies у своєму браузері.
-                        <Link to="/cookie-policy" className="font-semibold"> Дізнатись більше.</Link>
+                        {t('settings_cookie')}
+                        <Link to="/cookie-policy" className="font-semibold"> {t('learn_more')}</Link>
                     </p>
                     <div className="flex flex-col items-center justify-center">
                         <button onClick={handleCloseBanner} className="font-montserratRegular xl:text-relative-ps md:text-relative-pxl sm:text-relative-h2 font-semibold relative">
-                            Закрити
+                            {t('close')}
                         </button>
                         <div className="w-[6%] rounded-3xl xl:mb-[2vh] md:mb-[2vh] sm:mb-0 h-0.5 bg-blue-600 " />
                     </div>

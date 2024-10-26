@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from "../../../ui/Button.tsx";
 import { useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { ukrainianPetitionTopics } from "../../../data/petitionTopicsList.ts";
+import {PetitionTopic} from "../../../data/petitionTopicsList.ts";
 import BackArrow from '../../../assets/images/back_arrow_mini.svg?react';
 
 interface FiltersProps {
@@ -11,14 +11,21 @@ interface FiltersProps {
     onOpenMap: () => void;
 }
 
+
 const FiltersPetition: React.FC<FiltersProps> = ({ onCloseSidebar, onOpenMap }) => {
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
     const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
     const [isUkraineSelected, setIsUkraineSelected] = useState<boolean>(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [searchParams, setSearchParams] = useSearchParams();
+    const { t } = useTranslation();
 
-    const categories = ['Громадські ініціативи', 'Організаційні ініціативи', 'Офіційні'];
+    const categories = [
+        { key: 'community_initiatives', value: 'Громадські ініціативи' },
+        { key: 'organizational_initiatives', value: 'Організаційні ініціативи' },
+        { key: 'official', value: 'Офіційні' },
+    ];
+
 
     // sync filters with url
     useEffect(() => {
@@ -43,10 +50,13 @@ const FiltersPetition: React.FC<FiltersProps> = ({ onCloseSidebar, onOpenMap }) 
         );
     };
 
-    const selectTopic = (topic: string) => {
+    const selectTopic = (topic: PetitionTopic) => {
         setSelectedTopic(topic);
         setIsDropdownOpen(false);
     };
+
+    // Текст выбранной темы
+
 
     const toggleDropdown = () => {
         setIsDropdownOpen(prev => !prev);
@@ -73,11 +83,9 @@ const FiltersPetition: React.FC<FiltersProps> = ({ onCloseSidebar, onOpenMap }) 
     const applyFilters = async () => {
         const newSearchParams = new URLSearchParams(searchParams);
 
-        // Clear previous types and set new ones
         newSearchParams.delete('types');
         selectedCategories.forEach(category => newSearchParams.append('types', category));
 
-        // Set topic if selected
         if (selectedTopic) {
             newSearchParams.set('topic', selectedTopic);
         } else {
@@ -94,7 +102,8 @@ const FiltersPetition: React.FC<FiltersProps> = ({ onCloseSidebar, onOpenMap }) 
         onCloseSidebar();
     };
 
-    const { t } = useTranslation();
+
+
 
     return (
         <div className="p-4 w-full mx-4 rounded-lg">
@@ -109,19 +118,21 @@ const FiltersPetition: React.FC<FiltersProps> = ({ onCloseSidebar, onOpenMap }) 
             <div className="mb-4">
                 <h3 className="text-lg font-montserratRegular mb-4">{t('petition_topic')}</h3>
                 <Button
-                    className={`w-full py-1 border border-blue-500  ${isDropdownOpen ? "rounded-t-2xl" : "rounded-full"}`}
+                    className={`w-full py-1 border border-blue-500 ${isDropdownOpen ? "rounded-t-2xl" : "rounded-full"}`}
                     onClick={toggleDropdown}>
-                    {selectedTopic || t('choose_topic')}
+                    {selectedTopic != null ? t(`petition_topics.${selectedTopic}`) : t('choose_topic')}
+
                 </Button>
                 {isDropdownOpen && (
-                        <div className={`w-full bg-white border-b border-l border-r border-blue-500 ${isDropdownOpen? "rounded-b-2xl": "rounded-b-2xl"}`}>
-                        {ukrainianPetitionTopics.map((topic, index) => (
+                    <div
+                        className={`w-full bg-white border-b border-l border-r border-blue-500 ${isDropdownOpen ? "rounded-b-2xl" : "rounded-b-2xl"}`}>
+                        {Object.values(PetitionTopic).map((topicKey) => (
                             <div
-                                key={index}
-                                onClick={() => selectTopic(topic)}
+                                key={topicKey}
+                                onClick={() => selectTopic(topicKey)}
                                 className="cursor-pointer py-2 px-4 rounded-2xl hover:bg-gray-100"
                             >
-                                {topic}
+                                {t(`petition_topics.${topicKey}`)}
                             </div>
                         ))}
                     </div>
@@ -138,7 +149,8 @@ const FiltersPetition: React.FC<FiltersProps> = ({ onCloseSidebar, onOpenMap }) 
                 >
                     {t('all_ukraine')}
                 </button>
-                <button onClick={onOpenMap} className="w-full block text-center py-2 font-montserratRegular rounded-full underline">
+                <button onClick={onOpenMap}
+                        className="w-full block text-center py-2 font-montserratRegular rounded-full underline">
                     {t('change')}
                 </button>
             </div>
@@ -148,16 +160,19 @@ const FiltersPetition: React.FC<FiltersProps> = ({ onCloseSidebar, onOpenMap }) 
             <div className="mb-4">
                 <h3 className="text-lg font-montserratRegular mb-4">{t('type_of_petition')}</h3>
                 <div className="space-y-2">
-                    {categories.map((category, index) => (
-                        <button
-                            key={index}
-                            onClick={() => toggleCategory(category)}
-                            className={`w-full py-1 border font-montserratRegular border-blue-500 rounded-full
-                                ${selectedCategories.includes(category) ? 'bg-dark-blue text-white' : ''}`}
-                        >
-                            {category}
-                        </button>
-                    ))}
+                    <div className="space-y-2">
+                        {categories.map(({key, value}) => (
+                            <button
+                                key={key}
+                                onClick={() => toggleCategory(value)}
+                                className={`w-full py-1 border font-montserratRegular border-blue-500 rounded-full
+                ${selectedCategories.includes(value) ? 'bg-dark-blue text-white' : ''}`}
+                            >
+                                {t(`${key}`)}
+                            </button>
+                        ))}
+                    </div>
+
                 </div>
             </div>
 
