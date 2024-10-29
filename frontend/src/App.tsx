@@ -30,69 +30,76 @@ import MapsAlarm from "./pages/maps/MapsAlarm.tsx";
 import Maps from "./pages/maps/Maps.tsx";
 import {AuthProvider} from "./hooks/AuthContext.tsx";
 import CookieBanner from "./components/CookieBanner.tsx";
+import AdminPage from "./pages/admin/AdminPage.tsx";
+import UserDetails from "./pages/admin/UserDetails.tsx";
+import ProtectedRoute from './hooks/ProtectedRoute.tsx';
 
 const App: React.FC = () => {
     return (
         <>
-                <CookieBanner />
+            <CookieBanner />
                 <Routes>
-                        <Route path="/" element={<Navigate to="/home" replace />} />
-                        {/* home */}
-                        <Route path="/home" element={<HomePage />} />
+                    <Route path="/" element={<Navigate to="/home" replace />} />
+                    {/* home */}
+                    <Route path="/home" element={<HomePage />} />
 
-                        {/* auth */}
-                        <Route path="/login" element={<LoginPage />} />
-                        <Route path="/registration" element={<RegisterPage />} />
-                        <Route path="/reset-password" element={<ResetPasswordPage />} />
-                        <Route path="/new-password" element={<NewPasswordPage />} />
+                    {/* admin */}
+                    <Route path="/admin" element={<ProtectedRoute requiredRole="admin"> <AdminPage /> </ProtectedRoute>} />
+                    <Route path="/user-details/:id" element={<ProtectedRoute requiredRole="admin"> <UserDetails /> </ProtectedRoute>} />
 
-                        {/* profile */}
-                        <Route path="/profile" element={<PrivateRoute element={<ProfilePage />} />} />
-                        <Route path="/profile-volunteer/:id" element={<PrivateRoute element={<VolunteerProfilePage />} />} />
+                    {/* auth */}
+                    <Route path="/login" element={<LoginPage />} />
+                    <Route path="/registration" element={<RegisterPage />} />
+                    <Route path="/reset-password" element={<ResetPasswordPage />} />
+                    <Route path="/new-password" element={<NewPasswordPage />} />
 
-                        {/* main */}
-                        <Route path="/main" element={<PrivateRoute element={<WebSocketProvider><MainPage /></WebSocketProvider>} />} />
-                        <Route path="/add-announcement" element={<PrivateRoute element={<CreateAnnouncementPage />} />} />
-                        <Route path="/main/announcement/:id" element={<PrivateRoute element={<WebSocketProvider><AnnouncementDetailsPage /></WebSocketProvider>} />} />
+                    {/* profile */}
+                    <Route path="/profile" element={<PrivateRoute element={<ProfilePage />} />} />
+                    <Route path="/profile-volunteer/:id" element={<PrivateRoute element={<VolunteerProfilePage />} />} />
 
-                        {/* chat */}
-                        <Route path="/chat" element={<PrivateRoute element={<WebSocketProvider> <FullChat /> </WebSocketProvider>} />} />
-                        <Route path="/chat/:chatId" element={<PrivateRoute element={<WebSocketProvider> <FullChat /> </WebSocketProvider>} />} />
+                    {/* main */}
+                    <Route path="/main" element={<PrivateRoute element={<WebSocketProvider><MainPage /></WebSocketProvider>} />} />
+                    <Route path="/add-announcement" element={<PrivateRoute element={<CreateAnnouncementPage />} />} />
+                    <Route path="/main/announcement/:id" element={<PrivateRoute element={<WebSocketProvider><AnnouncementDetailsPage /></WebSocketProvider>} />} />
 
-                        {/* maps */}
-                        <Route path="/map-alert" element={<MapsAlarm />} />
-                        <Route path="/map-help" element={<Maps />} />
+                    {/* chat */}
+                    <Route path="/chat" element={<PrivateRoute element={<WebSocketProvider> <FullChat /> </WebSocketProvider>} />} />
+                    <Route path="/chat/:chatId" element={<PrivateRoute element={<WebSocketProvider> <FullChat /> </WebSocketProvider>} />} />
 
-                        {/* gatherings */}
-                        <Route path="/gatherings" element={<GatheringPage />} />
-                        <Route path="/add-gathering" element={<PrivateRoute element={<CreateGatheringPage />} />} />
-                        <Route path="/gathering/:id" element={<GatheringDetailsPage />} />
+                    {/* maps */}
+                    <Route path="/map-alert" element={<MapsAlarm />} />
+                    <Route path="/map-help" element={<Maps />} />
 
-                        {/* petitions */}
-                        <Route path="/petitions" element={<PrivateRoute element={<PetitionPage />} />} />
-                        <Route path="/add-petition" element={<PrivateRoute element={<CreatePetitionPage />} />} />
-                        <Route path="/petition/:id" element={<PrivateRoute element={<PetitionDetailsPage />} />} />
+                    {/* gatherings */}
+                    <Route path="/gatherings" element={<GatheringPage />} />
+                    <Route path="/add-gathering" element={<PrivateRoute element={<CreateGatheringPage />} />} />
+                    <Route path="/gathering/:id" element={<GatheringDetailsPage />} />
 
-                        {/* question */}
-                        <Route path="/faq" element={<FAQPage />} />
+                    {/* petitions */}
+                    <Route path="/petitions" element={<PrivateRoute element={<PetitionPage />} />} />
+                    <Route path="/add-petition" element={<PrivateRoute element={<CreatePetitionPage />} />} />
+                    <Route path="/petition/:id" element={<PrivateRoute element={<PetitionDetailsPage />} />} />
 
-                        {/* how it works */}
-                        <Route path="/how-it-works" element={<HowItWorksPage />} />
+                    {/* question */}
+                    <Route path="/faq" element={<FAQPage />} />
 
-                        {/* cookie policy */}
-                        <Route path="/cookie-policy" element={<CookiePolicyPage />} />
+                    {/* how it works */}
+                    <Route path="/how-it-works" element={<HowItWorksPage />} />
 
-                        {/* about */}
-                        <Route path="/about" element={<AboutPage />} />
+                    {/* cookie policy */}
+                    <Route path="/cookie-policy" element={<CookiePolicyPage />} />
 
-                        {/* privacy policy */}
-                        <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+                    {/* about */}
+                    <Route path="/about" element={<AboutPage />} />
 
-                        {/* terms of use */}
-                        <Route path="/terms-of-use" element={<TermsOfUsePage />} />
+                    {/* privacy policy */}
+                    <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
 
-                        {/* 404 */}
-                        <Route path="*" element={<NotFoundPage />} />
+                    {/* terms of use */}
+                    <Route path="/terms-of-use" element={<TermsOfUsePage />} />
+
+                    {/* 404 */}
+                    <Route path="*" element={<NotFoundPage />} />
                 </Routes>
         </>
 

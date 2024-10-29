@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import PetitionCard from "../../petitions/components/PetitionCard.tsx";
 import NothingFound from "../../../assets/images/NothingFound.png";
 import {useTranslation} from "react-i18next";
+import Settings from "./Settings.tsx";
 
 interface MainContentProps {
 	activeSection: string;
@@ -18,6 +19,7 @@ interface MainContentProps {
 	completedAnnouncements: any[];
 	likedGatherings: any[];
 	likedPetitions: any[];
+	userData?: any;
 }
 
 const MainContent: React.FC<MainContentProps> = ({
@@ -31,6 +33,7 @@ const MainContent: React.FC<MainContentProps> = ({
 													 completedAnnouncements,
 													 likedGatherings,
 													 likedPetitions,
+													 userData
 												 }) => {
 	const calculatePercentage = (goal: number, raised: number) => {
 		return (raised / goal) * 100;
@@ -64,6 +67,7 @@ const MainContent: React.FC<MainContentProps> = ({
 					}
 				</>
 			)}
+
 			{activeSection === 'gatherings' && (
 				<>
 					<h1 className="text-h2 font-kharkiv">{t('my_statements')}</h1>
@@ -99,6 +103,7 @@ const MainContent: React.FC<MainContentProps> = ({
 					</div>
 				</>
 			)}
+
 			{
 				activeSection === 'petitions' && (
 					<>
@@ -250,6 +255,14 @@ const MainContent: React.FC<MainContentProps> = ({
 						</div>
 
 					}
+				</>
+			)}
+
+			{activeSection === 'settings' && (
+				<>
+					<h1 className="text-h2 font-kharkiv">{t('settings')}</h1>
+					<h3 className="text-h5 font-kharkiv mb-[2vh]">{t('shared')}</h3>
+					<Settings userData={userData} />
 				</>
 			)}
 		</main>

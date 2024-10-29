@@ -3,7 +3,6 @@ import VectorLanguage from '../assets/VectorLanguage.svg?react';
 import HelpingHand from '../../main-page/assets/Helping_Hand.svg?react';
 import VectorRequest from '../assets/VectorRequest.svg?react';
 import VectorLiked from '../assets/VectorLiked.svg?react';
-import Account from '../assets/Account.svg?react';
 import Settings from '../assets/Settings.svg?react';
 import DownArrowIcon from '../assets/Down_arrow.svg?react';
 import {useAuth} from "../../../hooks/useAuth.ts";
@@ -13,9 +12,7 @@ interface SidebarProps {
     activeSection: string;
     setActiveSection: (section: string) => void;
     setIsHelpOpen: (isOpen: boolean) => void;
-    setIsAccountOpen: (isOpen: boolean) => void;
     isHelpOpen: boolean;
-    isAccountOpen: boolean;
     avatarUrl: string;
     firstName: string;
     lastName: string;
@@ -36,9 +33,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                                              activeSection,
                                              setActiveSection,
                                              setIsHelpOpen,
-                                             setIsAccountOpen,
                                              isHelpOpen,
-                                             isAccountOpen,
                                              avatarUrl,
                                              firstName,
                                              lastName,
@@ -190,36 +185,9 @@ const Sidebar: React.FC<SidebarProps> = ({
                         </ul>
                     )}
 
-                    {/* Account */}
-                    <hr className="border-gray-300 mx-4 mb-4"/>
-                    <li
-                        className="cursor-pointer ml-8 flex items-center justify-between"
-                        onClick={() => setIsAccountOpen(!isAccountOpen)}
-                    >
-                        <div className="flex items-center">
-                            <Account className="mr-2"/> {t('account')}
-                        </div>
-                        <DownArrowIcon
-                            className={`mr-5 transform transition-transform ${isAccountOpen ? 'rotate-0' : 'rotate-180'}`}/>
-                    </li>
-                    {isAccountOpen && (
-                        <ul className="ml-16">
-                            {role == "volunteer" ?
-                                <>
-                                    <li className="cursor-pointer">{t('statistic')}</li>
-                                    <li onClick={() => setActiveSection('reviews')} className="cursor-pointer">{t('responds')}
-                                    </li>
-                                </>
-                                :
-                                <></>
-                            }
-                            <li className="cursor-pointer">{t('datas')}</li>
-                        </ul>
-                    )}
-
                     {/* Settings */}
                     <hr className="border-gray-300 mx-4 mb-4"/>
-                    <li className="cursor-pointer ml-8 flex items-center">
+                    <li className="cursor-pointer ml-8 flex items-center" onClick={() => setActiveSection('settings')}>
                         <Settings className="mr-2"/> {t('settings')}
                     </li>
                 </ul>

@@ -3,7 +3,7 @@ import {
     Controller,
     Delete,
     Get,
-    Param,
+    Param, ParseIntPipe,
     Patch,
     Post,
     Query,
@@ -46,7 +46,10 @@ export class PetitionController {
     })
     @ApiResponse({ status: 200, type: [Petition] })
     @Get('/')
+    @Roles(Role.Volunteer, Role.Victim, Role.Guest, Role.Admin)
+    @UseGuards(JwtAuthGuard)
     getAllAnnouncements(
+        @Req() req: Request,
         @Query('query') query?: string,
         @Query('topic', new EnumValidationPipe(PetitionTopic)) topics?: PetitionTopic[],
         @Query('types', new EnumValidationPipe(PetitionType)) types?: PetitionType[],
@@ -66,7 +69,10 @@ export class PetitionController {
             limit,
             offset,
         };
-        const petitions = this.petitionService.findPetitions(options);
+        const user = req.user;
+
+        const petitions = this.petitionService.findPetitions(options, user);
+
         return petitions;
     }
 
@@ -83,7 +89,6 @@ export class PetitionController {
     findPetitionsByUserId(@Param('id') id: number): Promise<Petition[]> {
         return this.petitionService.findPetitionsByUserId(id);
     }
-pe
 
     @Get('/completed')
     @ApiOperation({ summary: 'Get completed petitions for current user' })
@@ -100,6 +105,23 @@ pe
         const user = req.user as User;
         return this.petitionService.findFavoritePetitionsForUser(user.id);
     }
+
+    @ApiResponse({ status: 200, type: User })
+    @UseGuards(JwtAuthGuard)
+    @Post('block-petition/:id')
+    async blockGathering(@Param('id', ParseIntPipe) id: number) {
+        return this.petitionService.blockPetition(id);
+    }
+
+    @ApiOperation({ summary: 'Delete a petition by ID' })
+    @ApiResponse({ status: 204 })
+    @UseGuards(JwtAuthGuard)
+    @Delete(':id')
+    delete(@Param('id') id: string): Promise<void> {
+        return this.petitionService.delete(+id);
+    }
+
+
 
     @ApiOperation({ summary: 'Get an announcement by ID' })
     @ApiResponse({ status: 200, type: Petition })

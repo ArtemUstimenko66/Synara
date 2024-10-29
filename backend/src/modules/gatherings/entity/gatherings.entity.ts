@@ -115,6 +115,14 @@ export class Gatherings {
   is_favorite: boolean;
 
   @ApiProperty({
+    example: false,
+    description: 'Whether gathering blocked',
+    type: Boolean,
+  })
+  @Column({ default: false })
+  isBlockedGathering?: boolean;
+
+  @ApiProperty({
     example: '2024-09-23T18:30:00.000Z',
     description: 'Timestamp when the gathering was created',
     type: Date,
@@ -122,7 +130,10 @@ export class Gatherings {
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 
-  @ManyToOne(() => User, (user) => user.gatherings)
+  @ManyToOne(() => User, (user) => user.gatherings, {
+        onDelete: 'CASCADE',
+      }
+  )
   user: User;
 
   @OneToMany(() => FileGathering, (file) => file.gathering)

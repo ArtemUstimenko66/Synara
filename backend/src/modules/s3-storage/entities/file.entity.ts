@@ -42,7 +42,10 @@ export class File {
   isAvatar?: boolean;
 
 
-  @ManyToOne(() => User, (user) => user.files)
+  @ManyToOne(() => User, (user) => user.files, {
+        onDelete: 'CASCADE',
+      }
+  )
   @ApiProperty({
     description: 'User associated with the file',
     type: () => User,

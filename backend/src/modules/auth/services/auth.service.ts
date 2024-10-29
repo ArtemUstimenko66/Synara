@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {ForbiddenException, Injectable, UnauthorizedException} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../../users/services/users.service';
 import { VolunteersService } from '../../users/services/volunteer.service';
@@ -104,8 +104,12 @@ export class AuthService {
     if (!user) {
       throw new UnauthorizedException();
     }
+      if(user == "blocked"){
+          throw new ForbiddenException();
+      }
 
-    return this.generateTokens(user);
+
+      return this.generateTokens(user);
   }
 
   async refreshToken(refreshToken: string) {
@@ -137,7 +141,11 @@ export class AuthService {
 
   async validateUser(email: string, password: string): Promise<any> {
     const user = await this.userService.findByEmail(email);
-    if (user && (await bcrypt.compare(password, user.password))) {
+      if(user.isBlockedUser){
+          return "blocked"
+      }
+
+      if (user && (await bcrypt.compare(password, user.password))) {
       const { password, ...result } = user;
       return result;
     }

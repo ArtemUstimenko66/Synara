@@ -32,9 +32,17 @@ export class SynaraCommentService {
     }
   }
 
-  async getAll(): Promise<SynaraComment[]> {
-    return await this.commentRepository.find({ relations: ['author'] });
+  async getAll(options: { limit?: number } = {}): Promise<SynaraComment[]> {
+    const queryBuilder = this.commentRepository.createQueryBuilder('synara-comment')
+        .leftJoinAndSelect('synara-comment.author', 'author')
+
+    if (options.limit !== undefined) {
+      queryBuilder.take(options.limit);
+    }
+
+    return queryBuilder.getMany();
   }
+
 
   async update(id: number, updateDto: SynaraCommentUpdateDto) {
     if (updateDto.rating >= 0) {

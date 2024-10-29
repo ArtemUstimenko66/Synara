@@ -20,7 +20,6 @@ import {Helmet} from "react-helmet-async";
 const ProfilePage = () => {
     const [activeSection, setActiveSection] = useState<string>('announcements');
     const [isHelpOpen, setIsHelpOpen] = useState(false);
-    const [isAccountOpen, setIsAccountOpen] = useState(false);
     const [announcementsData, setAnnouncementsData] = useState([]);
     const [gatheringsData, setGatheringsData] = useState([]);
     const [petitionsData, setPetitionsData] = useState([]);
@@ -30,6 +29,7 @@ const ProfilePage = () => {
     const [favoriteGatheringsData, setFavoriteGatheringsData] = useState([]);
     const [favoritePetitionsData, setFavoritePetitionsData] = useState([]);
     const [completedAnnouncementsData, setCompletedAnnouncementsData] = useState([]);
+    const [user, setUser] = useState([]);
 
     const [userData, setUserData] = useState({
         avatarUrl: '',
@@ -53,7 +53,7 @@ const ProfilePage = () => {
                     setGatheringsData(data.gatherings);
                     setPetitionsData(data.petitions);
 
-
+                    setUser(data);
 
                     setUserData({
                         avatarUrl: data.avatarUrl,
@@ -126,8 +126,6 @@ const ProfilePage = () => {
                             setActiveSection={setActiveSection}
                             isHelpOpen={isHelpOpen}
                             setIsHelpOpen={setIsHelpOpen}
-                            isAccountOpen={isAccountOpen}
-                            setIsAccountOpen={setIsAccountOpen}
                             avatarUrl={userData.avatarUrl || 'https://via.placeholder.com/150'}
                             firstName={userData.firstName}
                             lastName={userData.lastName}
@@ -146,6 +144,7 @@ const ProfilePage = () => {
                         completedAnnouncements={completedAnnouncementsData}
                         likedGatherings={favoriteGatheringsData}
                         likedPetitions={favoritePetitionsData}
+                        userData={user}
                     />
                 </div>
             </div>

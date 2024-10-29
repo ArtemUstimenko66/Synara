@@ -5,7 +5,7 @@ import {
   Get,
   Param,
   Patch,
-  Post,
+  Post, Query,
   Req,
   UseGuards,
 } from '@nestjs/common';
@@ -40,8 +40,8 @@ export class SynaraCommentController {
   @ApiOperation({ summary: 'Get all comments of Synara' })
   @ApiResponse({ status: 200, type: [SynaraComment] })
   @Get()
-  getAll(): Promise<SynaraComment[]> {
-    return this.serviceSynaraComment.getAll();
+  getAll(@Query('limit') limit? : number,): Promise<SynaraComment[]> {
+    return this.serviceSynaraComment.getAll({limit});
   }
 
   @ApiOperation({ summary: 'Update comment of Synara' })

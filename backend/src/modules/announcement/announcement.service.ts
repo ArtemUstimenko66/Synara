@@ -1,5 +1,5 @@
 import {
-  BadRequestException,
+  BadRequestException, HttpException, HttpStatus,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -81,6 +81,7 @@ export class AnnouncementService {
 
   async findAnnouncements(
     options: Partial<FindAnnouncementsOptions> = {},
+    user: any
   ): Promise<Announcement[]> {
     const qb = this.announcementRepository
       .createQueryBuilder('announcement')
@@ -94,6 +95,14 @@ export class AnnouncementService {
       qb.andWhere('announcement.description ILIKE :query', {
         query: `%${options.query}%`,
       });
+    }
+
+    if('roles' in user){
+      console.log(user.roles)
+      if(!(user.roles as string[]).includes('admin'))
+        qb.andWhere('announcement.isBlockedAnnouncement = :isBlock', {
+          isBlock: "false"
+        })
     }
 
     // filter by type help
@@ -121,6 +130,16 @@ export class AnnouncementService {
 
     return qb.getMany();
   }
+
+  async blockAnnouncement(id){
+    const announcement = await this.announcementRepository.findOneBy({id});
+    if (!announcement) {
+      throw new HttpException('Announcement not found', HttpStatus.NOT_FOUND);
+    }
+    announcement.isBlockedAnnouncement = !announcement.isBlockedAnnouncement;
+    return await this.announcementRepository.save(announcement);
+  }
+
 
   async findCompletedAnnouncementsForUser(userId: number) : Promise<Announcement[]> {
     return this.announcementRepository

@@ -109,6 +109,14 @@ export class Announcement {
   is_favorite: boolean;
 
   @ApiProperty({
+    example: false,
+    description: 'Whether announcement blocked',
+    type: Boolean,
+  })
+  @Column({ default: false })
+  isBlockedAnnouncement?: boolean;
+
+  @ApiProperty({
     example: '2024-08-25',
     description: 'Date when the announcement was created',
     type: Date,
@@ -116,13 +124,19 @@ export class Announcement {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date
 
-  @ManyToOne(() => User, (user) => user.announcements)
+  @ManyToOne(() => User, (user) => user.announcements,{
+  onDelete: 'CASCADE',
+}
+)
   user: User;
 
   @OneToMany(() => File, (file) => file.announcement)
   files: File[];
 
-  @ManyToOne(() => User, (user) => user.complete_announcements)
+  @ManyToOne(() => User, (user) => user.complete_announcements,{
+  onDelete: 'CASCADE',
+}
+)
   volunteer_who_complete: User;
 
 }

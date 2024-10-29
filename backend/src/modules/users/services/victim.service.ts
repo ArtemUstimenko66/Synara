@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import {Injectable, NotFoundException} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { VictimsEntity } from '../entities/victim.entity';
 import { CreateVictimDto } from '../dtos/create-victim.dto';
 import { GeocodingService } from './geocoding.service';
+import {UpdateVictimDto} from "../dtos/update-victim.dto";
 
 @Injectable()
 export class VictimService {
@@ -23,6 +24,18 @@ export class VictimService {
       where: { userId },
     });
   }
+
+  async updateVictim(updatedVictim : UpdateVictimDto, id : number){
+    const victim = await this.victimsRepository.findOneBy({ id});
+    if (!victim) {
+      throw new NotFoundException(`Victim ${id} not found`);
+    }
+
+    Object.assign(victim, updatedVictim);
+
+    return await this.victimsRepository.save(victim);
+  }
+
 
   async findVictimsByCity(city: string): Promise<any[]> {
     const victims = await this.victimsRepository.find({

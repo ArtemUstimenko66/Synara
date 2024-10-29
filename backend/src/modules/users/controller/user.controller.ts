@@ -1,8 +1,8 @@
 import {
   Body,
-  Controller,
+  Controller, Delete,
   Get,
-  Param, Patch,
+  Param, ParseIntPipe, Patch,
   Post,
   Query,
   UploadedFile,
@@ -22,6 +22,8 @@ import {SupportType} from "../enums/support-type.enum";
 import {EnumValidationPipe} from "../../announcement/enum-validation.pipe";
 import {GenderType} from "../enums/gender.enum";
 import {UpdateUserDto} from "../dtos/update-user.dto";
+import {UpdateVictimDto} from "../dtos/update-victim.dto";
+import {UpdateVolunteerDto} from "../dtos/update-volunteer.dto";
 
 @ApiTags('Users')
 @Controller('api/users')
@@ -52,11 +54,6 @@ export class UserController {
   ) {
     const decodedCity = decodeURIComponent(city);
     return this.victimService.getUsersByRadius(radius, decodedCity);
-  }
-
-  @Get()
-  async getUsers() {
-    return this.userService.findAll();
   }
 
   @ApiResponse({ status: 200, type: [VolunteersEntity] })
@@ -90,6 +87,54 @@ export class UserController {
   async findVolunteerById(@Param('id') id: number): Promise<VolunteersEntity> {
     return this.volunteerService.findVolunteerById(id);
   }
+
+  @Get()
+  async getUsers(@Query('limit') limit = 12, @Query('role') role= 'volunteer', @Query('sortOrder') sortOrder: 'ASC' | 'DESC' = 'ASC',) {
+    const options = {
+      limit,
+      role,
+      sortOrder,
+    };
+    return this.userService.findAll(options);
+  }
+
+  @ApiResponse({ status: 200, type: User })
+  @UseGuards(JwtAuthGuard)
+  @Post('block-user/:id')
+  async blockUser(@Param('id', ParseIntPipe) id: number) {
+    return this.userService.blockUser(id);
+  }
+
+
+  @ApiResponse({ status: 200, type: VolunteersEntity })
+  @Get('/user/:id')
+  async findUserById(@Param('id', ParseIntPipe) id: number): Promise<User> {
+    return this.userService.findById(id);
+  }
+
+  @ApiResponse({ status: 200, type: VolunteersEntity })
+  @Patch("volunteer/:id")
+  @UseGuards(JwtAuthGuard)
+  async recordModeratorAnswer(@Body() updateVolunteer : UpdateVolunteerDto, @Param("id", ParseIntPipe) id : number){
+    return this.volunteerService.updateVolunteer(updateVolunteer, id)
+  }
+
+  @ApiResponse({ status: 200, type: VolunteersEntity })
+  @Patch("victim/:id")
+  @UseGuards(JwtAuthGuard)
+  async updateVictim(@Body() updateVictim : UpdateVictimDto, @Param("id", ParseIntPipe) id : number){
+    return this.victimService.updateVictim(updateVictim, id)
+  }
+
+
+  @ApiOperation({ summary: 'Delete a user by ID' })
+  @ApiResponse({ status: 204 })
+  @UseGuards(JwtAuthGuard)
+  @Delete(':id')
+  delete(@Param('id') id: string): Promise<void> {
+    return this.userService.delete(+id);
+  }
+
 
 
   @UseGuards(JwtAuthGuard)

@@ -5,7 +5,7 @@ import {
   Get,
   Param,
   Patch,
-  Post,
+  Post, Query,
   Req,
   UseGuards,
 } from '@nestjs/common';
@@ -57,8 +57,10 @@ export class CommentsController {
   @ApiOperation({ summary: 'Get all comments' })
   @ApiResponse({ status: 200, type: [Comment] })
   @Get('/')
-  getAllComments() {
-    return this.commentsService.getAllComments();
+  getAllComments(
+      @Query('limit') limit? : number,
+  ) {
+    return this.commentsService.getAllComments({limit});
   }
 
   @ApiOperation({ summary: 'Get an comment' })

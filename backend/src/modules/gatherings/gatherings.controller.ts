@@ -3,7 +3,7 @@ import {
   Body,
   Controller, Delete,
   Get,
-  Param, ParseArrayPipe, Patch,
+  Param, ParseArrayPipe, ParseIntPipe, Patch,
   Post,
   Query, Req,
   UseGuards,
@@ -45,7 +45,10 @@ export class GatheringsController {
   })
   @ApiResponse({ status: 200, type: [Gatherings] })
   @Get('/')
+  @UseGuards(JwtAuthGuard)
+  @Roles(Role.Volunteer, Role.Victim, Role.Guest, Role.Admin)
   async getAllGatherings(
+      @Req() req: Request,
       @Query('query') query?: string,
       @Query('limit') limit = 12,
       @Query('offset') offset = 0,
@@ -66,7 +69,11 @@ export class GatheringsController {
       moneyTo,
       typeEnding,
     };
-    return this.gatheringService.findGatherings(options);
+    const user = req.user;
+
+
+    return this.gatheringService.findGatherings(options, user);
+
   }
 
   @Get('/completed')
@@ -86,6 +93,14 @@ export class GatheringsController {
     }
     return this.gatheringService.findFavoriteGatheringsForUser(user.id);
   }
+
+  @ApiResponse({ status: 200, type: User })
+  @UseGuards(JwtAuthGuard)
+  @Post('block-gathering/:id')
+  async blockGathering(@Param('id', ParseIntPipe) id: number) {
+    return this.gatheringService.blockGathering(id);
+  }
+
 
   @ApiOperation({ summary: 'Get an gathering by ID' })
   @ApiResponse({ status: 200, type: Gatherings })

@@ -1,5 +1,5 @@
 import {
-    BadRequestException,
+    BadRequestException, HttpException, HttpStatus,
     Injectable, NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -89,6 +89,7 @@ export class PetitionService {
 
     async findPetitions(
         options: Partial<FindPetitionOptions> = {},
+        user: any
     ): Promise<Petition[]> {
         const qb = this.petitionRepository
             .createQueryBuilder('petition')
@@ -125,6 +126,15 @@ export class PetitionService {
             );
         }
 
+        if('roles' in user){
+            console.log(user.roles)
+            if(!(user.roles as string[]).includes('admin'))
+                qb.andWhere('petition.isBlockedPetition = :isBlock', {
+                    isBlock: "false"
+                })
+        }
+
+
         const sortField = options.sortField || 'creationDate';
         qb.orderBy(`petition.${sortField}`, sortOrder)
             .take(options.limit)
@@ -132,6 +142,23 @@ export class PetitionService {
 
         return qb.getMany();
     }
+
+    async delete(id: number): Promise<void> {
+        const result = await this.petitionRepository.delete(id);
+        if (result.affected === 0) {
+            throw new NotFoundException(`Petition with id ${id} not found`);
+        }
+    }
+
+    async blockPetition(id: number){
+        const petition = await this.petitionRepository.findOneBy({id});
+        if (!petition) {
+            throw new HttpException('Petition not found', HttpStatus.NOT_FOUND);
+        }
+        petition.isBlockedPetition = !petition.isBlockedPetition;
+        return await this.petitionRepository.save(petition);
+    }
+
 
     private calculateDeadline() : Date {
         const currentDate = new Date();

@@ -106,6 +106,21 @@ export class VolunteersEntity {
   @Column({ type: 'text', nullable: true })
   description: string;
 
+  @ApiProperty({
+    example: 'Кваліфікований',
+    description: 'Answer of moderator about volunteer qualification.',
+  })
+  @Column({ type: 'text', nullable: true })
+  moderator_answer?: string;
+
+  @ApiProperty({
+    example: 'true',
+    description: 'Is show my profile in volunteer search.',
+  })
+  @Column({ type: 'boolean', nullable: true, default: true })
+  is_show_my_profile?: boolean;
+
+
   @OneToOne(() => User, (user) => user.volunteer, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'userId' })
   user: User;

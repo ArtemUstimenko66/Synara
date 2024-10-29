@@ -135,6 +135,14 @@ export class User {
   @Column({ default: false })
   isConfirmedEmail?: boolean;
 
+  @ApiProperty({
+    example: false,
+    description: 'Whether user blocked',
+    type: Boolean,
+  })
+  @Column({ default: false })
+  isBlockedUser?: boolean;
+
   @OneToOne(() => VolunteersEntity, (volunteers) => volunteers.user)
   volunteer?: VolunteersEntity;
 

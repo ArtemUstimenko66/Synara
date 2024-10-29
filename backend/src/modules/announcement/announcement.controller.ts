@@ -3,7 +3,7 @@ import {
   Controller,
   Delete,
   Get,
-  Param,
+  Param, ParseIntPipe,
   Patch,
   Post,
   Query,
@@ -46,9 +46,12 @@ export class AnnouncementController {
     summary: 'Find announcements with filters, search and sorting',
   })
   @ApiResponse({ status: 200, type: [Announcement] })
+  @UseGuards(JwtAuthGuard)
+  @Roles(Role.Volunteer, Role.Victim, Role.Guest, Role.Admin)
   @Get('/')
   getAllAnnouncements(
-    @Query('query') query?: string,
+      @Req() req: Request,
+      @Query('query') query?: string,
     @Query('type', new EnumValidationPipe(TypeHelp)) types?: TypeHelp[],
     @Query('limit') limit = 12,
     @Query('offset') offset = 0,
@@ -64,8 +67,16 @@ export class AnnouncementController {
       offset,
       isUrgent
     };
-    const announcements = this.announcementService.findAnnouncements(options);
+    const user = req.user;
+    const announcements = this.announcementService.findAnnouncements(options, user);
     return announcements;
+  }
+
+  @ApiResponse({ status: 200, type: User })
+  @UseGuards(JwtAuthGuard)
+  @Post('block-announcement/:id')
+  async blockAnnouncement(@Param('id', ParseIntPipe) id: number) {
+    return this.announcementService.blockAnnouncement(id);
   }
 
   @Get('/completed')

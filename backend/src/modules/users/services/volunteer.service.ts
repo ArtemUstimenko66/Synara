@@ -6,6 +6,7 @@ import { CreateVolunteerDto } from '../dtos/create-volunteer.dto';
 import { SupportType } from "../enums/support-type.enum";
 import { GenderType } from "../enums/gender.enum";
 import { Comment } from "../../comments/entity/comments.entity";
+import {UpdateVolunteerDto} from "../dtos/update-volunteer.dto";
 
 export interface FindVolunteersOptions {
   name?: string;
@@ -40,12 +41,28 @@ export class VolunteersService {
     });
   }
 
+  async updateVolunteer(updatedVolunteer : UpdateVolunteerDto, id : number){
+    const volunteer = await this.volunteersRepository.findOneBy({ user:{id}});
+    if (!volunteer) {
+      throw new NotFoundException(`Volunteer ${id} not found`);
+    }
+
+    Object.assign(volunteer, updatedVolunteer);
+
+    return await this.volunteersRepository.save(volunteer);
+  }
+
+
   async findVolunteers(
       options: Partial<FindVolunteersOptions> = {},
   ): Promise<VolunteersEntity[]> {
     const qb = this.volunteersRepository
         .createQueryBuilder('volunteer')
         .leftJoinAndSelect('volunteer.user', 'user');
+    qb.andWhere('volunteer.is_show_my_profile = :isShowProfile', {
+      isShowProfile : true
+    })
+
 
     this.applyNameFilter(qb, options.name);
     this.applySupportsFilter(qb, options.supports);

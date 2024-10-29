@@ -53,10 +53,19 @@ export class CommentService {
     }
   }
 
-  async getAllComments() {
-    return await this.commentRepository.find({
-      relations: ['author', 'volunteer', 'volunteer.user'],
-    });
+  async getAllComments(options: { limit?: number } = {}
+  ) {
+    const queryBuilder = this.commentRepository.createQueryBuilder('comment')
+        .leftJoinAndSelect('comment.author', 'author')
+        .leftJoinAndSelect('comment.volunteer', 'volunteer')
+        .leftJoinAndSelect('volunteer.user', 'user');
+
+    if (options.limit !== undefined) {
+      queryBuilder.take(options.limit);
+    }
+
+    return queryBuilder.getMany();
+
   }
 
 

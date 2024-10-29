@@ -1,5 +1,5 @@
 import {
-  BadRequestException,
+  BadRequestException, HttpException, HttpStatus,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -82,6 +82,7 @@ export class GatheringsService {
 
   async findGatherings(
       options: Partial<FindGatheringsOptions> = {},
+      user: any
   ): Promise<Gatherings[]> {
     const qb = this.gatheringRepository.createQueryBuilder('gathering')
         .leftJoinAndSelect('gathering.user', 'user')
@@ -93,6 +94,15 @@ export class GatheringsService {
           { query: `%${lowerCaseQuery}%` },
       );
     }
+
+    if('roles' in user){
+      console.log(user.roles)
+      if(!(user.roles as string[]).includes('admin'))
+        qb.andWhere('gathering.isBlockedGathering = :isBlock', {
+          isBlock: "false"
+        })
+    }
+
 
 
     if (options.isUrgent !== undefined) {
@@ -221,4 +231,14 @@ export class GatheringsService {
     gatherings.is_favorite = !gatherings.is_favorite;
 
     return this.gatheringRepository.save(gatherings);  }
+
+  async blockGathering(id: number){
+    const gathering = await this.gatheringRepository.findOneBy({id});
+    if (!gathering) {
+      throw new HttpException('Gathering not found', HttpStatus.NOT_FOUND);
+    }
+    gathering.isBlockedGathering = !gathering.isBlockedGathering;
+    return await this.gatheringRepository.save(gathering);
+  }
+
 }

@@ -1,4 +1,4 @@
-import {BadRequestException, Injectable} from '@nestjs/common';
+import {BadRequestException, HttpException, HttpStatus, Injectable, NotFoundException} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../entities/users.entity';
 import { Repository } from 'typeorm';
@@ -49,20 +49,58 @@ export class UsersService {
     return this.userRepository.save(user);
   }
 
-  async findAll(): Promise<User[]> {
-    return await this.userRepository.find();
+  async findAll(options: { limit: number; role: string; sortOrder: 'ASC' | 'DESC'; }): Promise<User[]> {
+    const qb = this.userRepository.createQueryBuilder('user')
+        .leftJoinAndSelect('user.volunteer', 'volunteer')
+        .leftJoinAndSelect('user.victim', 'victim')
+        .leftJoinAndSelect('user.files', 'files');
+
+    if (options.role && options.role.trim() !== '') {
+      qb.andWhere('user.role = :role', { role: options.role });
+    }
+
+    const sortOrder = options.sortOrder ?? 'DESC';
+    qb.orderBy('user.id', sortOrder)
+        .take(options.limit);
+
+    return qb.getMany();
   }
+
 
   async findById(id: number): Promise<User> {
     return this.userRepository.findOne({
       where: { id },
-      relations: ['volunteer', 'victim', 'announcements', 'gatherings', 'petitions', 'comments_author'],
+      relations: ['volunteer', 'victim', 'announcements', 'gatherings', 'petitions', 'comments_author', 'files'],
     });
   }
 
   async findByEmail(email: string): Promise<User | undefined> {
     return this.userRepository.findOne({ where: { email } });
   }
+
+  async blockUser(id: number): Promise<User> {
+    const user = await this.findById(id);
+    if (!user) {
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    }
+    user.isBlockedUser = !user.isBlockedUser;
+    return await this.userRepository.save(user);
+  }
+
+  async delete(id: number): Promise<void> {
+    const deleteResult = await this.userRepository
+        .createQueryBuilder()
+        .delete()
+        .from(User)
+        .where("id = :id", { id })
+        .returning("id")
+        .execute();
+
+    if (deleteResult.affected === 0) {
+      throw new NotFoundException(`User with id ${id} not found`);
+    }
+  }
+
 
   async findUserByPhoneNumber(phoneNumber: string): Promise<User | undefined> {
     return this.userRepository.findOne({ where: { phoneNumber } });

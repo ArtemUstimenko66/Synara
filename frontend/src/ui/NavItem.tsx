@@ -17,7 +17,7 @@ const NavItem: React.FC<NavItemProps> = ({ text = "", to, isLast = false, classN
             <span
                 className={`${className} text-medium-gray xl:text-pl md:text-pxl sm:text-pd Montserrat cursor-pointer hover:text-almost-black}`}
             >
-                <div className="mb-2">
+                <div className="my-2">
                     {text}
                 </div>
             </span>

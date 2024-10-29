@@ -109,6 +109,15 @@ export class Petition {
 
     @ApiProperty({
         example: false,
+        description: 'Whether gathering blocked',
+        type: Boolean,
+    })
+    @Column({ default: false })
+    isBlockedPetition?: boolean;
+
+
+    @ApiProperty({
+        example: false,
         description: 'Indicates whether the petition is favorite',
         type: Boolean,
     })
@@ -126,6 +135,9 @@ export class Petition {
     @Column({ type: 'int', default: 0})
     signatureCount: number;
 
-    @ManyToOne(() => User, (user) => user.petitions)
+    @ManyToOne(() => User, (user) => user.petitions, {
+            onDelete: 'CASCADE',
+        }
+    )
     author: User;
 }
