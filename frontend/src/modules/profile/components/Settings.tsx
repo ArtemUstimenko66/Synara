@@ -766,7 +766,7 @@ const Settings: React.FC<SettingsProps> = ({ userData }) => {
                                                         type === 'humanitarian' ? `${t('categories2')}` :
                                                             `${t('categories4')}`}
                                             </strong>
-                                            {`${t('helpProvide')} :`}
+                                            {` ${t('helpProvide')} :`}
                                         </label>
                                         <input
                                             type="text"

@@ -68,7 +68,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                     className="mt-2 rounded-full w-14 h-14 mx-auto"
                 />
                 <div>
-                    <p className="text-relative-h5 font-montserratRegular mr-8">{`${firstName} ${lastName}`}</p>
+                    <p className="xl:text-xs-pxl md:text-relative-h5 sm:text-xs-h3 font-montserratRegular mr-8">{`${firstName} ${lastName}`}</p>
                     <p className="text-sm text-gray-600 font-montserratRegular">{formatDate(birthDate)}</p>
                 </div>
             </div>
@@ -128,7 +128,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                     <div className="h-[1.5vh]"></div>
                 }
 
-                <ul className="space-y-4">
+                <ul className="space-y-4 mb-2">
 
 
                     {/* My Applications */}
