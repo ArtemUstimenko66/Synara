@@ -191,7 +191,8 @@ const Footer: React.FC = () => {
                                 <a href="#" aria-label="Facebook">
                                     <FontAwesomeIcon icon={['fab', 'facebook-f']}/>
                                 </a>
-                                <a href="#" aria-label="Instagram">
+                                <a href="https://www.instagram.com/synara.help/" target="_blank"
+                                    rel="noopener noreferrer" aria-label="Instagram">
                                     <FontAwesomeIcon icon={['fab', 'instagram']}/>
                                 </a>
                                 <a href="#" aria-label="Twitter">

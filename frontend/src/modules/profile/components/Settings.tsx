@@ -27,14 +27,14 @@ const Settings: React.FC<SettingsProps> = ({ userData }) => {
     const [isEditable, setIsEditable] = useState(false);
 
     // @ts-ignore
-    const supportDescriptions = userData.role === 'volunteer' && userData.volunteer
-        ? parseSupportDescription(userData.volunteer.support_description)
-        : {
-            psychological: '',
-            informational: '',
-            humanitarian: ''
-        };
-
+    const supportDescriptions =
+        userData.role === 'volunteer' && userData.volunteer && userData.volunteer.support_description
+            ? parseSupportDescription(userData.volunteer.support_description)
+            : {
+                psychological: '',
+                informational: '',
+                humanitarian: ''
+            };
     const initialFormData = userData.role === 'victim'
         ? { ...userData } as UserVictim
         : {
@@ -185,14 +185,14 @@ const Settings: React.FC<SettingsProps> = ({ userData }) => {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const { t } = useTranslation();
 
-    const weekdays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Нд"];
+    const weekdays = [`${t('Mon')}`, `${t('Tues')}`, `${t('Wed')}`, `${t('Thurs')}`, `${t('Fri')}`, `${t('Sat')}`, `${t('Sun')}`];
     const helpTypes = ['psychological', 'informational', 'humanitarian', 'material'];
 
     const handleEdit = () => setIsEditable(true);
 
     const handleSave = async () => {
         if (validateFields()) {
-           // console.log("Сохраненные данные:", formData);
+            // console.log("Сохраненные данные:", formData);
             await saveUserData(formData);
             if (formData.role == 'volunteer'){
                 await saveVolunteerData(formData);
@@ -284,7 +284,7 @@ const Settings: React.FC<SettingsProps> = ({ userData }) => {
     // @ts-ignore
     async function saveVictimData(formData) {
         const victimData = prepareVictimData(formData);
-       // console.log("ready send -> ", victimData)
+        // console.log("ready send -> ", victimData)
         await updateVictim(formData.id, victimData)
     }
 
@@ -458,7 +458,7 @@ const Settings: React.FC<SettingsProps> = ({ userData }) => {
 
     return (
 
-        <div className=" py-6 xl:-mt-[9vh]">
+        <div className=" py-6 xl:-mt-[9vh] ">
             {/* Header */}
             <div className="flex justify-end items-end mb-4">
 
@@ -467,7 +467,7 @@ const Settings: React.FC<SettingsProps> = ({ userData }) => {
                     className="text-blue-600 font-montserratMedium"
                     onClick={() => (isEditable ? handleSave() : handleEdit())}
                 >
-                    {isEditable ? "ЗБЕРЕГТИ" : "РЕДАГУВАТИ"}
+                    {isEditable ? `${t('saveUPPER')}` : `${t('editUPPER')}`}
                 </Button>
 
             </div>
@@ -494,10 +494,10 @@ const Settings: React.FC<SettingsProps> = ({ userData }) => {
                 </span>
             )}
         </span>
-                        Відображати мій акаунт на сторінці “Пошук волонтера”
+                        {t('displayVolunteer')}
                     </label>
                 )}
-                <div className="flex items-center  gap-4 mb-4 mt-4">
+                <div className="md:flex sm:flex-none xl:flex items-center  gap-4 mb-4 mt-4">
                     {isEditable ? (
                         <label htmlFor="photo-upload" className="cursor-pointer">
                             <img src={formData.avatarUrl || 'https://via.placeholder.com/150'} alt="User" className="w-16 h-16 rounded-full object-cover"/>
@@ -515,9 +515,9 @@ const Settings: React.FC<SettingsProps> = ({ userData }) => {
 
 
                     {/* Name and Surname Fields */}
-                    <div className="flex-grow grid grid-cols-2 space-x-12 gap-4 font-montserratRegular">
+                    <div className="flex-grow grid md:grid-cols-2 sm:grid-cols-1 xl:grid-cols-2 md:space-x-12 sm:space-x-0 xl:space-x-12 gap-4 font-montserratRegular">
                         <div>
-                            <label>Ім'я*</label>
+                            <label>{t('name')}*</label>
                             <input
                                 name="firstName"
                                 type="text"
@@ -532,7 +532,7 @@ const Settings: React.FC<SettingsProps> = ({ userData }) => {
                             )}
                         </div>
                         <div>
-                            <label>Прізвище*</label>
+                            <label>{t('surname')}*</label>
                             <input
                                 name="lastName"
                                 type="text"
@@ -550,7 +550,7 @@ const Settings: React.FC<SettingsProps> = ({ userData }) => {
                 </div>
 
 
-                <div className="grid grid-cols-3 gap-4 mb-4 font-montserratRegular">
+                <div className="grid md:grid-cols-3 sm:grid-cols-1 xl:grid-cols-3 gap-4 mb-4 font-montserratRegular">
                     <div>
                         <label className="font-montserratRegular mb-8">{t('telephone_number')}*</label>
                         <div className="flex items-center space-x-2">
@@ -570,7 +570,7 @@ const Settings: React.FC<SettingsProps> = ({ userData }) => {
                     </div>
 
                     <div>
-                        <label>Область*</label>
+                        <label>{t('region')}*</label>
                         <input
                             name="region"
                             type="text"
@@ -615,7 +615,7 @@ const Settings: React.FC<SettingsProps> = ({ userData }) => {
 
 
                     <div>
-                        <label>Місто*</label>
+                        <label>{t('city')}*</label>
                         <input
                             type="text"
                             name="city"
@@ -665,78 +665,81 @@ const Settings: React.FC<SettingsProps> = ({ userData }) => {
 
                     <>
                         <div className="mb-4 font-montserratMedium">
-                            <label className="font-montserratRegular">Коли ви на зв'язку:</label>
-                            <div className="flex items-center gap-2">
+                            <label className="font-montserratRegular">{t('touchPhone')}:</label>
+                            <div className="md:flex sm:flex-none xl:flex items-center gap-2">
 
                                 {/* Выбор рабочих дней */}
-                                <Calendar className="h-8 w-8"/>
-                                {isEditable ? (
-                                    <div className="flex gap-2">
-                                        {weekdays.map((day) => (
-                                            <button
-                                                key={day}
-                                                className={`p-2 rounded ${
-                                                    selectedDays.includes(getDayOfWeekInUkrainian(day)) 
-                                                        ? 'bg-blue-500 text-white'
-                                                        : 'bg-gray-200 text-black'
-                                                }`}
-                                                onClick={() => handleDayClick(getDayOfWeekInUkrainian(day))}
-                                            >
-                                                {getDayOfWeekInUkrainian(day)}
-                                            </button>
-                                        ))}
-                                    </div>
-                                ) : (
-                                    <span className="p-2 rounded">
-         {`${getDayOfWeekInUkrainian(formData.volunteer.startWorkingDay)} - ${getDayOfWeekInUkrainian(formData.volunteer.endWorkingDay)}`}
+                                <div className="flex">
+                                    <Calendar className="h-8 w-8 mr-2"/>
+                                    {isEditable ? (
+                                        <div className="flex gap-2">
+                                            {weekdays.map((day) => (
+                                                <button
+                                                    key={day}
+                                                    className={`p-2 rounded ${
+                                                        selectedDays.includes(getDayOfWeekInUkrainian(day))
+                                                            ? 'bg-blue-500 text-white'
+                                                            : 'bg-gray-200 text-black'
+                                                    }`}
+                                                    onClick={() => handleDayClick(getDayOfWeekInUkrainian(day))}
+                                                >
+                                                    {getDayOfWeekInUkrainian(day)}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    ) : (
+                                        <span className="p-2 rounded">
+         {`${getDayOfWeekInUkrainian(formData.volunteer.startWorkingDay) || `${t('Mon')}`} - ${getDayOfWeekInUkrainian(formData.volunteer.endWorkingDay)|| `${t('Fri')}`}`}
 
 
 
 
                             </span>
-                                )}
 
-                                {/* Время начала и окончания работы */}
-                                <Clock className="h-8 w-8 ml-4"/>
-                                {isEditable ? (
-                                    <div className="flex flex-col">
-                                        <div className="flex gap-2 items-center">
-                                            <input
-                                                type="text"
-                                                name="startTime"
-                                                placeholder="09:00"
-                                                value={formData.volunteer.startTime}
-                                                onChange={handleTimeChange}
-                                                className="p-2 w-2/6 border-2 border-light-blue rounded focus:outline-none focus:border-blue-500"
-                                            />
+                                    )}
+                                </div>
+                                <div className="flex xl:mt-0 md:mt-0 sm:mt-4">
+                                    <Clock className="xl:h-8 xl:w-8 md:h-8 md:w-8 sm:h-12 sm:w-12   mr-2"/>
+                                    {isEditable ? (
+                                        <div className="flex flex-col">
+                                            <div className="flex gap-2 items-center">
+                                                <input
+                                                    type="text"
+                                                    name="startTime"
+                                                    placeholder="09:00"
+                                                    value={formData.volunteer.startTime}
+                                                    onChange={handleTimeChange}
+                                                    className="p-2 w-2/6 border-2 border-light-blue rounded focus:outline-none focus:border-blue-500"
+                                                />
 
-                                            <span>-</span>
-                                            <input
-                                                type="text"
-                                                name="endTime"
-                                                placeholder="18:00"
-                                                value={formData.volunteer.endTime}
-                                                onChange={handleTimeChange}
-                                                className="p-2 w-2/6 rounded border-light-blue border-2 focus:outline-none focus:border-blue-500"
-                                            />
+                                                <span>-</span>
+                                                <input
+                                                    type="text"
+                                                    name="endTime"
+                                                    placeholder="18:00"
+                                                    value={formData.volunteer.endTime}
+                                                    onChange={handleTimeChange}
+                                                    className="p-2 w-2/6 rounded border-light-blue border-2 focus:outline-none focus:border-blue-500"
+                                                />
 
+                                            </div>
+                                            {errors.startTime && <p className="text-red-500 text-sm">{errors.startTime}</p>}
+                                            {errors.endTime && <p className="text-red-500 text-sm">{errors.endTime}</p>}
                                         </div>
-                                        {errors.startTime && <p className="text-red-500 text-sm">{errors.startTime}</p>}
-                                        {errors.endTime && <p className="text-red-500 text-sm">{errors.endTime}</p>}
-                                    </div>
-                                ) : (
-                                    <span className="p-2 rounded">
+                                    ) : (
+                                        <span className=" p-2 rounded">
                 {formData.volunteer.startTime && formData.volunteer.endTime
                     ? `${formatTime(formData.volunteer.startTime)} - ${formatTime(formData.volunteer.endTime)}`
                     : '09:00 - 18:00'}
             </span>
-                                )}
+                                    )}
+                                </div>
                             </div>
                         </div>
 
 
                         <div className="mb-4">
-                            <label className="font-montserratRegular my-4">Яку допомогу ви можете надати:</label>
+                            <label className="font-montserratRegular my-4">{t('whatHelpUMake')}:</label>
                             <div className="flex flex-wrap gap-2">
                                 {helpTypes.map((type) => (
                                     <button
@@ -745,7 +748,7 @@ const Settings: React.FC<SettingsProps> = ({ userData }) => {
                                         className={`p-1 px-8 rounded-3xl font-montserratRegular ${formData.volunteer.supports.includes(type) ? 'bg-dark-blue text-white' : `bg-white border-2 border-light-blue text-almost-black ${isEditable ? "" : "hidden"}`}`}
                                         onClick={() => toggleHelpOption(type)}
                                     >
-                                        {type === 'psychological' ? 'Психологічна' : type === 'informational' ? 'Інформаційна' : type === 'humanitarian' ? 'Гуманітарна' : 'Матеріальна'}
+                                        {type === 'psychological' ? `${t('categories1')}` : type === 'informational' ? `${t('categories3')}` : type === 'humanitarian' ? `${t('categories2')}` : `${t('categories4')}`}
                                     </button>
                                 ))}
                             </div>
@@ -756,19 +759,19 @@ const Settings: React.FC<SettingsProps> = ({ userData }) => {
                                 return helpProvided && (
                                     <div className="my-4" key={type}>
                                         <label className="font-montserratRegular">
-                                            {`Яку саме `}
+                                            {`${t('whatExactly')} `}
                                             <strong className="font-montserratRegular">
-                                                {type === 'psychological' ? 'психологічну' :
-                                                    type === 'informational' ? 'інформаційну' :
-                                                        type === 'humanitarian' ? 'гуманітарну' :
-                                                            'матеріальну'}
+                                                {type === 'psychological' ? `${t('categories1')}` :
+                                                    type === 'informational' ? `${t('categories3')}` :
+                                                        type === 'humanitarian' ? `${t('categories2')}` :
+                                                            `${t('categories4')}`}
                                             </strong>
-                                            {` допомогу ви надаєте:`}
+                                            {`${t('helpProvide')} :`}
                                         </label>
                                         <input
                                             type="text"
                                             name={fieldName}
-                                            placeholder={`Опишіть ${type === 'psychологічну' ? 'психологічну' : type === 'інформаційну' ? 'інформаційну' : type === 'гуманітарну' ? 'гуманітарну' : 'матеріальну'} допомогу`}
+                                            placeholder={`${t('describe')} ${type === 'psychological' ? `${t('categories1')}` : type === 'informational' ? `${t('categories3')}` : type === 'humanitarian' ? `${t('categories2')}` : `${t('categories4')}`} ${t('onlyHelp')}`}
                                             className="w-full p-4 border-2 rounded-lg bg-white outline-none border-light-blue focus:border-dark-blue"
                                             disabled={!isEditable}
                                             value={(formData.volunteer as any)[fieldName] || ''}
@@ -781,7 +784,7 @@ const Settings: React.FC<SettingsProps> = ({ userData }) => {
 
 
                         <div className="mb-4">
-                            <label className="font-montserratRegular">Про себе:</label>
+                            <label className="font-montserratRegular">{t('aboutMyself')}:</label>
                             <textarea
                                 placeholder="Про себе"
                                 name="description"
@@ -802,12 +805,12 @@ const Settings: React.FC<SettingsProps> = ({ userData }) => {
 
 
             {/* !!! Section: Конфіденційні */}
-            <h2 className="text-h2  mt-6 mb-4 font-kharkiv">Конфіденційні</h2>
+            <h2 className="md:text-h2 sm:text-h5 xl:text-h2  mt-6 mb-4 font-kharkiv">{t('confidential')}</h2>
             <div className="bg-gray-100 p-4 rounded-3xl">
                 {formData.role === 'victim' && (
                     <div className="grid grid-cols-3 gap-4 mb-4">
                         <div>
-                            <label className="font-montserratRegular">Вулиця*</label>
+                            <label className="font-montserratRegular">{t('street')}*</label>
                             <input
                                 type="text"
                                 placeholder="Сумська"
@@ -837,7 +840,7 @@ const Settings: React.FC<SettingsProps> = ({ userData }) => {
                         </div>
 
                         <div>
-                            <label className="font-montserratRegular">Будинок*</label>
+                            <label className="font-montserratRegular">{t('house')}*</label>
                             <input
                                 type="text"
                                 placeholder="12"
@@ -846,59 +849,59 @@ const Settings: React.FC<SettingsProps> = ({ userData }) => {
                                 disabled={!isEditable}
                                 value={formData.role === 'victim' ? (formData as UserVictim).victim.houseNumber : ''}
                                 onChange={(e) => {
-                                const {value} = e.target;
-                                setFormData((prevData) => {
-                                    if (prevData.role === 'victim') {
-                                        return {
-                                            ...prevData,
-                                            victim: {
-                                                ...(prevData as UserVictim).victim,
-                                                houseNumber: value,
-                                            },
-                                        };
-                                    }
-                                    return prevData;
-                                });
-                            }}
-                        />
-                        {errors.houseNumber && (
-                            <p className="text-red-500 text-sm">{errors.houseNumber}</p>
-                        )}
+                                    const {value} = e.target;
+                                    setFormData((prevData) => {
+                                        if (prevData.role === 'victim') {
+                                            return {
+                                                ...prevData,
+                                                victim: {
+                                                    ...(prevData as UserVictim).victim,
+                                                    houseNumber: value,
+                                                },
+                                            };
+                                        }
+                                        return prevData;
+                                    });
+                                }}
+                            />
+                            {errors.houseNumber && (
+                                <p className="text-red-500 text-sm">{errors.houseNumber}</p>
+                            )}
+                        </div>
+
+                        <div>
+                            <label className="font-montserratRegular">{t('apartment')}</label>
+                            <input
+                                type="text"
+                                placeholder="35"
+                                name="flatNumber"
+                                className="w-full p-4 border-2 rounded-lg bg-white outline-none border-light-blue focus:border-dark-blue"
+                                disabled={!isEditable}
+                                value={formData.role === 'victim' ? (formData as UserVictim).victim.flatNumber : ''}
+                                onChange={(e) => {
+                                    const {value} = e.target;
+                                    setFormData((prevData) => {
+                                        if (prevData.role === 'victim') {
+                                            return {
+                                                ...prevData,
+                                                victim: {
+                                                    ...(prevData as UserVictim).victim,
+                                                    flatNumber: Number(value),
+                                                },
+                                            };
+                                        }
+                                        return prevData;
+                                    });
+                                }}
+                            />
+
+                        </div>
+
                     </div>
-
-                    <div>
-                        <label className="font-montserratRegular">Квартира</label>
-                        <input
-                            type="text"
-                            placeholder="35"
-                            name="flatNumber"
-                            className="w-full p-4 border-2 rounded-lg bg-white outline-none border-light-blue focus:border-dark-blue"
-                            disabled={!isEditable}
-                            value={formData.role === 'victim' ? (formData as UserVictim).victim.flatNumber : ''}
-                            onChange={(e) => {
-                                const {value} = e.target;
-                                setFormData((prevData) => {
-                                    if (prevData.role === 'victim') {
-                                        return {
-                                            ...prevData,
-                                            victim: {
-                                                ...(prevData as UserVictim).victim,
-                                                flatNumber: Number(value),
-                                            },
-                                        };
-                                    }
-                                    return prevData;
-                                });
-                            }}
-                        />
-
-                    </div>
-
-                </div>
 
                 )}
                 <div className="mb-4">
-                    <label className="font-montserratRegular">Ваша стать:</label>
+                    <label className="font-montserratRegular">{t('your_gender')}:</label>
                     <div className="flex space-x-2">
                         {["female", "male", "other"].map((option) => (
                             <button
@@ -907,17 +910,17 @@ const Settings: React.FC<SettingsProps> = ({ userData }) => {
                                 onClick={() => handleGenderChange(option)}
                                 disabled={!isEditable}
                             >
-                                {option === "female" ? "Жінка" : option === "male" ? "Чоловік" : "Інше"}
+                                {option === "female" ? `${t('woman')}` : option === "male" ? `${t('man')}` : `${t('other_gender')}`}
                             </button>
                         ))}
                     </div>
                 </div>
 
-                <div className="flex items-center gap-4 mb-4">
+                <div className="md:flex sm:flex-none xl:flex items-center gap-4 mb-4">
                     {/* Volunteer ID Field */}
                     {formData.role === 'volunteer' && (
                         <div>
-                            <label className="block font-montserratRegular">Номер волонтерського посвідчення</label>
+                            <label className="block font-montserratRegular">{t('volunteerID')}</label>
                             <input
                                 type="text"
                                 name="volunteer_identification_number"
@@ -956,61 +959,61 @@ const Settings: React.FC<SettingsProps> = ({ userData }) => {
 
 
                     {/* РНОКПП Field */}
-                        <div className="flex-grow">
-                            <label className="font-montserratRegular">РНОКПП</label>
-                            <input
-                                type="text"
-                                placeholder="1111111"
-                                name="UNP"
-                                className="w-full p-4 border-2 rounded-lg bg-white outline-none border-light-blue focus:border-dark-blue"
-                                disabled={!isEditable}
-                                value={formData.UNP}
-                                onChange={handleInputChange}
-                            />
-                            {errors.UNP && (
-                                <p className="text-red-500 text-sm">{errors.UNP}</p>
-                            )}
-                        </div>
-
+                    <div className="flex-grow">
+                        <label className="font-montserratRegular">{t('itn')}</label>
+                        <input
+                            type="text"
+                            placeholder="1111111"
+                            name="UNP"
+                            className="w-full p-4 border-2 rounded-lg bg-white outline-none border-light-blue focus:border-dark-blue"
+                            disabled={!isEditable}
+                            value={formData.UNP}
+                            onChange={handleInputChange}
+                        />
+                        {errors.UNP && (
+                            <p className="text-red-500 text-sm">{errors.UNP}</p>
+                        )}
                     </div>
 
-
-                    <div className="mb-4">
-                        <label className="font-montserratRegular">Додані вами документи:</label>
-                        <div>
-                            {formData.files?.map((doc, index) => (
-                                <div key={index}
-                                     className="flex items-center justify-between w-full mt-1 p-4 rounded-lg border-2 bg-baby-blue border-baby-blue">
-                                    <p className="font-montserratRegular text-sm text-almost-black">{doc.fileName}</p>
-                                    <DeleteImg className="cursor-pointer"
-                                               onClick={() => handleRemoveDocument(doc.fileName)}/>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-
-                    {isEditable && (
-                        <div>
-                            <button
-                                className="w-52 mb-2 mt-2 p-2 uppercase text-center border-2 rounded-lg outline-none border-light-blue text-light-blue"
-                                onClick={handleAddDocumentClick}
-                            >
-                                Додати документи
-                            </button>
-                            <input
-                                ref={fileInputRef}
-                                type="file"
-                                multiple
-                                accept="application/pdf,image/*"
-                                className="hidden"
-                                onChange={handleDocumentUpload}
-                            />
-                        </div>
-                    )}
                 </div>
-            </div>
-            )
-            ;
-            }
 
-            export default Settings;
+
+                <div className="mb-4">
+                    <label className="font-montserratRegular">{t('documentsAttached')}:</label>
+                    <div>
+                        {formData.files?.map((doc, index) => (
+                            <div key={index}
+                                 className="flex items-center justify-between w-full mt-1 p-4 rounded-lg border-2 bg-baby-blue border-baby-blue">
+                                <p className="font-montserratRegular text-sm text-almost-black">{doc.fileName}</p>
+                                <DeleteImg className="cursor-pointer"
+                                           onClick={() => handleRemoveDocument(doc.fileName)}/>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {isEditable && (
+                    <div>
+                        <button
+                            className="w-52 mb-2 mt-2 p-2 uppercase text-center border-2 rounded-lg outline-none border-light-blue text-light-blue"
+                            onClick={handleAddDocumentClick}
+                        >
+                            Додати документи
+                        </button>
+                        <input
+                            ref={fileInputRef}
+                            type="file"
+                            multiple
+                            accept="application/pdf,image/*"
+                            className="hidden"
+                            onChange={handleDocumentUpload}
+                        />
+                    </div>
+                )}
+            </div>
+        </div>
+    )
+        ;
+}
+
+export default Settings;

@@ -366,10 +366,12 @@ const AboutPage = () => {
                             <Facebook className="text-white xl:w-20 xl:h-20 w-10 h-10"/>
                         </div>
                         {/* Instagram */}
-                        <div
-                            className="bg-blue-500 rounded-2xl xl:w-36 xl:h-36 w-20 h-20 flex items-center justify-center">
-                            <Instagram className="text-white xl:w-20 xl:h-20 w-10 h-10"/>
-                        </div>
+                        <a href="https://www.instagram.com/synara.help/" target="_blank" rel="noopener noreferrer">
+                            <div
+                                className="bg-blue-500 rounded-2xl xl:w-36 xl:h-36 w-20 h-20 flex items-center justify-center">
+                                <Instagram className="text-white xl:w-20 xl:h-20 w-10 h-10"/>
+                            </div>
+                        </a>
                         {/* Twitter */}
                         <div
                             className="bg-blue-500 rounded-2xl xl:w-36 xl:h-36 w-20 h-20 flex items-center justify-center">

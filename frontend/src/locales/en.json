@@ -240,7 +240,7 @@
 
 
 
-"our_site_use_cookie": "Our site uses cookies to ensure correct operation. By continuing to use the site, you agree to the use of cookies in accordance with our Privacy Policy.",
+  "our_site_use_cookie": "Our site uses cookies to ensure correct operation. By continuing to use the site, you agree to the use of cookies in accordance with our Privacy Policy.",
   "settings_cookie": "You can change the cookie settings in your browser.",
   "learn_more": "Learn more.",
   "close": "Close",
@@ -732,6 +732,35 @@
   "helmet_profile": "Profile - Synara",
   "helmet_volunteer_profile": "Volunteer Profile - Synara",
   "helmet_reset": "Password Reset - Synara",
-  "helmet_terms": "Terms of Use - Synara"
+  "helmet_terms": "Terms of Use - Synara",
 
+  "displayVolunteer" : "Display my account on the \"Volunteer search\" page\n",
+  "touchPhone": "When you're in touch",
+  "whatHelpUMake": "What help can you provide\n",
+  "whatExactly": "Which one exactly",
+  "helpProvide": "help you provide\n",
+  "aboutMyself": "About myself\n",
+  "confidential": "Confidential",
+  "volunteerID": "Volunteer ID number\n",
+  "documentsAttached": "Documents you have attached\n",
+  "onlyHelp": "help",
+  "describe": "Describe",
+  "Mon": "Mon",
+  "Tues": "Tues",
+  "Wed": "Wed",
+  "Thurs": "Thurs",
+  "Fri": "Fri",
+  "Sat": "Sat",
+  "Sun": "Sun",
+  "editUPPER": "EDIT",
+  "saveUPPER": "SAVE",
+  "section": {
+    "title": "Use of Third-Party APIs in the Application: Copyright and Liability Information",
+    "copyrightTitle": "1. Copyright and Trademarks",
+    "copyrightText": "All copyrights, trademarks, and other intellectual property rights for third-party APIs, including Jitsi and Google Maps, belong to their respective owners. Our application merely provides access to these services for user convenience and does not claim ownership or copyrights related to these APIs.",
+    "disclaimerTitle": "2. Disclaimer of Responsibility for Information Provided by Third-Party Services",
+    "disclaimerText": "We are not responsible for the accuracy, completeness, or timeliness of information provided by Jitsi, Google Maps, or other third-party providers. By using our application, users agree that any data or information obtained through these APIs is provided without any guarantees and may vary according to the policies and conditions of third-party companies.",
+    "limitationTitle": "3. Limitation of Liability",
+    "limitationText": "Our application does not guarantee the uninterrupted operation of third-party services or data availability. Any issues related to the operation of third-party services should be directed to their respective owners."
+  }
 }

@@ -41,7 +41,7 @@ const MainContent: React.FC<MainContentProps> = ({
 	const {t} = useTranslation();
 
 	return (
-		<main className="w-full bg-almost-white p-8">
+		<main className="w-full bg-almost-white md:p-8 sm:p-3 xl:p-8">
 			{activeSection === 'reviews' && <Reviews reviews={reviews} rating={rating}/>}
 
 			{activeSection === 'announcements' && (
@@ -260,8 +260,8 @@ const MainContent: React.FC<MainContentProps> = ({
 
 			{activeSection === 'settings' && (
 				<>
-					<h1 className="text-h2 font-kharkiv">{t('settings')}</h1>
-					<h3 className="text-h5 font-kharkiv mb-[2vh]">{t('shared')}</h3>
+					<h1 className="xl:text-h2 sm:text-h4 md:text-h2 font-kharkiv">{t('settings')}</h1>
+					<h3 className="xl:text-h5 sm:text-xs-pxl md:text-h5 font-kharkiv mb-[2vh]">{t('shared')}</h3>
 					<Settings userData={userData} />
 				</>
 			)}

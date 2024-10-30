@@ -74,6 +74,31 @@ const TermsOfUsePage = () => {
 
 
 					<section>
+						<h2 className="text-h5 font-semibold mb-4">
+							{t('section.title')}
+						</h2>
+						<p className="text-pl font-semibold mt-4">
+							{t('section.copyrightTitle')}
+						</p>
+						<p className="text-pl mt-2">
+							{t('section.copyrightText')}
+						</p>
+						<p className="text-pl font-semibold mt-4">
+							{t('section.disclaimerTitle')}
+						</p>
+						<p className="text-pl mt-2">
+							{t('section.disclaimerText')}
+						</p>
+						<p className="text-pl font-semibold mt-4">
+							{t('section.limitationTitle')}
+						</p>
+						<p className="text-pl mt-2">
+							{t('section.limitationText')}
+						</p>
+					</section>
+
+
+					<section>
 						<h2 className="text-h5 font-semibold mb-4"> {t('contacts')}</h2>
 						<p className="text-pl">
 							{t('if_you_have_questions_mail_to')}
@@ -85,7 +110,7 @@ const TermsOfUsePage = () => {
 				</div>
 			</div>
 
-			<Footer />
+			<Footer/>
 		</Wrapper>
 	);
 };
