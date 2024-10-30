@@ -121,7 +121,7 @@ const ProfilePage = () => {
             <div className="min-h-screen flex xl:mt-12 md:mt-12 sm:mt-6">
                 <div className="md:flex xl:flex xl:flex-1 md:flex-1 sm:flex-row ">
                     {/* Sidebar */}
-                    <div className="sm:mx-0 md:mx-0 xl:mx-0 md:w-[20%] xl:w-[20%] ">
+                    <div className="sm:mx-0 md:mx-0 xl:mx-0 sm:w-full md:w-[20%] xl:w-[20%] ">
                         <Sidebar
                             activeSection={activeSection}
                             setActiveSection={setActiveSection}
@@ -132,6 +132,7 @@ const ProfilePage = () => {
                             lastName={userData.lastName}
                             birthDate={userData.birthDate}
                         />
+
                     </div>
                     {/* Main Content */}
                     <MainContent
