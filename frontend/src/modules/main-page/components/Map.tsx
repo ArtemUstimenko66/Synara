@@ -171,7 +171,7 @@ export const Map: React.FC<SideBarProps> = ({ isOpen, onClose, onBackToFilters, 
         try {
             const dynamicMarkers = await searchMap(city);
             const allMarkers = [...dynamicMarkers];
-            console.log("All markers:", allMarkers);
+          //  console.log("All markers:", allMarkers);
             // @ts-ignore
             setUserMarkers(allMarkers);
         } catch (error) {
@@ -245,7 +245,7 @@ export const Map: React.FC<SideBarProps> = ({ isOpen, onClose, onBackToFilters, 
                 const radiusInKm = circleRadius / 1000;
                 // @ts-ignore
                 const usersByRadius = await searchUsersByRadius(radiusInKm, selectedCity.name);
-                console.log("Users by radius:", usersByRadius);
+               // console.log("Users by radius:", usersByRadius);
 
                 onUsersByRadiusFound(usersByRadius);
 
@@ -281,8 +281,8 @@ export const Map: React.FC<SideBarProps> = ({ isOpen, onClose, onBackToFilters, 
 
         setActiveMarker(null)
 
-        console.log("user location:", userLocation);
-        console.log("kharkiv", kharkiv);
+       // console.log("user location:", userLocation);
+       // console.log("kharkiv", kharkiv);
     };
 
     const buildRouteClick = () => {

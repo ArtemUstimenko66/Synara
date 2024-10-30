@@ -43,7 +43,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 setUnp(data.UNP || null);
                 setBirthDate(data.age || null);
             } catch (error) {
-                console.log('Failed to fetch profile -> ', error);
+               // console.log('Failed to fetch profile -> ', error);
                 setIsAuthenticated(false);
             } finally {
                 setIsLoading(false);

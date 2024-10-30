@@ -4,18 +4,21 @@ import NotFound404 from '../../assets/images/NotFound404.png';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import {useMediaQuery} from "react-responsive";
+import {useTranslation} from "react-i18next";
 
 const NotFoundPage: React.FC = () => {
     const navigate = useNavigate(); // Initialize the navigate function
+    const {t} = useTranslation();
     const isSmallScreen = useMediaQuery({ query: '(max-width: 1025px)' });
     const handleGoHome = () => {
         navigate('/main'); // Redirect to the /main route
     };
+
     // @ts-ignore
     return (
         <>
             <Helmet>
-                <title>404 - Сторінка не знайдена - Synara</title>
+                <title>{t('helmet_not_found')}</title>
                 <meta name="description" content="Вибачте, але сторінка, яку ви шукаєте, не знайдена. Перевірте URL або поверніться на головну." />
                 <meta name="keywords" content="404, не знайдено, Synara, помилка, головна" />
                 <meta name="robots" content="noindex, nofollow" />

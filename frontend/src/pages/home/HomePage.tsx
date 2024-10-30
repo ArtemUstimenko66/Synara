@@ -238,7 +238,7 @@ const HomePage: React.FC = () => {
     return (
         <>
             <Helmet>
-                <title>Головна - Synara</title>
+                <title>{t('helmet_home')}</title>
                 <meta name="description" content="Ласкаво просимо на платформу Synara. Долучайтеся до підтримки ініціатив та отримуйте допомогу." />
                 <meta name="keywords" content="Synara, головна, підтримка, ініціативи, українці" />
                 <meta name="robots" content="index, follow" />

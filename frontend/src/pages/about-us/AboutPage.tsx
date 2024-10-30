@@ -32,7 +32,7 @@ const AboutPage = () => {
     return (
         <Wrapper>
             <Helmet>
-                <title>Synara - Платформа для українців</title>
+                <title>{t('helmet_about')}</title>
                 <meta name="description" content="Synara — це платформа, створена українцями для українців, щоб об'єднати тих, хто потребує допомоги з тими, хто готовий її надати." />
                 <meta name="keywords" content="Synara, платформа, українці, допомога, підтримка, спільнота" />
                 <meta name="robots" content="index, follow" />

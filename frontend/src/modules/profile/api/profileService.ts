@@ -5,7 +5,7 @@ export const getProfile = async () => {
         const response = await api.get('/auth/profile', {
             withCredentials: true
         });
-        console.log("/auth/profile");
+        //console.log("/auth/profile");
         return response.data;
     } catch (error) {
         console.log('Failed to fetch profile', error);
@@ -18,7 +18,7 @@ export const getUser = async ( id: number ) => {
         const response = await api.get(`/auth/user/${id}`, {
             withCredentials: true
         });
-        console.log("/auth/user/${id}");
+        //console.log("/auth/user/${id}");
         return response.data;
     } catch (error) {
         console.log('Failed to fetch profile', error);
@@ -31,7 +31,7 @@ export const refreshToken = async () => {
         const response = await api.post('/auth/refresh', {}, {
             withCredentials: true,
         });
-        console.log('Token refreshed successfully:', response.data);
+       // console.log('Token refreshed successfully:', response.data);
         return response.data;
     } catch (error) {
         console.error('Error refreshing token:', error);
@@ -44,7 +44,7 @@ export const logout = async () => {
         const response = await api.post('/auth/logout', {},  {
             withCredentials: true
         });
-        console.log('Logout successful:', response.data);
+       // console.log('Logout successful:', response.data);
         return response.data;
     } catch (error) {
         console.error('Logout error:', error);
@@ -73,7 +73,7 @@ export const updateVolunteer = async (id: number,
         const response = await api.patch(`/users/volunteer/${id}`, volunteerData,  {
             withCredentials: true
         });
-        console.log('Update volunteer successful');
+       // console.log('Update volunteer successful');
         return response.data;
     } catch (error) {
         console.error('Update volunteer error:', error);
@@ -92,7 +92,7 @@ export const updateVictim = async (id: number, victimData: {
         const response = await api.patch(`/users/victim/${id}`, victimData,  {
             withCredentials: true
         });
-        console.log('Update victim successful');
+      //  console.log('Update victim successful');
         return response.data;
     } catch (error) {
         console.error('Update victim error:', error);
@@ -105,7 +105,7 @@ export const updateUser = async (id: number, userData: { firstName: any; lastNam
         const response = await api.patch(`/users/${id}`, userData,  {
             withCredentials: true
         });
-        console.log('Update user successful');
+      //  console.log('Update user successful');
         return response.data;
     } catch (error) {
         console.error('Update user error:', error);
@@ -117,7 +117,7 @@ export const uploadAvatar = async ( userId: number, file: File) => {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('announcementId', userId.toString());
-    console.log('Upload ',userId, file)
+   // console.log('Upload ',userId, file)
     try {
         const response = await api.post(`/users/${userId}/avatar`, formData, {
             withCredentials: true,
@@ -126,6 +126,23 @@ export const uploadAvatar = async ( userId: number, file: File) => {
             },
         });
         //console.log('Document uploaded successfully:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error("Failed to upload document:", error);
+        throw error;
+    }
+};
+
+export const uploadDocument = async ( userId: number, file: File) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('userId', userId.toString());
+    try {
+        const response = await api.post('/files/upload', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
         return response.data;
     } catch (error) {
         console.error("Failed to upload document:", error);
@@ -194,7 +211,7 @@ export const fetchVolunteerDetails = async (id: number) => {
 export const getUserCompletedAnnouncements = async (volunteerId: number) => {
     try {
         const response = await api.get(`/announcements/completed/${volunteerId}`, { withCredentials: true });
-        console.log(`!!!!!!-> /announcements/completed/${volunteerId}`,response.data);
+      //  console.log(`!!!!!!-> /announcements/completed/${volunteerId}`,response.data);
         return response.data;
     } catch (error) {
         console.error("Ошибка при получении выполненных пользователем обьявлений:", error);

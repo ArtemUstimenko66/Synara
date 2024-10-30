@@ -23,19 +23,19 @@ const EmailConfirm: React.FC<EmailConfirmProps> = ({ userData, onNextStep }) => 
                 if (!registrationDoneRef.current) {
                     try {
                         const preparedData = prepareUserDataForBackend(userData);
-                        console.log("Registering user with data:", preparedData);
+                      //  console.log("Registering user with data:", preparedData);
 
                         // @ts-ignore
                         const data = await registerUser(preparedData);
-                        console.log("Registration successful:", data);
+                      //  console.log("Registration successful:", data);
 
                         await sendEmailConfirmation(userData.email);
-                        console.log("Email confirmation sent successfully");
+                       // console.log("Email confirmation sent successfully");
 
                         if (userData.documents) {
                             for (const file of userData.documents) {
                                 await uploadDocument(file);
-                                console.log("Document uploaded successfully");
+                              //  console.log("Document uploaded successfully");
                             }
                         }
 

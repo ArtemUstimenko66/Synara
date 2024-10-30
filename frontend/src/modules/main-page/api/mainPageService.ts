@@ -36,8 +36,8 @@ export const getFilteredAnnouncements = async (
             withCredentials: true,
         });
 
-        console.log('query->:', `/announcements/?${decodedQueryParams}`);
-        console.log('Filtered and searched announcements fetched successfully:', response.data);
+        //console.log('query->:', `/announcements/?${decodedQueryParams}`);
+        //console.log('Filtered and searched announcements fetched successfully:', response.data);
         return response.data;
     } catch (error) {
         console.error('Failed to fetch filtered announcements:', error);
@@ -98,9 +98,9 @@ export const searchMap = async (city: string) => {
                 city: city,
             },
         });
-        console.log("Get city", `/users/coordinates-by-city`);
-        console.log('Response data:', response.data);
-        console.log('City:', city);
+        //console.log("Get city", `/users/coordinates-by-city`);
+        //console.log('Response data:', response.data);
+        //console.log('City:', city);
 
         const mappedMarkers = response.data.map((item: { victimId: number, address: string, coordinates: { lat: number, lng: number } }) => ({
             id: item.victimId,
@@ -124,8 +124,8 @@ export const searchUsersByRadius = async (
     city: string
 ) => {
     try {
-        console.log("city -> ", city);
-        console.log("radius -> ", radius);
+        //console.log("city -> ", city);
+       // console.log("radius -> ", radius);
 
         const encodedCity = encodeURIComponent(city);
 
@@ -136,7 +136,7 @@ export const searchUsersByRadius = async (
             }
         );
 
-        console.log('Response data:', response.data);
+       // console.log('Response data:', response.data);
 
         return response.data;
     } catch (error) {
@@ -163,7 +163,7 @@ export const addAnnouncementToFavorites = async (id: number) => {
         });
 
         if (response.status === 200) {
-            console.log('Объявление успешно добавлена в избранное');
+           // console.log('Объявление успешно добавлена в избранное');
             return true;
         } else {
             console.error("Не удалось добавить объявление в избранное");
@@ -266,7 +266,7 @@ export const doneAnnouncement = async (id: number) => {
         });
 
         if (response.status === 200) {
-            console.log('Объявление завершенно');
+           // console.log('Объявление завершенно');
             return true;
         } else {
             console.error("Не удалось добавить объявление в завершенные");
@@ -283,7 +283,7 @@ export const cancelAnnouncement = async (id: number) => {
         const response = await api.delete(`/announcements/${id}`);
 
         if (response.status === 200) {
-            console.log('Объявление завершенно');
+            //console.log('Объявление завершенно');
             return true;
         } else {
             console.error("Не удалось добавить объявление в завершенные");

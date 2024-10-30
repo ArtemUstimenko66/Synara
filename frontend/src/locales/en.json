@@ -77,6 +77,7 @@
   "get_an_answer_text": "The volunteer will receive your message and will be able to view your page. If they are willing to help, they will reply to you.",
 
   "gatherings": "GATHERINGS",
+  "gatherings_lower": "Gatherings",
   "profile_look": "Check out profiles:",
   "gatherings_text_1": "Do you want to make the world a better place? On our website you can find many interesting projects and\nand support those that are close to you. Do you have an idea on how to make life better?",
   "gatherings_text_2": "Create your own collection and unite people around it! How does it work? It's very simple. You can\nbrowse different projects, learn more about them and support the ones you like.\nOr you can create your own collection by telling others about your idea. It's like an online piggy bank,\nwhere everyone can add their own bricks. You can change the world: Even a small contribution can\ncan make a big difference.",
@@ -713,7 +714,24 @@
   "howToDeleteEmail": "How to delete my account?",
   "answerAboutDeleteEmail": "If you decide to delete your account, log in and go to the \"Settings\" or \"My Profile\" section. There you’ll find the \"Delete Account\" option. Click on it and confirm deletion. Remember, deleting your account is irreversible, and all your data will be removed from the platform.",
   "howDecideTech": "What to do if I encounter technical issues with the platform?",
-  "answerDecideTech": "If you encounter technical issues while using the platform, first try refreshing the page or clearing your browser cache. Also, make sure you have a stable internet connection. If the problem persists, try using another browser or device. If these actions don’t help, contact our support team, describing the issue in as much detail as possible. We will do our best to help you resolve it quickly."
+  "answerDecideTech": "If you encounter technical issues while using the platform, first try refreshing the page or clearing your browser cache. Also, make sure you have a stable internet connection. If the problem persists, try using another browser or device. If these actions don’t help, contact our support team, describing the issue in as much detail as possible. We will do our best to help you resolve it quickly.",
 
+
+  "helmet_main": "Home - Synara",
+  "helmet_about": "About Us - Synara",
+  "helmet_login": "Account Login - Synara",
+  "helmet_register": "Registration - Synara",
+  "helmet_cookie": "Cookie Policy - Synara",
+  "helmet_faq": "FAQ - Synara",
+  "helmet_gathering": "Fundraisers - Synara",
+  "helmet_home": "Home - Synara",
+  "helmet_how_it_works": "How It Works - Synara",
+  "helmet_not_found": "404 - Page Not Found - Synara",
+  "helmet_petitions": "Petitions - Synara",
+  "helmet_privacy": "Privacy Policy - Synara",
+  "helmet_profile": "Profile - Synara",
+  "helmet_volunteer_profile": "Volunteer Profile - Synara",
+  "helmet_reset": "Password Reset - Synara",
+  "helmet_terms": "Terms of Use - Synara"
 
 }

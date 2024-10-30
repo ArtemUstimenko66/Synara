@@ -175,7 +175,7 @@ const VolunteerProfilePage: React.FC = () => {
 	return (
 		<Wrapper>
 			<Helmet>
-				<title>Профіль Волонтера - Synara</title>
+				<title>{t('helmet_volunteer_profile')}</title>
 				<meta name="description" content="Перегляньте та редагуйте інформацію про волонтера на платформі Synara. Долучайтеся до ініціатив та отримуйте підтримку." />
 				<meta name="keywords" content="профіль волонтера, Synara, волонтерство, ініціативи, користувач" />
 				<meta name="robots" content="index, follow" />

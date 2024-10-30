@@ -6,12 +6,13 @@ import EmailSend from "../../modules/reset-password/components/EmailSend.tsx";
 import {Link, useNavigate} from 'react-router-dom';
 import LogoSynara from '../../assets/images/logoRegistration.svg?react';
 import {Helmet} from "react-helmet-async";
+import {useTranslation} from "react-i18next";
 
 const ResetPasswordPage = () => {
     const [currentStep, setCurrentStep] = useState(1);
     const [userData, setUserData] = useState<UserLogin>({ email: '', password: '' });
     const navigate = useNavigate();
-
+    const {t} = useTranslation();
     const handleNextStep = (data: Partial<UserLogin>, nextStep: number) => {
         setUserData(prev => ({ ...prev, ...data }));
         setCurrentStep(nextStep);
@@ -45,7 +46,7 @@ const ResetPasswordPage = () => {
     return (
         <>
             <Helmet>
-                <title>Зміна пароля - Synara</title>
+                <title>{t('helmet_reset')}</title>
                 <meta name="description" content="Змініть свій пароль для захисту вашого профілю на платформі Synara. Слідкуйте за безпекою ваших даних." />
                 <meta name="keywords" content="зміна пароля, Synara, безпека, профіль, користувач" />
                 <meta name="robots" content="index, follow" />

@@ -36,8 +36,8 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, className,
         };
 
         try {
-            const response = await submitFeedback(feedbackData);
-            console.log('Server response:', response);
+         await submitFeedback(feedbackData);
+         //   console.log('Server response:', response);
 
             onClose();
         } catch (error) {

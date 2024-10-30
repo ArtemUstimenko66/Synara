@@ -2,8 +2,8 @@ import api from "../../main-api/api.ts";
 
 export const sendCodeToPhoneNumber = async (phoneNumber: string) => {
     try {
-        const response = await api.post('/sms/send-code', { phoneNumber });
-        console.log("Code sent successfully:", response.data);
+        await api.post('/sms/send-code', { phoneNumber });
+        //console.log("Code sent successfully:", response.data);
     } catch (error) {
         console.error("Error sending code:", error);
     }
@@ -14,9 +14,9 @@ export const verifyCode = async (phoneNumber: string, code: string): Promise<{ s
         throw new Error('Phone number is not available');
     }
     try {
-        const response = await api.post('/sms/verify-code', { phoneNumber, code });
+        await api.post('/sms/verify-code', { phoneNumber, code });
         localStorage.removeItem('phoneNumber');
-        console.log("Code verified successfully:", response.data);
+        //console.log("Code verified successfully:", response.data);
 
         return { success: true };
     } catch (error) {

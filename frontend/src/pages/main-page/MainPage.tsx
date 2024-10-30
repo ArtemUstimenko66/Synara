@@ -244,7 +244,7 @@ const MainPage: React.FC = () => {
     return (
         <Wrapper>
             <Helmet>
-                <title>Головна - Synara</title>
+                <title>{t('helmet_main')}</title>
                 <meta name="description" content="Ласкаво просимо на платформу Synara. Тут ви можете знайти оголошення та волонтерів, готових допомогти." />
                 <meta name="keywords" content="Synara, головна, оголошення, волонтери, допомога, українці" />
                 <meta name="robots" content="index, follow" />

@@ -30,7 +30,7 @@ export const fetchGatherings = async (
             params.append('moneyTo', moneyTo.toString());
         }
 
-        console.log("query -> ", `/gatherings?${params.toString()}`);
+       // console.log("query -> ", `/gatherings?${params.toString()}`);
         const response = await api.get(`/gatherings?${params.toString()}`);
         return response.data;
     } catch (error) {
@@ -52,7 +52,7 @@ export const uploadDocumentGathering = async (file: File, gatheringId: string) =
                 'Content-Type': 'multipart/form-data',
             },
         });
-        console.log('Document uploaded successfully:', response.data);
+       // console.log('Document uploaded successfully:', response.data);
         return response.data;
     } catch (error) {
         console.error("Failed to upload document:", error);
@@ -106,7 +106,7 @@ export const addGatheringToFavorites = async (id: number) => {
         });
 
         if (response.status === 200) {
-            console.log('Петиция успешно добавлена в избранное');
+           // console.log('Петиция успешно добавлена в избранное');
             return true;
         } else {
             console.error("Не удалось добавить петицию в избранное");

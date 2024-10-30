@@ -36,7 +36,7 @@ const LoginPage = () => {
     return (
         <>
             <Helmet>
-                <title>Вхід в акаунт - Synara</title>
+                <title>{t('helmet_login')}</title>
                 <meta name="description" content="Увійдіть в свій акаунт на Synara, щоб отримати доступ до особистих даних, управління підписками та іншим можливостям." />
                 <meta name="keywords" content="вхід, акаунт, авторизація, Synara, українці" />
                 <meta name="robots" content="index, follow" />

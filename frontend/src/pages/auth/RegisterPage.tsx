@@ -172,7 +172,7 @@ const Registration = () => {
     return (
         <>
             <Helmet>
-                <title>Реєстрація - Synara</title>
+                <title>{t('helmet_register')}</title>
                 <meta name="description"
                       content="Заповніть форму реєстрації на платформі Synara, щоб стати частиною спільноти та отримати доступ до важливих ресурсів."/>
                 <meta name="keywords" content="реєстрація, акаунт, Synara, українці, допомога"/>

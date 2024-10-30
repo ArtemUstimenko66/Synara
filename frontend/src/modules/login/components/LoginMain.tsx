@@ -50,7 +50,7 @@ const LoginMain: React.FC = () => {
     };
 
     const handleLogin = async () => {
-        console.log('handleLogin')
+        //console.log('handleLogin')
         if (validate()) {
             try {
                 await login(email, password);

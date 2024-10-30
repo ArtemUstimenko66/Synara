@@ -11,7 +11,7 @@ const EmailSend: React.FC<EmailSendProps> = ({ email }) => {
     const handleSubmit = async () => {
         try {
             await sendResetEmail(email);
-            console.log('Success resend');
+           // console.log('Success resend');
         } catch (error: any) {
             console.error('Error resend:', error);
         }

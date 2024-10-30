@@ -16,6 +16,7 @@ import Footer from "../../components/Footer.tsx";
 import {Player} from "@lottiefiles/react-lottie-player";
 import loadingAnimation from "../../assets/animations/logoLoading.json";
 import {Helmet} from "react-helmet-async";
+import {useTranslation} from "react-i18next";
 
 const ProfilePage = () => {
     const [activeSection, setActiveSection] = useState<string>('announcements');
@@ -24,7 +25,7 @@ const ProfilePage = () => {
     const [gatheringsData, setGatheringsData] = useState([]);
     const [petitionsData, setPetitionsData] = useState([]);
     const [commentsData, setCommentsData] = useState([]);
-
+    const {t} = useTranslation();
     const [favoriteAnnouncementsData, setFavoriteAnnouncementsData] = useState([]);
     const [favoriteGatheringsData, setFavoriteGatheringsData] = useState([]);
     const [favoritePetitionsData, setFavoritePetitionsData] = useState([]);
@@ -110,7 +111,7 @@ const ProfilePage = () => {
     return (
         <Wrapper>
             <Helmet>
-                <title>Профіль - Synara</title>
+                <title>{t('helmet_profile')}</title>
                 <meta name="description" content="Перегляньте та редагуйте ваш профіль на платформі Synara. Оновіть свою інформацію для покращення досвіду." />
                 <meta name="keywords" content="профіль, Synara, редагування, користувач, волонтерство" />
                 <meta name="robots" content="index, follow" />

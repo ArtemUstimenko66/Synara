@@ -6,9 +6,9 @@ export const getFilteredPetitions = async (
     offset = 0,
     sortOrder: 'ASC' | 'DESC' = 'ASC',
     field: string,
-    topic: string,            // добавляем параметр topic
-    types: string[],          // добавляем параметр types
-    ukraine: boolean          // добавляем параметр ukraine
+    topic: string,
+    types: string[],
+    ukraine: boolean
 ) => {
     const queryParams = new URLSearchParams();
 
@@ -16,13 +16,13 @@ export const getFilteredPetitions = async (
         queryParams.append('query', query);
     }
     if (topic) {
-        queryParams.append('topic', topic); // добавляем topic в параметры
+        queryParams.append('topic', topic);
     }
     if (types.length) {
-        types.forEach(type => queryParams.append('types', type)); // добавляем все выбранные types
+        types.forEach(type => queryParams.append('types', type));
     }
     if (ukraine) {
-        queryParams.append('ukraine', 'true'); // добавляем ukraine в параметры
+        queryParams.append('ukraine', 'true');
     }
 
     queryParams.append('limit', limit.toString());
@@ -37,8 +37,8 @@ export const getFilteredPetitions = async (
             withCredentials: true,
         });
 
-        console.log('query->:', `/petitions/?${decodedQueryParams}`);
-        console.log('Filtered and searched petitions fetched successfully:', response.data);
+        //console.log('query->:', `/petitions/?${decodedQueryParams}`);
+        //console.log('Filtered and searched petitions fetched successfully:', response.data);
         return response.data;
     } catch (error) {
         console.error('Failed to fetch filtered petitions:', error);
@@ -57,7 +57,7 @@ export const createPetition = async (petitionData: any) => {
             withCredentials: true,
         });
 
-        console.log('Петиция успешно отправлена:', response.data);
+        //console.log('Петиция успешно отправлена:', response.data);
         return response.data;
     } catch (error) {
         console.error('Ошибка при отправке петиции:', error);
@@ -70,7 +70,7 @@ export const fetchPetitionDetails = async (id: number) => {
         const response = await api.get(`/petitions/${id}`, {
             withCredentials: true,
         });
-        console.log(response.data)
+        //console.log(response.data)
         return response.data;
     } catch (error) {
         console.error("Ошибка при получении деталей петиции:", error);
@@ -85,7 +85,7 @@ export const addPetitionToFavorites = async (id: number) => {
         });
 
         if (response.status === 200) {
-            console.log('Петиция успешно добавлена в избранное');
+           // console.log('Петиция успешно добавлена в избранное');
             return true;
         } else {
             console.error("Не удалось добавить петицию в избранное");

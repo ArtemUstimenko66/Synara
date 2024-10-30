@@ -165,7 +165,7 @@ const GatheringPage: React.FC = () => {
 	return (
 		<>
 			<Helmet>
-				<title>Збори - Synara</title>
+				<title>{t('helmet_gathering')}</title>
 				<meta name="description" content="Долучайтеся до зборів на платформі Synara, щоб підтримати важливі ініціативи та проекти." />
 				<meta name="keywords" content="збори, підтримка, ініціативи, Synara, українці" />
 				<meta name="robots" content="index, follow" />

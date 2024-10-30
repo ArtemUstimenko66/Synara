@@ -10,7 +10,7 @@ const PrivacyPolicyPage = () => {
 	return (
 		<Wrapper>
 			<Helmet>
-				<title>Політика конфіденційності - Synara</title>
+				<title>{t('helmet_privacy')}</title>
 				<meta name="description" content="Дізнайтеся про нашу політику конфіденційності на платформі Synara. Як ми захищаємо вашу інформацію." />
 				<meta name="keywords" content="політика конфіденційності, Synara, захист інформації, користувач" />
 				<meta name="robots" content="index, follow" />

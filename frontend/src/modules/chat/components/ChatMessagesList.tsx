@@ -42,7 +42,7 @@ interface ChatMessagesListProps {
 
 
 export const ChatMessagesList: React.FC<ChatMessagesListProps> = ({ isOpen, onClose, chatId, chatChoose }) => {
-    const [chatList, setChatList] = useState<Chat[]>([]);
+    const [, setChatList] = useState<Chat[]>([]);
     const [messages, setMessages] = useState<Message[]>([]);
     const [, setFile] = useState<File | null>(null);
     const [formattedMessages, setFormattedMessages] = useState<any[]>([]);
@@ -100,7 +100,7 @@ export const ChatMessagesList: React.FC<ChatMessagesListProps> = ({ isOpen, onCl
     }, []);
 
     const loadMessages = useCallback(async () => {
-        console.log('loading messages skip -> ', skip);
+      //  console.log('loading messages skip -> ', skip);
         if (!chatId || loading || !hasMore) return;
 
         setLoading(true);
@@ -115,7 +115,7 @@ export const ChatMessagesList: React.FC<ChatMessagesListProps> = ({ isOpen, onCl
                 setMessages(prevMessages => [...newMessages, ...prevMessages]);
                 setSkip(prevSkip => {
                     const newSkip = prevSkip + take;
-                    console.log('Updated skip ->', newSkip);
+                  //  console.log('Updated skip ->', newSkip);
                     return newSkip;
                 });
 
@@ -211,9 +211,9 @@ export const ChatMessagesList: React.FC<ChatMessagesListProps> = ({ isOpen, onCl
                     setMessages((prevMessages) => [...prevMessages, formattedMessage]);
                 } else {
 
-                    chatList.forEach(chat => {
-                        console.log(`New messages ${chat.unreadCount} in chat ${chat.id}`);
-                    });
+                   // chatList.forEach(chat => {
+                   //     console.log(`New messages ${chat.unreadCount} in chat ${chat.id}`);
+                   // });
 
                     setChatList(prevChatList =>
                         prevChatList.map(chat =>
@@ -308,7 +308,7 @@ export const ChatMessagesList: React.FC<ChatMessagesListProps> = ({ isOpen, onCl
         if (socket) {
             // Отправляем событие через WebSocket
             socket.emit('markAsRead', {messageId});
-            console.log(`Сообщение с id ${messageId} отправлено на отметку как прочитанное`);
+            //console.log(`Сообщение с id ${messageId} отправлено на отметку как прочитанное`);
         }
     };
 

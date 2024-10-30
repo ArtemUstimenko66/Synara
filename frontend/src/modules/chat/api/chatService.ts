@@ -31,8 +31,8 @@ export const fetchChats = async (filter: 'active' | 'archived' | 'blocked', user
             params,
         });
 
-        console.log("/chats", JSON.stringify(params));
-        console.log('Response data:', response.data);
+       // console.log("/chats", JSON.stringify(params));
+       // console.log('Response data:', response.data);
 
         return response.data.map((chat: any) => {
             const lastMessage = chat.messages.length > 0 ? chat.messages[chat.messages.length - 1] : null;
@@ -67,8 +67,8 @@ export const fetchMessages = async (chatId: number, skip: number, take: number):
             params: { skip, take }
         });
 
-        console.log(`/messages/${chatId}?skip=${skip}&take=${take}`);
-        console.log('Response data:', response.data);
+       // console.log(`/messages/${chatId}?skip=${skip}&take=${take}`);
+       // console.log('Response data:', response.data);
 
         const formattedMessages = response.data.map((message: { content: string, senderId: number, chatId: number, timestamp: string }) => ({
             ...message,
@@ -95,8 +95,8 @@ export const handleSendFile = async (selectedFile: File, chatId: number | null, 
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
 
-            console.log('/files/upload', formData);
-            console.log('Response data:', response.data);
+           // console.log('/files/upload', formData);
+            //console.log('Response data:', response.data);
 
             if (socket) {
                 socket.emit('sendMessage', {
@@ -116,7 +116,7 @@ const baseUrl = '/chats';
 export const blockChat = async (chatId: number) => {
     try {
         const response = await api.patch(`${baseUrl}/${chatId}/block`, {}, { withCredentials: true });
-        console.log(`Block chat: ${baseUrl}/${chatId}/block`);
+        //console.log(`Block chat: ${baseUrl}/${chatId}/block`);
         return response;
     } catch (error) {
         console.error("Failed to block chat:", error);
@@ -127,7 +127,7 @@ export const blockChat = async (chatId: number) => {
 export const unblockChat = async (chatId: number) => {
     try {
         const response = await api.patch(`${baseUrl}/${chatId}/unblock`, {}, { withCredentials: true });
-        console.log(`Unblock chat: ${baseUrl}/${chatId}/unblock`);
+       // console.log(`Unblock chat: ${baseUrl}/${chatId}/unblock`);
         return response;
     } catch (error) {
         console.error("Failed to unblock chat:", error);
@@ -138,7 +138,7 @@ export const unblockChat = async (chatId: number) => {
 export const archiveChat = async (chatId: number) => {
     try {
         const response = await api.patch(`${baseUrl}/${chatId}/archive`, {}, { withCredentials: true });
-        console.log(`Archive chat: ${baseUrl}/${chatId}/archive`);
+       // console.log(`Archive chat: ${baseUrl}/${chatId}/archive`);
         return response;
     } catch (error) {
         console.error("Failed to archive chat:", error);
@@ -149,7 +149,7 @@ export const archiveChat = async (chatId: number) => {
 export const unarchiveChat = async (chatId: number) => {
     try {
         const response = await api.patch(`${baseUrl}/${chatId}/unarchive`, {}, { withCredentials: true });
-        console.log(`Unarchive chat: ${baseUrl}/${chatId}/unarchive`);
+        //console.log(`Unarchive chat: ${baseUrl}/${chatId}/unarchive`);
         return response;
     } catch (error) {
         console.error("Failed to unarchive chat:", error);
@@ -161,7 +161,7 @@ export const unarchiveChat = async (chatId: number) => {
 export const submitFeedback = async (feedbackData: any) => {
     try {
         const response = await api.post('/comments/', feedbackData, { withCredentials: true });
-        console.log('Feedback submitted:', feedbackData);
+        //console.log('Feedback submitted:', feedbackData);
         return response;
     } catch (error) {
         console.error('Failed to submit feedback:', error);
@@ -185,7 +185,7 @@ export const addLinkToChat = async (chatId:number|null, link:string) => {
 export const getLink = async (chatID: number | null) => {
     try{
         const reponse = await api.get(`${baseUrlCurrentPhones}/link/${chatID}`, { withCredentials: true });
-        console.log(reponse.data.link);
+        //console.log(reponse.data.link);
         return reponse.data.link;
     }
     catch(error){

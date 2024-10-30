@@ -32,8 +32,8 @@ export const FeedbackSynaraModal: React.FC<FeedbackModalProps> = ({ isOpen, onCl
         };
 
         try {
-            const response = await submitSynaraFeedback(feedbackData);
-            console.log('Server response:', response);
+            await submitSynaraFeedback(feedbackData);
+          //  console.log('Server response:', response);
 
             onClose();
         } catch (error) {

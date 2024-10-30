@@ -99,7 +99,7 @@ const FullChat: React.FC = () => {
             allowOutsideClick: true,
             allowEscapeKey: true,
             willOpen: async() => {
-                console.log(role);
+               // console.log(role);
                 if (role == 'volunteer') {
                     const roomName = generateRoomName();
                     await addLinkToChat(selectedChatId, roomName);
@@ -109,7 +109,7 @@ const FullChat: React.FC = () => {
                 }
                 else {
                     const roomName = await getLink(selectedChatId);
-                    console.log("roomName:", roomName);
+                    //console.log("roomName:", roomName);
                     if(!roomName){
                         root.render(
                             "Волонтер ще не готовий до дзвінка"
@@ -308,9 +308,9 @@ const FullChat: React.FC = () => {
                     setMessages((prevMessages) => [...prevMessages, formattedMessage]);
                 } else {
 
-                    chatList.forEach(chat => {
-                        console.log(`New messages ${chat.unreadCount} in chat ${chat.id}`);
-                    });
+                    // chatList.forEach(chat => {
+                    //     console.log(`New messages ${chat.unreadCount} in chat ${chat.id}`);
+                    // });
 
                     setChatList(prevChatList =>
                         prevChatList.map(chat =>
@@ -430,16 +430,14 @@ const FullChat: React.FC = () => {
     // func for read / delivered status
     const markMessageAsRead = (messageId: number) => {
         if (socket) {
-            // Отправляем событие через WebSocket
             socket.emit('markAsRead', { messageId });
-            console.log(`Сообщение с id ${messageId} отправлено на отметку как прочитанное`);
+          //  console.log(`Сообщение с id ${messageId} отправлено на отметку как прочитанное`);
         }
     };
 
     useEffect(() => {
         if (selectedChatId && messages.length > 0) {
             messages.forEach(message => {
-                // Отмечаем как прочитанное только если сообщение еще не прочитано и отправлено не текущим пользователем
                 if (!message.isRead && message.sender.id !== userId) {
                     markMessageAsRead(message.id);
                 }

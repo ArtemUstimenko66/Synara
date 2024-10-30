@@ -40,8 +40,8 @@ export const SideBarChat: React.FC<SideBarChatProps> = ({ isOpen, onClose }) => 
             setFilter(savedFilter);
         }
         fetchChatData(filter);
-        console.log( "fetchChatData", fetchChatData(filter))
-        console.log( "isOpen", isOpen)
+        //console.log( "fetchChatData", fetchChatData(filter))
+        //console.log( "isOpen", isOpen)
     }, []);
 
     const fetchChatData = useCallback(debounce(async (filter: 'active' | 'archived' | 'blocked') => {

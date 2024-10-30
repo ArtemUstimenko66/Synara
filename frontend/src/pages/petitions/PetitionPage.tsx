@@ -176,7 +176,7 @@ const PetitionPage: React.FC = () => {
 	return (
 		<>
 			<Helmet>
-				<title>Петиції - Synara</title>
+				<title>{t('helmet_petitions')}</title>
 				<meta name="description" content="Створіть та підпишіть петицію для підтримки важливих ініціатив. Долучайтеся до спільноти, щоб змінити світ на краще!" />
 				<meta name="keywords" content="петиції, Synara, підтримка, ініціативи, волонтерство" />
 				<meta name="robots" content="index, follow" />

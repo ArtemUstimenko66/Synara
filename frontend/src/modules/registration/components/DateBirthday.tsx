@@ -99,9 +99,9 @@ const DateBirthday: React.FC<DateBirthdayProps> = ({ onNextStep, selectedRole, s
 
         const isValidUNP = await checkUNP(formatDate(dateOfBirth), unp.toString());
         setValidUNP(isValidUNP);
-        console.log("dateOfBirth ->", formatDate(dateOfBirth));
-        console.log("unp ->", unp.toString());
-        console.log("isValid UNP ->", isValidUNP);
+       // console.log("dateOfBirth ->", formatDate(dateOfBirth));
+       // console.log("unp ->", unp.toString());
+        //console.log("isValid UNP ->", isValidUNP);
 
 
             if(validateFields())
@@ -118,7 +118,7 @@ const DateBirthday: React.FC<DateBirthdayProps> = ({ onNextStep, selectedRole, s
                         unp,
                     };
 
-                    console.log("Updated User Data: ", localData);
+                   // console.log("Updated User Data: ", localData);
 
                     if (typeof setUserData === 'function') {
                         // @ts-ignore

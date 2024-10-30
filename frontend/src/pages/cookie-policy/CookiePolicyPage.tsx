@@ -12,7 +12,7 @@ const CookiePolicyPage = () => {
 	return (
 		<Wrapper>
 			<Helmet>
-				<title>Політика використання cookie - Synara</title>
+				<title>{t('helmet_cookie')}</title>
 				<meta name="description" content="Дізнайтеся про нашу політику використання кукі на платформі Synara." />
 				<meta name="keywords" content="кукі, політика, Synara, українці, конфіденційність" />
 				<meta name="robots" content="index, follow" />

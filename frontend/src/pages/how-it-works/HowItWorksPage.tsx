@@ -40,7 +40,7 @@ const HowItWorksPage: React.FC = () => {
     return (
         <Wrapper>
             <Helmet>
-                <title>Як це працює - Synara</title>
+                <title>{t('helmet_how_it_works')}</title>
                 <meta name="description" content="Зв'яжіться з нами для отримання допомоги або інформації про нашу платформу Synara." />
                 <meta name="keywords" content="Synara, як це працює, контакти, підтримка, допомога, українці" />
                 <meta name="robots" content="index, follow" />

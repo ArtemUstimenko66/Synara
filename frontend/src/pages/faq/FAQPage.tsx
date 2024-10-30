@@ -4,6 +4,7 @@ import Wrapper from "../../ui/Wrapper.tsx";
 import { useState } from "react";
 import DownArrow from '../../assets/images/Down_Arrow.svg?react';
 import { useTranslation } from "react-i18next";
+import {Helmet} from "react-helmet-async";
 
 
 // @ts-ignore
@@ -59,6 +60,13 @@ const FAQPage = () => {
 
 	return (
 		<Wrapper>
+			<Helmet>
+				<title>{t('helmet_faq')}</title>
+				<meta name="description" content="Найчастіші запитання" />
+				<meta name="keywords" content="Synara, головна, оголошення, волонтери, допомога, українці" />
+				<meta name="robots" content="index, follow" />
+				<link rel="canonical" href="https://synara.help/main" />
+			</Helmet>
 			<MainHeader />
 			<div className="min-h-screen mt-20 ml-[3%] mr-[3%]">
 				<h1 className="text-h2 font-kharkiv uppercase">{t('MostpoweredUPPER')}</h1>

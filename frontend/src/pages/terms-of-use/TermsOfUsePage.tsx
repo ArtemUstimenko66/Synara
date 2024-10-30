@@ -10,7 +10,7 @@ const TermsOfUsePage = () => {
 	return (
 		<Wrapper>
 			<Helmet>
-				<title>Правила використання сайту - Synara</title>
+				<title>{t('helmet_terms')}</title>
 				<meta name="description" content="Ознайомтеся з правилами використання платформи Synara. Всі користувачі повинні дотримуватися цих правил." />
 				<meta name="keywords" content="правила, використання, Synara, платформа, користувач" />
 				<meta name="robots" content="index, follow" />

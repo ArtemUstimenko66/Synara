@@ -7,7 +7,7 @@ import DeleteImg from '../../../assets/images/DeleteImg.svg?react';
 import {MuiPhone} from "../../registration/components/ui/MuiPhone.tsx";
 import {useTranslation} from "react-i18next";
 import {getDayOfWeekInUkrainian} from "../../../data/dayOfWeekMap.ts";
-import {updateUser, updateVictim, updateVolunteer, uploadAvatar} from "../api/profileService.ts";
+import {updateUser, updateVictim, updateVolunteer, uploadAvatar, uploadDocument} from "../api/profileService.ts";
 import { parseSupportDescription } from '../helpers/parseSupportDescription.ts';
 import {UserVolunteer} from "../interfaces/UserVolunteerInterface.ts";
 import {UserVictim} from "../interfaces/UserVictimInterface.ts";
@@ -277,21 +277,21 @@ const Settings: React.FC<SettingsProps> = ({ userData }) => {
     // @ts-ignore
     async function saveVolunteerData(formData) {
         const volunteerData = prepareVolunteerData(formData);
-        console.log("ready volunteer send -> ",volunteerData)
+        //console.log("ready volunteer send -> ",volunteerData)
         await updateVolunteer(formData.id, volunteerData)
     }
 
     // @ts-ignore
     async function saveVictimData(formData) {
         const victimData = prepareVictimData(formData);
-        console.log("ready send -> ", victimData)
+       // console.log("ready send -> ", victimData)
         await updateVictim(formData.id, victimData)
     }
 
     // @ts-ignore
     async function saveUserData(formData) {
         const defaultUserData = prepareUserData(formData);
-        console.log("ready user send -> ", defaultUserData)
+        //console.log("ready user send -> ", defaultUserData)
         await updateUser(formData.id, defaultUserData)
     }
 
@@ -319,20 +319,33 @@ const Settings: React.FC<SettingsProps> = ({ userData }) => {
         });
     };
 
-    const handleDocumentUpload = (e: ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && 'files' in formData) {
-            const newFiles = Array.from(e.target.files).map((file, index) => ({
-                id: index,
-                fileName: file.name,
-                fileUrl: URL.createObjectURL(file),
-                fileType: file.type,
-                isAvatar: false,
-            }));
+    const handleDocumentUpload = async (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+            const filesArray = Array.from(e.target.files);
 
-            setFormData(prevData => ({
-                ...prevData,
-                files: [...(prevData as UserVolunteer).files, ...newFiles],
-            }));
+            try {
+                const uploadedFiles = await Promise.all(
+                    filesArray.map(async (file, index) => {
+                        const responseData = await uploadDocument(formData.id, file);
+
+                        return {
+                            id: index,
+                            fileName: file.name,
+                            fileUrl: responseData.url || URL.createObjectURL(file),
+                            fileType: file.type,
+                            isAvatar: false,
+                        };
+                    })
+                );
+
+                // @ts-ignore
+                setFormData((prevData: UserVolunteer) => ({
+                    ...prevData,
+                    files: [...prevData.files, ...uploadedFiles],
+                }));
+            } catch (error) {
+                console.error("Error uploading one or more files:", error);
+            }
         }
     };
 
