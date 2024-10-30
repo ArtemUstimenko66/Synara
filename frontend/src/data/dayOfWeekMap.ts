@@ -1,4 +1,4 @@
-export const dayOfWeekMap: { [key: string]: string } = {
+const dayOfWeekMap: { [key: string]: string } = {
     Monday: 'Пн',
     Tuesday: 'Вт',
     Wednesday: 'Ср',
@@ -11,3 +11,4 @@ export const dayOfWeekMap: { [key: string]: string } = {
 export const getDayOfWeekInUkrainian = (day: string): string => {
     return dayOfWeekMap[day] || day;
 };
+

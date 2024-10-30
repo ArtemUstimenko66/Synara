@@ -50,6 +50,7 @@ interface VolunteerDetails {
 	endTime: string;
 	description: string;
 	support_description: string;
+	moderator_answer: string;
 	user: {
 		id: number;
 		firstName: string;
@@ -91,7 +92,7 @@ const VolunteerProfilePage: React.FC = () => {
 	const [commentsData, setCommentsData] = useState([]);
 	const [hasQualification, setHasQualification] = useState([]);
 	const navigate = useNavigate();
-
+	const [isDetailsVisible, setIsDetailsVisible] = useState(false);
 
 	const { userId, isAuthenticated } = useAuth();
 
@@ -167,7 +168,9 @@ const VolunteerProfilePage: React.FC = () => {
 			navigate(`/chat`);
 		}
 	};
-
+	const toggleDetailsVisibility = () => {
+		setIsDetailsVisible((prev) => !prev);
+	};
 
 	return (
 		<Wrapper>
@@ -271,11 +274,18 @@ const VolunteerProfilePage: React.FC = () => {
 								<h3 className="font-montserratMedium mb-1 mr-2">{t('type_of_help')}</h3>
 								{hasQualification
 									?
-									<VectorOfficial/>
+									<div
+										onClick={toggleDetailsVisibility}> {/* Оборачиваем VectorOfficial в div и добавляем обработчик клика */}
+										<VectorOfficial/>
+									</div>
 									:
 									<></>
 								}
-
+								{isDetailsVisible && (
+									<div className=" absolute right-[25vw] bg-almost-white border border-dark-blue px-4 py-2 rounded-xl mt-2">
+										<p>{details.moderator_answer}</p>
+									</div>
+								)}
 							</div>
 
 							<div className="">
@@ -286,9 +296,17 @@ const VolunteerProfilePage: React.FC = () => {
 										</span>
 									))
 								}
-								<div className="text-sm flex mb-2 mt-[3vh]">
-									<div className=" font-montserratMedium flex">{details.support_description}</div>
+								<div className="mt-5">
+									{details.support_description.split(',').map((support, index) => {
+										const [type, description] = support.split(':');
+										return (
+											<div key={index} className="font-montserratRegular text-sm mb-2">
+												<span className="font-montserratRegular font-bold">{type}:</span> {description.trim()}
+											</div>
+										);
+									})}
 								</div>
+
 							</div>
 						</div>
 					</div>

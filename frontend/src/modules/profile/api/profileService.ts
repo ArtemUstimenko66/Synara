@@ -52,6 +52,87 @@ export const logout = async () => {
     }
 }
 
+export const updateVolunteer = async (id: number,
+                                      volunteerData:
+                                          {
+                                              volunteer_identification_number: any;
+                                              region: any;
+                                              city: any;
+                                              supports: any;
+                                              support_description: any;
+                                              rating: any;
+                                              startWorkingDay: any;
+                                              endWorkingDay: any;
+                                              startTime: string;
+                                              endTime: string;
+                                              description: any;
+                                              is_show_my_profile: any;
+                                              moderator_answer: string;
+                                          }) => {
+    try {
+        const response = await api.patch(`/users/volunteer/${id}`, volunteerData,  {
+            withCredentials: true
+        });
+        console.log('Update volunteer successful');
+        return response.data;
+    } catch (error) {
+        console.error('Update volunteer error:', error);
+        throw error;
+    }
+}
+
+export const updateVictim = async (id: number, victimData: {
+    region: any;
+    city: any;
+    street: any;
+    houseNumber: any;
+    flatNumber: any;
+}) => {
+    try {
+        const response = await api.patch(`/users/victim/${id}`, victimData,  {
+            withCredentials: true
+        });
+        console.log('Update victim successful');
+        return response.data;
+    } catch (error) {
+        console.error('Update victim error:', error);
+        throw error;
+    }
+}
+
+export const updateUser = async (id: number, userData: { firstName: any; lastName: any; password: any; email: any; phoneNumber: any; birthDate: any; role: any; gender: any; UNP: any; }) => {
+    try {
+        const response = await api.patch(`/users/${id}`, userData,  {
+            withCredentials: true
+        });
+        console.log('Update user successful');
+        return response.data;
+    } catch (error) {
+        console.error('Update user error:', error);
+        throw error;
+    }
+}
+
+export const uploadAvatar = async ( userId: number, file: File) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('announcementId', userId.toString());
+    console.log('Upload ',userId, file)
+    try {
+        const response = await api.post(`/users/${userId}/avatar`, formData, {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        //console.log('Document uploaded successfully:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error("Failed to upload document:", error);
+        throw error;
+    }
+};
+
 export const getFavoriteAnnouncements = async () => {
     try {
         const response = await api.get('/announcements/favorite', {
