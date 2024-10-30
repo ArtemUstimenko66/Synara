@@ -28,6 +28,6 @@ export class EmailConfirmationController {
     // if (user && user.phoneNumber) {
     //   await this.smsService.sendVerificationCode(user.phoneNumber);
     // }
-    return res.redirect('http://localhost:5173/home');
+    return res.redirect('https://synara.help/home');
   }
 }
