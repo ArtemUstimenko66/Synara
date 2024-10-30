@@ -59,16 +59,16 @@ const Sidebar: React.FC<SidebarProps> = ({
     const  {role} = useAuth();
 
     return (
-        <div className="md:w-full sm:w-[95%] xl:w-full mr-[5vw] xl:ml-0 md:ml-0 sm:ml-3 p-[3%] bg-gray-100  h-auto py-[2vh] rounded-3xl mt-8">
+        <div className="md:w-full sm:w-[90%] xl:w-full mr-[5vw] xl:ml-0 md:ml-0 sm:ml-[4%] md:p-[3%] sm:p-[5%] xl:p-[3%] bg-gray-100  h-auto py-[2vh] rounded-3xl mt-8">
             {/* Photo */}
             <div className="mb-6 flex items-center ml-2">
                 <img
                     src={avatarUrl || 'https://via.placeholder.com/150'}
                     alt="Profile"
-                    className="mt-2 rounded-full w-14 h-14 mx-auto"
+                    className="mt-2 rounded-full w-14 h-14 md:mx-auto sm:mx-2 xl:mx-auto"
                 />
                 <div>
-                    <p className="text-relative-h5 font-montserratRegular mr-8">{`${firstName} ${lastName}`}</p>
+                    <p className="xl:text-relative-h5 md:text-relative-h5 sm:text-xs-h3 font-montserratRegular mr-8">{`${firstName} ${lastName}`}</p>
                     <p className="text-sm text-gray-600 font-montserratRegular">{formatDate(birthDate)}</p>
                 </div>
             </div>

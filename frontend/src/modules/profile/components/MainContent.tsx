@@ -41,13 +41,13 @@ const MainContent: React.FC<MainContentProps> = ({
 	const {t} = useTranslation();
 
 	return (
-		<main className="w-full bg-almost-white md:p-8 sm:p-3 xl:p-8">
+		<main className="w-full bg-almost-white md:p-8 sm:p-2 xl:p-8">
 			{activeSection === 'reviews' && <Reviews reviews={reviews} rating={rating}/>}
 
 			{activeSection === 'announcements' && (
 				<>
 
-					<h1 className="text-h2 font-kharkiv">{t('my_statements')}</h1>
+					<h1 className="text-6xl font-kharkiv">{t('my_statements')}</h1>
 					<h3 className="text-h5 font-kharkiv mb-[2vh]">{t('advertisement')}</h3>
 					{announcements.length > 0 ?
 						<AnnouncementsPart
@@ -70,7 +70,7 @@ const MainContent: React.FC<MainContentProps> = ({
 
 			{activeSection === 'gatherings' && (
 				<>
-					<h1 className="text-h2 font-kharkiv">{t('my_statements')}</h1>
+					<h1 className="text-6xl font-kharkiv">{t('my_statements')}</h1>
 					<h3 className="text-h5 font-kharkiv mb-[2vh]">{t('collection')}</h3>
 					<div className="grid sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
 						{gatherings.length > 0 ?
@@ -107,10 +107,10 @@ const MainContent: React.FC<MainContentProps> = ({
 			{
 				activeSection === 'petitions' && (
 					<>
-						<h1 className="text-h2 font-kharkiv">{t('my_statements')}</h1>
+						<h1 className="text-6xl font-kharkiv">{t('my_statements')}</h1>
 						<h3 className="text-h5 font-kharkiv mb-[2vh]">{t('petitions')}</h3>
 						<div
-							className="grid sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 xl:px-0 md:px-0 sm:px-4 gap-6 w-full">
+							className="grid sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 xl:px-0 md:px-0 sm:px-0 gap-6 w-full">
 							{petitions.length > 0 ?
 								(petitions.map((petition, index) => (
 										<PetitionCard
@@ -142,7 +142,7 @@ const MainContent: React.FC<MainContentProps> = ({
 			{
 				activeSection === 'likedPetitions' && (
 					<>
-						<h1 className="text-h2 font-kharkiv">{t('saved')}</h1>
+						<h1 className="text-hhalf1 font-kharkiv">{t('saved')}</h1>
 						<h3 className="text-h5 font-kharkiv mb-[2vh]">{t('petitions')}</h3>
 						<div
 							className="grid sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 xl:px-0 md:px-0 sm:px-4 gap-6 w-full">
@@ -176,7 +176,7 @@ const MainContent: React.FC<MainContentProps> = ({
 			{
 				activeSection === 'likedGatherings' && (
 					<>
-						<h1 className="text-h2 font-kharkiv">{t('saved')}</h1>
+						<h1 className="text-hhalf1 font-kharkiv">{t('saved')}</h1>
 						<h3 className="text-h5 font-kharkiv mb-[2vh]">{t('collection')}</h3>
 						<div className="grid sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
 							{likedGatherings.length > 0 ?
@@ -214,7 +214,7 @@ const MainContent: React.FC<MainContentProps> = ({
 			{
 				activeSection === 'likedAnnouncements' && (
 					<>
-						<h1 className="text-h2 font-kharkiv">{t('saved')}</h1>
+						<h1 className="text-hhalf1 font-kharkiv">{t('saved')}</h1>
 						<h3 className="text-h5 font-kharkiv mb-[2vh]">{t('advertisement')}</h3>
 						{likedAnnouncements.length > 0 ?
 							<AnnouncementsPart
@@ -259,11 +259,11 @@ const MainContent: React.FC<MainContentProps> = ({
 			)}
 
 			{activeSection === 'settings' && (
-				<>
-					<h1 className="xl:text-h2 sm:text-h4 md:text-h2 font-kharkiv">{t('settings')}</h1>
+				<div className="xl:mx-0 md:mx-0 sm:mx-4">
+					<h1 className="xl:text-h2 sm:text-4xl md:text-h2 font-kharkiv">{t('settings')}</h1>
 					<h3 className="xl:text-h5 sm:text-xs-pxl md:text-h5 font-kharkiv mb-[2vh]">{t('shared')}</h3>
 					<Settings userData={userData} />
-				</>
+				</div>
 			)}
 		</main>
 	);

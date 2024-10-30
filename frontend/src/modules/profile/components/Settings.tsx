@@ -458,7 +458,7 @@ const Settings: React.FC<SettingsProps> = ({ userData }) => {
 
     return (
 
-        <div className=" py-6 xl:-mt-[9vh] ">
+        <div className="w-full  xl:-mt-[9vh] ">
             {/* Header */}
             <div className="flex justify-end items-end mb-4">
 
@@ -473,7 +473,7 @@ const Settings: React.FC<SettingsProps> = ({ userData }) => {
             </div>
 
             {/* Section: Оприлюдненні */}
-            <div className="bg-gray-100 p-4 rounded-3xl">
+            <div className="bg-gray-100 md:p-4 sm:p-4 xl:p-4 rounded-3xl">
                 {formData.role === 'volunteer' && 'volunteer' in formData && (
                     <label className="font-montserratRegular">
                         <input
@@ -806,7 +806,7 @@ const Settings: React.FC<SettingsProps> = ({ userData }) => {
 
             {/* !!! Section: Конфіденційні */}
             <h2 className="md:text-h2 sm:text-h5 xl:text-h2  mt-6 mb-4 font-kharkiv">{t('confidential')}</h2>
-            <div className="bg-gray-100 p-4 rounded-3xl">
+            <div className="bg-gray-100 md:p-4 sm:p-4 xl:p-4 rounded-3xl">
                 {formData.role === 'victim' && (
                     <div className="grid grid-cols-3 gap-4 mb-4">
                         <div>
@@ -902,7 +902,7 @@ const Settings: React.FC<SettingsProps> = ({ userData }) => {
                 )}
                 <div className="mb-4">
                     <label className="font-montserratRegular">{t('your_gender')}:</label>
-                    <div className="flex space-x-2">
+                    <div className="flex md:flex-row xl:flex-row sm:flex-col xl:space-x-2 md:space-x-2 xl:space-y-0 md:space-y-0 sm:space-y-2 sm:space-x-0">
                         {["female", "male", "other"].map((option) => (
                             <button
                                 key={option}

@@ -289,13 +289,16 @@ const VolunteerProfilePage: React.FC = () => {
 							</div>
 
 							<div className="">
-								{details.supports
-									.map((support, index) => (
+								{details.supports && details.supports.length > 0
+									? details.supports.map((support, index) => (
 										<span key={index}
-											  className="text-sm border border-dark-blue font-montserratRegular px-4 py-0.5 mr-2 rounded-3xl">{getHelpTypeInUkrainianEngToUkr(support)}
-										</span>
+											  className="text-sm border border-dark-blue font-montserratRegular px-4 py-0.5 mr-2 rounded-3xl">
+											{getHelpTypeInUkrainianEngToUkr(support)}
+										  </span>
 									))
+									: <p className="font-montserratRegular text-sm">Данные отсутствуют</p>
 								}
+
 								<div className="mt-5">
 									{details.support_description.split(',').map((support, index) => {
 										const [type, description] = support.split(':');

@@ -8,6 +8,6 @@ export const navItems = [
     { textKey: "about_us", to: "/about" },
     { textKey: "gatherings_lower", to: "/gatherings" },
     { textKey: "map_help", to: "/map-help" },
-    { textKey: "how_it_works", to: "/how-it-works" },
+    { textKey: "how_it_works_sm", to: "/how-it-works" },
     { textKey: "map_alert", to: "/map-alert" }
 ];
