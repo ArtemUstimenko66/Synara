@@ -13,10 +13,10 @@ import { PasswordService } from '../password/password.service';
 @Injectable()
 export class AuthGoogleService {
   constructor(
-    private jwtService: JwtService,
-    private configService: ConfigService,
-    private passwordService: PasswordService,
-    @InjectRepository(User) private userRepository: Repository<User>,
+      private jwtService: JwtService,
+      private configService: ConfigService,
+      private passwordService: PasswordService,
+      @InjectRepository(User) private userRepository: Repository<User>,
   ) {}
 
   generateJwt(payload) {
@@ -55,7 +55,7 @@ export class AuthGoogleService {
       // Создаем нового пользователя и устанавливаем необходимые поля
       const newUser = this.userRepository.create(user);
       newUser.password = await this.passwordService.hashPassword(
-        this.generateRandomPassword(),
+          this.generateRandomPassword(),
       );
       console.log('New user before saving:', newUser); // Для отладки
 
@@ -81,12 +81,12 @@ export class AuthGoogleService {
     });
 
     const refreshToken = this.jwtService.sign(
-      {
-        id: user.id,
-        email: user.email,
-        roles: [user.role],
-      },
-      { expiresIn: '7d', secret: 'JWT_SECRET_REFRESH' },
+        {
+          id: user.id,
+          email: user.email,
+          roles: [user.role],
+        },
+        { expiresIn: '7d', secret: 'JWT_SECRET_REFRESH' },
     );
 
     return { accessToken, refreshToken };
