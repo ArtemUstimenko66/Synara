@@ -97,7 +97,8 @@ const Footer: React.FC = () => {
                             synara.support@email.com
                         </a>
                         <div className="mt-2 flex space-x-4">
-                            <a href="#" aria-label="Facebook">
+                            <a href="https://www.facebook.com/synara.help?mibextid=LQQJ4d" target="_blank"
+                               rel="noopener noreferrer" aria-label="Facebook">
                                 <FontAwesomeIcon icon={['fab', 'facebook-f']}/>
                             </a>
                             <a href="https://www.instagram.com/synara.help/" target="_blank"
@@ -189,7 +190,9 @@ const Footer: React.FC = () => {
                                 synara.support@email.com
                             </a>
                             <div className="mt-2 flex justify-start space-x-4">
-                                <a href="#" aria-label="Facebook">
+                                <a href="https://www.facebook.com/synara.help?mibextid=LQQJ4d" target="_blank"
+                                   rel="noopener noreferrer"
+                                   aria-label="Facebook">
                                     <FontAwesomeIcon icon={['fab', 'facebook-f']}/>
                                 </a>
                                 <a href="https://www.instagram.com/synara.help/" target="_blank"

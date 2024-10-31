@@ -361,33 +361,35 @@ const AboutPage = () => {
                     <h2 className="xl:text-h2 sm:text-h4 font-kharkiv mb-12">{t('our_networks')}</h2>
                     <div className="flex xl:space-x-44 sm:space-x-4">
                         {/* Facebook */}
-                        <div
-                            className="bg-blue-500 rounded-2xl xl:w-36 xl:h-36 w-20 h-20 flex items-center justify-center">
-                            <Facebook className="text-white xl:w-20 xl:h-20 w-10 h-10"/>
-                        </div>
-                        {/* Instagram */}
-                        <a href="https://www.instagram.com/synara.help/" target="_blank" rel="noopener noreferrer">
+                        <a href="https://www.facebook.com/synara.help?mibextid=LQQJ4d" target="_blank" rel="noopener noreferrer">
                             <div
                                 className="bg-blue-500 rounded-2xl xl:w-36 xl:h-36 w-20 h-20 flex items-center justify-center">
-                                <Instagram className="text-white xl:w-20 xl:h-20 w-10 h-10"/>
+                                <Facebook className="text-white xl:w-20 xl:h-20 w-10 h-10"/>
                             </div>
                         </a>
-                        {/* Twitter */}
-                        <div
-                            className="bg-blue-500 rounded-2xl xl:w-36 xl:h-36 w-20 h-20 flex items-center justify-center">
-                            <Twitter className="text-white xl:w-20 xl:h-20 w-10 h-10"/>
-                        </div>
-                        {/* Telegram */}
-                        <div
-                            className="bg-blue-500 rounded-2xl xl:w-36 xl:h-36 w-20 h-20 flex items-center justify-center">
-                            <Telegram className="text-white xl:w-20 xl:h-20 w-10 h-10"/>
-                        </div>
+                            {/* Instagram */}
+                            <a href="https://www.instagram.com/synara.help/" target="_blank" rel="noopener noreferrer">
+                                <div
+                                    className="bg-blue-500 rounded-2xl xl:w-36 xl:h-36 w-20 h-20 flex items-center justify-center">
+                                    <Instagram className="text-white xl:w-20 xl:h-20 w-10 h-10"/>
+                                </div>
+                            </a>
+                            {/* Twitter */}
+                            <div
+                                className="bg-blue-500 rounded-2xl xl:w-36 xl:h-36 w-20 h-20 flex items-center justify-center">
+                                <Twitter className="text-white xl:w-20 xl:h-20 w-10 h-10"/>
+                            </div>
+                            {/* Telegram */}
+                            <div
+                                className="bg-blue-500 rounded-2xl xl:w-36 xl:h-36 w-20 h-20 flex items-center justify-center">
+                                <Telegram className="text-white xl:w-20 xl:h-20 w-10 h-10"/>
+                            </div>
                     </div>
                 </section>
             </div>
             <Footer/>
         </Wrapper>
-    );
+);
 };
 
 export default AboutPage;
