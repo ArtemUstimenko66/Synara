@@ -997,14 +997,8 @@ const HomePage: React.FC = () => {
                         className="sm:mt-12 w-full sm:flex-col select-none md:flex-row xl:flex-row h-auto flex items-center justify-center xl:mt-44 md:mt-24 px-8 mb-14">
                         {/* YouTube Frame */}
                         <div className="">
-                            <iframe
-                                className="sm:h-[200px] sm:w-auto xl:w-[600px] rounded-3xl xl:h-[400px] md:w-[110%] md:h-auto"
-                                src="https://www.youtube.com/embed/M1oNK0jVoyE"
-                                title="YouTube video player"
-                                frameBorder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowFullScreen>
-                            </iframe>
+                            <FrameYouTube
+                                className="sm:h-[200px] sm:w-auto xl:w-[600px] xl:h-auto md:w-[110%] md:h-auto"/>
                         </div>
 
                         {/* App Details */}
