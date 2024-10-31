@@ -30,7 +30,6 @@ import VECTOR_4_1 from '../../assets/images/vector_4_1.svg?react';
 import VECTOR_4_2 from '../../assets/images/vector_4_2.svg?react';
 
 import VectorBlue from '../../assets/images/VectorBlue.svg?react';
-import FrameYouTube from '../../assets/images/FrameYouTube.svg?react';
 import GooglePlayImg from '../../assets/images/GooglePlayImg.svg?react';
 import AppStoreImg from '../../assets/images/AppStoreImg.svg?react';
 
@@ -997,8 +996,13 @@ const HomePage: React.FC = () => {
                         className="sm:mt-12 w-full sm:flex-col select-none md:flex-row xl:flex-row h-auto flex items-center justify-center xl:mt-44 md:mt-24 px-8 mb-14">
                         {/* YouTube Frame */}
                         <div className="">
-                            <FrameYouTube
-                                className="sm:h-[200px] sm:w-auto xl:w-[600px] xl:h-auto md:w-[110%] md:h-auto"/>
+                            <iframe
+                                className="sm:h-[200px] sm:w-auto xl:w-[600px] rounded-3xl xl:h-[400px] md:w-[110%] md:h-auto"
+                                src="https://www.youtube.com/embed/M1oNK0jVoyE"
+                                title="YouTube video player"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen>
+                            </iframe>
                         </div>
 
                         {/* App Details */}
