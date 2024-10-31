@@ -45,8 +45,8 @@ export class GatheringsController {
   })
   @ApiResponse({ status: 200, type: [Gatherings] })
   @Get('/')
-  @UseGuards(JwtAuthGuard)
-  @Roles(Role.Volunteer, Role.Victim, Role.Guest, Role.Admin)
+  // @UseGuards(JwtAuthGuard)
+  // @Roles(Role.Volunteer, Role.Victim, Role.Guest, Role.Admin)
   async getAllGatherings(
       @Req() req: Request,
       @Query('query') query?: string,
@@ -69,10 +69,10 @@ export class GatheringsController {
       moneyTo,
       typeEnding,
     };
-    const user = req.user;
+    // const user = req.user;
 
 
-    return this.gatheringService.findGatherings(options, user);
+    return this.gatheringService.findGatherings(options);
 
   }
 

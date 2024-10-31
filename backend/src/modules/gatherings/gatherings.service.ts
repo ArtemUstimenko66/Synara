@@ -82,7 +82,7 @@ export class GatheringsService {
 
   async findGatherings(
       options: Partial<FindGatheringsOptions> = {},
-      user: any
+      // user: any
   ): Promise<Gatherings[]> {
     const qb = this.gatheringRepository.createQueryBuilder('gathering')
         .leftJoinAndSelect('gathering.user', 'user')
@@ -95,15 +95,13 @@ export class GatheringsService {
       );
     }
 
-    if('roles' in user){
-      console.log(user.roles)
-      if(!(user.roles as string[]).includes('admin'))
-        qb.andWhere('gathering.isBlockedGathering = :isBlock', {
-          isBlock: "false"
-        })
-    }
-
-
+    // if('roles' in user){
+    //   console.log(user.roles)
+    //   if(!(user.roles as string[]).includes('admin'))
+    //     qb.andWhere('gathering.isBlockedGathering = :isBlock', {
+    //       isBlock: "false"
+    //     })
+    // }
 
     if (options.isUrgent !== undefined) {
       if (options.isUrgent) {
