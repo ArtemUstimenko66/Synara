@@ -45,7 +45,7 @@ export class VolunteersEntity {
     example: 'Individual consultations',
     description: 'Short description of each type of support',
   })
-  @Column({ nullable: true })
+  @Column({ nullable: true, default: "Тут потрібен текст про Вашу підтримку" })
   support_description: string;
 
   @ApiProperty({
@@ -68,42 +68,42 @@ export class VolunteersEntity {
     description: 'Rating of the volunteer (from 0 to 5 stars)',
     required: false,
   })
-  @Column({ type: 'decimal', precision: 3, scale: 2, nullable: true })
+  @Column({ type: 'decimal', precision: 3, scale: 2, nullable: true, default: 0 })
   rating?: number;
 
   @ApiProperty({
     example: 'Monday',
     description: 'Start working day of the volunteer',
   })
-  @Column({ nullable: true })
+  @Column({ nullable: true, default:WorkingDays.MONDAY })
   startWorkingDay?: WorkingDays;
 
   @ApiProperty({
     example: 'Friday',
     description: 'End working day of the volunteer',
   })
-  @Column({ nullable: true })
+  @Column({ nullable: true, default:WorkingDays.FRIDAY })
   endWorkingDay?: WorkingDays;
 
   @ApiProperty({
     example: '09:00',
     description: 'Start time of the volunteer\'s working hours in HH:mm format',
   })
-  @Column({ nullable: true })
+  @Column({ nullable: true, default: "9:00" })
   startTime?: string;
 
   @ApiProperty({
     example: '17:00',
     description: 'End time of the volunteer\'s working hours in HH:mm format',
   })
-  @Column({ nullable: true })
+  @Column({ nullable: true, default: "17:00" })
   endTime?: string;
 
   @ApiProperty({
     example: 'Helping the elderly with daily tasks.',
     description: 'Description of the volunteer’s activities',
   })
-  @Column({ type: 'text', nullable: true })
+  @Column({ type: 'text', nullable: true, default: "Я волонтер Synara" })
   description: string;
 
   @ApiProperty({

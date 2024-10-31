@@ -116,7 +116,7 @@ export class User {
     description: 'URL to the users avatar',
     type: Number,
   })
-  @Column({ type: 'varchar', length: 255, nullable: true })
+  @Column({ type: 'varchar', length: 255, nullable: true, default: "https://via.placeholder.com/150" })
   avatarUrl?: string;
 
   @ApiProperty({
