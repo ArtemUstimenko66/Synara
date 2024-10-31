@@ -40,7 +40,7 @@ export class AuthGoogleService {
       }
 
       return this.generateJwt({
-        sub: userExist.id,
+        id: userExist.id,
         email: userExist.email,
       });
     } catch (error) {
@@ -64,7 +64,7 @@ export class AuthGoogleService {
       console.log('User saved successfully:', newUser); // Для отладки
 
       return this.generateJwt({
-        sub: newUser.id,
+        id: newUser.id,
         email: newUser.email,
       });
     } catch (error) {
