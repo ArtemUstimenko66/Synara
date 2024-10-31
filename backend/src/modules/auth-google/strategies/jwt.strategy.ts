@@ -7,7 +7,7 @@ import { User } from '../../users/entities/users.entity';
 import { Repository } from 'typeorm';
 
 export type JwtPayload = {
-  sub: string;
+  id: string;
   email: string;
 };
 
@@ -31,7 +31,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
   }
 
   async validate(payload: JwtPayload) {
-    const userId = parseInt(payload.sub);
+    const userId = parseInt(payload.id);
     const user = await this.userRepository.findOneBy({ id: userId });
 
     if (!user) {
@@ -39,7 +39,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     }
 
     return {
-      id: payload.sub,
+      id: payload.id,
       email: payload.email,
     };
   }
